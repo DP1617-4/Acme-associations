@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles_es.xml
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+
+	<definition name="chorbi/display" extends="master.page">	
+		<put-attribute name="title" value="Mostrar chorbi" />
+		<put-attribute name="body" value="/views/chorbi/display.jsp" />
+	</definition>
+	
+	<definition name="chorbi/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar chorbi" />
+		<put-attribute name="body" value="/views/chorbi/edit.jsp" />
+	</definition>
+	
+	<definition name="chorbi/register" extends="master.page">	
+		<put-attribute name="title" value="Registrarse como un chorbi" />
+		<put-attribute name="body" value="/views/chorbi/register.jsp" />
+	</definition>
+	
+	<definition name="chorbi/list" extends="master.page">	
+		<put-attribute name="title" value="Listar chorbis" />
+		<put-attribute name="body" value="/views/chorbi/list.jsp" />
+	</definition>
+	
+</tiles-definitions>
