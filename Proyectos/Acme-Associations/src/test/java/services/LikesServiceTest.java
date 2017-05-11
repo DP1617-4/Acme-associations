@@ -22,7 +22,7 @@ public class LikesServiceTest extends AbstractTest {
 
 	// The SUT -------------------------------------------------------------
 	@Autowired
-	private LikesService	likesService;
+	private CommentService	likesService;
 
 	@Autowired
 	private ChorbiService	chorbiService;
