@@ -18,7 +18,7 @@
 	<!-- Artifact identification and properties -->
 
 	<groupId>Design-and-Testing</groupId>
-	<version>2.0</version>
+	<version>1.0</version>
 	<packaging>war</packaging>
 	
 	<properties>
@@ -27,7 +27,7 @@
 
 	<!-- Indexing information -->
 
-	<name>Acme-Chorbi</name>
+	<name>Acme-Associations</name>
 	<url>http://www.acme.com</url>
 	
 	<!-- Build commands -->
@@ -325,6 +325,6 @@
 		
 	</dependencies>
 
-	<artifactId>Acme-Chorbi</artifactId>
-	<description>This is acme-chorbi</description>
+	<artifactId>Acme-Associations</artifactId>
+	<description>This is acme-associations</description>
 </project> 
