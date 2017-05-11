@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.FolderRepository;
 import domain.Actor;
+import domain.Folder;
 
 @Service
 @Transactional
@@ -31,14 +31,14 @@ public class FolderService {
 	//Auxiliary Services
 
 	@Autowired
-	private UserService			actorService;
+	private ActorService		actorService;
 
 
 	//CRUD
 
-	public Folder create(final User actor) {
+	public Folder create(final Actor actor) {
 		final Folder result = new Folder();
-		result.setUser(actor);
+		result.setActor(actor);
 		return result;
 	}
 
@@ -56,16 +56,16 @@ public class FolderService {
 	}
 
 	public Collection<Folder> findAllByPrincipal() {
-		User actor;
+		Actor actor;
 		Collection<Folder> result;
 		actor = this.actorService.findByPrincipal();
-		result = this.folderRepository.findAllByUser(actor.getId());
+		result = this.folderRepository.findAllByActor(actor.getId());
 		return result;
 	}
 
 	//Business Methods
 
-	public Collection<Folder> initFolders(final User actor) {
+	public Collection<Folder> initFolders(final Actor actor) {
 		Collection<Folder> result = new ArrayList<Folder>();
 		final Collection<Folder> aux = new ArrayList<Folder>();
 		Folder inbox;
@@ -83,8 +83,8 @@ public class FolderService {
 	}
 
 	public void checkPrincipal(final Folder folder) {
-		final User actor = this.actorService.findByPrincipal();
-		Assert.isTrue(actor.equals(folder.getUser()), "Dear User, you can't edit a folder that doesn't belong to you");
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.isTrue(actor.equals(folder.getActor()), "Dear Actor, you can't edit a folder that doesn't belong to you");
 	}
 
 	public void checkPrincipal(final int folderId) {

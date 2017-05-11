@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.RolesRepository;
 import domain.Association;
+import domain.Roles;
 
 @Service
 @Transactional
