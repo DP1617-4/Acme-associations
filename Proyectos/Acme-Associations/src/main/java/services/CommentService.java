@@ -5,11 +5,12 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import repositories.CommentRepository;
+import domain.Comment;
+import domain.Commentable;
+import domain.User;
 
 @Service
 public class CommentService {
@@ -33,7 +34,7 @@ public class CommentService {
 		final User principal = this.userService.findByPrincipal();
 		created.setUser(principal);
 		created.setMoment(moment);
-		created.setCommented(commentable);
+		created.setCommentable(commentable);
 		return created;
 	}
 
@@ -57,7 +58,6 @@ public class CommentService {
 	}
 
 	public Comment save(final Comment comment) {
-		Assert.isTrue(!comment.getLiked().equals(comment.getChorbi()));
 		Comment saved;
 		final Date moment = new Date(System.currentTimeMillis() - 100);
 		comment.setMoment(moment);

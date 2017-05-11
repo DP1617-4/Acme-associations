@@ -39,7 +39,7 @@ public class ChirpServiceTest extends AbstractTest {
 	private FolderService	folderService;
 
 	@Autowired
-	private ChorbiService	chorbiService;
+	private UserService	chorbiService;
 
 	@Autowired
 	private ManagerService	managerService;
