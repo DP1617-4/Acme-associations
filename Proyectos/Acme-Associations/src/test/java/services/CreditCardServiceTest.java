@@ -29,7 +29,7 @@ public class CreditCardServiceTest extends AbstractTest {
 	private ActorService		actorService;
 
 	@Autowired
-	private ChorbiService		chorbiService;
+	private UserService		chorbiService;
 
 
 	// Tests ---------------------------------------------------------------

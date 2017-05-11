@@ -28,7 +28,7 @@ public class ChorbiServiceTest extends AbstractTest {
 
 	// The SUT -------------------------------------------------------------
 	@Autowired
-	private ChorbiService	chorbiService;
+	private UserService	chorbiService;
 
 	Calendar				calendarValida	= new GregorianCalendar(1995, 12, 14);
 	Date					fechaValida		= this.calendarValida.getTime();

@@ -32,7 +32,7 @@ public class SearchTemplateServiceTest extends AbstractTest {
 	private SearchTemplateService		searchTemplateService;
 
 	@Autowired
-	private ChorbiService				chorbiService;
+	private UserService				chorbiService;
 
 	@Autowired
 	private SystemConfigurationService	scService;

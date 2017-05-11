@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.RolesRepository;
+import domain.Association;
 
 @Service
 @Transactional
