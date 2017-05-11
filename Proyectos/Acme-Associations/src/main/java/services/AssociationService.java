@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import repositories.AssociationRepository;
+import domain.Association;
 
 @Service
 @Transactional

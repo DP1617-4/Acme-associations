@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import repositories.PlaceRepository;
+import domain.Place;
 
 @Service
 @Transactional

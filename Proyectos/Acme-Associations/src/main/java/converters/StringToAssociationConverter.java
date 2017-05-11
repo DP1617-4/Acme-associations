@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.AssociationRepository;
+import domain.Association;
 
 @Component
 @Transactional
