@@ -14,20 +14,20 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.Message;
+import domain.Activity;
 
 @Component
 @Transactional
-public class MessageToStringConverter implements Converter<Message, String> {
+public class ActivityToStringConverter implements Converter<Activity, String> {
 
 	@Override
-	public String convert(final Message message) {
+	public String convert(final Activity activity) {
 		String result;
 
-		if (message == null)
+		if (activity == null)
 			result = null;
 		else
-			result = String.valueOf(message.getId());
+			result = String.valueOf(activity.getId());
 
 		return result;
 	}
