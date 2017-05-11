@@ -21,8 +21,6 @@ import repositories.ActorRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
-import domain.Administrator;
-import domain.Chorbi;
 
 @Service
 @Transactional
@@ -36,9 +34,6 @@ public class ActorService {
 	// Supporting services ----------------------------------------------------
 	@Autowired
 	private AdministratorService	administratorService;
-
-	@Autowired
-	private ChorbiService			chorbiService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -88,15 +83,6 @@ public class ActorService {
 		return result;
 	}
 
-	public Actor save(final Actor actor) {
-		Assert.notNull(actor);
-		Actor result;
-		if (actor instanceof Administrator)
-			result = this.administratorService.save((Administrator) actor);
-		else
-			result = this.chorbiService.save((Chorbi) actor);
-		return result;
-	}
 	public void delete(final Actor actor) {
 		Assert.notNull(actor);
 		Assert.isTrue(actor.getId() != 0);
