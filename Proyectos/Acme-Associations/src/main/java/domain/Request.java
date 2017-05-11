@@ -23,28 +23,28 @@ public class Request extends DomainEntity {
 
 	// Relationships ----------------------------------------------------------
 
-	private Association	issuedTo;
-	private User		issuedBy;
+	private Association	association;
+	private User		user;
 
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public Association getIssuedTo() {
-		return this.issuedTo;
+	public Association getAssociation() {
+		return this.association;
 	}
-	public void setIssuedTo(final Association issuedTo) {
-		this.issuedTo = issuedTo;
+	public void setAssociation(final Association association) {
+		this.association = association;
 	}
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public User getIssuedBy() {
-		return this.issuedBy;
+	public User getUser() {
+		return this.user;
 	}
-	public void setIssuedBy(final User issuedBy) {
-		this.issuedBy = issuedBy;
+	public void setUser(final User user) {
+		this.user = user;
 	}
 
 }

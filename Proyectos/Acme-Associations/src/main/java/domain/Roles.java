@@ -47,28 +47,28 @@ public class Roles extends DomainEntity {
 
 	// Relationships ----------------------------------------------------------
 
-	private Association	belongsTo;
-	private User		assignedTo;
+	private Association	association;
+	private User		user;
 
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public Association getBelongsTo() {
-		return this.belongsTo;
+	public Association getAssociation() {
+		return this.association;
 	}
-	public void setBelongsTo(final Association belongsTo) {
-		this.belongsTo = belongsTo;
+	public void setAssociation(final Association association) {
+		this.association = association;
 	}
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public User getAssignedTo() {
-		return this.assignedTo;
+	public User getUser() {
+		return this.user;
 	}
-	public void setAssignedToBy(final User assignedTo) {
-		this.assignedTo = assignedTo;
+	public void setUser(final User user) {
+		this.user = user;
 	}
 
 }

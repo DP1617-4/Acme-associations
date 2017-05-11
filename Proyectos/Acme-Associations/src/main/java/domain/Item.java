@@ -84,17 +84,17 @@ public class Item extends Commentable {
 
 	// Relationships ----------------------------------------------------------
 
-	private Section	belongsTo;
+	private Section	section;
 
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public Section getBelongsTo() {
-		return this.belongsTo;
+	public Section getSection() {
+		return this.section;
 	}
-	public void setBelongsTo(final Section belongsTo) {
-		this.belongsTo = belongsTo;
+	public void setSection(final Section section) {
+		this.section = section;
 	}
 
 }

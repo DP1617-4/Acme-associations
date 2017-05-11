@@ -62,28 +62,28 @@ public class Comment extends DomainEntity {
 
 	// Relationships ----------------------------------------------------------
 
-	private Commentable	placedTo;
-	private User		placedBy;
+	private Commentable	commentable;
+	private User		user;
 
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public User getPlacedBy() {
-		return this.placedBy;
+	public User getUser() {
+		return this.user;
 	}
-	public void setPlacedBy(final User placedBy) {
-		this.placedBy = placedBy;
+	public void setUser(final User user) {
+		this.user = user;
 	}
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public Commentable getPlacedTo() {
-		return this.placedTo;
+	public Commentable getCommentable() {
+		return this.commentable;
 	}
-	public void setPlacedTo(final Commentable placedTo) {
-		this.placedTo = placedTo;
+	public void setCommentable(final Commentable commentable) {
+		this.commentable = commentable;
 	}
 
 }

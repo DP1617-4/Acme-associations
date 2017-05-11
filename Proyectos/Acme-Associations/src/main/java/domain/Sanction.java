@@ -53,28 +53,28 @@ public class Sanction extends DomainEntity {
 
 	// Relationships ----------------------------------------------------------
 
-	private Association	relatedTo;
-	private User		assignedTo;
+	private Association	association;
+	private User		user;
 
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public Association getRelatedTo() {
-		return this.relatedTo;
+	public Association getAssociation() {
+		return this.association;
 	}
-	public void setRelatedTo(final Association relatedTo) {
-		this.relatedTo = relatedTo;
+	public void setAssociation(final Association association) {
+		this.association = association;
 	}
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public User getAssignedTo() {
-		return this.assignedTo;
+	public User getUser() {
+		return this.user;
 	}
-	public void setAssignedTo(final User assignedTo) {
-		this.assignedTo = assignedTo;
+	public void setUser(final User user) {
+		this.user = user;
 	}
 
 }
