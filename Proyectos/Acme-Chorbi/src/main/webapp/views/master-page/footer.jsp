@@ -18,5 +18,5 @@
 
 <hr />
 
-<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme Chorbies Co., Inc.</b>
+<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme Associations Co., Inc.</b>
 <p><spring:message code="footer.terms.1" /> <a href="redirect/terms.do"><spring:message code="footer.terms.2" /></a> <spring:message code="footer.terms.3" /> <a href="redirect/cookies.do"><spring:message code="footer.terms.4" /></a></p>

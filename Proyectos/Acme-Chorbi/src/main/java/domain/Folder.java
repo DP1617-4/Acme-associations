@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(indexes = {
-	@Index(columnList = "chorbi_id"), @Index(columnList = "name")
+	@Index(columnList = "actor_id"), @Index(columnList = "name")
 })
 public class Folder extends DomainEntity {
 
@@ -41,17 +41,16 @@ public class Folder extends DomainEntity {
 
 
 	//Relationships
-	private Chorbi	chorbi;
+	private Actor	actor;
 
 
 	@Valid
 	@NotNull
 	@ManyToOne()
-	//	@NotFound(action = NotFoundAction.IGNORE)
-	public Chorbi getChorbi() {
-		return this.chorbi;
+	public Actor getActor() {
+		return this.actor;
 	}
-	public void setChorbi(final Chorbi chorbi) {
-		this.chorbi = chorbi;
+	public void setActor(final Actor actor) {
+		this.actor = actor;
 	}
 }

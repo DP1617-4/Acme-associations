@@ -1,12 +1,10 @@
 
 package domain;
 
-import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.ManyToOne;
@@ -25,29 +23,28 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(indexes = {
 	@Index(columnList = "folder_id"), @Index(columnList = "sender_id"), @Index(columnList = "recipient_id")
 })
-public class Chirp extends DomainEntity {
+public class Message extends DomainEntity {
 
 	// Constructors -----------------------------------------------------------
 
-	public Chirp() {
+	public Message() {
 		super();
 	}
 
 
 	// Attributes -------------------------------------------------------------
 
-	private String				subject;
-	private String				text;
-	private Collection<String>	attachments;
-	private Date				moment;
+	private String	title;
+	private String	text;
+	private Date	moment;
 
 
 	@NotBlank
-	public String getSubject() {
-		return this.subject;
+	public String getTitle() {
+		return this.title;
 	}
-	public void setSubject(final String subject) {
-		this.subject = subject;
+	public void setTitle(final String title) {
+		this.title = title;
 	}
 	@NotBlank
 	public String getText() {
@@ -55,14 +52,6 @@ public class Chirp extends DomainEntity {
 	}
 	public void setText(final String text) {
 		this.text = text;
-	}
-
-	@ElementCollection
-	public Collection<String> getAttachments() {
-		return this.attachments;
-	}
-	public void setAttachments(final Collection<String> attachments) {
-		this.attachments = attachments;
 	}
 
 	@Past
@@ -96,7 +85,6 @@ public class Chirp extends DomainEntity {
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	//	@NotFound(action = NotFoundAction.IGNORE)
 	public Actor getSender() {
 		return this.sender;
 	}
@@ -107,7 +95,6 @@ public class Chirp extends DomainEntity {
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	//	@NotFound(action = NotFoundAction.IGNORE)
 	public Actor getRecipient() {
 		return this.recipient;
 	}

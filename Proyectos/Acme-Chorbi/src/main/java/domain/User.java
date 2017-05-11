@@ -7,25 +7,15 @@ import javax.persistence.Entity;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class CreditHolder extends Actor {
+public class User extends Actor {
 
 	// Constructors -----------------------------------------------------------
 
-	public CreditHolder() {
+	public User() {
 		super();
 	}
 
-
 	// Attributes -------------------------------------------------------------
-	private Double	cumulatedFee;
-
-
-	public Double getCumulatedFee() {
-		return this.cumulatedFee;
-	}
-	public void setCumulatedFee(final Double cumulatedFee) {
-		this.cumulatedFee = cumulatedFee;
-	}
 
 	// Relationships ----------------------------------------------------------
 

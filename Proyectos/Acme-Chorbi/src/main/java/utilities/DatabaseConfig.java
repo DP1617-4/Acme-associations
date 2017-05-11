@@ -12,6 +12,6 @@ package utilities;
 
 public interface DatabaseConfig {
 
-	public final String	PersistenceUnit	= "acme-chorbi";
+	public final String	PersistenceUnit	= "acme-associations";
 
 }

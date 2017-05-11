@@ -14,20 +14,18 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.Chorbi;
-
 @Component
 @Transactional
-public class ChorbiToStringConverter implements Converter<Chorbi, String> {
+public class MessageToStringConverter implements Converter<Message, String> {
 
 	@Override
-	public String convert(final Chorbi chorbi) {
+	public String convert(final Message message) {
 		String result;
 
-		if (chorbi == null)
+		if (message == null)
 			result = null;
 		else
-			result = String.valueOf(chorbi.getId());
+			result = String.valueOf(message.getId());
 
 		return result;
 	}
