@@ -37,28 +37,28 @@ public class Section extends DomainEntity {
 
 	// Relationships ----------------------------------------------------------
 
-	private Association	belongsTo;
-	private User		managedBy;
+	private Association	association;
+	private User		user;
 
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public Association getRelatedTo() {
-		return this.belongsTo;
+	public Association getAssociation() {
+		return this.association;
 	}
-	public void setBelongsTo(final Association belongsTo) {
-		this.belongsTo = belongsTo;
+	public void setAssociation(final Association association) {
+		this.association = association;
 	}
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public User getManagedBy() {
-		return this.managedBy;
+	public User getUser() {
+		return this.user;
 	}
-	public void setManagedBy(final User managedBy) {
-		this.managedBy = managedBy;
+	public void setUser(final User user) {
+		this.user = user;
 	}
 
 }

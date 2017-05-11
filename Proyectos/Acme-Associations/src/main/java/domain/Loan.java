@@ -66,39 +66,39 @@ public class Loan extends DomainEntity {
 
 	// Relationships ----------------------------------------------------------
 
-	private Item	contains;
-	private User	madeBy;
-	private User	madeTo;
+	private Item	item;
+	private User	lender;
+	private User	borrower;
 
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public Item getContains() {
-		return this.contains;
+	public Item getItem() {
+		return this.item;
 	}
-	public void setContains(final Item contains) {
-		this.contains = contains;
-	}
-
-	@Valid
-	@NotNull
-	@ManyToOne(optional = false)
-	public User getMadeBy() {
-		return this.madeBy;
-	}
-	public void setMadeBy(final User madeBy) {
-		this.madeBy = madeBy;
+	public void setItem(final Item item) {
+		this.item = item;
 	}
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public User getMadeTo() {
-		return this.madeTo;
+	public User getLender() {
+		return this.lender;
 	}
-	public void setMadeTo(final User madeTo) {
-		this.madeTo = madeTo;
+	public void setLender(final User lender) {
+		this.lender = lender;
+	}
+
+	@Valid
+	@NotNull
+	@ManyToOne(optional = false)
+	public User getBorrower() {
+		return this.borrower;
+	}
+	public void setBorrower(final User borrower) {
+		this.borrower = borrower;
 	}
 
 }

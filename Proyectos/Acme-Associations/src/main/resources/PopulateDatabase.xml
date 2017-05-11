@@ -32,7 +32,7 @@
 	</bean>
 
 	<bean id="userAccount2" class="security.UserAccount">
-		<property name="username" value="admin2" />
+		<property name="username" value="system" />
 		<property name="password" value="c84258e9c39059a89ab77d846ddab909" />
 		<property name="isEnabled" value="true" />
 		<property name="authorities">
@@ -44,201 +44,93 @@
 		</property>
 	</bean>
 	
-	<!-- CHORBIES -->		
+	<!-- USERS -->		
 	<bean id="userAccount3" class="security.UserAccount">
-		<property name="username" value="chorbi1" />
+		<property name="username" value="user1" />
 		<property name="password" value="3daa859a294cdefb20a84840240a76f5" />
 		<property name="isEnabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="CHORBI" />
+					<property name="authority" value="USER" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 	
 	<bean id="userAccount4" class="security.UserAccount">
-		<property name="username" value="chorbi2" />
+		<property name="username" value="user2" />
 		<property name="password" value="0c8746de81268518ff83490301db8652" />
 		<property name="isEnabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="CHORBI" />
+					<property name="authority" value="USER" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 	
 	<bean id="userAccount5" class="security.UserAccount">
-		<property name="username" value="chorbi3" />
+		<property name="username" value="user3" />
 		<property name="password" value="a2da05a88eead7e64593826cafc6a7a7" />
 		<property name="isEnabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="CHORBI" />
+					<property name="authority" value="USER" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 	
 	<bean id="userAccount6" class="security.UserAccount">
-		<property name="username" value="chorbi4" />
+		<property name="username" value="user4" />
 		<property name="password" value="a09dd233386632e297a7f4f461989563" />
 		<property name="isEnabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="CHORBI" />
+					<property name="authority" value="USER" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 	
 	<bean id="userAccount7" class="security.UserAccount">
-		<property name="username" value="chorbi5" />
+		<property name="username" value="user5" />
 		<property name="password" value="7e062f6f2a4c0f7ec5abacef2917e033" />
 		<property name="isEnabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="CHORBI" />
+					<property name="authority" value="USER" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 	
 	<bean id="userAccount8" class="security.UserAccount">
-		<property name="username" value="chorbi6" />
+		<property name="username" value="user6" />
 		<property name="password" value="0b41c51bd4b755c5b639498f55058fd3" />
 		<property name="isEnabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="CHORBI" />
+					<property name="authority" value="USER" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 	
-	<bean id="userAccount9" class="security.UserAccount">
-		<property name="username" value="manager1" />
-		<property name="password" value="c240642ddef994358c96da82c0361a58" />
-		<property name="isEnabled" value="true" />
-		<property name="authorities">
-			<list>
-				<bean class="security.Authority">
-					<property name="authority" value="MANAGER" />
-				</bean>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="userAccount10" class="security.UserAccount">
-		<property name="username" value="manager2" />
-		<property name="password" value="8df5127cd164b5bc2d2b78410a7eea0c" />
-		<property name="isEnabled" value="true" />
-		<property name="authorities">
-			<list>
-				<bean class="security.Authority">
-					<property name="authority" value="MANAGER" />
-				</bean>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="userAccount11" class="security.UserAccount">
-		<property name="username" value="manager3" />
-		<property name="password" value="2d3a5db4a2a9717b43698520a8de57d0" />
-		<property name="isEnabled" value="true" />
-		<property name="authorities">
-			<list>
-				<bean class="security.Authority">
-					<property name="authority" value="MANAGER" />
-				</bean>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="userAccount12" class="security.UserAccount">
-		<property name="username" value="manager4" />
-		<property name="password" value="e1ec6fc941af3ba79a4ac5242dd39735" />
-		<property name="isEnabled" value="true" />
-		<property name="authorities">
-			<list>
-				<bean class="security.Authority">
-					<property name="authority" value="MANAGER" />
-				</bean>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="userAccount13" class="security.UserAccount">
-		<property name="username" value="manager5" />
-		<property name="password" value="029cb1d27c0b9c551703ccba2591c334" />
-		<property name="isEnabled" value="true" />
-		<property name="authorities">
-			<list>
-				<bean class="security.Authority">
-					<property name="authority" value="MANAGER" />
-				</bean>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="userAccount14" class="security.UserAccount">
-		<property name="username" value="manager6" />
-		<property name="password" value="46bae9ead851e0f288529e6322f4fd77" />
-		<property name="isEnabled" value="true" />
-		<property name="authorities">
-			<list>
-				<bean class="security.Authority">
-					<property name="authority" value="MANAGER" />
-				</bean>
-			</list>
-		</property>
-	</bean>
-	
-	
-	<!-- Other domain beans come here -->	
-	
-	<!-- ADMIN -->
-	<bean id="admin" class="domain.Administrator">
-		<property name="name" value="Administrador" />
-		<property name="surname" value="1" />
-		<property name="email" value="admin1@gmail.com" />
-		<property name="phoneNumber" value="1234" />
-		<property name="userAccount" ref="userAccount1" />
-	</bean>
-
-	<bean id="admin2" class="domain.Administrator">
-		<property name="name" value="Administrador" />
-		<property name="surname" value="2" />
-		<property name="email" value="admin2@gmail.com" />
+	<!-- USER -->
+	<bean id="user1" class="domain.User">
+		<property name="name" value="User1" />
+		<property name="surname" value="user" />
+		<property name="email" value="user1@gmail.com" />
 		<property name="phoneNumber" value="2345" />
-		<property name="userAccount" ref="userAccount2" />
-	</bean>
-	
-	<!-- CHORBI -->
-	<bean id="chorbi1" class="domain.Chorbi">
-		<property name="name" value="Edurne" />
-		<property name="surname" value="Almagro" />
-		<property name="email" value="customer1@gmail.com" />
-		<property name="phoneNumber" value="2345" />
-		
-		<property name="picture" value="http://www.que.es/archivos/201511/edurne-985xXx80.jpg"/>
-		<property name="description" value="Mira mi foto"/>
-		<property name="relationshipType" value="ACTIVITIES"/>
-		<property name="birthDate" value="06/05/1989"/>
-		<property name="genre" value="WOMAN"/>
-		<property name="banned" value="false"/>
-		<property name="country" value="España"/>
-		<property name="state" value="Comunidad Valenciana"/>
-		<property name="province" value="Alicante"/>
-		<property name="city" value="Alicante"/>
-		<property name="cumulatedFee" value="4.0"></property>
+		<property name="postalAddress" value="casa" />
+		<property name="idNumber" value="2345" />
 		
 		<property name="userAccount" ref="userAccount3" />
 	</bean>

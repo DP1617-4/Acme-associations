@@ -14,20 +14,20 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.Message;
+import domain.Place;
 
 @Component
 @Transactional
-public class MessageToStringConverter implements Converter<Message, String> {
+public class PlaceToStringConverter implements Converter<Place, String> {
 
 	@Override
-	public String convert(final Message message) {
+	public String convert(final Place place) {
 		String result;
 
-		if (message == null)
+		if (place == null)
 			result = null;
 		else
-			result = String.valueOf(message.getId());
+			result = String.valueOf(place.getId());
 
 		return result;
 	}
