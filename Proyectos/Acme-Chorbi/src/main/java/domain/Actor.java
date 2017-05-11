@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -39,6 +38,8 @@ public abstract class Actor extends DomainEntity {
 	private String	email;
 	private String	phoneNumber;
 	private String	completeName;
+	private String	postalAddress;
+	private String	idNumber;
 
 
 	@NotBlank
@@ -66,12 +67,27 @@ public abstract class Actor extends DomainEntity {
 	}
 
 	@NotBlank
-	@Pattern(regexp = "^([+](9[976]\\d|8[987530]\\d|6[987]\\d|5[90]\\d|42\\d|3[875]\\d|2[98654321]\\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1))?(\\s?\\d){1,14}$")
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}
 	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	@NotBlank
+	public String getPostalAddress() {
+		return this.postalAddress;
+	}
+	public void setPostalAddress(final String postalAddress) {
+		this.postalAddress = postalAddress;
+	}
+
+	@NotBlank
+	public String getIdNumber() {
+		return this.idNumber;
+	}
+	public void setIdNumber(final String idNumber) {
+		this.idNumber = idNumber;
 	}
 
 	@Transient
