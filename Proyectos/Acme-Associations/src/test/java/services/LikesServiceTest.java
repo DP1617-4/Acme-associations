@@ -25,7 +25,7 @@ public class LikesServiceTest extends AbstractTest {
 	private CommentService	likesService;
 
 	@Autowired
-	private ChorbiService	chorbiService;
+	private UserService	chorbiService;
 
 
 	// Teoria pagina 107 y 108
