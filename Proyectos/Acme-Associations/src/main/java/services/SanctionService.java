@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 
 import repositories.SanctionRepository;
 import domain.Sanction;
+import domain.User;
 
 @Service
 @Transactional

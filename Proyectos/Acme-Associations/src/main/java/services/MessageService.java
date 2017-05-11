@@ -15,6 +15,8 @@ import org.springframework.util.Assert;
 
 import repositories.MessageRepository;
 import domain.Actor;
+import domain.Folder;
+import domain.Message;
 
 @Service
 @Transactional
@@ -38,7 +40,7 @@ public class MessageService {
 	private ActorService			actorService;
 
 	@Autowired
-	private UserService				userService;
+	private ActorService			userService;
 
 	@Autowired
 	private AdministratorService	adminService;
@@ -107,13 +109,13 @@ public class MessageService {
 
 	public Message send(final Message message) {
 
-		User recipient;
+		Actor recipient;
 		Folder recipientFolder;
 		Folder senderFolder;
-		User sender;
+		Actor sender;
 
 		sender = this.userService.findByPrincipal();
-		recipient = (User) message.getRecipient();
+		recipient = message.getRecipient();
 
 		recipientFolder = this.folderService.findSystemFolder(recipient, "Received");
 		senderFolder = this.folderService.findSystemFolder(sender, "Sent");
@@ -158,22 +160,17 @@ public class MessageService {
 	public Message reply(final Message message) {
 		final Message result;
 		result = this.create();
-		Collection<String> attachments;
-		attachments = new ArrayList<String>(message.getAttachments());
-		result.setAttachments(attachments);
-		result.setSubject("Re: " + message.getSubject());
+		result.setTitle("Re: " + message.getTitle());
 		result.setRecipient(message.getSender());
 
 		return result;
 	}
 
-	public Message reSend(final Message message, final User user) {
+	public Message reSend(final Message message, final Actor user) {
 
 		Message result;
 		result = this.create();
-		final Collection<String> attachments = new ArrayList<String>(message.getAttachments());
-		result.setAttachments(attachments);
-		result.setSubject(message.getSubject());
+		result.setTitle(message.getTitle());
 		result.setText(message.getText());
 		result.setRecipient(user);
 		this.send(result);

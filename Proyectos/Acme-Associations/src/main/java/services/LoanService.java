@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.LoanRepository;
+import domain.Loan;
+import domain.User;
 
 @Service
 @Transactional
@@ -35,10 +37,10 @@ public class LoanService {
 		return result;
 	}
 
-	public Loan findOne(final int LoanId) {
+	public Loan findOne(final int loanId) {
 		Loan result;
 
-		result = this.loanRepository.findOne(LoanId);
+		result = this.loanRepository.findOne(loanId);
 
 		return result;
 	}
