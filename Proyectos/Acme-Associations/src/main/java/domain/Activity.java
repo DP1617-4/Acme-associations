@@ -92,39 +92,39 @@ public class Activity extends DomainEntity {
 
 	// Relationships ----------------------------------------------------------
 
-	private Association			organisedBy;
-	private Collection<User>	isAttendedBy;
-	private Place				ubicatedIn;
+	private Association			association;
+	private Collection<User>	users;
+	private Place				place;
 
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public Association getOrganisedBy() {
-		return this.organisedBy;
+	public Association getAssociation() {
+		return this.association;
 	}
-	public void setOrganisedBy(final Association organisedBy) {
-		this.organisedBy = organisedBy;
+	public void setAssociation(final Association association) {
+		this.association = association;
 	}
 
 	@Valid
 	@NotNull
 	@ManyToMany
-	public Collection<User> getIsAttendedBy() {
-		return this.isAttendedBy;
+	public Collection<User> getUsers() {
+		return this.users;
 	}
-	public void setIsAttendedBy(final Collection<User> isAttendedBy) {
-		this.isAttendedBy = isAttendedBy;
+	public void setUsers(final Collection<User> users) {
+		this.users = users;
 	}
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public Place getUbicatedIn() {
-		return this.ubicatedIn;
+	public Place getPlace() {
+		return this.place;
 	}
-	public void setUbicatedIn(final Place ubicatedIn) {
-		this.ubicatedIn = ubicatedIn;
+	public void setPlace(final Place place) {
+		this.place = place;
 	}
 
 }
