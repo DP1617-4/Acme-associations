@@ -41,28 +41,28 @@ public class Minutes extends Commentable {
 
 	// Relationships ----------------------------------------------------------
 
-	private Meeting				about;
-	private Collection<User>	isAttendedBy;
+	private Meeting				meeting;
+	private Collection<User>	users;
 
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public Meeting getAbout() {
-		return this.about;
+	public Meeting getMeeting() {
+		return this.meeting;
 	}
-	public void setAbout(final Meeting about) {
-		this.about = about;
+	public void setMeeting(final Meeting meeting) {
+		this.meeting = meeting;
 	}
 
 	@Valid
 	@NotNull
 	@ManyToMany
-	public Collection<User> getIsAttendedBy() {
-		return this.isAttendedBy;
+	public Collection<User> getUsers() {
+		return this.users;
 	}
-	public void setIsAttendedBy(final Collection<User> isAttendedBy) {
-		this.isAttendedBy = isAttendedBy;
+	public void setUsers(final Collection<User> users) {
+		this.users = users;
 	}
 
 }

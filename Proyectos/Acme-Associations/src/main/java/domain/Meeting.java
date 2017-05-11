@@ -73,17 +73,17 @@ public class Meeting extends Commentable {
 
 	// Relationships ----------------------------------------------------------
 
-	private Association	organisedBy;
+	private Association	association;
 
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public Association getOrganisedBy() {
-		return this.organisedBy;
+	public Association getAssociation() {
+		return this.association;
 	}
-	public void setOrganisedBy(final Association organisedBy) {
-		this.organisedBy = organisedBy;
+	public void setAssociation(final Association association) {
+		this.association = association;
 	}
 
 }
