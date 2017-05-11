@@ -30,7 +30,7 @@ public class ChirpServiceTest extends AbstractTest {
 
 	// The SUT -------------------------------------------------------------
 	@Autowired
-	private ChirpService	chirpService;
+	private MessageService	chirpService;
 
 	@Autowired
 	private ActorService	actorService;
