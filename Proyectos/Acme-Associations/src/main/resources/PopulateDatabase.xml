@@ -135,574 +135,368 @@
 		<property name="userAccount" ref="userAccount3" />
 	</bean>
 	
-	<bean id="chorbi2" class="domain.Chorbi">
-		<property name="name" value="Pablo" />
-		<property name="surname" value="Nefstrife" />
-		<property name="email" value="customer2@gmail.com" />
+	<bean id="user2" class="domain.User">
+		<property name="name" value="User2" />
+		<property name="surname" value="user" />
+		<property name="email" value="user1@gmail.com" />
 		<property name="phoneNumber" value="2345" />
-
-		<property name="picture" value="http://www.metal-archives.com/images/8/4/1/6/84165_logo.jpg"/>
-		<property name="description" value="VIKINGO"/>
-		<property name="relationshipType" value="LOVE"/>
-		<property name="birthDate" value="25/11/1997"/>
-		<property name="genre" value="MAN"/>
-		<property name="banned" value="false"/>
-		<property name="country" value="España"/>
-		<property name="state" value="Andalucía"/>
-		<property name="province" value="Sevilla"/>
-		<property name="city" value="El zaudín"/>
-		<property name="cumulatedFee" value="3.0"></property>
-
+		<property name="postalAddress" value="casa" />
+		<property name="idNumber" value="2345" />
+		
 		<property name="userAccount" ref="userAccount4" />
 	</bean>
 	
-	<bean id="chorbi3" class="domain.Chorbi">
-		<property name="name" value="Paco Javier" />
-		<property name="surname" value="De la Fuente Bonilla" />
-		<property name="email" value="customer3@gmail.com" />
+	<bean id="user3" class="domain.User">
+		<property name="name" value="User3" />
+		<property name="surname" value="user" />
+		<property name="email" value="user1@gmail.com" />
 		<property name="phoneNumber" value="2345" />
-
-		<property name="picture" value="https://yts.ag/assets/images/movies/Labyrinth_1986/large-screenshot2.jpg"/>
-		<property name="description" value="El año que viene me saco estadística"/>
-		<property name="relationshipType" value="FRIENDSHIP"/>
-		<property name="birthDate" value="10/06/1995"/>
-		<property name="genre" value="MAN"/>
-		<property name="banned" value="false"/>
-		<property name="country" value="España"/>
-		<property name="state" value="Andalucía"/>
-		<property name="province" value="Sevilla"/>
-		<property name="city" value="Camas"/>
-		<property name="cumulatedFee" value="0.0"></property>
-
+		<property name="postalAddress" value="casa" />
+		<property name="idNumber" value="2345" />
+		
 		<property name="userAccount" ref="userAccount5" />
 	</bean>
 	
-	<bean id="chorbi4" class="domain.Chorbi">
-		<property name="name" value="Talia" />
-		<property name="surname" value="Al Ghul" />
-		<property name="email" value="customer4@gmail.com" />
+	<bean id="user4" class="domain.User">
+		<property name="name" value="User4" />
+		<property name="surname" value="user" />
+		<property name="email" value="user1@gmail.com" />
 		<property name="phoneNumber" value="2345" />
-
-		<property name="picture" value="http://vignette1.wikia.nocookie.net/batman/images/d/d0/Miranda.jpg/revision/latest?cb=20121205211641"/>
-		<property name="description" value="No pain no bane"/>
-		<property name="relationshipType" value="LOVE"/>
-		<property name="birthDate" value="04/01/1959"/>
-		<property name="genre" value="WOMAN"/>
-		<property name="banned" value="false"/>
-		<property name="country" value="USA"/>
-		<property name="state" value="Kansas"/>
-		<property name="province" value="Wyandotte"/>
-		<property name="city" value="Kansas City"/>
-		<property name="cumulatedFee" value="1.0"></property>
-
+		<property name="postalAddress" value="casa" />
+		<property name="idNumber" value="2345" />
+		
 		<property name="userAccount" ref="userAccount6" />
 	</bean>
 	
-	<bean id="chorbi5" class="domain.Chorbi">
-		<property name="name" value="Arturian" />
-		<property name="surname" value="Kurosakian" />
-		<property name="email" value="vamosARio@gmail.com" />
+	<bean id="user5" class="domain.User">
+		<property name="name" value="User5" />
+		<property name="surname" value="user" />
+		<property name="email" value="user1@gmail.com" />
 		<property name="phoneNumber" value="2345" />
-
-		<property name="picture" value="http://imgs.abduzeedo.com/files/articles/wheat-fields-photography/5.jpg"/>
-		<property name="description" value="Voy por falla 85, top mil ez"/>
-		<property name="relationshipType" value="LOVE"/>
-		<property name="birthDate" value="23/03/1994"/>
-		<property name="genre" value="MAN"/>
-		<property name="banned" value="false"/>
-		<property name="country" value="España"/>
-		<property name="state" value="Sevilla"/>
-		<property name="province" value="Triana"/>
-		<property name="city" value="En la plaza esa rara"/>
-		<property name="cumulatedFee" value="7.0"></property>
-
+		<property name="postalAddress" value="casa" />
+		<property name="idNumber" value="2345" />
+		
 		<property name="userAccount" ref="userAccount7" />
 	</bean>
 	
-	<bean id="chorbi6" class="domain.Chorbi">
-		<property name="name" value="Alvaracha" />
-		<property name="surname" value="Acha" />
-		<property name="email" value="vapingAllDay@gmail.com" />
+	<bean id="user6" class="domain.User">
+		<property name="name" value="User6" />
+		<property name="surname" value="user" />
+		<property name="email" value="user1@gmail.com" />
 		<property name="phoneNumber" value="2345" />
-
-		<property name="picture" value="http://marmoles.mex.tl/imagesnew2/0/0/0/1/0/9/2/6/3/2/marmol%20blanco%20royal%20block.jpg"/>
-		<property name="description" value="Pandilla a Patches es bueno"/>
-		<property name="relationshipType" value="FRIENDSHIP"/>
-		<property name="birthDate" value="04/01/1993"/>
-		<property name="genre" value="MAN"/>
-		<property name="banned" value="false"/>
-		<property name="country" value="España"/>
-		<property name="state" value="Sevilla"/>
-		<property name="province" value="Sevilla"/>
-		<property name="city" value="Sevilla"/>
-		<property name="cumulatedFee" value="6.0"></property>
-
+		<property name="postalAddress" value="casa" />
+		<property name="idNumber" value="2345" />
+		
 		<property name="userAccount" ref="userAccount8" />
-	</bean>
-	
-	<!-- Managers -->
-	
-	<bean id="manager1" class="domain.Manager">
-		<property name="name" value="Javier" />
-		<property name="surname" value="Ballena" />
-		<property name="email" value="matriculaOrDie@gmail.com" />
-		<property name="phoneNumber" value="2345" />
-
-		<property name="companyName" value="Google"/>
-		<property name="VATNumber" value="43321"/>
-		<property name="cumulatedFee" value="4.0"></property>
-
-		<property name="userAccount" ref="userAccount9" />
-	</bean>
-	
-	<bean id="manager2" class="domain.Manager">
-		<property name="name" value="Diego" />
-		<property name="surname" value="Alonso" />
-		<property name="email" value="queFresquitoHace@gmail.com" />
-		<property name="phoneNumber" value="2345" />
-
-		<property name="companyName" value="Portugal SA"/>
-		<property name="VATNumber" value="896234"/>
-		<property name="cumulatedFee" value="4.0"></property>
-
-		<property name="userAccount" ref="userAccount10" />
-	</bean>
-	
-	<bean id="manager3" class="domain.Manager">
-		<property name="name" value="Alberto" />
-		<property name="surname" value="Bujarranse" />
-		<property name="email" value="siNoLlegoALeyendaMeRapo@gmail.com" />
-		<property name="phoneNumber" value="2345" />
-
-		<property name="companyName" value="Youtube"/>
-		<property name="VATNumber" value="852842"/>
-		<property name="cumulatedFee" value="0.0"></property>
-
-		<property name="userAccount" ref="userAccount11" />
-	</bean>
-	
-	<bean id="manager4" class="domain.Manager">
-		<property name="name" value="Pavfvfvflo" />
-		<property name="surname" value="Vasques" />
-		<property name="email" value="mañanaEntregoLaDashboard@gmail.com" />
-		<property name="phoneNumber" value="2345" />
-
-		<property name="companyName" value="Fixing PCs Inc"/>
-		<property name="VATNumber" value="43321"/>
-		<property name="cumulatedFee" value="1.0"></property>
-
-		<property name="userAccount" ref="userAccount12" />
-	</bean>
-	
-	<bean id="manager5" class="domain.Manager">
-		<property name="name" value="José Luis" />
-		<property name="surname" value="Marmol" />
-		<property name="email" value="mañanaEntregoLaDashboard@gmail.com" />
-		<property name="phoneNumber" value="2345" />
-
-		<property name="companyName" value="Openinguess"/>
-		<property name="VATNumber" value="43321"/>
-		<property name="cumulatedFee" value="6.0"></property>
-
-		<property name="userAccount" ref="userAccount13" />
-	</bean>
-	
-	<bean id="manager6" class="domain.Manager">
-		<property name="name" value="Emilito" />
-		<property name="surname" value="Casper" />
-		<property name="email" value="noEstarasEstudiandoEnCultura@gmail.com" />
-		<property name="phoneNumber" value="2345" />
-
-		<property name="companyName" value="No me duele SL"/>
-		<property name="VATNumber" value="43321"/>
-		<property name="cumulatedFee" value="0.0"></property>
-
-		<property name="userAccount" ref="userAccount14" />
-	</bean>
-	
-	<!-- CREDITCARD -->
-	<bean id="creditCard1" class="domain.CreditCard">
-		<property name="holderName" value="Edurne"/>
-		<property name="brandName" value="VISA"/>
-		<property name="creditCardNumber" value="4532896667885495"/>
-		<property name="expirationMonth" value="12"/>
-		<property name="expirationYear" value="19"/>
-		<property name="CVV" value="842"/>
-		<property name="holder" ref="chorbi1"/>
-	</bean>
-	
-	<bean id="creditCard2" class="domain.CreditCard">
-		<property name="holderName" value="Nefasto"/>
-		<property name="brandName" value="VISA"/>
-		<property name="creditCardNumber" value="5497733952520638"/>
-		<property name="expirationMonth" value="7"/>
-		<property name="expirationYear" value="18"/>
-		<property name="CVV" value="842"/>
-		<property name="holder" ref="chorbi2"/>
-	</bean>
-	
-	<bean id="creditCard3" class="domain.CreditCard">
-		<property name="holderName" value="Francisco"/>
-		<property name="brandName" value="VISA"/>
-		<property name="creditCardNumber" value="6011989537619189"/>
-		<property name="expirationMonth" value="4"/>
-		<property name="expirationYear" value="22"/>
-		<property name="CVV" value="122"/>
-		<property name="holder" ref="chorbi3"/>
-	</bean>
-	
-	<bean id="creditCard4" class="domain.CreditCard">
-		<property name="holderName" value="Arturo"/>
-		<property name="brandName" value="VISA"/>
-		<property name="creditCardNumber" value="6011989537619189"/>
-		<property name="expirationMonth" value="4"/>
-		<property name="expirationYear" value="22"/>
-		<property name="CVV" value="122"/>
-		<property name="holder" ref="chorbi5"/>
-	</bean>
-	
-	<bean id="creditCard5" class="domain.CreditCard">
-		<property name="holderName" value="Alvaro"/>
-		<property name="brandName" value="VISA"/>
-		<property name="creditCardNumber" value="6011989537619189"/>
-		<property name="expirationMonth" value="4"/>
-		<property name="expirationYear" value="22"/>
-		<property name="CVV" value="122"/>
-		<property name="holder" ref="chorbi6"/>
-	</bean>
-	
-	<bean id="creditCard6" class="domain.CreditCard">
-		<property name="holderName" value="Javi"/>
-		<property name="brandName" value="VISA"/>
-		<property name="creditCardNumber" value="6011989537619189"/>
-		<property name="expirationMonth" value="4"/>
-		<property name="expirationYear" value="22"/>
-		<property name="CVV" value="122"/>
-		<property name="holder" ref="manager1"/>
-	</bean>
-	
-	<bean id="creditCard7" class="domain.CreditCard">
-		<property name="holderName" value="Diego"/>
-		<property name="brandName" value="VISA"/>
-		<property name="creditCardNumber" value="6011989537619189"/>
-		<property name="expirationMonth" value="4"/>
-		<property name="expirationYear" value="22"/>
-		<property name="CVV" value="122"/>
-		<property name="holder" ref="manager2"/>
-	</bean>
-	
-	<bean id="creditCard8" class="domain.CreditCard">
-		<property name="holderName" value="Alberto"/>
-		<property name="brandName" value="VISA"/>
-		<property name="creditCardNumber" value="6011989537619189"/>
-		<property name="expirationMonth" value="4"/>
-		<property name="expirationYear" value="22"/>
-		<property name="CVV" value="122"/>
-		<property name="holder" ref="manager3"/>
-	</bean>
-	
-	<bean id="creditCard9" class="domain.CreditCard">
-		<property name="holderName" value="Pablo"/>
-		<property name="brandName" value="VISA"/>
-		<property name="creditCardNumber" value="6011989537619189"/>
-		<property name="expirationMonth" value="4"/>
-		<property name="expirationYear" value="22"/>
-		<property name="CVV" value="122"/>
-		<property name="holder" ref="manager4"/>
-	</bean>
-	
-	<bean id="creditCard10" class="domain.CreditCard">
-		<property name="holderName" value="Jose"/>
-		<property name="brandName" value="VISA"/>
-		<property name="creditCardNumber" value="6011989537619189"/>
-		<property name="expirationMonth" value="4"/>
-		<property name="expirationYear" value="22"/>
-		<property name="CVV" value="122"/>
-		<property name="holder" ref="manager5"/>
 	</bean>
 	
 	<!-- FOLDER -->
 	<bean id="sent1" class="domain.Folder">
 		<property name="name" value="Sent" />
-		<property name="chorbi" ref="chorbi1" />
+		<property name="user" ref="user1" />
 	</bean>
 	
 	<bean id="received1" class="domain.Folder">
 		<property name="name" value="Received" />
-		<property name="chorbi" ref="chorbi1" />
+		<property name="user" ref="user1" />
 	</bean>
 	
 		<bean id="sent2" class="domain.Folder">
 		<property name="name" value="Sent" />
-		<property name="chorbi" ref="chorbi2" />
+		<property name="user" ref="user2" />
 	</bean>
 	
 	<bean id="received2" class="domain.Folder">
 		<property name="name" value="Received" />
-		<property name="chorbi" ref="chorbi2" />
+		<property name="user" ref="user2" />
 	</bean>
 	
 		<bean id="sent3" class="domain.Folder">
 		<property name="name" value="Sent" />
-		<property name="chorbi" ref="chorbi3" />
+		<property name="user" ref="user3" />
 	</bean>
 	
 	<bean id="received3" class="domain.Folder">
 		<property name="name" value="Received" />
-		<property name="chorbi" ref="chorbi3" />
+		<property name="user" ref="user3" />
 	</bean>
 	
 		<bean id="sent4" class="domain.Folder">
 		<property name="name" value="Sent" />
-		<property name="chorbi" ref="chorbi4" />
+		<property name="user" ref="user4" />
 	</bean>
 	
 	<bean id="received4" class="domain.Folder">
 		<property name="name" value="Received" />
-		<property name="chorbi" ref="chorbi4" />
+		<property name="user" ref="user4" />
 	</bean>
 	
 	<bean id="sent5" class="domain.Folder">
 		<property name="name" value="Sent" />
-		<property name="chorbi" ref="chorbi5" />
+		<property name="user" ref="user5" />
 	</bean>
 	
 	<bean id="received5" class="domain.Folder">
 		<property name="name" value="Received" />
-		<property name="chorbi" ref="chorbi5" />
+		<property name="user" ref="user5" />
 	</bean>
 	
 	<bean id="sent6" class="domain.Folder">
 		<property name="name" value="Sent" />
-		<property name="chorbi" ref="chorbi6" />
+		<property name="user" ref="user6" />
 	</bean>
 	
 	<bean id="received6" class="domain.Folder">
 		<property name="name" value="Received" />
-		<property name="chorbi" ref="chorbi6" />
+		<property name="user" ref="user6" />
+	</bean>
+	
+	<bean id="sent7" class="domain.Folder">
+		<property name="name" value="Sent" />
+		<property name="user" ref="user7" />
+	</bean>
+	
+	<bean id="received7" class="domain.Folder">
+		<property name="name" value="Received" />
+		<property name="user" ref="user7" />
+	</bean>
+	
+	<bean id="sent8" class="domain.Folder">
+		<property name="name" value="Sent" />
+		<property name="user" ref="user8" />
+	</bean>
+	
+	<bean id="received8" class="domain.Folder">
+		<property name="name" value="Received" />
+		<property name="user" ref="user8" />
 	</bean>
 	
 	<!-- MESSAGE -->
 	
-	<bean id="chirp1" class="domain.Chirp">
-		<property name="subject" value="Hola" />
+	<bean id="message1" class="domain.Message">
+		<property name="title" value="Message1" />
 		<property name="text" value="Estoy jugando a la Play" />
 		<property name="moment" value="03/03/2017 23:49" />
-		<property name="attachments">
-			<list>
-				<value>http://www.bouncepen.com/wp-content/themes/twentyfifteen/uploads/user-photo/dummy-image.png</value>
-			</list>
-		</property>
-		<property name="recipient" ref="chorbi1" />
-		<property name="sender" ref="chorbi2" />
+		<property name="recipient" ref="user1" />
+		<property name="sender" ref="user2" />
 		<property name="folder" ref="sent2" />
 	</bean>
 	
-	<bean id="chirp2" class="domain.Chirp">
-		<property name="subject" value="Hola" />
+	<bean id="message2" class="domain.Message">
+		<property name="title" value="Message1" />
 		<property name="text" value="Estoy jugando a la Play" />
 		<property name="moment" value="03/03/2017 23:49" />
-		<property name="attachments">
-			<list>
-			</list>
-		</property>
-		<property name="recipient" ref="chorbi1" />
-		<property name="sender" ref="chorbi2" />
+		<property name="recipient" ref="user1" />
+		<property name="sender" ref="user2" />
 		<property name="folder" ref="received1" />
 	</bean>
 	
-	<bean id="chirp3" class="domain.Chirp">
-		<property name="subject" value="Hola" />
-		<property name="text" value="¿Te vienes a cultura?" />
+	<bean id="message3" class="domain.Message">
+		<property name="title" value="Message2" />
+		<property name="text" value="Estoy jugando a la Play" />
 		<property name="moment" value="03/03/2017 23:49" />
-		<property name="attachments">
-			<list>
-				<value>http://www.bouncepen.com/wp-content/themes/twentyfifteen/uploads/user-photo/dummy-image.png</value>
-			</list>
-		</property>
-		<property name="recipient" ref="chorbi2" />
-		<property name="sender" ref="chorbi1" />
-		<property name="folder" ref="sent1" />
+		<property name="recipient" ref="user3" />
+		<property name="sender" ref="user5" />
+		<property name="folder" ref="sent5" />
 	</bean>
 	
-	<bean id="chirp4" class="domain.Chirp">
-		<property name="subject" value="Hola" />
-		<property name="text" value="¿Te vienes a cultura?" />
+	<bean id="message4" class="domain.Message">
+		<property name="title" value="Message2" />
+		<property name="text" value="Estoy jugando a la Play" />
 		<property name="moment" value="03/03/2017 23:49" />
-				<property name="attachments">
-			<list>
-				<value>http://www.bouncepen.com/wp-content/themes/twentyfifteen/uploads/user-photo/dummy-image.png</value>
-			</list>
-		</property>
-		<property name="recipient" ref="chorbi2" />
-		<property name="sender" ref="chorbi1" />
+		<property name="recipient" ref="user3" />
+		<property name="sender" ref="user5" />
+		<property name="folder" ref="received3" />
+	</bean>
+	
+	<bean id="message5" class="domain.Message">
+		<property name="title" value="Message3" />
+		<property name="text" value="Estoy jugando a la Play" />
+		<property name="moment" value="03/03/2017 23:49" />
+		<property name="recipient" ref="user1" />
+		<property name="sender" ref="user4" />
+		<property name="folder" ref="sent4" />
+	</bean>
+	
+	<bean id="message6" class="domain.Message">
+		<property name="title" value="Message3" />
+		<property name="text" value="Estoy jugando a la Play" />
+		<property name="moment" value="03/03/2017 23:49" />
+		<property name="recipient" ref="user1" />
+		<property name="sender" ref="user4" />
+		<property name="folder" ref="received1" />
+	</bean>
+	
+	<bean id="message7" class="domain.Message">
+		<property name="title" value="Message4" />
+		<property name="text" value="Estoy jugando a la Play" />
+		<property name="moment" value="03/03/2017 23:49" />
+		<property name="recipient" ref="user1" />
+		<property name="sender" ref="user2" />
+		<property name="folder" ref="sent2" />
+	</bean>
+	
+	<bean id="message8" class="domain.Message">
+		<property name="title" value="Message4" />
+		<property name="text" value="Estoy jugando a la Play" />
+		<property name="moment" value="03/03/2017 23:49" />
+		<property name="recipient" ref="user1" />
+		<property name="sender" ref="user2" />
+		<property name="folder" ref="received1" />
+	</bean>
+	
+	<bean id="message9" class="domain.Message">
+		<property name="title" value="Message5" />
+		<property name="text" value="Estoy jugando a la Play" />
+		<property name="moment" value="03/03/2017 23:49" />
+		<property name="recipient" ref="user2" />
+		<property name="sender" ref="user6" />
+		<property name="folder" ref="sent6" />
+	</bean>
+	
+	<bean id="message10" class="domain.Message">
+		<property name="title" value="Message5" />
+		<property name="text" value="Estoy jugando a la Play" />
+		<property name="moment" value="03/03/2017 23:49" />
+		<property name="recipient" ref="user2" />
+		<property name="sender" ref="user6" />
 		<property name="folder" ref="received2" />
 	</bean>
 	
-	
-	<bean id="chirp5" class="domain.Chirp">
-		<property name="subject" value="Illo" />
-		<property name="text" value="La Switch mola" />
+	<bean id="message11" class="domain.Message">
+		<property name="title" value="Message6" />
+		<property name="text" value="Estoy jugando a la Play" />
 		<property name="moment" value="03/03/2017 23:49" />
-		<property name="attachments">
-			<list>
-				<value>http://www.bouncepen.com/wp-content/themes/twentyfifteen/uploads/user-photo/dummy-image.png</value>
-				<value>http://www.bouncepen.com/wp-content/themes/twentyfifteen/uploads/user-photo/dummy-image.png</value>
-			</list>
-		</property>
-		<property name="recipient" ref="chorbi3" />
-		<property name="sender" ref="chorbi4" />
+		<property name="recipient" ref="user3" />
+		<property name="sender" ref="user1" />
+		<property name="folder" ref="sent1" />
+	</bean>
+	
+	<bean id="message12" class="domain.Message">
+		<property name="title" value="Message6" />
+		<property name="text" value="Estoy jugando a la Play" />
+		<property name="moment" value="03/03/2017 23:49" />
+		<property name="recipient" ref="user3" />
+		<property name="sender" ref="user1" />
 		<property name="folder" ref="received3" />
 	</bean>
 	
-	<bean id="chirp6" class="domain.Chirp">
-		<property name="subject" value="Illo" />
-		<property name="text" value="La Switch mola" />
-		<property name="moment" value="03/03/2017 23:49" />
-		<property name="attachments">
-			<list>
-				<value>http://www.bouncepen.com/wp-content/themes/twentyfifteen/uploads/user-photo/dummy-image.png</value>
-				<value>http://www.bouncepen.com/wp-content/themes/twentyfifteen/uploads/user-photo/dummy-image.png</value>
-				<value>http://www.bouncepen.com/wp-content/themes/twentyfifteen/uploads/user-photo/dummy-image.png</value>
-				<value>http://www.bouncepen.com/wp-content/themes/twentyfifteen/uploads/user-photo/dummy-image.png</value>
-			</list>
-		</property>
-		<property name="recipient" ref="chorbi3" />
-		<property name="sender" ref="chorbi4" />
-		<property name="folder" ref="sent4" />
-	</bean>
-	
-	<bean id="chirp7" class="domain.Chirp">
-		<property name="subject" value="¿Estás interesado en esto?" />
-		<property name="text" value="Era una broma" />
-		<property name="moment" value="03/03/2017 23:49" />
-		<property name="attachments">
-			<list>
-			</list>
-		</property>
-		<property name="recipient" ref="chorbi3" />
-		<property name="sender" ref="chorbi4" />
-		<property name="folder" ref="sent4" />
-	</bean>
-	
-	<bean id="chirp8" class="domain.Chirp">
-		<property name="subject" value="¿Estás interesado en esto?" />
-		<property name="text" value="Era una broma" />
-		<property name="moment" value="03/03/2017 23:49" />
-		<property name="attachments">
-			<list>
-				<value>http://www.bouncepen.com/wp-content/themes/twentyfifteen/uploads/user-photo/dummy-image.png</value>
-				<value>http://www.bouncepen.com/wp-content/themes/twentyfifteen/uploads/user-photo/dummy-image.png</value>
-			</list>
-		</property>
-		<property name="recipient" ref="chorbi3" />
-		<property name="sender" ref="chorbi4" />
-		<property name="folder" ref="received3" />
-	</bean>
-	
-	<!-- SEARCH ENGINE -->
-	
-	<bean id="searchTemplate1" class="domain.SearchTemplate">
-		<property name="relationshipType" value="LOVE" />
-		<property name="age" value="30" />
-		<property name="genre" value="WOMAN" />
-		<property name="keyword" value="futa" />
-		<property name="moment" value="2017/03/30" />
-		<property name="country" value="España" />
-		<property name="state" value="Andalucía" />
-		<property name="province" value="Sevilla" />
-		<property name="city" value="Sevilla" />
-		<property name="chorbi" ref="chorbi1" />
-		<property name="chorbies">
+	<!-- ASSOCIATIONS -->
+	<property name="chorbies">
 			<list>
 				<ref bean="chorbi2"></ref>
 				<ref bean="chorbi3"></ref>
 			</list>
 		</property>
+	
+	
+	<bean id="association1" class="domain.Association">
+		<property name="name" value="Asociacion1" />
+		<property name="description" value="description" />
+		<property name="address" value="address" />
+		<property name="creationDate" value="2017/03/30" />
+		<property name="statutes" value="www.lmgtfy.com" />
+		<property name="announcements" value="Announcements" />
+		<property name="picture" value="www.google.es" />
+		<property name="closedAssociation" value="false" />
+		<property name="adminClosed" value="false" />
 	</bean>
 	
-	<bean id="searchTemplate2" class="domain.SearchTemplate">
-		<property name="relationshipType" value="ACTIVITIES" />
-		<property name="age" value="25" />
-		<property name="genre" value="MAN" />
-		<property name="keyword" value="ball" />
-		<property name="moment" value="2017/03/30" />
-		<property name="country" value="España" />
-		<property name="state" value="Comunidad Valenciana" />
-		<property name="province" value="Alicante" />
-		<property name="city" value="Alicante" />
-		<property name="chorbi" ref="chorbi2" />
-		<property name="chorbies">
-			<list>
-				<ref bean="chorbi4"></ref>
-			</list>
-		</property>
+	<bean id="association2" class="domain.Association">
+		<property name="name" value="Asociacion2" />
+		<property name="description" value="description" />
+		<property name="address" value="address" />
+		<property name="creationDate" value="2017/03/30" />
+		<property name="statutes" value="www.lmgtfy.com" />
+		<property name="announcements" value="Announcements" />
+		<property name="picture" value="www.google.es" />
+		<property name="closedAssociation" value="false" />
+		<property name="adminClosed" value="false" />
 	</bean>
 	
-	<bean id="searchTemplate3" class="domain.SearchTemplate">
-		<property name="relationshipType" value="LOVE" />
-		<property name="age" value="55" />
-		<property name="genre" value="WOMAN"/>
-		<property name="keyword" value="welp"/>
-		<property name="moment" value="2017/03/30" />
-		<property name="country" value="España" />
-		<property name="state" value="Andalucía" />
-		<property name="province" value="Sevilla" />
-		<property name="city" value="Sevilla" />
-		<property name="chorbi" ref="chorbi4" />
-		<property name="chorbies">
-			<list>
-			</list>
-		</property>
+	<bean id="association3" class="domain.Association">
+		<property name="name" value="Asociacion3" />
+		<property name="description" value="description" />
+		<property name="address" value="address" />
+		<property name="creationDate" value="2017/03/30" />
+		<property name="statutes" value="www.lmgtfy.com" />
+		<property name="announcements" value="Announcements" />
+		<property name="picture" value="www.google.es" />
+		<property name="closedAssociation" value="false" />
+		<property name="adminClosed" value="false" />
 	</bean>
 	
-	<!-- LIKES -->
-	<bean id="likes1" class="domain.Likes">
-		<property name="comment" value="Guapi"/>
-		<property name="moment" value="2017/03/25 13:45" />
-		<property name="liked" ref="chorbi3" />
-		<property name="chorbi" ref="chorbi4" />
-		<property name="stars" value="2"></property>
+	<bean id="association4" class="domain.Association">
+		<property name="name" value="Asociacion4" />
+		<property name="description" value="description" />
+		<property name="address" value="address" />
+		<property name="creationDate" value="2017/03/30" />
+		<property name="statutes" value="www.lmgtfy.com" />
+		<property name="announcements" value="Announcements" />
+		<property name="picture" value="www.google.es" />
+		<property name="closedAssociation" value="false" />
+		<property name="adminClosed" value="false" />
 	</bean>
 	
-	<bean id="likes2" class="domain.Likes">
-		<property name="comment" value="Un dark souls?"/>
-		<property name="moment" value="2017/03/30 21:43" />
-		<property name="liked" ref="chorbi3" />
-		<property name="chorbi" ref="chorbi1" />
-		<property name="stars" value="3"></property>
+	<bean id="association5" class="domain.Association">
+		<property name="name" value="Asociacion5" />
+		<property name="description" value="description" />
+		<property name="address" value="address" />
+		<property name="creationDate" value="2017/03/30" />
+		<property name="statutes" value="www.lmgtfy.com" />
+		<property name="announcements" value="Announcements" />
+		<property name="picture" value="www.google.es" />
+		<property name="closedAssociation" value="false" />
+		<property name="adminClosed" value="true" />
 	</bean>
 	
-	<bean id="likes3" class="domain.Likes">
-		<property name="comment" value="De SeBihllYaaA??¿?"/>
-		<property name="moment" value="2017/03/31 12:00" />
-		<property name="liked" ref="chorbi4" />
-		<property name="chorbi" ref="chorbi2" />
-		<property name="stars" value="3"></property>
+	<bean id="association6" class="domain.Association">
+		<property name="name" value="Asociacion6" />
+		<property name="description" value="description" />
+		<property name="address" value="address" />
+		<property name="creationDate" value="2017/03/30" />
+		<property name="statutes" value="www.lmgtfy.com" />
+		<property name="announcements" value="Announcements" />
+		<property name="picture" value="www.google.es" />
+		<property name="closedAssociation" value="true" />
+		<property name="adminClosed" value="false" />
 	</bean>
 	
-	<bean id="likes4" class="domain.Likes">
-		<property name="comment" value="Una cebadita?"/>
-		<property name="moment" value="2017/03/31 12:00" />
-		<property name="liked" ref="chorbi5" />
-		<property name="chorbi" ref="chorbi6" />
-		<property name="stars" value="3"></property>
+	<!-- ROLES -->
+	<bean id="roles1" class="domain.Roles">
+		<property name="type" value="MANAGER"/>
+		<property name="association" ref="association1" />
+		<property name="user" ref="user1" />
 	</bean>
 	
-	<bean id="likes5" class="domain.Likes">
-		<property name="comment" value="¿Quedamos?"/>
-		<property name="moment" value="2017/03/31 12:00" />
-		<property name="liked" ref="chorbi6" />
-		<property name="chorbi" ref="chorbi1" />
-		<property name="stars" value="1"></property>
+	<bean id="roles2" class="domain.Roles">
+		<property name="type" value="MANAGER"/>
+		<property name="association" ref="association2" />
+		<property name="user" ref="user2" />
 	</bean>
 	
-	<bean id="likes6" class="domain.Likes">
-		<property name="comment" value="Mi num 2345"/>
-		<property name="moment" value="2017/03/31 12:00" />
-		<property name="liked" ref="chorbi2" />
-		<property name="chorbi" ref="chorbi4" />
-		<property name="stars" value="3"></property>
+	<bean id="roles3" class="domain.Roles">
+		<property name="type" value="MANAGER"/>
+		<property name="association" ref="association3" />
+		<property name="user" ref="user3" />
+	</bean>
+	
+	<bean id="roles4" class="domain.Roles">
+		<property name="type" value="MANAGER"/>
+		<property name="association" ref="association4" />
+		<property name="user" ref="user4" />
+	</bean>
+	
+	<bean id="roles5" class="domain.Roles">
+		<property name="type" value="MANAGER"/>
+		<property name="association" ref="association5" />
+		<property name="user" ref="user5" />
+	</bean>
+	
+	<bean id="roles6" class="domain.Roles">
+		<property name="type" value="MANAGER"/>
+		<property name="association" ref="association6" />
+		<property name="user" ref="user6" />
 	</bean>
 	
 	<!-- Events -->
