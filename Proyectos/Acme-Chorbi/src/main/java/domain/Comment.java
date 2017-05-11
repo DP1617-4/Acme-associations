@@ -11,70 +11,79 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Sanction extends DomainEntity {
+public class Comment extends DomainEntity {
 
 	// Constructors -----------------------------------------------------------
 
-	public Sanction() {
+	public Comment() {
 		super();
 	}
 
 
 	// Attributes -------------------------------------------------------------
 
-	private String	motiff;
-	private Date	endDate;
+	private String	title;
+	private String	text;
+	private Date	moment;
 
 
 	@NotBlank
-	public String getMotiff() {
-		return this.motiff;
+	public String getTitle() {
+		return this.title;
 	}
-	public void setMotiff(final String motiff) {
-		this.motiff = motiff;
+	public void setTitle(final String title) {
+		this.title = title;
+	}
+	@NotBlank
+	public String getText() {
+		return this.text;
+	}
+	public void setText(final String text) {
+		this.text = text;
 	}
 
+	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	@NotNull
 	public Date getMoment() {
-		return this.endDate;
+		return this.moment;
 	}
-	public void setMoment(final Date endDate) {
-		this.endDate = endDate;
+	public void setMoment(final Date moment) {
+		this.moment = moment;
 	}
 
 
 	// Relationships ----------------------------------------------------------
 
-	private Association	relatedTo;
-	private User		assignedTo;
+	private Commentable	placedTo;
+	private User		placedBy;
 
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public Association getRelatedTo() {
-		return this.relatedTo;
+	public User getPlacedBy() {
+		return this.placedBy;
 	}
-	public void setRelatedTo(final Association relatedTo) {
-		this.relatedTo = relatedTo;
+	public void setPlacedBy(final User placedBy) {
+		this.placedBy = placedBy;
 	}
 
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public User getAssignedTo() {
-		return this.assignedTo;
+	public Commentable getPlacedTo() {
+		return this.placedTo;
 	}
-	public void setAssignedTo(final User assignedTo) {
-		this.assignedTo = assignedTo;
+	public void setPlacedTo(final Commentable placedTo) {
+		this.placedTo = placedTo;
 	}
 
 }
