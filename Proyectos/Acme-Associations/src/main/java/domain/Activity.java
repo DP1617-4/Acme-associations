@@ -93,8 +93,9 @@ public class Activity extends DomainEntity {
 	// Relationships ----------------------------------------------------------
 
 	private Association			association;
-	private Collection<User>	users;
+	private Collection<User>		attendants;
 	private Place				place;
+	private User				winner;
 
 
 	@Valid
@@ -110,16 +111,25 @@ public class Activity extends DomainEntity {
 	@Valid
 	@NotNull
 	@ManyToMany
-	public Collection<User> getUsers() {
-		return this.users;
+	public Collection<User> getAttendants() {
+		return this.attendants;
 	}
-	public void setUsers(final Collection<User> users) {
-		this.users = users;
+	public void setAttendants(final Collection<User> attendants) {
+		this.attendants = attendats;
+	}
+	
+	@Valid
+	@NotNull
+	@ManyToOne(optional = true)
+	public User getWinner() {
+		return this.winner;
+	}
+	public void setWinner(final User winner) {
+		this.winner = winner;
 	}
 
 	@Valid
-	@NotNull
-	@ManyToOne(optional = false)
+	@OneToOne(optional = true)
 	public Place getPlace() {
 		return this.place;
 	}
