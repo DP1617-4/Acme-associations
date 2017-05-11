@@ -6,8 +6,10 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.MeetingRepository;
+import domain.Actor;
 
 @Service
 @Transactional
@@ -43,6 +45,8 @@ public class MeetingService {
 		return result;
 	}
 	public Meeting findOne(final int meetingId) {
+
+		Assert.isTrue(meetingId != 0);
 		Meeting result;
 
 		result = this.meetingRepository.findOne(meetingId);
@@ -51,12 +55,27 @@ public class MeetingService {
 	}
 
 	public Collection<Meeting> findAll() {
-		return this.meetingRepository.findAll();
+
+		Collection<Meeting> result;
+		result = this.meetingRepository.findAll();
+		Assert.notNull(result);
+		return result;
 	}
 
 	public void delete(final Meeting meeting) {
 
+		Assert.notNull(meeting);
+		Assert.isTrue(meeting.getId() != 0);
+		Assert.isTrue(this.meetingRepository.exists(meeting.getId()));
 		this.meetingRepository.delete(meeting);
 
+	}
+
+	public Actor save(final Meeting meeting) {
+		Assert.notNull(meeting);
+		Meeting result;
+
+		result = this.meetingRepository.save(meeting);
+		return result;
 	}
 }

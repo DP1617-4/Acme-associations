@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.MinutesRepository;
 
@@ -48,6 +49,8 @@ public class MinutesService {
 		return result;
 	}
 	public Minutes findOne(final int minutesId) {
+
+		Assert.isTrue(minutesId != 0);
 		Minutes result;
 
 		result = this.minutesRepository.findOne(minutesId);
@@ -56,11 +59,17 @@ public class MinutesService {
 	}
 
 	public Collection<Minutes> findAll() {
-		return this.minutesRepository.findAll();
+
+		Collection<Minutes> result;
+		result = this.minutesRepository.findAll();
+		Assert.notNull(result);
 	}
 
 	public void delete(final Minutes minutes) {
 
+		Assert.notNull(minutes);
+		Assert.isTrue(minutes.getId() != 0);
+		Assert.isTrue(this.minutesRepository.exists(minutes.getId()));
 		this.minutesRepository.delete(minutes);
 
 	}
@@ -70,6 +79,14 @@ public class MinutesService {
 		Collection<User> participants = minutes.getParticipants();
 
 		participants.add(participant);
+	}
+
+	public Minutes save(final Minutes minutes) {
+		Assert.notNull(minutes);
+		Minutes result;
+
+		result = this.minutesRepository.save(minutes);
+		return result;
 	}
 
 }
