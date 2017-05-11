@@ -26,7 +26,7 @@ public class FolderServiceTest extends AbstractTest {
 	private FolderService	folderService;
 
 	@Autowired
-	private ChorbiService	chorbiService;
+	private UserService	chorbiService;
 
 
 	// Tests ---------------------------------------------------------------
