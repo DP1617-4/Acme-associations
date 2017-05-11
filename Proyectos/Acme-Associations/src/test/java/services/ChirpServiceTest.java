@@ -16,7 +16,7 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Actor;
-import domain.Chirp;
+import domain.Comment;
 import domain.Chorbi;
 import domain.Folder;
 import forms.ChirpBroadcast;
@@ -30,7 +30,7 @@ public class ChirpServiceTest extends AbstractTest {
 
 	// The SUT -------------------------------------------------------------
 	@Autowired
-	private ChirpService	chirpService;
+	private MessageService	chirpService;
 
 	@Autowired
 	private ActorService	actorService;
@@ -158,7 +158,7 @@ public class ChirpServiceTest extends AbstractTest {
 		try {
 			this.authenticate(username);
 			final Chorbi cus = this.chorbiService.findOne(this.extract("chorbi2"));
-			final Chirp m = this.chirpService.create();
+			final Comment m = this.chirpService.create();
 			m.setAttachments(attachment);
 			m.setText(text);
 			m.setSubject(subject);
@@ -174,16 +174,16 @@ public class ChirpServiceTest extends AbstractTest {
 			final Folder recipientFolder = this.folderService.findSystemFolder(recipient, "Received");
 			final Folder senderFolder = this.folderService.findSystemFolder(sender, "Sent");
 
-			final Collection<Chirp> recipientChirps = this.chirpService.findAllByFolderWithNoCheck(recipientFolder.getId());
-			final Collection<Chirp> senderChirps = this.chirpService.findAllByFolderWithNoCheck(senderFolder.getId());
+			final Collection<Comment> recipientChirps = this.chirpService.findAllByFolderWithNoCheck(recipientFolder.getId());
+			final Collection<Comment> senderChirps = this.chirpService.findAllByFolderWithNoCheck(senderFolder.getId());
 
-			for (final Chirp r : recipientChirps)
-				for (final Chirp s : senderChirps)
+			for (final Comment r : recipientChirps)
+				for (final Comment s : senderChirps)
 					if (r.getSubject() == s.getSubject() && r.getMoment().equals(s.getMoment()) && r.getAttachments() == s.getAttachments() && r.getRecipient().equals(s.getRecipient()) && r.getText() == s.getText())
 						Assert.isTrue(r.getSubject() == s.getSubject() && r.getMoment().equals(s.getMoment()) && r.getAttachments() == s.getAttachments() && r.getRecipient().equals(s.getRecipient()) && r.getText() == s.getText());
 			this.chirpService.delete(m);
 
-			final Collection<Chirp> all = this.chirpService.findAll();
+			final Collection<Comment> all = this.chirpService.findAll();
 			Assert.isTrue(!(all.contains(m)));
 
 			this.chirpService.flush();
@@ -230,8 +230,8 @@ public class ChirpServiceTest extends AbstractTest {
 
 			this.authenticate("chorbi1");
 			final Folder recipientFolder = this.folderService.findSystemFolder(this.chorbiService.findOne(this.extract("chorbi1")), "Received");
-			final Collection<Chirp> chirps = this.chirpService.findAllByFolder(recipientFolder.getId());
-			for (final Chirp c : chirps)
+			final Collection<Comment> chirps = this.chirpService.findAllByFolder(recipientFolder.getId());
+			for (final Comment c : chirps)
 				if (c.getSubject() == cB.getSubject() && c.getAttachments() == cB.getAttachments() && c.getSender() == sender && c.getText() == cB.getText())
 					Assert.isTrue(c.getSubject() == cB.getSubject() && c.getAttachments() == cB.getAttachments() && c.getSender() == sender && c.getText() == cB.getText());
 
@@ -247,7 +247,7 @@ public class ChirpServiceTest extends AbstractTest {
 	private void templateResendChirp(final String username, final String chirpToSend, final String receiver, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
-		final Chirp chirpToSendExtracted = this.chirpService.findOne(this.extract(chirpToSend));
+		final Comment chirpToSendExtracted = this.chirpService.findOne(this.extract(chirpToSend));
 		try {
 			this.authenticate(username);
 			this.chirpService.reSend(chirpToSendExtracted, this.chorbiService.findOne(this.extract(receiver)));
@@ -255,8 +255,8 @@ public class ChirpServiceTest extends AbstractTest {
 
 			this.authenticate(receiver);
 			final Folder recipientFolder = this.folderService.findSystemFolder(this.chorbiService.findOne(this.extract(receiver)), "Received");
-			final Collection<Chirp> chirps = this.chirpService.findAllByFolder(recipientFolder.getId());
-			for (final Chirp c : chirps)
+			final Collection<Comment> chirps = this.chirpService.findAllByFolder(recipientFolder.getId());
+			for (final Comment c : chirps)
 				if (c.getSubject() == chirpToSendExtracted.getSubject() && c.getMoment().equals(chirpToSendExtracted.getMoment()) && c.getAttachments() == chirpToSendExtracted.getAttachments()
 					&& c.getRecipient().equals(chirpToSendExtracted.getRecipient()) && c.getText() == chirpToSendExtracted.getText())
 					Assert.isTrue(c.getSubject() == chirpToSendExtracted.getSubject() && c.getMoment().equals(chirpToSendExtracted.getMoment()) && c.getAttachments() == chirpToSendExtracted.getAttachments()

@@ -13,14 +13,14 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
-public class Role extends DomainEntity {
+public class Roles extends DomainEntity {
 
 	private String	type;
 
 
 	// Constructors -----------------------------------------------------------
 
-	public Role() {
+	public Roles() {
 		super();
 	}
 
@@ -35,7 +35,7 @@ public class Role extends DomainEntity {
 	// Attributes -------------------------------------------------------------
 
 	@NotBlank
-	@Pattern(regexp = "^" + Role.MANAGER + "|" + Role.COLLABORATOR + "|" + Role.ASSOCIATE + "$")
+	@Pattern(regexp = "^" + Roles.MANAGER + "|" + Roles.COLLABORATOR + "|" + Roles.ASSOCIATE + "$")
 	public String getType() {
 		return this.type;
 	}

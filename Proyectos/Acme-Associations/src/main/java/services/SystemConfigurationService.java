@@ -33,7 +33,7 @@ public class SystemConfigurationService {
 	private AdministratorService			adminService;
 
 	@Autowired
-	private ChirpService					messageService;
+	private MessageService					messageService;
 
 
 	//Basic CRUD methods --------------------
