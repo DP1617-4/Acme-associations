@@ -1,0 +1,20 @@
+
+package domain;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+
+@Entity
+@Access(AccessType.PROPERTY)
+public class Commentable extends DomainEntity {
+
+	public Commentable() {
+		super();
+	}
+
+	//Attributes
+
+	//Relationships
+
+}
