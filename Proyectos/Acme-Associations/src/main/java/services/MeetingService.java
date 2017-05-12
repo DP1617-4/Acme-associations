@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.MeetingRepository;
-import domain.Actor;
+import domain.Association;
+import domain.Meeting;
 
 @Service
 @Transactional
@@ -24,9 +25,6 @@ public class MeetingService {
 	@Autowired
 	private AssociationService	associationService;
 
-	@Autowired
-	private ActorService		actorService;
-
 
 	// Constructors -----------------------------------------------------------
 
@@ -39,7 +37,7 @@ public class MeetingService {
 	public Meeting create(final int associationId) {
 		final Meeting result = new Meeting();
 
-		Association association = associationService.findOne(associationId);
+		final Association association = this.associationService.findOne(associationId);
 		result.setAssociation(association);
 
 		return result;
@@ -71,7 +69,7 @@ public class MeetingService {
 
 	}
 
-	public Actor save(final Meeting meeting) {
+	public Meeting save(final Meeting meeting) {
 		Assert.notNull(meeting);
 		Meeting result;
 

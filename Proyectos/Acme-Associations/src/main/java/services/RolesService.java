@@ -4,7 +4,6 @@ package services;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -12,6 +11,7 @@ import org.springframework.util.Assert;
 import repositories.RolesRepository;
 import domain.Association;
 import domain.Roles;
+import domain.User;
 
 @Service
 @Transactional
@@ -31,7 +31,7 @@ public class RolesService {
 	//Auxiliary Services
 
 	@Autowired
-	private UserService		actorService;
+	private UserService		userService;
 
 
 	//CRUD
@@ -45,14 +45,18 @@ public class RolesService {
 
 	public Roles assignRoles(final User user, final Association association, final String roleType) {
 
-		Roles role;
-		role = this.roleRepository.findRolesByUserAssociation(user.getId, association.getId);
 		this.checkManager(user, association);
+
+		Roles role;
+		role = this.roleRepository.findRolesByUserAssociation(user.getId(), association.getId());
 
 		if (role == null)
 			role = this.create(user, association);
 
-		role.setType = roleType;
+		role.setType(roleType);
+		final Roles saved = this.save(role);
+
+		return saved;
 
 	}
 
@@ -72,7 +76,13 @@ public class RolesService {
 	public Collection<Roles> findAllByPrincipal() {
 		final User principal;
 		Collection<Roles> result;
-		user = this.userService.findByPrincipal();
+		principal = this.userService.findByPrincipal();
+		result = this.roleRepository.findAllByUser(principal.getId());
+		return result;
+	}
+
+	public Collection<Roles> findAllByUser(final User user) {
+		Collection<Roles> result;
 		result = this.roleRepository.findAllByUser(user.getId());
 		return result;
 	}
@@ -82,23 +92,23 @@ public class RolesService {
 	public void checkManager(final User user, final Association association) {
 
 		Roles role;
-		role = this.roleRepository.findRolesByUserAssociation(user.getId, association.getId);
-		Assert.isTrue(role.getType.equals("MANAGER"));
+		role = this.roleRepository.findRolesByUserAssociation(user.getId(), association.getId());
+		Assert.isTrue(role.getType().equals("MANAGER"));
 
 	}
 
 	public void checkCollaborator(final User user, final Association association) {
 
 		Roles role;
-		role = this.roleRepository.findRolesByUserAssociation(user.getId, association.getId);
-		Assert.isTrue(role.getType.equals("MANAGER") || role.getType.equals("COLLABORATOR"));
+		role = this.roleRepository.findRolesByUserAssociation(user.getId(), association.getId());
+		Assert.isTrue(role.getType().equals("MANAGER") || role.getType().equals("COLLABORATOR"));
 
 	}
 
 	public void checkAssociate(final User user, final Association association) {
 
 		Roles role;
-		role = this.roleRepository.findRolesByUserAssociation(user.getId, association.getId);
+		role = this.roleRepository.findRolesByUserAssociation(user.getId(), association.getId());
 		Assert.notNull(role);
 
 	}
