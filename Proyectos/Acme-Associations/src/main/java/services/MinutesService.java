@@ -4,14 +4,15 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.joda.time.Minutes;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.MinutesRepository;
+import domain.Meeting;
+import domain.Minutes;
+import domain.User;
 
 @Service
 @Transactional
@@ -40,11 +41,11 @@ public class MinutesService {
 
 	public Minutes create(final int meetingId) {
 		final Minutes result = new Minutes();
-		Collection<User> participants = new ArrayList<User>();
-		Meeting meeting = meetingService.findOne(meetingId);
+		final Collection<User> participants = new ArrayList<User>();
+		final Meeting meeting = this.meetingService.findOne(meetingId);
 
 		result.setMeeting(meeting);
-		result.setParticipants(participants);
+		result.setUsers(participants);
 
 		return result;
 	}
@@ -63,6 +64,8 @@ public class MinutesService {
 		Collection<Minutes> result;
 		result = this.minutesRepository.findAll();
 		Assert.notNull(result);
+
+		return result;
 	}
 
 	public void delete(final Minutes minutes) {
@@ -74,11 +77,14 @@ public class MinutesService {
 
 	}
 
-	public void addParticipant(int participantId) {
-		User participant = this.userService.findOne(participantId);
-		Collection<User> participants = minutes.getParticipants();
+	public void addParticipant(final int participantId, final int minutesId) {
+		Minutes minutes;
+		final User participant = this.userService.findOne(participantId);
+		minutes = this.minutesRepository.findOne(minutesId);
+		final Collection<User> participants = minutes.getUsers();
 
 		participants.add(participant);
+		this.save(minutes);
 	}
 
 	public Minutes save(final Minutes minutes) {
