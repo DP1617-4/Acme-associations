@@ -65,6 +65,7 @@ public class Activity extends DomainEntity {
 		this.maximumAttendants = maximumAttendants;
 	}
 
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getStartMoment() {
@@ -74,6 +75,7 @@ public class Activity extends DomainEntity {
 		this.startMoment = startMoment;
 	}
 
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getEndMoment() {
@@ -120,7 +122,6 @@ public class Activity extends DomainEntity {
 	}
 
 	@Valid
-	@NotNull
 	@ManyToOne(optional = true)
 	public User getWinner() {
 		return this.winner;

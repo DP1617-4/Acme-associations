@@ -43,10 +43,10 @@ public class Sanction extends DomainEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	@NotNull
-	public Date getMoment() {
+	public Date getEndDate() {
 		return this.endDate;
 	}
-	public void setMoment(final Date endDate) {
+	public void setEndDate(final Date endDate) {
 		this.endDate = endDate;
 	}
 

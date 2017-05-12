@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 
 import repositories.ItemRepository;
 import domain.Item;
+import domain.User;
 
 @Service
 @Transactional
@@ -61,14 +62,14 @@ public class ItemService {
 		final User principal = this.userService.findByPrincipal();
 		Assert.notNull(item);
 		Assert.isTrue(item.getId() != 0);
-		Assert.isTrue(this.rolesService.checkCollaborator(principal, item.getSection().getAssociation()));
+		this.roleService.checkCollaborator(principal, item.getSection().getAssociation());
 
 		this.itemRepository.delete(item);
 	}
 
 	public Item save(final Item item) {
 		final User principal = this.userService.findByPrincipal();
-		Assert.isTrue(this.rolesService.checkCollaborator(principal, item.getSection().getAssociation()));
+		this.roleService.checkCollaborator(principal, item.getSection().getAssociation());
 
 		final Item result = this.itemRepository.save(item);
 
