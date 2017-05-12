@@ -60,7 +60,7 @@ public class Item extends Commentable {
 	}
 
 	@NotBlank
-	@Pattern(regexp = "^" + Item.BAD + "|" + Item.EXCELENT + "|" + Item.GOOD + Item.LOAN + "|" + Item.MODERATE + "|" + Item.PRIZE + "$")
+	@Pattern(regexp = "^" + Item.BAD + "|" + Item.EXCELENT + "|" + Item.GOOD + "|" + Item.LOAN + "|" + Item.MODERATE + "|" + Item.PRIZE + "$")
 	public String getItemCondition() {
 		return this.itemCondition;
 	}

@@ -233,82 +233,92 @@
 	<!-- FOLDER -->
 	<bean id="sent1" class="domain.Folder">
 		<property name="name" value="Sent" />
-		<property name="user" ref="user1" />
+		<property name="actor" ref="user1" />
 	</bean>
 	
 	<bean id="received1" class="domain.Folder">
 		<property name="name" value="Received" />
-		<property name="user" ref="user1" />
+		<property name="actor" ref="user1" />
 	</bean>
 	
 		<bean id="sent2" class="domain.Folder">
 		<property name="name" value="Sent" />
-		<property name="user" ref="user2" />
+		<property name="actor" ref="user2" />
 	</bean>
 	
 	<bean id="received2" class="domain.Folder">
 		<property name="name" value="Received" />
-		<property name="user" ref="user2" />
+		<property name="actor" ref="user2" />
 	</bean>
 	
 		<bean id="sent3" class="domain.Folder">
 		<property name="name" value="Sent" />
-		<property name="user" ref="user3" />
+		<property name="actor" ref="user3" />
 	</bean>
 	
 	<bean id="received3" class="domain.Folder">
 		<property name="name" value="Received" />
-		<property name="user" ref="user3" />
+		<property name="actor" ref="user3" />
 	</bean>
 	
 		<bean id="sent4" class="domain.Folder">
 		<property name="name" value="Sent" />
-		<property name="user" ref="user4" />
+		<property name="actor" ref="user4" />
 	</bean>
 	
 	<bean id="received4" class="domain.Folder">
 		<property name="name" value="Received" />
-		<property name="user" ref="user4" />
+		<property name="actor" ref="user4" />
 	</bean>
 	
 	<bean id="sent5" class="domain.Folder">
 		<property name="name" value="Sent" />
-		<property name="user" ref="user5" />
+		<property name="actor" ref="user5" />
 	</bean>
 	
 	<bean id="received5" class="domain.Folder">
 		<property name="name" value="Received" />
-		<property name="user" ref="user5" />
+		<property name="actor" ref="user5" />
 	</bean>
 	
 	<bean id="sent6" class="domain.Folder">
 		<property name="name" value="Sent" />
-		<property name="user" ref="user6" />
+		<property name="actor" ref="user6" />
 	</bean>
 	
 	<bean id="received6" class="domain.Folder">
 		<property name="name" value="Received" />
-		<property name="user" ref="user6" />
+		<property name="actor" ref="user6" />
 	</bean>
 	
 	<bean id="sent7" class="domain.Folder">
 		<property name="name" value="Sent" />
-		<property name="user" ref="user7" />
+		<property name="actor" ref="user7" />
 	</bean>
 	
 	<bean id="received7" class="domain.Folder">
 		<property name="name" value="Received" />
-		<property name="user" ref="user7" />
+		<property name="actor" ref="user7" />
 	</bean>
 	
 	<bean id="sent8" class="domain.Folder">
 		<property name="name" value="Sent" />
-		<property name="user" ref="user8" />
+		<property name="actor" ref="administrator1" />
 	</bean>
 	
 	<bean id="received8" class="domain.Folder">
 		<property name="name" value="Received" />
-		<property name="user" ref="user8" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+	
+	<bean id="sent9" class="domain.Folder">
+		<property name="name" value="Sent" />
+		<property name="actor" ref="administrator2" />
+	</bean>
+	
+	<bean id="received9" class="domain.Folder">
+		<property name="name" value="Received" />
+		<property name="actor" ref="administrator2" />
 	</bean>
 	
 	<!-- MESSAGE -->
@@ -428,9 +438,9 @@
 		<property name="description" value="description" />
 		<property name="address" value="address" />
 		<property name="creationDate" value="2017/03/30" />
-		<property name="statutes" value="www.lmgtfy.com" />
+		<property name="statutes" value="http://www.lmgtfy.com" />
 		<property name="announcements" value="Announcements" />
-		<property name="picture" value="www.google.es" />
+		<property name="picture" value="http://http://www.google.es" />
 		<property name="closedAssociation" value="false" />
 		<property name="adminClosed" value="false" />
 	</bean>
@@ -440,9 +450,9 @@
 		<property name="description" value="description" />
 		<property name="address" value="address" />
 		<property name="creationDate" value="2017/03/30" />
-		<property name="statutes" value="www.lmgtfy.com" />
+		<property name="statutes" value="http://www.lmgtfy.com" />
 		<property name="announcements" value="Announcements" />
-		<property name="picture" value="www.google.es" />
+		<property name="picture" value="http://http://www.google.es" />
 		<property name="closedAssociation" value="false" />
 		<property name="adminClosed" value="false" />
 	</bean>
@@ -452,9 +462,9 @@
 		<property name="description" value="description" />
 		<property name="address" value="address" />
 		<property name="creationDate" value="2017/03/30" />
-		<property name="statutes" value="www.lmgtfy.com" />
+		<property name="statutes" value="http://www.lmgtfy.com" />
 		<property name="announcements" value="Announcements" />
-		<property name="picture" value="www.google.es" />
+		<property name="picture" value="http://http://www.google.es" />
 		<property name="closedAssociation" value="false" />
 		<property name="adminClosed" value="false" />
 	</bean>
@@ -464,9 +474,9 @@
 		<property name="description" value="description" />
 		<property name="address" value="address" />
 		<property name="creationDate" value="2017/03/30" />
-		<property name="statutes" value="www.lmgtfy.com" />
+		<property name="statutes" value="http://www.lmgtfy.com" />
 		<property name="announcements" value="Announcements" />
-		<property name="picture" value="www.google.es" />
+		<property name="picture" value="http://http://www.google.es" />
 		<property name="closedAssociation" value="false" />
 		<property name="adminClosed" value="false" />
 	</bean>
@@ -476,9 +486,9 @@
 		<property name="description" value="description" />
 		<property name="address" value="address" />
 		<property name="creationDate" value="2017/03/30" />
-		<property name="statutes" value="www.lmgtfy.com" />
+		<property name="statutes" value="http://www.lmgtfy.com" />
 		<property name="announcements" value="Announcements" />
-		<property name="picture" value="www.google.es" />
+		<property name="picture" value="http://http://www.google.es" />
 		<property name="closedAssociation" value="false" />
 		<property name="adminClosed" value="true" />
 	</bean>
@@ -488,9 +498,9 @@
 		<property name="description" value="description" />
 		<property name="address" value="address" />
 		<property name="creationDate" value="2017/03/30" />
-		<property name="statutes" value="www.lmgtfy.com" />
+		<property name="statutes" value="http://www.lmgtfy.com" />
 		<property name="announcements" value="Announcements" />
-		<property name="picture" value="www.google.es" />
+		<property name="picture" value="http://http://www.google.es" />
 		<property name="closedAssociation" value="true" />
 		<property name="adminClosed" value="false" />
 	</bean>
@@ -908,7 +918,7 @@
 	<bean id="meeting1" class="domain.Meeting">
 		<property name="address" value="address" />
 		<property name="moment" value="2017/07/21 16:00" />
-		<property name="agenda" value="agenda" />
+		<property name="agenda" value="http://www.google.com" />
 		<property name="issue" value="issue" />
 		<property name="association" ref="association1" />
 	</bean>
@@ -916,7 +926,7 @@
 	<bean id="meeting2" class="domain.Meeting">
 		<property name="address" value="address" />
 		<property name="moment" value="2017/05/21 16:00" />
-		<property name="agenda" value="agenda" />
+		<property name="agenda" value="http://www.google.com" />
 		<property name="issue" value="issue" />
 		<property name="association" ref="association1" />
 	</bean>
@@ -924,7 +934,7 @@
 	<bean id="meeting3" class="domain.Meeting">
 		<property name="address" value="address" />
 		<property name="moment" value="2017/05/22 16:00" />
-		<property name="agenda" value="agenda" />
+		<property name="agenda" value="http://www.google.com" />
 		<property name="issue" value="issue" />
 		<property name="association" ref="association1" />
 	</bean>
@@ -932,7 +942,7 @@
 	<bean id="meeting4" class="domain.Meeting">
 		<property name="address" value="address" />
 		<property name="moment" value="2017/05/23 16:00" />
-		<property name="agenda" value="agenda" />
+		<property name="agenda" value="http://www.google.com" />
 		<property name="issue" value="issue" />
 		<property name="association" ref="association1" />
 	</bean>
@@ -940,7 +950,7 @@
 	<bean id="meeting5" class="domain.Meeting">
 		<property name="address" value="address" />
 		<property name="moment" value="2017/05/24 16:00" />
-		<property name="agenda" value="agenda" />
+		<property name="agenda" value="http://www.google.com" />
 		<property name="issue" value="issue" />
 		<property name="association" ref="association1" />
 	</bean>
@@ -948,7 +958,7 @@
 	<bean id="meeting6" class="domain.Meeting">
 		<property name="address" value="address" />
 		<property name="moment" value="2017/05/25 16:00" />
-		<property name="agenda" value="agenda" />
+		<property name="agenda" value="http://www.google.com" />
 		<property name="issue" value="issue" />
 		<property name="association" ref="association1" />
 	</bean>
@@ -1067,67 +1077,67 @@
 	
 	<!-- Minutes -->
 	
-	<bean id="minutes1" class="domain.Minute">
-		<property name="document" value="www.google.es" />
+	<bean id="minutes1" class="domain.Minutes">
+		<property name="document" value="http://http://www.google.es" />
 		<property name="users">
 			<list>
-				<ref bean="chorbi2"></ref>
-				<ref bean="chorbi3"></ref>
+				<ref bean="user2"></ref>
+				<ref bean="user3"></ref>
 			</list>
 		</property>	
 		<property name="meeting" ref="meeting1" />
 	</bean>
 	
 	<bean id="minutes2" class="domain.Minutes">
-		<property name="document" value="www.google.es" />
+		<property name="document" value="http://www.google.es" />
 		<property name="users">
 			<list>
-				<ref bean="chorbi2"></ref>
-				<ref bean="chorbi3"></ref>
+				<ref bean="user2"></ref>
+				<ref bean="user3"></ref>
 			</list>
 		</property>	
 		<property name="meeting" ref="meeting2" />
 	</bean>
 	
 	<bean id="minutes3" class="domain.Minutes">
-		<property name="document" value="www.google.es" />
+		<property name="document" value="http://www.google.es" />
 		<property name="users">
 			<list>
-				<ref bean="chorbi2"></ref>
-				<ref bean="chorbi3"></ref>
+				<ref bean="user2"></ref>
+				<ref bean="user3"></ref>
 			</list>
 		</property>	
 		<property name="meeting" ref="meeting3" />
 	</bean>
 	
-	<bean id="minutes4" class="domain.Minute">
-		<property name="document" value="www.google.es" />
+	<bean id="minutes4" class="domain.Minutes">
+		<property name="document" value="http://www.google.es" />
 		<property name="users">
 			<list>
-				<ref bean="chorbi2"></ref>
-				<ref bean="chorbi3"></ref>
+				<ref bean="user2"></ref>
+				<ref bean="user3"></ref>
 			</list>
 		</property>	
 		<property name="meeting" ref="meeting4" />
 	</bean>
 	
-	<bean id="minutes5" class="domain.Minute">
-		<property name="document" value="www.google.es" />
+	<bean id="minutes5" class="domain.Minutes">
+		<property name="document" value="http://www.google.es" />
 		<property name="users">
 			<list>
-				<ref bean="chorbi2"></ref>
-				<ref bean="chorbi3"></ref>
+				<ref bean="user2"></ref>
+				<ref bean="user3"></ref>
 			</list>
 		</property>	
 		<property name="meeting" ref="meeting5" />
 	</bean>
 	
-	<bean id="minutes6" class="domain.Minute">
-		<property name="document" value="www.google.es" />
+	<bean id="minutes6" class="domain.Minutes">
+		<property name="document" value="http://www.google.es" />
 		<property name="users">
 			<list>
-				<ref bean="chorbi2"></ref>
-				<ref bean="chorbi3"></ref>
+				<ref bean="user2"></ref>
+				<ref bean="user3"></ref>
 			</list>
 		</property>	
 		<property name="meeting" ref="meeting6" />

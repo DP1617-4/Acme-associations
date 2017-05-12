@@ -26,8 +26,14 @@ public class SanctionService {
 	@Autowired
 	private SanctionRepository	sanctionRepository;
 
-
 	// Auxiliary services
+
+	@Autowired
+	private UserService			userService;
+
+	@Autowired
+	private RolesService		rolesService;
+
 
 	public Sanction create() {
 		Sanction result;
@@ -53,20 +59,20 @@ public class SanctionService {
 		return result;
 	}
 
-	public void delete(final Sanction Sanction) {
+	public void delete(final Sanction sanction) {
 		final User principal = this.userService.findByPrincipal();
-		Assert.notNull(Sanction);
-		Assert.isTrue(Sanction.getId() != 0);
-		Assert.isTrue(this.rolesService.checkCollaborator(principal, Sanction.getSection().getAssociation()));
+		Assert.notNull(sanction);
+		Assert.isTrue(sanction.getId() != 0);
+		this.rolesService.checkCollaborator(principal, sanction.getAssociation());
 
-		this.sanctionRepository.delete(Sanction);
+		this.sanctionRepository.delete(sanction);
 	}
 
-	public Sanction save(final Sanction Sanction) {
+	public Sanction save(final Sanction sanction) {
 		final User principal = this.userService.findByPrincipal();
-		Assert.isTrue(this.rolesService.checkCollaborator(principal, Sanction.getSection().getAssociation()));
-		Assert.isTrue(this.userService.findByAssociation().contains(sanction.getBorrower));
-		final Sanction result = this.sanctionRepository.save(Sanction);
+		this.rolesService.checkCollaborator(principal, sanction.getAssociation());
+		Assert.isTrue(this.userService.findAllByAssociation(sanction.getAssociation()).contains(sanction.getUser()));
+		final Sanction result = this.sanctionRepository.save(sanction);
 
 		return result;
 	}
