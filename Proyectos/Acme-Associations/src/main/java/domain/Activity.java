@@ -9,6 +9,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -93,7 +94,7 @@ public class Activity extends DomainEntity {
 	// Relationships ----------------------------------------------------------
 
 	private Association			association;
-	private Collection<User>		attendants;
+	private Collection<User>	attendants;
 	private Place				place;
 	private User				winner;
 
@@ -115,9 +116,9 @@ public class Activity extends DomainEntity {
 		return this.attendants;
 	}
 	public void setAttendants(final Collection<User> attendants) {
-		this.attendants = attendats;
+		this.attendants = attendants;
 	}
-	
+
 	@Valid
 	@NotNull
 	@ManyToOne(optional = true)

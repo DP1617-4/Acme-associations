@@ -123,7 +123,32 @@
 		</property>
 	</bean>
 	
+	<!-- ADMIN -->
+	
+	<bean id="administrator1" class="domain.Administrator">
+		<property name="name" value="Administrator" />
+		<property name="surname" value="admin" />
+		<property name="email" value="admin@gmail.com" />
+		<property name="phoneNumber" value="2345" />
+		<property name="postalAddress" value="casa" />
+		<property name="idNumber" value="2345" />
+		
+		<property name="userAccount" ref="userAccount1" />
+	</bean>
+	
+	<bean id="administrator2" class="domain.Administrator">
+		<property name="name" value="System" />
+		<property name="surname" value="system" />
+		<property name="email" value="system@gmail.com" />
+		<property name="phoneNumber" value="2345" />
+		<property name="postalAddress" value="casa" />
+		<property name="idNumber" value="2345" />
+		
+		<property name="userAccount" ref="userAccount2" />
+	</bean>
+	
 	<!-- USER -->
+	
 	<bean id="user1" class="domain.User">
 		<property name="name" value="User1" />
 		<property name="surname" value="user" />
@@ -499,91 +524,238 @@
 		<property name="user" ref="user6" />
 	</bean>
 	
-	<!-- Events -->
+	<bean id="roles7" class="domain.Roles">
+		<property name="type" value="COLLABORATOR"/>
+		<property name="association" ref="association1" />
+		<property name="user" ref="user2" />
+	</bean>
 	
-	<bean id="event1" class="domain.Event">
-		<property name="title" value="MLP Party"/>
-		<property name="moment" value="2017/07/23 15:00"/>
-		<property name="description" value="Best party ever"/>
-		<property name="picture" value="http://img10.deviantart.net/b3f4/i/2012/091/3/c/mlp__fim_pony_party_summary_comic_hi_res_by_moviefreaq-d4ulfqo.png"/>
-		<property name="numberSeat" value="1300"/>
-		<property name="organiser" ref="manager1"/>
-		<property name="registered">
+	<bean id="roles8" class="domain.Roles">
+		<property name="type" value="COLLABORATOR"/>
+		<property name="association" ref="association1" />
+		<property name="user" ref="user3" />
+	</bean>
+	
+	<bean id="roles9" class="domain.Roles">
+		<property name="type" value="COLLABORATOR"/>
+		<property name="association" ref="association1" />
+		<property name="user" ref="user4" />
+	</bean>
+	
+	<bean id="roles10" class="domain.Roles">
+		<property name="type" value="COLLABORATOR"/>
+		<property name="association" ref="association1" />
+		<property name="user" ref="user5" />
+	</bean>
+	
+	<bean id="roles11" class="domain.Roles">
+		<property name="type" value="COLLABORATOR"/>
+		<property name="association" ref="association1" />
+		<property name="user" ref="user6" />
+	</bean>
+	
+	<!-- Sections -->
+	
+	<bean id="section1" class="domain.Section">
+		<property name="name" value="Section1"/>
+		<property name="association" ref="association1" />
+		<property name="user" ref="user1" />
+	</bean>
+	
+	<bean id="section2" class="domain.Section">
+		<property name="name" value="Section1"/>
+		<property name="association" ref="association1" />
+		<property name="user" ref="user2" />
+	</bean>
+	
+	<bean id="section3" class="domain.Section">
+		<property name="name" value="Section1"/>
+		<property name="association" ref="association1" />
+		<property name="user" ref="user3" />
+	</bean>
+	
+	<bean id="section4" class="domain.Section">
+		<property name="name" value="Section1"/>
+		<property name="association" ref="association1" />
+		<property name="user" ref="user4" />
+	</bean>
+	
+	<bean id="section5" class="domain.Section">
+		<property name="name" value="Section1"/>
+		<property name="association" ref="association1" />
+		<property name="user" ref="user5" />
+	</bean>
+	
+	<bean id="section6" class="domain.Section">
+		<property name="name" value="Section1"/>
+		<property name="association" ref="association1" />
+		<property name="user" ref="user6" />
+	</bean>
+	
+	<bean id="section7" class="domain.Section">
+		<property name="name" value="Section1"/>
+		<property name="association" ref="association2" />
+		<property name="user" ref="user1" />
+	</bean>
+	
+	<!-- PLACE -->
+	
+	<bean id="place1" class="domain.Place">
+		<property name="address" value="Calle gotg" />
+		<property name="latitude" value="0.0" />
+		<property name="longitude" value="0.0" />
+	</bean>
+	
+	<bean id="place2" class="domain.Place">
+		<property name="address" value="Calle pesadilla" />
+		<property name="latitude" value="10.0" />
+		<property name="longitude" value="80.0" />
+	</bean>
+	
+	<bean id="place3" class="domain.Place">
+		<property name="address" value="Calle barbacoa" />
+		<property name="longitude" value="-120.0" />
+		<property name="latitude" value="40.0" />
+	</bean>
+	
+	<bean id="place4" class="domain.Place">
+		<property name="address" value="Calle patata" />
+		<property name="latitude" value="-10.0" />
+		<property name="longitude" value="10.0" />
+	</bean>
+	
+	<bean id="place5" class="domain.Place">
+		<property name="address" value="Calle chorizo" />
+		<property name="latitude" value="0.0" />
+		<property name="longitude" value="-20.0" />
+	</bean>
+	
+	<bean id="place6" class="domain.Place">
+		<property name="address" value="Calle melon" />
+		<property name="latitude" value="-20.0" />
+		<property name="longitude" value="0.0" />
+	</bean>
+	
+	<bean id="place7" class="domain.Place">
+		<property name="address" value="Calle vida" />
+		<property name="longitude" value="150" />
+		<property name="latitude" value="-45" />
+	</bean>
+	
+	<bean id="place8" class="domain.Place">
+		<property name="address" value="Calle " />
+		<property name="latitude" value="30" />
+		<property name="longitude" value="20" />
+	</bean>
+	
+	<!-- Activities -->
+	
+	<bean id="activity1" class="domain.Activity">
+		<property name="name" value="Activity1"/>
+		<property name="description" value="asgf"/>
+		<property name="startMoment" value="2017/07/23 15:00"/>
+		<property name="endMoment" value="2017/07/23 22:00"/>
+		<property name="maximumAttendants" value="14"/>
+		<property name="publicActivity" value="true"/>
+		<property name="association" ref="association1"/>
+		<property name="winner" ref=""/>
+		<property name="place" ref="place1"/>
+		<property name="attendants">
+			<list>
+				<ref bean="user1"></ref>
+				<ref bean="user3"></ref>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="activity2" class="domain.Activity">
+		<property name="name" value="Activity2"/>
+		<property name="description" value="asgf"/>
+		<property name="startMoment" value="2017/07/25 15:00"/>
+		<property name="endMoment" value="2017/07/26 22:00"/>
+		<property name="maximumAttendants" value="21"/>
+		<property name="publicActivity" value="false"/>
+		<property name="association" ref="association1"/>
+		<property name="winner" ref=""/>
+		<property name="place" ref="place3"/>
+		<property name="attendants">
+			<list>
+				<ref bean="user2"></ref>
+				<ref bean="user5"></ref>
+				<ref bean="user4"></ref>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="activity3" class="domain.Activity">
+		<property name="name" value="Activity3"/>
+		<property name="description" value="asgf"/>
+		<property name="startMoment" value="2017/04/23 15:00"/>
+		<property name="endMoment" value="2017/04/23 22:00"/>
+		<property name="maximumAttendants" value="10"/>
+		<property name="publicActivity" value="true"/>
+		<property name="association" ref="association1"/>
+		<property name="winner" ref="user6"/>
+		<property name="place" ref="place4"/>
+		<property name="attendants">
+			<list>
+				<ref bean="user1"></ref>
+				<ref bean="user3"></ref>
+				<ref bean="user6"></ref>
+				<ref bean="user4"></ref>
+				<ref bean="user2"></ref>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="activity4" class="domain.Activity">
+		<property name="name" value="Activity4"/>
+		<property name="description" value="asgf"/>
+		<property name="startMoment" value="2017/07/28 15:00"/>
+		<property name="endMoment" value="2017/07/31 23:59"/>
+		<property name="maximumAttendants" value="14"/>
+		<property name="publicActivity" value="true"/>
+		<property name="association" ref="association1"/>
+		<property name="winner" ref=""/>
+		<property name="place" ref="place5"/>
+		<property name="attendants">
 			<list>
 			</list>
 		</property>
 	</bean>
 	
-	<bean id="event2" class="domain.Event">
-		<property name="title" value="Viaje a canarias"/>
-		<property name="moment" value="2018/07/23 10:00"/>
-		<property name="description" value="Barco ready"/>
-		<property name="picture" value="http://www.holaislascanarias.com/sites/default/files/lanzarote.jpg"/>
-		<property name="numberSeat" value="500"/>
-		<property name="organiser" ref="manager3"/>
-		<property name="registered">
+	<bean id="activity5" class="domain.Activity">
+		<property name="name" value="Activity5"/>
+		<property name="description" value="asgf"/>
+		<property name="startMoment" value="2018/07/23 15:00"/>
+		<property name="endMoment" value="2018/07/23 22:00"/>
+		<property name="maximumAttendants" value="2"/>
+		<property name="publicActivity" value="false"/>
+		<property name="association" ref="association1"/>
+		<property name="winner" ref=""/>
+		<property name="place" ref=""/>
+		<property name="attendants">
 			<list>
-				<ref bean="chorbi4"></ref>
-				<ref bean="chorbi5"></ref>
+				<ref bean="user1"></ref>
+				<ref bean="user3"></ref>
 			</list>
 		</property>
 	</bean>
 	
-	<bean id="event3" class="domain.Event">
-		<property name="title" value="Papasá"/>
-		<property name="moment" value="2017/05/30 21:00"/>
-		<property name="description" value="En Triana, bueno bueno"/>
-		<property name="picture" value="http://www.infofranquicias.com/media/mediauploads/Papasa-foto1.jpg"/>
-		<property name="numberSeat" value="10"/>
-		<property name="organiser" ref="manager2"/>
-		<property name="registered">
+	<bean id="activity6" class="domain.Activity">
+		<property name="name" value="Activity6"/>
+		<property name="description" value="asgf"/>
+		<property name="startMoment" value="2017/07/23 15:00"/>
+		<property name="endMoment" value="2017/07/23 22:00"/>
+		<property name="maximumAttendants" value="12"/>
+		<property name="publicActivity" value="true"/>
+		<property name="association" ref="association1"/>
+		<property name="winner" ref=""/>
+		<property name="place" ref="place7"/>
+		<property name="attendants">
 			<list>
-				<ref bean="chorbi1"></ref>
-				<ref bean="chorbi2"></ref>
-				<ref bean="chorbi6"></ref>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="event4" class="domain.Event">
-		<property name="title" value="Raideo Mítico"/>
-		<property name="moment" value="2017/09/23 10:00"/>
-		<property name="description" value="Full equip or kick"/>
-		<property name="picture" value="https://lh3.googleusercontent.com/-htwgMWOeoxo/TpRONlsITNI/AAAAAAAAAL0/dnC35Uoz78Y/s1024/BT_InstanceMap.jpg"/>
-		<property name="numberSeat" value="25"/>
-		<property name="organiser" ref="manager1"/>
-		<property name="registered">
-			<list>
-				<ref bean="chorbi1"></ref>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="event5" class="domain.Event">
-		<property name="title" value="Greater rift lvl 987"/>
-		<property name="moment" value="2017/05/10 00:00"/>
-		<property name="description" value="No monk no party"/>
-		<property name="picture" value="http://i.imgur.com/Vi1WVMy.jpg"/>
-		<property name="numberSeat" value="3"/>
-		<property name="organiser" ref="manager5"/>
-		<property name="registered">
-			<list>
-				<ref bean="chorbi4"></ref>
-			</list>
-		</property>
-	</bean>
-	
-	<bean id="event6" class="domain.Event">
-		<property name="title" value="Reunión sin gluten"/>
-		<property name="moment" value="2021/04/11 10:00"/>
-		<property name="description" value="Ni cebada ni trigo ni avena ni ná"/>
-		<property name="picture" value="http://cienciauanl.uanl.mx/wp-content/uploads/2015/04/glutenalimentos.jpg"/>
-		<property name="numberSeat" value="45"/>
-		<property name="organiser" ref="manager4"/>
-		<property name="registered">
-			<list>
-				<ref bean="chorbi6"></ref>
-				<ref bean="chorbi5"></ref>
+				<ref bean="user1"></ref>
+				<ref bean="user3"></ref>
 			</list>
 		</property>
 	</bean>
