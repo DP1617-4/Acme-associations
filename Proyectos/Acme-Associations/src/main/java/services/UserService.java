@@ -17,6 +17,7 @@ import repositories.UserRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Association;
 import domain.User;
 import forms.RegisterUser;
 
@@ -32,6 +33,9 @@ public class UserService {
 
 	@Autowired
 	private FolderService				folderService;
+
+	@Autowired
+	private AssociationService			associationService;
 
 	@Autowired
 	private Validator					validator;
@@ -86,6 +90,14 @@ public class UserService {
 		User user;
 		user = this.userRepository.findOne(userId);
 		return user;
+	}
+
+	public Collection<User> findAllByAssociation(final Association association) {
+
+		Collection<User> result;
+		result = this.userRepository.findAllByAssociation(association.getId());
+		return result;
+
 	}
 
 	public Collection<User> findAll() {

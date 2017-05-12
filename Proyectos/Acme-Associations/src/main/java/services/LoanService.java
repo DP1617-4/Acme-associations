@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.LoanRepository;
+import domain.Association;
 import domain.Loan;
 import domain.User;
 
@@ -25,6 +26,12 @@ public class LoanService {
 
 	@Autowired
 	private LoanRepository	loanRepository;
+
+	@Autowired
+	private RolesService	roleService;
+
+	@Autowired
+	private UserService		userService;
 
 
 	// Auxiliary services
@@ -53,20 +60,21 @@ public class LoanService {
 		return result;
 	}
 
-	public void delete(final Loan Loan) {
+	public void delete(final Loan loan) {
 		final User principal = this.userService.findByPrincipal();
-		Assert.notNull(Loan);
-		Assert.isTrue(Loan.getId() != 0);
-		Assert.isTrue(this.rolesService.checkCollaborator(principal, Loan.getSection().getAssociation()));
+		Assert.notNull(loan);
+		Assert.isTrue(loan.getId() != 0);
+		this.roleService.checkCollaborator(principal, loan.getItem().getSection().getAssociation());
 
-		this.loanRepository.delete(Loan);
+		this.loanRepository.delete(loan);
 	}
-
-	public Loan save(final Loan Loan) {
+	public Loan save(final Loan loan) {
 		final User principal = this.userService.findByPrincipal();
-		Assert.isTrue(this.rolesService.checkCollaborator(principal, Loan.getSection().getAssociation()));
-		Assert.isTrue(this.userService.findByAssociation().contains(loan.getBorrower));
-		final Loan result = this.loanRepository.save(Loan);
+		Association association;
+		association = loan.getItem().getSection().getAssociation();
+		this.roleService.checkCollaborator(principal, association);
+		Assert.isTrue(this.userService.findAllByAssociation(association).contains(loan.getBorrower()));
+		final Loan result = this.loanRepository.save(loan);
 
 		return result;
 	}
