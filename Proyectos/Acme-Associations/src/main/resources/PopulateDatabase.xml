@@ -21,7 +21,6 @@
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
 		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
-		<property name="isEnabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -34,7 +33,6 @@
 	<bean id="userAccount2" class="security.UserAccount">
 		<property name="username" value="system" />
 		<property name="password" value="c84258e9c39059a89ab77d846ddab909" />
-		<property name="isEnabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -48,7 +46,6 @@
 	<bean id="userAccount3" class="security.UserAccount">
 		<property name="username" value="user1" />
 		<property name="password" value="3daa859a294cdefb20a84840240a76f5" />
-		<property name="isEnabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -61,7 +58,6 @@
 	<bean id="userAccount4" class="security.UserAccount">
 		<property name="username" value="user2" />
 		<property name="password" value="0c8746de81268518ff83490301db8652" />
-		<property name="isEnabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -74,7 +70,6 @@
 	<bean id="userAccount5" class="security.UserAccount">
 		<property name="username" value="user3" />
 		<property name="password" value="a2da05a88eead7e64593826cafc6a7a7" />
-		<property name="isEnabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -87,7 +82,6 @@
 	<bean id="userAccount6" class="security.UserAccount">
 		<property name="username" value="user4" />
 		<property name="password" value="a09dd233386632e297a7f4f461989563" />
-		<property name="isEnabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -100,7 +94,6 @@
 	<bean id="userAccount7" class="security.UserAccount">
 		<property name="username" value="user5" />
 		<property name="password" value="7e062f6f2a4c0f7ec5abacef2917e033" />
-		<property name="isEnabled" value="true" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -113,7 +106,18 @@
 	<bean id="userAccount8" class="security.UserAccount">
 		<property name="username" value="user6" />
 		<property name="password" value="0b41c51bd4b755c5b639498f55058fd3" />
-		<property name="isEnabled" value="true" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount9" class="security.UserAccount">
+		<property name="username" value="user7" />
+		<property name="password" value="0b41c51bd4b755c5b639498f55058fd3" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -163,7 +167,7 @@
 	<bean id="user2" class="domain.User">
 		<property name="name" value="User2" />
 		<property name="surname" value="user" />
-		<property name="email" value="user1@gmail.com" />
+		<property name="email" value="user2@gmail.com" />
 		<property name="phoneNumber" value="2345" />
 		<property name="postalAddress" value="casa" />
 		<property name="idNumber" value="2345" />
@@ -174,7 +178,7 @@
 	<bean id="user3" class="domain.User">
 		<property name="name" value="User3" />
 		<property name="surname" value="user" />
-		<property name="email" value="user1@gmail.com" />
+		<property name="email" value="user3@gmail.com" />
 		<property name="phoneNumber" value="2345" />
 		<property name="postalAddress" value="casa" />
 		<property name="idNumber" value="2345" />
@@ -185,7 +189,7 @@
 	<bean id="user4" class="domain.User">
 		<property name="name" value="User4" />
 		<property name="surname" value="user" />
-		<property name="email" value="user1@gmail.com" />
+		<property name="email" value="user4@gmail.com" />
 		<property name="phoneNumber" value="2345" />
 		<property name="postalAddress" value="casa" />
 		<property name="idNumber" value="2345" />
@@ -196,7 +200,7 @@
 	<bean id="user5" class="domain.User">
 		<property name="name" value="User5" />
 		<property name="surname" value="user" />
-		<property name="email" value="user1@gmail.com" />
+		<property name="email" value="user5@gmail.com" />
 		<property name="phoneNumber" value="2345" />
 		<property name="postalAddress" value="casa" />
 		<property name="idNumber" value="2345" />
@@ -207,12 +211,23 @@
 	<bean id="user6" class="domain.User">
 		<property name="name" value="User6" />
 		<property name="surname" value="user" />
-		<property name="email" value="user1@gmail.com" />
+		<property name="email" value="user6@gmail.com" />
 		<property name="phoneNumber" value="2345" />
 		<property name="postalAddress" value="casa" />
 		<property name="idNumber" value="2345" />
 		
 		<property name="userAccount" ref="userAccount8" />
+	</bean>
+	
+	<bean id="user7" class="domain.User">
+		<property name="name" value="User7" />
+		<property name="surname" value="user" />
+		<property name="email" value="user7@gmail.com" />
+		<property name="phoneNumber" value="2345" />
+		<property name="postalAddress" value="casa" />
+		<property name="idNumber" value="2345" />
+		
+		<property name="userAccount" ref="userAccount9" />
 	</bean>
 	
 	<!-- FOLDER -->
@@ -407,13 +422,6 @@
 	</bean>
 	
 	<!-- ASSOCIATIONS -->
-	<property name="chorbies">
-			<list>
-				<ref bean="chorbi2"></ref>
-				<ref bean="chorbi3"></ref>
-			</list>
-		</property>
-	
 	
 	<bean id="association1" class="domain.Association">
 		<property name="name" value="Asociacion1" />
@@ -658,7 +666,6 @@
 		<property name="maximumAttendants" value="14"/>
 		<property name="publicActivity" value="true"/>
 		<property name="association" ref="association1"/>
-		<property name="winner" ref=""/>
 		<property name="place" ref="place1"/>
 		<property name="attendants">
 			<list>
@@ -676,7 +683,6 @@
 		<property name="maximumAttendants" value="21"/>
 		<property name="publicActivity" value="false"/>
 		<property name="association" ref="association1"/>
-		<property name="winner" ref=""/>
 		<property name="place" ref="place3"/>
 		<property name="attendants">
 			<list>
@@ -716,7 +722,6 @@
 		<property name="maximumAttendants" value="14"/>
 		<property name="publicActivity" value="true"/>
 		<property name="association" ref="association1"/>
-		<property name="winner" ref=""/>
 		<property name="place" ref="place5"/>
 		<property name="attendants">
 			<list>
@@ -732,8 +737,7 @@
 		<property name="maximumAttendants" value="2"/>
 		<property name="publicActivity" value="false"/>
 		<property name="association" ref="association1"/>
-		<property name="winner" ref=""/>
-		<property name="place" ref=""/>
+		<property name="place" ref="place8"/>
 		<property name="attendants">
 			<list>
 				<ref bean="user1"></ref>
@@ -750,7 +754,6 @@
 		<property name="maximumAttendants" value="12"/>
 		<property name="publicActivity" value="true"/>
 		<property name="association" ref="association1"/>
-		<property name="winner" ref=""/>
 		<property name="place" ref="place7"/>
 		<property name="attendants">
 			<list>
@@ -759,19 +762,375 @@
 			</list>
 		</property>
 	</bean>
+
+	<!-- Requests -->
+
+	<bean id="request1" class="domain.Request">
+		<property name="association" ref="association2" />
+		<property name="user" ref="user1" />
+	</bean>
 	
-	<!-- SYSTEM CONFIGURATION -->
-	<bean id="systemConfiguration" class="domain.SystemConfiguration">
-		<property name="banners">
+	<bean id="request2" class="domain.Request">
+		<property name="association" ref="association2" />
+		<property name="user" ref="user3" />
+	</bean>
+	
+	<bean id="request3" class="domain.Request">
+		<property name="association" ref="association2" />
+		<property name="user" ref="user4" />
+	</bean>
+	
+	<bean id="request4" class="domain.Request">
+		<property name="association" ref="association2" />
+		<property name="user" ref="user5" />
+	</bean>
+	
+	<bean id="request5" class="domain.Request">
+		<property name="association" ref="association2" />
+		<property name="user" ref="user6" />
+	</bean>
+	
+	<bean id="request6" class="domain.Request">
+		<property name="association" ref="association2" />
+		<property name="user" ref="user7" />
+	</bean>
+	
+	<!-- Comments -->
+	
+	<bean id="comment1" class="domain.Comment">
+		<property name="title" value="title" />
+		<property name="text" value="text" />
+		<property name="moment" value="2017/04/28 15:00" />
+		<property name="commentable" ref="association1" />
+		<property name="user" ref="user1" />
+	</bean>
+	
+	<bean id="comment2" class="domain.Comment">
+		<property name="title" value="title" />
+		<property name="text" value="text" />
+		<property name="moment" value="2017/04/28 15:00" />
+		<property name="commentable" ref="association1" />
+		<property name="user" ref="user2" />
+	</bean>
+	
+	<bean id="comment3" class="domain.Comment">
+		<property name="title" value="title" />
+		<property name="text" value="text" />
+		<property name="moment" value="2017/04/28 15:00" />
+		<property name="commentable" ref="association1" />
+		<property name="user" ref="user3" />
+	</bean>
+	
+	<bean id="comment4" class="domain.Comment">
+		<property name="title" value="title" />
+		<property name="text" value="text" />
+		<property name="moment" value="2017/04/28 15:00" />
+		<property name="commentable" ref="association1" />
+		<property name="user" ref="user4" />
+	</bean>
+	
+	<bean id="comment5" class="domain.Comment">
+		<property name="title" value="title" />
+		<property name="text" value="text" />
+		<property name="moment" value="2017/04/28 15:00" />
+		<property name="commentable" ref="association1" />
+		<property name="user" ref="user5" />
+	</bean>
+	
+	<bean id="comment6" class="domain.Comment">
+		<property name="title" value="title" />
+		<property name="text" value="text" />
+		<property name="moment" value="2017/04/28 15:00" />
+		<property name="commentable" ref="association1" />
+		<property name="user" ref="user6" />
+	</bean>
+	
+	<!-- Sanctions -->
+	
+	<bean id="sanction1" class="domain.Sanction">
+		<property name="motiff" value="motiff" />
+		<property name="endDate" value="2017/03/21 15:00" />
+		<property name="association" ref="association1" />
+		<property name="user" ref="user3" />
+	</bean>
+	
+	<bean id="sanction2" class="domain.Sanction">
+		<property name="motiff" value="motiff" />
+		<property name="endDate" value="2017/03/21 15:00" />
+		<property name="association" ref="association1" />
+		<property name="user" ref="user2" />
+	</bean>
+	
+	<bean id="sanction3" class="domain.Sanction">
+		<property name="motiff" value="motiff" />
+		<property name="endDate" value="2017/03/21 15:00" />
+		<property name="association" ref="association1" />
+		<property name="user" ref="user4" />
+	</bean>
+	
+	<bean id="sanction4" class="domain.Sanction">
+		<property name="motiff" value="motiff" />
+		<property name="endDate" value="2017/03/21 15:00" />
+		<property name="association" ref="association1" />
+		<property name="user" ref="user5" />
+	</bean>
+	
+	<bean id="sanction5" class="domain.Sanction">
+		<property name="motiff" value="motiff" />
+		<property name="endDate" value="2017/03/21 15:00" />
+		<property name="association" ref="association1" />
+		<property name="user" ref="user6" />
+	</bean>
+	
+	<bean id="sanction6" class="domain.Sanction">
+		<property name="motiff" value="motiff" />
+		<property name="endDate" value="2017/03/21 15:00" />
+		<property name="association" ref="association1" />
+		<property name="user" ref="user1" />
+	</bean>
+	
+	<bean id="sanction7" class="domain.Sanction">
+		<property name="motiff" value="motiff" />
+		<property name="endDate" value="2017/07/21 14:00" />
+		<property name="association" ref="association1" />
+		<property name="user" ref="user3" />
+	</bean>
+	
+	<bean id="sanction8" class="domain.Sanction">
+		<property name="motiff" value="motiff" />
+		<property name="endDate" value="2017/07/21 16:00" />
+		<property name="association" ref="association1" />
+		<property name="user" ref="user4" />
+	</bean>
+	
+	<!-- Meeting -->
+	
+	<bean id="meeting1" class="domain.Meeting">
+		<property name="address" value="address" />
+		<property name="moment" value="2017/07/21 16:00" />
+		<property name="agenda" value="agenda" />
+		<property name="issue" value="issue" />
+		<property name="association" ref="association1" />
+	</bean>
+	
+	<bean id="meeting2" class="domain.Meeting">
+		<property name="address" value="address" />
+		<property name="moment" value="2017/05/21 16:00" />
+		<property name="agenda" value="agenda" />
+		<property name="issue" value="issue" />
+		<property name="association" ref="association1" />
+	</bean>
+	
+	<bean id="meeting3" class="domain.Meeting">
+		<property name="address" value="address" />
+		<property name="moment" value="2017/05/22 16:00" />
+		<property name="agenda" value="agenda" />
+		<property name="issue" value="issue" />
+		<property name="association" ref="association1" />
+	</bean>
+	
+	<bean id="meeting4" class="domain.Meeting">
+		<property name="address" value="address" />
+		<property name="moment" value="2017/05/23 16:00" />
+		<property name="agenda" value="agenda" />
+		<property name="issue" value="issue" />
+		<property name="association" ref="association1" />
+	</bean>
+	
+	<bean id="meeting5" class="domain.Meeting">
+		<property name="address" value="address" />
+		<property name="moment" value="2017/05/24 16:00" />
+		<property name="agenda" value="agenda" />
+		<property name="issue" value="issue" />
+		<property name="association" ref="association1" />
+	</bean>
+	
+	<bean id="meeting6" class="domain.Meeting">
+		<property name="address" value="address" />
+		<property name="moment" value="2017/05/25 16:00" />
+		<property name="agenda" value="agenda" />
+		<property name="issue" value="issue" />
+		<property name="association" ref="association1" />
+	</bean>
+	
+	<!-- Items -->
+	
+	<bean id="item1" class="domain.Item">
+		<property name="name" value="name" />
+		<property name="identifier" value="20170521-b73" />
+		<property name="itemCondition" value="GOOD" />
+		<property name="description" value="description" />
+		<property name="picture" value="" />
+		<property name="section" ref="section1" />
+	</bean>
+	
+	<bean id="item2" class="domain.Item">
+		<property name="name" value="name" />
+		<property name="identifier" value="20170521-b72" />
+		<property name="itemCondition" value="GOOD" />
+		<property name="description" value="description" />
+		<property name="picture" value="" />
+		<property name="section" ref="section1" />
+	</bean>
+	
+	<bean id="item3" class="domain.Item">
+		<property name="name" value="name" />
+		<property name="identifier" value="20170521-b71" />
+		<property name="itemCondition" value="GOOD" />
+		<property name="description" value="description" />
+		<property name="picture" value="" />
+		<property name="section" ref="section1" />
+	</bean>
+	
+	<bean id="item4" class="domain.Item">
+		<property name="name" value="name" />
+		<property name="identifier" value="20170521-b70" />
+		<property name="itemCondition" value="BAD" />
+		<property name="description" value="description" />
+		<property name="picture" value="" />
+		<property name="section" ref="section1" />
+	</bean>
+	
+	<bean id="item5" class="domain.Item">
+		<property name="name" value="name" />
+		<property name="identifier" value="20170521-b79" />
+		<property name="itemCondition" value="LOAN" />
+		<property name="description" value="description" />
+		<property name="picture" value="" />
+		<property name="section" ref="section1" />
+	</bean>
+	
+	<bean id="item6" class="domain.Item">
+		<property name="name" value="name" />
+		<property name="identifier" value="20170521-b78" />
+		<property name="itemCondition" value="EXCELENT" />
+		<property name="description" value="description" />
+		<property name="picture" value="" />
+		<property name="section" ref="section1" />
+	</bean>
+	
+	<!-- Loans -->
+	
+	<bean id="loan1" class="domain.Loan">
+		<property name="startDate" value="2017/03/21 14:00" />
+		<property name="expectedDate" value="2017/03/24 14:00" />
+		<property name="finalDate" value="2017/07/23 14:00" />
+		<property name="item" ref="item1" />
+		<property name="lender" ref="user1" />
+		<property name="borrower" ref="user2" />
+	</bean>
+	
+	<bean id="loan2" class="domain.Loan">
+		<property name="startDate" value="2017/03/21 14:00" />
+		<property name="expectedDate" value="2017/03/24 14:00" />
+		<property name="finalDate" value="2017/07/23 14:00" />
+		<property name="item" ref="item2" />
+		<property name="lender" ref="user1" />
+		<property name="borrower" ref="user2" />
+	</bean>
+	
+	<bean id="loan3" class="domain.Loan">
+		<property name="startDate" value="2017/03/21 14:00" />
+		<property name="expectedDate" value="2017/03/24 14:00" />
+		<property name="finalDate" value="2017/07/23 14:00" />
+		<property name="item" ref="item3" />
+		<property name="lender" ref="user1" />
+		<property name="borrower" ref="user2" />
+	</bean>
+	
+	<bean id="loan4" class="domain.Loan">
+		<property name="startDate" value="2017/03/21 14:00" />
+		<property name="expectedDate" value="2017/03/24 14:00" />
+		<property name="finalDate" value="2017/07/23 14:00" />
+		<property name="item" ref="item4" />
+		<property name="lender" ref="user1" />
+		<property name="borrower" ref="user2" />
+	</bean>
+	
+	<bean id="loan5" class="domain.Loan">
+		<property name="startDate" value="2017/03/21 14:00" />
+		<property name="expectedDate" value="2017/03/24 14:00" />
+		<property name="finalDate" value="2017/07/23 14:00" />
+		<property name="item" ref="item5" />
+		<property name="lender" ref="user1" />
+		<property name="borrower" ref="user2" />
+	</bean>
+	
+	<bean id="loan6" class="domain.Loan">
+		<property name="startDate" value="2017/03/21 14:00" />
+		<property name="expectedDate" value="2017/03/24 14:00" />
+		<property name="finalDate" value="2017/07/23 14:00" />
+		<property name="item" ref="item6" />
+		<property name="lender" ref="user1" />
+		<property name="borrower" ref="user2" />
+	</bean>
+	
+	<!-- Minutes -->
+	
+	<bean id="minutes1" class="domain.Minute">
+		<property name="document" value="www.google.es" />
+		<property name="users">
 			<list>
-				<value>http://i.imgur.com/lDhkAcr.jpg</value>
-				<value>http://i.imgur.com/hZkZS9z.jpg</value>
-				<value>http://i.imgur.com/bP4ykEJ.jpg</value>
+				<ref bean="chorbi2"></ref>
+				<ref bean="chorbi3"></ref>
 			</list>
-		</property>
-		<property name="cacheTime" value="07/04/2017 12:00:00"/>
-		<property name="feeManager" value="1.0"/>
-		<property name="feeChorbi" value="1.0"/>
+		</property>	
+		<property name="meeting" ref="meeting1" />
+	</bean>
+	
+	<bean id="minutes2" class="domain.Minutes">
+		<property name="document" value="www.google.es" />
+		<property name="users">
+			<list>
+				<ref bean="chorbi2"></ref>
+				<ref bean="chorbi3"></ref>
+			</list>
+		</property>	
+		<property name="meeting" ref="meeting2" />
+	</bean>
+	
+	<bean id="minutes3" class="domain.Minutes">
+		<property name="document" value="www.google.es" />
+		<property name="users">
+			<list>
+				<ref bean="chorbi2"></ref>
+				<ref bean="chorbi3"></ref>
+			</list>
+		</property>	
+		<property name="meeting" ref="meeting3" />
+	</bean>
+	
+	<bean id="minutes4" class="domain.Minute">
+		<property name="document" value="www.google.es" />
+		<property name="users">
+			<list>
+				<ref bean="chorbi2"></ref>
+				<ref bean="chorbi3"></ref>
+			</list>
+		</property>	
+		<property name="meeting" ref="meeting4" />
+	</bean>
+	
+	<bean id="minutes5" class="domain.Minute">
+		<property name="document" value="www.google.es" />
+		<property name="users">
+			<list>
+				<ref bean="chorbi2"></ref>
+				<ref bean="chorbi3"></ref>
+			</list>
+		</property>	
+		<property name="meeting" ref="meeting5" />
+	</bean>
+	
+	<bean id="minutes6" class="domain.Minute">
+		<property name="document" value="www.google.es" />
+		<property name="users">
+			<list>
+				<ref bean="chorbi2"></ref>
+				<ref bean="chorbi3"></ref>
+			</list>
+		</property>	
+		<property name="meeting" ref="meeting6" />
 	</bean>
 	
 </beans>
