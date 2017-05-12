@@ -1,9 +1,12 @@
 
 package repositories;
 
-import org.joda.time.Minutes;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import domain.Minutes;
+
+@Repository
 public interface MinutesRepository extends JpaRepository<Minutes, Integer> {
 
 }
