@@ -9,6 +9,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -64,6 +65,7 @@ public class Activity extends DomainEntity {
 		this.maximumAttendants = maximumAttendants;
 	}
 
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getStartMoment() {
@@ -73,6 +75,7 @@ public class Activity extends DomainEntity {
 		this.startMoment = startMoment;
 	}
 
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getEndMoment() {
@@ -93,8 +96,9 @@ public class Activity extends DomainEntity {
 	// Relationships ----------------------------------------------------------
 
 	private Association			association;
-	private Collection<User>	users;
+	private Collection<User>	attendants;
 	private Place				place;
+	private User				winner;
 
 
 	@Valid
@@ -110,16 +114,24 @@ public class Activity extends DomainEntity {
 	@Valid
 	@NotNull
 	@ManyToMany
-	public Collection<User> getUsers() {
-		return this.users;
+	public Collection<User> getAttendants() {
+		return this.attendants;
 	}
-	public void setUsers(final Collection<User> users) {
-		this.users = users;
+	public void setAttendants(final Collection<User> attendants) {
+		this.attendants = attendants;
 	}
 
 	@Valid
-	@NotNull
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
+	public User getWinner() {
+		return this.winner;
+	}
+	public void setWinner(final User winner) {
+		this.winner = winner;
+	}
+
+	@Valid
+	@OneToOne(optional = true)
 	public Place getPlace() {
 		return this.place;
 	}

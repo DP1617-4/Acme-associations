@@ -35,7 +35,7 @@ public class Meeting extends Commentable {
 	private String	issue;
 
 
-	@NotBlank
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getMoment() {

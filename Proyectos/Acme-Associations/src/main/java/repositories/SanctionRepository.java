@@ -4,9 +4,9 @@ package repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import domain.Minutes;
+import domain.Sanction;
 
 @Repository
-public interface MinutesRepository extends JpaRepository<Minutes, Integer> {
+public interface SanctionRepository extends JpaRepository<Sanction, Integer> {
 
 }

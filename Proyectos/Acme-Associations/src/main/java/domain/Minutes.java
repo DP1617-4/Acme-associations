@@ -7,7 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -47,7 +47,7 @@ public class Minutes extends Commentable {
 
 	@Valid
 	@NotNull
-	@ManyToOne(optional = false)
+	@OneToOne(optional = false)
 	public Meeting getMeeting() {
 		return this.meeting;
 	}

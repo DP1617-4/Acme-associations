@@ -3,6 +3,7 @@ package domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
@@ -35,7 +36,7 @@ public class Item extends Commentable {
 
 	private String				name;
 	private String				identifier;
-	private String				condition;
+	private String				itemCondition;
 	private String				description;
 	private String				picture;
 
@@ -49,6 +50,8 @@ public class Item extends Commentable {
 	}
 
 	@NotBlank
+	@Column(unique = true)
+	@Pattern(regexp = "\\d{8}-.{3}")
 	public String getIdentifier() {
 		return this.identifier;
 	}
@@ -57,12 +60,12 @@ public class Item extends Commentable {
 	}
 
 	@NotBlank
-	@Pattern(regexp = "^" + Item.BAD + "|" + Item.EXCELENT + "|" + Item.GOOD + Item.LOAN + "|" + Item.MODERATE + "|" + Item.PRIZE + "$")
-	public String getCondition() {
-		return this.condition;
+	@Pattern(regexp = "^" + Item.BAD + "|" + Item.EXCELENT + "|" + Item.GOOD + "|" + Item.LOAN + "|" + Item.MODERATE + "|" + Item.PRIZE + "$")
+	public String getItemCondition() {
+		return this.itemCondition;
 	}
-	public void setCondition(final String condition) {
-		this.condition = condition;
+	public void setItemCondition(final String itemCondition) {
+		this.itemCondition = itemCondition;
 	}
 
 	@NotBlank
@@ -73,7 +76,6 @@ public class Item extends Commentable {
 		this.description = description;
 	}
 
-	@NotBlank
 	public String getPicture() {
 		return this.picture;
 	}

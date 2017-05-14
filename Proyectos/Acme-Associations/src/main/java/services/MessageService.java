@@ -6,15 +6,14 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.MessageRepository;
 import domain.Actor;
+import domain.Folder;
+import domain.Message;
 
 @Service
 @Transactional
@@ -38,7 +37,7 @@ public class MessageService {
 	private ActorService			actorService;
 
 	@Autowired
-	private UserService				userService;
+	private ActorService			userService;
 
 	@Autowired
 	private AdministratorService	adminService;
@@ -107,13 +106,13 @@ public class MessageService {
 
 	public Message send(final Message message) {
 
-		User recipient;
+		Actor recipient;
 		Folder recipientFolder;
 		Folder senderFolder;
-		User sender;
+		Actor sender;
 
 		sender = this.userService.findByPrincipal();
-		recipient = (User) message.getRecipient();
+		recipient = message.getRecipient();
 
 		recipientFolder = this.folderService.findSystemFolder(recipient, "Received");
 		senderFolder = this.folderService.findSystemFolder(sender, "Sent");
@@ -158,22 +157,17 @@ public class MessageService {
 	public Message reply(final Message message) {
 		final Message result;
 		result = this.create();
-		Collection<String> attachments;
-		attachments = new ArrayList<String>(message.getAttachments());
-		result.setAttachments(attachments);
-		result.setSubject("Re: " + message.getSubject());
+		result.setTitle("Re: " + message.getTitle());
 		result.setRecipient(message.getSender());
 
 		return result;
 	}
 
-	public Message reSend(final Message message, final User user) {
+	public Message reSend(final Message message, final Actor user) {
 
 		Message result;
 		result = this.create();
-		final Collection<String> attachments = new ArrayList<String>(message.getAttachments());
-		result.setAttachments(attachments);
-		result.setSubject(message.getSubject());
+		result.setTitle(message.getTitle());
 		result.setText(message.getText());
 		result.setRecipient(user);
 		this.send(result);
@@ -181,63 +175,63 @@ public class MessageService {
 		return result;
 	}
 
-	public Message broadcast(final MessageBroadcast message) {
+	//	public Message broadcast(final MessageBroadcast message) {
+	//
+	//		Message message;
+	//		message = this.create();
+	//
+	//		String subject = message.getSubject();
+	//		subject = "BROAD: " + subject;
+	//
+	//		message.setAttachments(message.getAttachments());
+	//		message.setSubject(subject);
+	//		message.setText(message.getText());
+	//		message.setMoment(new Date(System.currentTimeMillis() - 1));
+	//
+	//		Collection<User> recipients;
+	//		final Pageable page = new PageRequest(0, 100); //Second index is the size of the page
+	//		recipients = this.userService.findUseresRegisteredEvent(message.getEvent().getId(), page);
+	//
+	//		while (!recipients.isEmpty()) {
+	//
+	//			for (final User c : recipients) {
+	//				final Folder recipientFolder = this.folderService.findSystemFolder(c, "Received");
+	//				message.setFolder(recipientFolder);
+	//				message.setRecipient(c);
+	//				this.messageRepository.save(message);
+	//			}
+	//			recipients = this.userService.findUseresRegisteredEvent(message.getEvent().getId(), page.next());
+	//		}
+	//
+	//		return message;
+	//	}
 
-		Message message;
-		message = this.create();
-
-		String subject = message.getSubject();
-		subject = "BROAD: " + subject;
-
-		message.setAttachments(message.getAttachments());
-		message.setSubject(subject);
-		message.setText(message.getText());
-		message.setMoment(new Date(System.currentTimeMillis() - 1));
-
-		Collection<User> recipients;
-		final Pageable page = new PageRequest(0, 100); //Second index is the size of the page
-		recipients = this.userService.findUseresRegisteredEvent(message.getEvent().getId(), page);
-
-		while (!recipients.isEmpty()) {
-
-			for (final User c : recipients) {
-				final Folder recipientFolder = this.folderService.findSystemFolder(c, "Received");
-				message.setFolder(recipientFolder);
-				message.setRecipient(c);
-				this.messageRepository.save(message);
-			}
-			recipients = this.userService.findUseresRegisteredEvent(message.getEvent().getId(), page.next());
-		}
-
-		return message;
-	}
-
-	public void automaticMessage(final Event event) {
-
-		Message message;
-		Collection<User> recipients;
-
-		message = this.create();
-		final Pageable page = new PageRequest(0, 100); //Second index is the size of the page
-		recipients = this.userService.findUseresRegisteredEvent(event.getId(), page);
-
-		final String text = "The event " + event.getTitle() + " in which you are registered has been edited or deleted \n" + "El evento " + event.getTitle() + " en el que está registrado ha sido modificado o borrado";
-		final String subject = event.getTitle() + " Warn";
-
-		message.setSubject(subject);
-		message.setText(text);
-		message.setMoment(new Date(System.currentTimeMillis() - 1));
-		while (!recipients.isEmpty()) {
-			for (final User c : recipients) {
-				final Folder recipientFolder = this.folderService.findSystemFolder(c, "Received");
-				message.setFolder(recipientFolder);
-				message.setRecipient(c);
-				this.messageRepository.save(message);
-
-			}
-			recipients = this.userService.findUseresRegisteredEvent(event.getId(), page.next());
-		}
-	}
+	//	public void automaticMessage(final Event event) {
+	//
+	//		Message message;
+	//		Collection<User> recipients;
+	//
+	//		message = this.create();
+	//		final Pageable page = new PageRequest(0, 100); //Second index is the size of the page
+	//		recipients = this.userService.findUseresRegisteredEvent(event.getId(), page);
+	//
+	//		final String text = "The event " + event.getTitle() + " in which you are registered has been edited or deleted \n" + "El evento " + event.getTitle() + " en el que está registrado ha sido modificado o borrado";
+	//		final String subject = event.getTitle() + " Warn";
+	//
+	//		message.setSubject(subject);
+	//		message.setText(text);
+	//		message.setMoment(new Date(System.currentTimeMillis() - 1));
+	//		while (!recipients.isEmpty()) {
+	//			for (final User c : recipients) {
+	//				final Folder recipientFolder = this.folderService.findSystemFolder(c, "Received");
+	//				message.setFolder(recipientFolder);
+	//				message.setRecipient(c);
+	//				this.messageRepository.save(message);
+	//
+	//			}
+	//			recipients = this.userService.findUseresRegisteredEvent(event.getId(), page.next());
+	//		}
+	//	}
 	// Principal Checkers
 
 	public void checkPrincipalSender(final Message message) {
