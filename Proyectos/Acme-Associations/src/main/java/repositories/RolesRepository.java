@@ -17,4 +17,7 @@ public interface RolesRepository extends JpaRepository<Roles, Integer> {
 
 	@Query("select r from Roles r where r.user.id =?1")
 	Collection<Roles> findAllByUser(int userId);
+
+	@Query("select r from Roles r where r.association.adminClosed = false and r.association.associationClosed = false")
+	Collection<Roles> findAllNotClosed();
 }

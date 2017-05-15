@@ -142,7 +142,7 @@
 	
 	<bean id="administrator2" class="domain.Administrator">
 		<property name="name" value="System" />
-		<property name="surname" value="system" />
+		<property name="surname" value="administrator" />
 		<property name="email" value="system@gmail.com" />
 		<property name="phoneNumber" value="2345" />
 		<property name="postalAddress" value="casa" />
