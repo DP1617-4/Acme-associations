@@ -13,55 +13,62 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-<div>
-	<img src="images/logo.png" alt="Sample Co., Inc." height="150"/>
-</div>
+<nav class="navbar navbar-inverse navbar-fixed-top navbar-collapse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed"
+        data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">MyLooks</span> <span class="icon-bar"></span>
+        <span class="icon-bar"></span> <span class="icon-bar"></span>
+      </button>
+      <a href="#" class="navbar-brand"><img onError="imgError(this);"
+        src="images/YTijeraBlanco.png" width="80px" height="25px" /></a>
+    </div>
+    <div class="collapse navbar-collapse"
+      id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
 
-<div>
-	<ul id="jMenu">
-		<!-- Do not forget the "fNiv" class for the first level links !! -->
-		<security:authorize access="hasRole('ADMIN')">
-			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="administrator/action-1.do"><spring:message code="master.page.administrator.action.1" /></a></li>
-					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>					
-				</ul>
-			</li>
-		</security:authorize>
-		
-		<security:authorize access="hasRole('CUSTOMER')">
-			<li><a class="fNiv"><spring:message	code="master.page.customer" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="customer/action-1.do"><spring:message code="master.page.customer.action.1" /></a></li>
-					<li><a href="customer/action-2.do"><spring:message code="master.page.customer.action.2" /></a></li>					
-				</ul>
-			</li>
-		</security:authorize>
-		
-		<security:authorize access="isAnonymous()">
-			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
-		</security:authorize>
-		
-		<security:authorize access="isAuthenticated()">
-			<li>
-				<a class="fNiv"> 
-					<spring:message code="master.page.profile" /> 
-			        (<security:authentication property="principal.username" />)
-				</a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="profile/action-1.do"><spring:message code="master.page.profile.action.1" /></a></li>
-					<li><a href="profile/action-2.do"><spring:message code="master.page.profile.action.2" /></a></li>
-					<li><a href="profile/action-3.do"><spring:message code="master.page.profile.action.3" /></a></li>					
-					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
-				</ul>
-			</li>
-		</security:authorize>
-	</ul>
-</div>
+<security:authorize access="hasRole('ADMIN')">
 
-<div>
-	<a href="?language=en">en</a> | <a href="?language=es">es</a>
-</div>
+          <li><a href="owner/register.do"><spring:message
+                code="master.page.admin.registerOwner" /></a></li>
+</security:authorize>
+
+        <security:authorize access="hasRole('OWNER')">
+          <li><a href="owner/edit.do"><spring:message
+                code="master.page.owner.editOwner" /></a></li>
+          <li><a href="worker/owner/register.do"><spring:message
+                code="master.page.owner.createWorker" /></a></li>
+          <li><a href="establishment/owner/listByOwner.do"><spring:message
+                code="master.page.owner.list" /></a></li>
+          <li><a class="fNiv" href="establishment/owner/0/edit.do"><spring:message
+                code="master.page.establishments.create" /></a></li>
+        </security:authorize>
+
+        <li><a class="fNiv" href="establishment/list.do"><spring:message
+              code="master.page.establishments" /></a></li>
+
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <security:authorize access="isAnonymous()">
+            <li class="dropdown"><a href="security/login.do" ><b>Login</b> </a>
+              </li>
+        </security:authorize>
+        <security:authorize access="isAuthenticated()">
+          <li class="dropdown"><a href="#" class="dropdown-toggle fNiv" data-toggle="dropdown" type="button">
+              <div class="avatar">
+                <img onError="imgError(this);" src="${actor.picture }" />
+              </div>
+          </a>
+            <ul class="dropdown-menu">
+              <li class="arrow"></li>
+
+              
+              <li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
+            </ul></li>
+        </security:authorize>
+      </ul>
+    </div>
+  </div>
+</nav>

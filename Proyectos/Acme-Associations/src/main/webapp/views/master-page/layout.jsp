@@ -35,8 +35,7 @@
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
 
 
-<script src="js/bootstrap.min.js"></script>
-<script src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
 
 <!-- Bootstrap core CSS -->
     <!-- <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
@@ -79,6 +78,8 @@
 	<div>
 		<tiles:insertAttribute name="header" />
 	</div>
+	<br> </br>
+	<br> </br>
 	<div>
 		<h1>
 			<tiles:insertAttribute name="title" />
@@ -94,7 +95,6 @@
 	</div>
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="/bootstrap/js/bootstrap.js"></script>
 
 </body>
 </html>
