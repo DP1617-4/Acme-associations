@@ -6,14 +6,21 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.MessageRepository;
 import domain.Actor;
+import domain.Administrator;
+import domain.Association;
 import domain.Folder;
 import domain.Message;
+import domain.Request;
+import domain.User;
+import forms.MessageBroadcast;
 
 @Service
 @Transactional
@@ -37,7 +44,7 @@ public class MessageService {
 	private ActorService			actorService;
 
 	@Autowired
-	private ActorService			userService;
+	private UserService				userService;
 
 	@Autowired
 	private AdministratorService	adminService;
@@ -175,37 +182,75 @@ public class MessageService {
 		return result;
 	}
 
-	//	public Message broadcast(final MessageBroadcast message) {
-	//
-	//		Message message;
-	//		message = this.create();
-	//
-	//		String subject = message.getSubject();
-	//		subject = "BROAD: " + subject;
-	//
-	//		message.setAttachments(message.getAttachments());
-	//		message.setSubject(subject);
-	//		message.setText(message.getText());
-	//		message.setMoment(new Date(System.currentTimeMillis() - 1));
-	//
-	//		Collection<User> recipients;
-	//		final Pageable page = new PageRequest(0, 100); //Second index is the size of the page
-	//		recipients = this.userService.findUseresRegisteredEvent(message.getEvent().getId(), page);
-	//
-	//		while (!recipients.isEmpty()) {
-	//
-	//			for (final User c : recipients) {
-	//				final Folder recipientFolder = this.folderService.findSystemFolder(c, "Received");
-	//				message.setFolder(recipientFolder);
-	//				message.setRecipient(c);
-	//				this.messageRepository.save(message);
-	//			}
-	//			recipients = this.userService.findUseresRegisteredEvent(message.getEvent().getId(), page.next());
-	//		}
-	//
-	//		return message;
-	//	}
+	public Message broadcast(final MessageBroadcast messageBroad) {
 
+		Message message;
+		User principal;
+
+		principal = this.userService.findByPrincipal();
+		message = this.create();
+
+		message.setTitle("BROAD: " + messageBroad.getAssociation().getName());
+		message.setText(messageBroad.getText());
+		message.setMoment(new Date(System.currentTimeMillis() - 1));
+		message.setSender(principal);
+
+		Collection<User> recipients;
+		final Pageable page = new PageRequest(0, 100); //Second index is the size of the page
+		recipients = this.userService.findAllByAssociation(messageBroad.getAssociation(), page);
+
+		while (!recipients.isEmpty()) {
+
+			for (final User c : recipients) {
+				final Folder recipientFolder = this.folderService.findSystemFolder(c, "Received");
+				message.setFolder(recipientFolder);
+				message.setRecipient(c);
+				this.messageRepository.save(message);
+			}
+			recipients = this.userService.findAllByAssociation(messageBroad.getAssociation(), page.next());
+		}
+
+		return message;
+	}
+	public Message sendAccepted(final Request request) {
+		Message message;
+		User user;
+		Association association;
+
+		user = request.getUser();
+		association = request.getAssociation();
+
+		final Administrator admin = this.adminService.findSystemAdministrator();
+		message = this.create();
+		message.setRecipient(user);
+		message.setSender(admin);
+		message.setText("You have been accepted in the association " + association.getName());
+		message.setTitle("AUTO: Request warning");
+
+		this.send(message);
+
+		return message;
+	}
+
+	public Message sendDenied(final Request request) {
+		Message message;
+		User user;
+		Association association;
+
+		user = request.getUser();
+		association = request.getAssociation();
+
+		final Administrator admin = this.adminService.findSystemAdministrator();
+		message = this.create();
+		message.setRecipient(user);
+		message.setSender(admin);
+		message.setText("your request for the association " + association.getName() + " has been denied");
+		message.setTitle("AUTO: Request warning");
+
+		this.send(message);
+
+		return message;
+	}
 	//	public void automaticMessage(final Event event) {
 	//
 	//		Message message;
