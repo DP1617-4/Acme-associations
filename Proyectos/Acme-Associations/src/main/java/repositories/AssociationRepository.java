@@ -18,7 +18,4 @@ public interface AssociationRepository extends JpaRepository<Association, Intege
 	@Query("select a from Association a where a.adminClosed = false and a.closedAssociation = false")
 	Collection<Association> findAllExceptBannedAndClosed();
 
-	@Query("select a from Association a where a.adminClosed = false")
-	Collection<Association> findAllByManager();
-
 }
