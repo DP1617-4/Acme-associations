@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import repositories.RequestRepository;
 import domain.Association;
 import domain.Request;
+import domain.Roles;
 import domain.User;
 
 @Service
@@ -21,6 +22,15 @@ public class RequestService {
 	//supporting services-------------------
 	@Autowired
 	private UserService			userService;
+
+	@Autowired
+	private AssociationService	associationService;
+
+	@Autowired
+	private MessageService		messageService;
+
+	@Autowired
+	private RolesService		rolesService;
 
 
 	//Basic CRUD methods-------------------
@@ -56,6 +66,12 @@ public class RequestService {
 
 	}
 
+	public void delete(final Request request) {
+
+		this.requestRepository.delete(request.getId());
+
+	}
+
 	//Auxiliary methods
 
 	//Our other bussiness methods
@@ -76,6 +92,33 @@ public class RequestService {
 		Collection<Request> result;
 		result = this.requestRepository.findAllByAssociation(association.getId());
 		return result;
+	}
+
+	public void accept(final Request request) {
+
+		final User user;
+		final Association association;
+
+		user = request.getUser();
+		association = request.getAssociation();
+
+		this.messageService.sendAccepted(request);
+		this.rolesService.assignRoles(user, association, Roles.ASSOCIATE);
+		this.delete(request);
+
+	}
+
+	public void deny(final Request request) {
+
+		final User user;
+		final Association association;
+
+		user = request.getUser();
+		association = request.getAssociation();
+
+		this.messageService.sendDenied(request);
+		this.delete(request);
+
 	}
 
 }
