@@ -31,9 +31,21 @@
 <script type="text/javascript" src="scripts/jmenu.js"></script>
 
 <link rel="stylesheet" href="styles/common.css" type="text/css">
-<link rel="stylesheet" href="styles/jmenu.css" media="screen"
-	type="text/css" />
+<link rel="stylesheet" href="styles/jmenu.css" media="screen" type="text/css" />
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
+
+
+<script type="text/javascript" src="js/bootstrap.js"></script>
+
+<!-- Bootstrap core CSS -->
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <!-- <link href="css/bootstrap-grid.min.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap-reboot.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap-reboot.min.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap-grid.css" rel="stylesheet" type="text/css"> -->
+
+    <!-- Custom styles for this template -->
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
@@ -66,6 +78,8 @@
 	<div>
 		<tiles:insertAttribute name="header" />
 	</div>
+	<br> </br>
+	<br> </br>
 	<div>
 		<h1>
 			<tiles:insertAttribute name="title" />
@@ -79,6 +93,8 @@
 	<div>
 		<tiles:insertAttribute name="footer" />
 	</div>
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
 </body>
 </html>
