@@ -93,7 +93,7 @@ public class RolesService {
 
 		Roles role;
 		role = this.roleRepository.findRolesByUserAssociation(user.getId(), association.getId());
-		Assert.isTrue(role.getType().equals("MANAGER"));
+		Assert.isTrue(role.getType().equals("MANAGER"), "association.role.manager.error");
 
 	}
 
@@ -101,7 +101,7 @@ public class RolesService {
 
 		Roles role;
 		role = this.roleRepository.findRolesByUserAssociation(user.getId(), association.getId());
-		Assert.isTrue(role.getType().equals("MANAGER") || role.getType().equals("COLLABORATOR"));
+		Assert.isTrue(role.getType().equals("MANAGER") || role.getType().equals("COLLABORATOR"), "association.role.collaborator.error");
 
 	}
 
@@ -109,10 +109,9 @@ public class RolesService {
 
 		Roles role;
 		role = this.roleRepository.findRolesByUserAssociation(user.getId(), association.getId());
-		Assert.notNull(role);
+		Assert.notNull(role, "association.role.associate.error");
 
 	}
-
 	public void flush() {
 		this.roleRepository.flush();
 	}

@@ -7,6 +7,7 @@ import java.util.Collection;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -92,10 +93,10 @@ public class UserService {
 		return user;
 	}
 
-	public Collection<User> findAllByAssociation(final Association association) {
+	public Collection<User> findAllByAssociation(final Association association, final Pageable pageRequest) {
 
 		Collection<User> result;
-		result = this.userRepository.findAllByAssociation(association.getId());
+		result = this.userRepository.findAllByAssociation(association.getId(), pageRequest);
 		return result;
 
 	}
