@@ -32,7 +32,11 @@
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 
 		<security:intercept-url pattern="/scripts/**" access="permitAll" /> 
-		<security:intercept-url pattern="/styles/**" access="permitAll" /> 
+		<security:intercept-url pattern="/styles/**" access="permitAll" />
+		<security:intercept-url pattern="/bootstrap/**" access="permitAll" /> 
+		<security:intercept-url pattern="/css/**" access="permitAll" /> 
+		<security:intercept-url pattern="/js/**" access="permitAll" /> 
+		
 
 		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" /> 
 
@@ -43,6 +47,10 @@
 		
 		<!-- ACTOR --> 
 		<security:intercept-url pattern="/actor/actor/display.do**" access="isAuthenticated()" /> 
+		 
+		 <!-- Association -->
+		 
+		 <security:intercept-url pattern="/association/list.do**" access="permitAll" /> 
 		 
 		<!-- Redirects --> 
 		<security:intercept-url pattern="/redirect/**" access="permitAll" /> 
