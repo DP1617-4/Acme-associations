@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import repositories.AssociationRepository;
 import domain.Association;
+import domain.Roles;
 
 @Service
 @Transactional
@@ -19,8 +20,10 @@ public class AssociationService {
 	@Autowired
 	private AssociationRepository	associationRepository;
 
-
 	//supporting services --------------------------------------
+	@Autowired
+	private RolesService			rolesService;
+
 
 	// Constructors --------------------------------------------
 	public AssociationService() {
@@ -47,7 +50,9 @@ public class AssociationService {
 	}
 
 	public Association save(final Association association) {
-
+		Association result;
+		result = this.associationRepository.save(association);
+		return result;
 	}
 
 	public void delete(final Association association) {
@@ -55,7 +60,21 @@ public class AssociationService {
 	}
 
 	//Auxiliary methods ----------------------------------------
+	public void flush() {
+		this.associationRepository.flush();
+	}
 
 	//Our other bussiness methods ------------------------------
+	public Collection<Association> listByManager() {
+		final Collection<Association> result;
+		final Collection<Roles> rols = this.rolesService.findAllByPrincipal();
+		if (Roles.getType == Roles.MANAGER) {
+
+		}
+		Assert.notNull(manager);
+		Collection<Association> result;
+		result = this.associationRepository.findAllByPrincipal(manager.getId());
+		return result;
+	}
 
 }

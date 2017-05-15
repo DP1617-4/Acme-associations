@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.PlaceRepository;
 import domain.Place;
@@ -47,7 +48,10 @@ public class PlaceService {
 	}
 
 	public Place save(final Place place) {
-
+		Assert.notNull(place);
+		Place result;
+		result = this.placeRepository.save(place);
+		return result;
 	}
 
 	public void delete(final Place place) {
@@ -55,6 +59,9 @@ public class PlaceService {
 	}
 
 	//Auxiliary methods ----------------------------------------
+	public void flush() {
+		this.placeRepository.flush();
+	}
 
 	//Our other bussiness methods ------------------------------
 
