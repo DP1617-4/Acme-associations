@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import repositories.AssociationRepository;
 import domain.Association;
+import domain.User;
 
 @Service
 @Transactional
@@ -25,6 +26,9 @@ public class AssociationService {
 
 	@Autowired
 	private UserService				userService;
+
+	@Autowired
+	private AdministratorService	adminService;
 
 
 	// Constructors --------------------------------------------
@@ -64,6 +68,28 @@ public class AssociationService {
 	//Auxiliary methods ----------------------------------------
 	public void flush() {
 		this.associationRepository.flush();
+	}
+
+	public void banAssociation(final int associationId) {
+		this.adminService.checkAdministrator();
+		Association association;
+		association = this.associationRepository.findOne(associationId);
+		if (association.getAdminClosed())
+			association.setAdminClosed(false);
+		else
+			association.setAdminClosed(true);
+		this.associationRepository.save(association);
+	}
+
+	public void closeAssociationByManager(final int associationId) {
+		final User user = this.userService.findByPrincipal();
+		final Association association = this.associationRepository.findOne(associationId);
+		this.rolesService.checkManager(user, association);
+		if (association.getClosedAssociation())
+			association.setClosedAssociation(false);
+		else
+			association.setClosedAssociation(true);
+		this.associationRepository.save(association);
 	}
 
 	//Our other bussiness methods ------------------------------
