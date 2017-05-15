@@ -92,6 +92,12 @@ public class AssociationService {
 		this.associationRepository.save(association);
 	}
 
+	public Collection<Association> findAllExceptBannedAndClosed() {
+		Collection<Association> result;
+		result = this.associationRepository.findAllExceptBannedAndClosed();
+		return result;
+	}
+
 	//Our other bussiness methods ------------------------------
 	//	public Collection<Association> listByManager() {
 	//		Collection<Association> result;
