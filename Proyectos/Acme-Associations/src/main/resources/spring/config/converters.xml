@@ -25,10 +25,19 @@
 		<bean class="converters.AdministratorToStringConverter" />
 		<bean class="converters.StringToAdministratorConverter" />
 		
+		<bean class="converters.ActivityToStringConverter" />
+		<bean class="converters.StringToActivityConverter" />
+		
+		<bean class="converters.AssociationToStringConverter" />
+		<bean class="converters.StringToAssociationConverter" />
+		
+		<bean class="converters.CommentableToStringConverter" />
+		<bean class="converters.StringToCommentableConverter" />
+		
 		<bean class="converters.AuthorityToStringConverter" />
 		<bean class="converters.StringToAuthorityConverter" />
 		
-		<bean class="converters.MessagerToStringConverter" />
+		<bean class="converters.MessageToStringConverter" />
 		<bean class="converters.StringToMessageConverter" />
 		
 		<bean class="converters.FolderToStringConverter" />
@@ -39,6 +48,39 @@
 		
 		<bean class="converters.UserAccountToStringConverter" />
 		<bean class="converters.StringToUserAccountConverter" />
+		
+		<bean class="converters.CommentableToStringConverter" />
+		<bean class="converters.StringToCommentableConverter" />
+		
+		<bean class="converters.ItemToStringConverter" />
+		<bean class="converters.StringToItemConverter" />
+		
+		<bean class="converters.LoanToStringConverter" />
+		<bean class="converters.StringToLoanConverter" />	
+		
+		<bean class="converters.MeetingToStringConverter" />
+		<bean class="converters.StringToMeetingConverter" />
+		
+		<bean class="converters.MinutesToStringConverter" />
+		<bean class="converters.StringToMinutesConverter" />
+		
+		<bean class="converters.PlaceToStringConverter" />
+		<bean class="converters.StringToPlaceConverter" />
+		
+		<bean class="converters.RequestToStringConverter" />
+		<bean class="converters.StringToRequestConverter" />
+		
+		<bean class="converters.RolesToStringConverter" />
+		<bean class="converters.StringToRolesConverter" />
+		
+		<bean class="converters.SanctionToStringConverter" />
+		<bean class="converters.StringToSanctionConverter" />
+		
+		<bean class="converters.SectionToStringConverter" />
+		<bean class="converters.StringToSectionConverter" />
+		
+		<bean class="converters.UserToStringConverter" />
+		<bean class="converters.StringToUserConverter" />
 		
 	</util:list>
 	
