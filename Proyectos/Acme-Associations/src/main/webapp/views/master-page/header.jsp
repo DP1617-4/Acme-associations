@@ -14,6 +14,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <nav class="navbar navbar-inverse navbar-fixed-top navbar-collapse">
+
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed"
@@ -21,14 +22,14 @@
         <span class="sr-only">Acme Associations</span> <span class="icon-bar"></span>
         <span class="icon-bar"></span> <span class="icon-bar"></span>
       </button>
-      <a href="#" class="navbar-brand"><img onError="imgError(this);"
-        src="images/YTijeraBlanco.png" width="80px" height="25px" /></a>
+      <a href="welcome/index.do" class="navbar-brand"><img onError="imgError(this);"
+        src="https://i.imgur.com/i8YWDoL.png" height="50px" /></a>
     </div>
     <div class="collapse navbar-collapse"
       id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav navbar-right">
 
-<security:authorize access="hasRole('ADMIN')">
+	<security:authorize access="hasRole('ADMIN')">
 
          <li><a class="fNiv" href="association/administrator/list.do"><spring:message code="master.page.association.list" /></a></li>
 		<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
@@ -39,7 +40,7 @@
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>				
 				</ul>
 			</li>
-</security:authorize>
+		</security:authorize>
 
         <security:authorize access="hasRole('USER')">
 			<li class="dropdown"></li>
@@ -62,13 +63,23 @@
         
 
 
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
+      
+      
         <security:authorize access="isAnonymous()">
         	<li><a class="fNiv" href="association/list.do"><spring:message
               code="master.page.association" /></a></li>
-            <li class="Fniv"><a href="security/login.do" ><b>Login</b> </a></li>
              <li><a class="fNiv" href="user/register.do"><spring:message code="master.page.register.as.user" /></a></li>
+             <li class="Fniv"><a href="security/login.do" ><b>Login</b> </a></li>
+              <div class="dropdown-menu">
+  				<button class="dropbtn">Dropdown</button>
+  				<div class="dropdown-content">
+    				<a href="#">Link 1</a>
+    				<a href="#">Link 2</a>
+    				<a href="#">Link 3</a>
+  				</div>
+			  </div>
+
+			 </ul>
         </security:authorize>
         <security:authorize access="isAuthenticated()">
         		
@@ -77,4 +88,5 @@
       </ul>
     </div>
   </div>
-</nav>
+</nav> 
+
