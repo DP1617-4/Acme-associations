@@ -18,6 +18,10 @@ import repositories.UserRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
+
 import domain.Association;
 import domain.User;
 import forms.RegisterUser;
@@ -165,4 +169,31 @@ public class UserService {
 		this.userRepository.flush();
 	}
 
+	public void phoneValidator(final User user) {
+
+		//returns exception if user number is not valid.
+
+		final String phoneNumber = user.getPhoneNumber();
+		final PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+		String number;
+		String cCode;
+		int code;
+		int num;
+		final String[] phone = phoneNumber.split(" ", 2);
+
+		number = phone[1];
+		cCode = phone[0];
+		cCode = cCode.replaceAll("+", "");
+		code = Integer.parseInt(cCode);
+		num = Integer.parseInt(number);
+
+		PhoneNumber checkNum;
+
+		checkNum = new PhoneNumber();
+		checkNum.setCountryCode(code);
+		checkNum.setNationalNumber(num);
+
+		Assert.isTrue(phoneUtil.isValidNumber(checkNum));
+
+	}
 }
