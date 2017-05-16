@@ -28,6 +28,7 @@
 		<value>/views/terms/tiles.xml</value>
 		<value>/views/comment/tiles.xml</value>
 		<value>/views/association/tiles.xml</value>
+		<value>/views/user/tiles.xml</value>
 	</util:list>
 
 </beans>
