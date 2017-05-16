@@ -27,22 +27,19 @@ import forms.RegisterUser;
 public class UserService {
 
 	@Autowired
-	private UserRepository				userRepository;
+	private UserRepository			userRepository;
 
 	@Autowired
-	private AdministratorService		administratorService;
+	private AdministratorService	administratorService;
 
 	@Autowired
-	private FolderService				folderService;
+	private FolderService			folderService;
 
 	@Autowired
-	private AssociationService			associationService;
+	private AssociationService		associationService;
 
 	@Autowired
-	private Validator					validator;
-
-	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private Validator				validator;
 
 
 	public UserService() {
@@ -97,6 +94,14 @@ public class UserService {
 
 		Collection<User> result;
 		result = this.userRepository.findAllByAssociation(association.getId(), pageRequest);
+		return result;
+
+	}
+
+	public Collection<User> findAllByAssociation(final Association association) {
+
+		Collection<User> result;
+		result = this.userRepository.findAllByAssociation(association.getId());
 		return result;
 
 	}

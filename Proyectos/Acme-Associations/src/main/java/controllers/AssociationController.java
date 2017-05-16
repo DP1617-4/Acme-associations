@@ -43,7 +43,7 @@ public class AssociationController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 
-		final Collection<Association> associations = this.associationService.findAllNotBanned();
+		final Collection<Association> associations = this.associationService.findAllExceptBannedAndClosed();
 
 		result = new ModelAndView("association/list");
 		result.addObject("associations", associations);
