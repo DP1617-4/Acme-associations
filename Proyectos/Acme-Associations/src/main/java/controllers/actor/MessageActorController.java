@@ -18,8 +18,10 @@ import services.FolderService;
 import services.MessageService;
 import controllers.AbstractController;
 import domain.Actor;
+import domain.Association;
 import domain.Folder;
 import domain.Message;
+import forms.MessageBroadcast;
 
 @Controller
 @RequestMapping("/message/actor")
@@ -91,16 +93,9 @@ public class MessageActorController extends AbstractController {
 		Actor principal;
 		ModelAndView result;
 		Message sent;
-		Message message;
-
-		message = this.messageService.create();
-		message.setAttachments(messageAttach.getAttachments());
-		message.setRecipient(messageAttach.getRecipient());
-		message.setSubject(messageAttach.getSubject());
-		message.setText(messageAttach.getText());
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(messageAttach);
+			result = this.createEditModelAndView(message);
 		else
 			try {
 
@@ -108,41 +103,28 @@ public class MessageActorController extends AbstractController {
 				principal = this.actorService.findByPrincipal();
 				result = new ModelAndView("redirect:/message/actor/list.do?folderId=" + this.folderService.findSystemFolder(principal, "Sent").getId());
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(message, "message.commit.error", null);
+				result = this.createEditModelAndView(message, "message.commit.error");
 			}
 
 		return result;
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "attach")
-	public ModelAndView attach(final MessageAttach messageAttach) {
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "broadcast")
+	public ModelAndView broadcast(final MessageBroadcast messageBroad, final BindingResult binding) {
 		ModelAndView result;
+		Association association;
 
-		Message message;
-		String attachment;
+		association = messageBroad.getAssociation();
 
-		message = this.messageService.create();
-		message.setAttachments(messageAttach.getAttachments());
-		message.setRecipient(messageAttach.getRecipient());
-		message.setSubject(messageAttach.getSubject());
-		message.setText(messageAttach.getText());
-		attachment = messageAttach.getAttachment();
-
-		final Collection<String> attachments = messageAttach.getAttachments();
-
-		if (this.messageService.checkAttachment(messageAttach.getAttachment()))
+		if (binding.hasErrors())
+			result = new ModelAndView("redirect:/association/" + association.getId() + "/display");
+		else
 			try {
-				message.getAttachments().add(attachment);
-				result = this.createEditModelAndView(message);
+
+				result = new ModelAndView("redirect:/association/" + association.getId() + "/display");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(message, "message.commit.error", null);
+				result = new ModelAndView("redirect:/association/" + association.getId() + "/display");
 			}
-		else {
-
-			result = this.createEditModelAndView(message);
-			result.addObject("urlError", "message.attach.error");
-
-		}
 
 		return result;
 	}
@@ -165,83 +147,64 @@ public class MessageActorController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/resend", method = RequestMethod.POST, params = "save")
-	public ModelAndView resend(@Valid final ResendMessage resendMessage, final BindingResult binding) {
-		Actor principal;
-		ModelAndView result;
-		Message sent;
-		final Actor recipient;
+	//	@RequestMapping(value = "/resend", method = RequestMethod.POST, params = "save")
+	//	public ModelAndView resend(@Valid final ResendMessage resendMessage, final BindingResult binding) {
+	//		Actor principal;
+	//		ModelAndView result;
+	//		Message sent;
+	//		final Actor recipient;
+	//
+	//		if (binding.hasErrors())
+	//			result = new ModelAndView("redirect:/welcome/index.do");
+	//		else
+	//			try {
+	//				recipient = this.actorService.findOne(resendMessage.getRecipientId());
+	//				sent = this.messageService.findOne(resendMessage.getMessageId());
+	//				sent = this.messageService.reSend(sent, recipient);
+	//				principal = this.actorService.findByPrincipal();
+	//				result = new ModelAndView("redirect:/message/actor/list.do?folderId=" + this.folderService.findSystemFolder(principal, "Sent").getId());
+	//			} catch (final Throwable oops) {
+	//				result = new ModelAndView("redirect:/welcome/index.do");
+	//			}
+	//
+	//		return result;
+	//	}
 
-		if (binding.hasErrors())
-			result = new ModelAndView("redirect:/welcome/index.do");
-		else
-			try {
-				recipient = this.actorService.findOne(resendMessage.getRecipientId());
-				sent = this.messageService.findOne(resendMessage.getMessageId());
-				sent = this.messageService.reSend(sent, recipient);
-				principal = this.actorService.findByPrincipal();
-				result = new ModelAndView("redirect:/message/actor/list.do?folderId=" + this.folderService.findSystemFolder(principal, "Sent").getId());
-			} catch (final Throwable oops) {
-				result = new ModelAndView("redirect:/welcome/index.do");
-			}
-
-		return result;
-	}
-	@RequestMapping(value = "/reply", method = RequestMethod.GET)
-	public ModelAndView reply(@RequestParam final int messageId) {
-		ModelAndView result;
-		final Message message = this.messageService.findOne(messageId);
-		final Message reply = this.messageService.reply(message);
-
-		result = this.createEditModelAndView(reply);
-
-		return result;
-
-	}
+	//	@RequestMapping(value = "/reply", method = RequestMethod.GET)
+	//	public ModelAndView reply(@RequestParam final int messageId) {
+	//		ModelAndView result;
+	//		final Message message = this.messageService.findOne(messageId);
+	//		final Message reply = this.messageService.reply(message);
+	//
+	//		result = this.createEditModelAndView(reply);
+	//
+	//		return result;
+	//
+	//	}
 
 	// Ancillary methods ------------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(final Message message) {
 		ModelAndView result;
 
-		result = this.createEditModelAndView(message, null, null);
+		result = this.createEditModelAndView(message, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final MessageAttach messageAttach) {
-		ModelAndView result;
+	protected ModelAndView createEditModelAndView(final Message message, final String errorMessage) {
 
-		result = this.createEditModelAndView(null, null, messageAttach);
-
-		return result;
-	}
-
-	protected ModelAndView createEditModelAndView(final Message message, final String errorMessage, final MessageAttach ca) {
 		ModelAndView result;
 		Collection<Actor> actors;
+
 		actors = this.actorService.findAll();
-		if (ca == null) {
-			final MessageAttach messageAttach = new MessageAttach();
-			messageAttach.setAttachments(message.getAttachments());
-			messageAttach.setFolder(message.getFolder());
-			messageAttach.setMoment(message.getMoment());
-			messageAttach.setRecipient(message.getRecipient());
-			messageAttach.setSender(message.getSender());
-			messageAttach.setSubject(message.getSubject());
-			messageAttach.setText(message.getText());
-			actors = this.actorService.findAll();
 
-			result = new ModelAndView("message/edit");
-			result.addObject("message", errorMessage);
+		result = new ModelAndView("message/edit");
 
-			result.addObject("messageAttach", messageAttach);
-		} else {
-
-			result = new ModelAndView("message/edit");
-			result.addObject("messageAttach", ca);
-		}
+		result.addObject("errorMessage", errorMessage);
 		result.addObject("actors", actors);
+
 		return result;
+
 	}
 }

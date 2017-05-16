@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.AssociationService;
+import services.RolesService;
 import controllers.AbstractController;
 import domain.Association;
+import domain.Roles;
 
 @Controller
 @RequestMapping("/user/association")
@@ -26,20 +28,22 @@ public class UserAssociationController extends AbstractController {
 	@Autowired
 	private AssociationService	associationService;
 
+	@Autowired
+	private RolesService		rolesService;
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/listOwn", method = RequestMethod.GET)
 	public ModelAndView list() {
-		ModelAndView result;
+		final ModelAndView result;
 
-		final Collection<Association> associations = this.associationService.findAllByPrincipal();
+		final Collection<Roles> roles = this.rolesService.findAllByPrincipal();
 
 		result = new ModelAndView("association/list");
-		result.addObject("associations", associations);
-		result.addObject("requestURI", "/user/association/list.do");
+		result.addObject("roles", roles);
+		result.addObject("requestURI", "/user/association/listOwn.do");
 
 		return result;
 	}
-
 	//En esta debería haber un mensaje de confirmación al acceder al enlace
 	@RequestMapping(value = "/{association}/leave", method = RequestMethod.GET)
 	public ModelAndView leave(@PathVariable final Association association) {
@@ -61,7 +65,7 @@ public class UserAssociationController extends AbstractController {
 	public ModelAndView close(@PathVariable final Association association) {
 		ModelAndView result;
 
-		this.associationService.close(association);
+		this.associationService.closeAssociationByManager(association.getId());
 
 		result = new ModelAndView("redirect: /association/" + association.getId() + "/display.do");
 
@@ -72,7 +76,7 @@ public class UserAssociationController extends AbstractController {
 	public ModelAndView open(@PathVariable final Association association) {
 		ModelAndView result;
 
-		this.associationService.open(association);
+		this.associationService.closeAssociationByManager(association.getId());
 
 		result = new ModelAndView("redirect: /association/" + association.getId() + "/display.do");
 
