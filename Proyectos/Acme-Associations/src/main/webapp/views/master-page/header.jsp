@@ -18,7 +18,7 @@
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed"
         data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">MyLooks</span> <span class="icon-bar"></span>
+        <span class="sr-only">Acme Associations</span> <span class="icon-bar"></span>
         <span class="icon-bar"></span> <span class="icon-bar"></span>
       </button>
       <a href="#" class="navbar-brand"><img onError="imgError(this);"
