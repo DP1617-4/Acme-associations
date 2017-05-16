@@ -45,8 +45,8 @@
                 code="master.page.establishments.create" /></a></li>
         </security:authorize>
 
-        <li><a class="fNiv" href="establishment/list.do"><spring:message
-              code="master.page.establishments" /></a></li>
+        <li><a class="fNiv" href="association/list.do"><spring:message
+              code="master.page.association" /></a></li>
 
 
       </ul>
@@ -56,17 +56,7 @@
               </li>
         </security:authorize>
         <security:authorize access="isAuthenticated()">
-          <li class="dropdown"><a href="#" class="dropdown-toggle fNiv" data-toggle="dropdown" type="button">
-              <div class="avatar">
-                <img onError="imgError(this);" src="${actor.picture }" />
-              </div>
-          </a>
-            <ul class="dropdown-menu">
-              <li class="arrow"></li>
-
-              
               <li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
-            </ul></li>
         </security:authorize>
       </ul>
     </div>

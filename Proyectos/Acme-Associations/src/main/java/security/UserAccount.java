@@ -1,11 +1,11 @@
-/*
- * UserAccount.java
- * 
+/* UserAccount.java
+ *
  * Copyright (C) 2017 Universidad de Sevilla
  * 
- * The use of this project is hereby constrained to the conditions of the
- * TDG Licence, a copy of which you may download from
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
  * http://www.tdg-seville.info/License.html
+ * 
  */
 
 package security;
@@ -34,8 +34,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 
 	// Constructors -----------------------------------------------------------
 
-	private static final long	serialVersionUID	= 7254823034213841482L;
-
+	private static final long serialVersionUID = 7254823034213841482L;
 
 	public UserAccount() {
 		super();
@@ -43,35 +42,32 @@ public class UserAccount extends DomainEntity implements UserDetails {
 		this.authorities = new ArrayList<Authority>();
 	}
 
-
 	// Attributes -------------------------------------------------------------
 
 	// UserDetails interface --------------------------------------------------
 
-	private String					username;
-	private String					password;
-	private boolean					isEnabled;
-	private Collection<Authority>	authorities;
-
+	private String username;
+	private String password;
+	private Collection<Authority> authorities;
 
 	@Size(min = 5, max = 32)
 	@Column(unique = true)
 	@Override
 	public String getUsername() {
-		return this.username;
+		return username;
 	}
 
-	public void setUsername(final String username) {
+	public void setUsername(String username) {
 		this.username = username;
 	}
 
 	@Size(min = 5, max = 32)
 	@Override
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
 
-	public void setPassword(final String password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
@@ -81,25 +77,25 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	@Override
 	public Collection<Authority> getAuthorities() {
 		// WARNING: Should return an unmodifiable copy, but it's not possible with hibernate!
-		return this.authorities;
+		return authorities;
 	}
 
-	public void setAuthorities(final Collection<Authority> authorities) {
+	public void setAuthorities(Collection<Authority> authorities) {
 		this.authorities = authorities;
 	}
 
-	public void addAuthority(final Authority authority) {
+	public void addAuthority(Authority authority) {
 		Assert.notNull(authority);
-		Assert.isTrue(!this.authorities.contains(authority));
+		Assert.isTrue(!authorities.contains(authority));
 
-		this.authorities.add(authority);
+		authorities.add(authority);
 	}
 
-	public void removeAuthority(final Authority authority) {
+	public void removeAuthority(Authority authority) {
 		Assert.notNull(authority);
-		Assert.isTrue(this.authorities.contains(authority));
-
-		this.authorities.remove(authority);
+		Assert.isTrue(authorities.contains(authority));
+		
+		authorities.remove(authority);
 	}
 
 	@Transient
@@ -120,23 +116,10 @@ public class UserAccount extends DomainEntity implements UserDetails {
 		return true;
 	}
 
+	@Transient
 	@Override
 	public boolean isEnabled() {
-		return this.isEnabled;
-	}
-
-	public void setEnabled(final boolean isEnabled) {
-		this.isEnabled = isEnabled;
-	}
-
-	public boolean getIsEnabled() {
-
-		return this.isEnabled;
-	}
-
-	public void setIsEnabled(final boolean isEnabled) {
-
-		this.isEnabled = isEnabled;
+		return true;
 	}
 
 }
