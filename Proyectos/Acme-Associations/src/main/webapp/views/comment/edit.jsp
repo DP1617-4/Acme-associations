@@ -22,12 +22,9 @@
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="chorbi" />
-	<form:hidden path="liked" />
+	<form:hidden path="user" />
+	<form:hidden path="commentable" />
 	
-	<p><spring:message code="likes.liked"/>: <jstl:out value="${liked.name}" /> <jstl:out value="${liked.surname}" /></p> 
-	
-	<p><spring:message code="likes.moment"/>: <jstl:out value="${likes.moment}" /></p> 
 
     <acme:textbox code="likes.comment" path="comment"/>
     
