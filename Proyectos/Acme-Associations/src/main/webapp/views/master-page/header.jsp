@@ -1,13 +1,3 @@
-<%--
- * header.jsp
- *
- * Copyright (C) 2017 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- --%>
-
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -21,7 +11,7 @@
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->	
 		<security:authorize access="hasRole('ADMIN')">
-			<li><a class="fNiv" href="association/list.do"><spring:message code="master.page.association.list" /></a></li>
+			<li><a class="fNiv" href="association/administrator/list.do"><spring:message code="master.page.association.list" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
