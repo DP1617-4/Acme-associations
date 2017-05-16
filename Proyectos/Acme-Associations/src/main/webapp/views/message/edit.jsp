@@ -20,16 +20,15 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
-<form:form action="chirp/chorbi/edit.do" modelAttribute="chirpAttach">
+<form:form action="chirp/chorbi/edit.do" modelAttribute="message">
 
 	<form:hidden path="sender"/>
 	<form:hidden path="folder"/>
 	<form:hidden path="moment"/>
-	<form:hidden path="attachments"/>
 	
 
 
-	<acme:textbox code="message.title" path="subject"/>
+	<acme:textbox code="message.title" path="title"/>
 	
 	<acme:textbox code="message.body" path="text"/>
 	
@@ -45,17 +44,6 @@
 	<form:errors cssClass="error" path="recipient" />
 	<br /><br /><br />
 	
-	<acme:textbox  code="chirp.attachment.add" path="attachment"/>
-		
-		<input type="submit" name="attach"
-		value="<spring:message code="chirp.attachment.add" />" />&nbsp; 
-		<br/>
-		<jstl:if test="${urlError != null}">
-			<br />
-			<span class="message"><spring:message code="${urlError}" /></span>
-		</jstl:if>	
-	<br />
-	
 
 	<input type="submit" name="save"
 		value="<spring:message code="message.save" />" />&nbsp; 
@@ -68,10 +56,3 @@
 
 </form:form>
 	
-	<ul>
-	<jstl:forEach var="row" varStatus="i" items="${chirpAttach.attachments}">
-	
-		<li><a href="${row}"><jstl:out value="${row}" /></a>
-	
-    </jstl:forEach>
-    </ul>

@@ -44,10 +44,11 @@ public class AdminAssociationController extends AbstractController {
 	public ModelAndView ban(@PathVariable final Association association) {
 		ModelAndView result;
 
-		this.associationService.ban(association);
+		this.associationService.banAssociation(association.getId());
 
 		result = this.list();
 		result.addObject("flashMessage", "association.ban");
+		return result;
 	}
 
 }

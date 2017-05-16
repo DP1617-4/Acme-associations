@@ -28,6 +28,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("select r.user from Roles r where r.association.id = ?1")
 	Collection<User> findAllByAssociation(int associationId, Pageable pageRequest);
 
+	@Query("select r.user from Roles r where r.association.id = ?1")
+	Collection<User> findAllByAssociation(int associationId);
+
 	//Dashboard queries
 
 	// User 2.0
