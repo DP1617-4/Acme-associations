@@ -75,6 +75,7 @@
 					
 				</display:table>
             </div><!--/span-->
+            <jstl:if test="${role eq 'MANAGER'}">
             <div class="col-6 col-lg-4">
 	            <form:form action="message/actor/broadcast.do" modelAttribute="messageBroad">
 	            	<form:hidden path="association" value="${association}"/>
@@ -82,6 +83,7 @@
 	            	<acme:submit name="broadcast" code="association.message.post.broadcast"/>
 	            </form:form>
             </div>
+            </jstl:if>
           </div><!--/row-->
         </div><!--/span-->
 
@@ -89,8 +91,10 @@
           <div class="list-group">
             <a href="section/user/list.do" class="list-group-item active"><spring:message code="association.section"/></a>
             <a href="item/user/list.do" class="list-group-item"><spring:message code="association.item"/></a>
+            <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
             <a href="sanction/user/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>
             <a href="loan/user/list.do" class="list-group-item"><spring:message code="association.loan"/></a>
+            </jstl:if>
             <a href="activity/user/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
           </div>
         </div><!--/span-->

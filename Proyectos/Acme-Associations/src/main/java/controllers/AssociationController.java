@@ -15,7 +15,6 @@ import services.CommentService;
 import services.RolesService;
 import domain.Association;
 import domain.Comment;
-import domain.Roles;
 import forms.MessageBroadcast;
 
 @Controller
@@ -47,14 +46,15 @@ public class AssociationController extends AbstractController {
 		Collection<Comment> comments;
 		comments = this.commentService.findAllByCommentableId(association.getId());
 		final MessageBroadcast messageBroad = new MessageBroadcast();
-		Roles role;
-		role = this.rolesService.findRolesByPrincipalAssociation(association);
+		String role;
+		role = this.rolesService.findRolesByPrincipalAssociation(association).getType();
 
 		result = new ModelAndView("association/display");
 		result.addObject("association", association);
 		result.addObject("comments", comments);
 		result.addObject("requestURI", "/association/" + association.getId() + "/display.do");
 		result.addObject("messageBroad", messageBroad);
+		result.addObject("role", role);
 		return result;
 	}
 
