@@ -60,10 +60,29 @@ public class RolesService {
 
 	}
 
+	public Roles findRolesByUserAssociation(final User user, final Association association) {
+
+		return this.roleRepository.findRolesByUserAssociation(user.getId(), association.getId());
+	}
+
+	public Roles findRolesByPrincipalAssociation(final Association association) {
+
+		User principal;
+
+		principal = this.userService.findByPrincipal();
+
+		return this.roleRepository.findRolesByUserAssociation(principal.getId(), association.getId());
+	}
+
 	public Roles save(final Roles role) {
 		Roles result;
 		result = this.roleRepository.save(role);
 		return result;
+	}
+
+	public void delete(final Roles role) {
+
+		this.roleRepository.delete(role);
 	}
 
 	public Roles findOne(final int roleId) {
