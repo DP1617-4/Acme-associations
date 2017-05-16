@@ -1,13 +1,3 @@
-<%--
- * header.jsp
- *
- * Copyright (C) 2017 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- --%>
-
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -19,19 +9,14 @@
 
 <div>
 	<ul id="jMenu">
-		<!-- Do not forget the "fNiv" class for the first level links !! -->
+		<!-- Do not forget the "fNiv" class for the first level links !! -->	
 		<security:authorize access="hasRole('ADMIN')">
-			<li><a class="fNiv"><spring:message code="master.page.associations" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="associations/list.do"><spring:message code="master.page.list.associations" /></a></li>			
-				</ul>
-			</li>
+			<li><a class="fNiv" href="association/list.do"><spring:message code="master.page.association.list" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/administrator/edit.do"><spring:message code="master.page.system" /></a></li>
-					<li><a href="administrator/administrator/dashboard.do"><spring:message code="master.page.dashboard" /></a></li>	
+					<li><a href="systemConfiguration/administrator/edit.do"><spring:message code="master.page.system" /></a></li>
+					<li><a href="systemConfiguration/administrator/dashboard.do"><spring:message code="master.page.dashboard" /></a></li>	
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>				
 				</ul>
 			</li>
@@ -39,29 +24,14 @@
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
-			<li><a class="fNiv"><spring:message code="master.page.associations" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="associations/list.do"><spring:message code="master.page.list.associations" /></a></li>			
-				</ul>
-			</li>
+			<li><a class="fNiv" href="association/list.do"><spring:message code="master.page.association.list" /></a></li>
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
-			<li><a class="fNiv" href="user/register.do"><spring:message code="master.page.as.user" /></a></li>
-				
-			
+			<li><a class="fNiv" href="user/register.do"><spring:message	code="master.page.register.as.user" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('USER')">
-			
-			
-			<li><a class="fNiv"><spring:message code="master.page.associations" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="associations/list.do"><spring:message code="master.page.list.associations" /></a></li>	
-					<li><a href="associations/listOwn.do"><spring:message code="master.page.list.associations.own" /></a></li>		
-				</ul>
-			</li>
-			
+			<li><a class="fNiv" href="association/list.do"><spring:message code="master.page.association.list" /></a></li>
+			<li><a class="fNiv" href="association/user/listOwn.do"><spring:message code="master.page.association.list.own" /></a></li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 
@@ -76,7 +46,6 @@
 			</li>
 			
 		</security:authorize>
-		
 		
 	</ul>
 </div>
