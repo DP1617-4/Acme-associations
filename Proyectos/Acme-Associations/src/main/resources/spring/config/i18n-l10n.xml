@@ -25,7 +25,7 @@
 		
 		<value>/views/folder/messages</value>
 		<value>/views/message/messages</value>
-		<value>/views/systemConfiguration/messages</value>
+		<value>/views/association/messages</value>
 		<value>/views/terms/messages</value>
 	</util:list>
 

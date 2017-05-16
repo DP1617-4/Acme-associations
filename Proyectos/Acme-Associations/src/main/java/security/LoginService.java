@@ -1,11 +1,11 @@
-/*
- * LoginService.java
- * 
+/* LoginService.java
+ *
  * Copyright (C) 2017 Universidad de Sevilla
  * 
- * The use of this project is hereby constrained to the conditions of the
- * TDG Licence, a copy of which you may download from
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
  * http://www.tdg-seville.info/License.html
+ * 
  */
 
 package security;
@@ -24,23 +24,22 @@ import org.springframework.util.Assert;
 @Service
 @Transactional
 public class LoginService implements UserDetailsService {
-
+	
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	UserAccountRepository	userRepository;
-
-
+	UserAccountRepository userRepository;
+	
 	// Business methods -------------------------------------------------------
 
-	@Override
-	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username)
+			throws UsernameNotFoundException {
 		Assert.notNull(username);
 
 		UserDetails result;
 
-		result = this.userRepository.findByUsername(username);
-		Assert.notNull(result);
+		result = userRepository.findByUsername(username);
+		Assert.notNull(result);		
 		// WARNING: The following sentences prevent lazy initialisation problems!
 		Assert.notNull(result.getAuthorities());
 		result.getAuthorities().size();
