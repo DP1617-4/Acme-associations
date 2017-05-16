@@ -33,13 +33,7 @@ public class UserService {
 	private UserRepository			userRepository;
 
 	@Autowired
-	private AdministratorService	administratorService;
-
-	@Autowired
 	private FolderService			folderService;
-
-	@Autowired
-	private AssociationService		associationService;
 
 	@Autowired
 	private Validator				validator;
@@ -181,7 +175,7 @@ public class UserService {
 
 		number = phone[1];
 		cCode = phone[0];
-		cCode = cCode.replaceAll("+", "");
+		cCode = cCode.replaceAll("\\+", "");
 		code = Integer.parseInt(cCode);
 		num = Integer.parseInt(number);
 
