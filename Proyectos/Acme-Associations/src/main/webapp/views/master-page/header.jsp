@@ -28,11 +28,11 @@
       id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
 
-<security:authorize access="hasRole('ADMIN')">
+		<security:authorize access="hasRole('ADMIN')">
 
           <li><a href="owner/register.do"><spring:message
                 code="master.page.admin.registerOwner" /></a></li>
-</security:authorize>
+		</security:authorize>
 
         <security:authorize access="hasRole('OWNER')">
           <li><a href="owner/edit.do"><spring:message
@@ -47,6 +47,16 @@
 
         <li><a class="fNiv" href="association/list.do"><spring:message
               code="master.page.association" /></a></li>
+        
+        <security:authorize access="isAnonymous()">
+            <li><a class="fNiv" href="user/register.do"><spring:message
+                code="master.page.register" /></a></li>
+        </security:authorize>
+        
+        <security:authorize access="isAuthenticated()">
+            <li><a class="fNiv" href="user/user/edit.do"><spring:message
+                code="master.page.edit.profile" /></a></li>
+        </security:authorize>
 
 
       </ul>
@@ -55,6 +65,7 @@
             <li class="dropdown"><a href="security/login.do" ><b>Login</b> </a>
               </li>
         </security:authorize>
+        
         <security:authorize access="isAuthenticated()">
               <li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
         </security:authorize>
