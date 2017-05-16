@@ -15,11 +15,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
-
-    <title>Off Canvas Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
@@ -34,6 +30,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="/WEB-INF/tags/functions" prefix="mask" %>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <body>
 <security:authentication property="principal" var ="loggedactor"/>
@@ -42,34 +39,51 @@
       <div class="row row-offcanvas row-offcanvas-right">
 
         <div class="col-12 col-md-9">
-          <p class="float-right hidden-md-up">
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="offcanvas">Toggle nav</button>
-          </p>
           <div class="jumbotron">
-            <%-- <h1><jstl:out value="${association.name}" /></h1> --%>
-            <h1><jstl:out value="Titulo" /></h1>
-            <%-- <p><jstl:out value="${association.description}" /></p> --%>
-            <p><jstl:out value="Descripcion" /></p>
+          <img src="<jstl:out value="http://www.zoonewengland.org/media/813822/redpanda_gallery10.jpg"/>" align="right" width="300">
+            <h1><jstl:out value="${association.name}" /></h1>
+            <p><jstl:out value="${association.description}" /></p>
           </div>
-         <%--  <div><jstl:out value="${association.address}" /></div> --%>
-          <div><jstl:out value="Address" /></div>
-          <%-- <div><jstl:out value="${association.creationDate}" /></div> --%>
-          <div><jstl:out value="Creation Date" /></div>
-          <%-- <div><a href="${association.statutes}"><spring:message code="association.statutes"/></a></div> --%>
-          <div><a href="www.google.es"><spring:message code="association.statutes"/></a></div>
-          <%-- <img src="<jstl:out value='${association.picture}'/>"  width="300"> --%>
-          <img src="<jstl:out value=Foto/>"  width="300"> 
+          <div><jstl:out value="${association.address}" /></div>
+          <div><jstl:out value="${association.creationDate}" /></div>
+          <div><a href="${association.statutes}"><spring:message code="association.statutes"/></a></div>
           <div class="row">
             <div class="col-6 col-lg-4">
               <h2><spring:message code="association.announcements"/></h2>
-              <%-- <p><jstl:out value="${association.announcements}" /></p> --%>
-              <p><jstl:out value="Announcements}" /></p>
+              <p><jstl:out value="${association.announcements}" /></p>
             </div><!--/span-->
             <div class="col-6 col-lg-4">
               <h2><spring:message code="association.comments"/></h2>
-              <%-- <p><jstl:out value="${association.comments}" /></p> --%>
-              <p><jstl:out value="Comments" /></p>
+              <%-- <display:table pagesize="5" class="displaytag" keepStatus="true" name="associationComments" requestURI="${requestURI}" id="row"> </display:table> --%>
+              <display:table pagesize="5" class="displaytag" keepStatus="true"
+					name="comments" requestURI="${requestURI }" id="row">
+				
+					<!--Attributes -->
+					<spring:message code="comment.title" var="titleHeader" />
+					<display:column property="title" title="${titleHeader}" sortable="true" />
+				
+					<spring:message code="comment.text" var="textHeader" />
+					<display:column property="text" title="${textHeader}" sortable="true" />
+				
+					<spring:message code="comment.moment" var="momentHeader" />
+					<display:column property="moment" title="${momentHeader}"  format="{0,date,dd/MM/yyyy HH:mm}"/>
+					
+					<spring:message code="comment.user" var="userHeader"/>
+					<display:column title="${userHeader}">
+						<a href="actor/user/display.do?actorId=${row.user.id}"> ${row.user.name} ${row.user.surname}</a>
+					</display:column>
+					
+				</display:table>
             </div><!--/span-->
+            <jstl:if test="${role eq 'MANAGER'}">
+            <div class="col-6 col-lg-4">
+	            <form:form action="message/actor/broadcast.do" modelAttribute="messageBroad">
+	            	<form:hidden path="association" value="${association}"/>
+	            	<acme:textarea code="association.message.broadcast" path="text"/>
+	            	<acme:submit name="broadcast" code="association.message.post.broadcast"/>
+	            </form:form>
+            </div>
+            </jstl:if>
           </div><!--/row-->
         </div><!--/span-->
 
@@ -77,8 +91,10 @@
           <div class="list-group">
             <a href="section/user/list.do" class="list-group-item active"><spring:message code="association.section"/></a>
             <a href="item/user/list.do" class="list-group-item"><spring:message code="association.item"/></a>
+            <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
             <a href="sanction/user/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>
             <a href="loan/user/list.do" class="list-group-item"><spring:message code="association.loan"/></a>
+            </jstl:if>
             <a href="activity/user/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
           </div>
         </div><!--/span-->

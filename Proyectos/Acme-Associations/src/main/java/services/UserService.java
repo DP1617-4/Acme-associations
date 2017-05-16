@@ -7,7 +7,6 @@ import java.util.Collection;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -18,6 +17,10 @@ import repositories.UserRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
+
 import domain.Association;
 import domain.User;
 import forms.RegisterUser;
@@ -27,22 +30,19 @@ import forms.RegisterUser;
 public class UserService {
 
 	@Autowired
-	private UserRepository				userRepository;
+	private UserRepository			userRepository;
 
 	@Autowired
-	private AdministratorService		administratorService;
+	private AdministratorService	administratorService;
 
 	@Autowired
-	private FolderService				folderService;
+	private FolderService			folderService;
 
 	@Autowired
-	private AssociationService			associationService;
+	private AssociationService		associationService;
 
 	@Autowired
-	private Validator					validator;
-
-	@Autowired
-	private SystemConfigurationService	systemConfigurationService;
+	private Validator				validator;
 
 
 	public UserService() {
@@ -60,7 +60,6 @@ public class UserService {
 		authority.setAuthority(Authority.USER);
 		authorities.add(authority);
 		userAccount.setAuthorities(authorities);
-		userAccount.setEnabled(true);
 
 		result.setUserAccount(userAccount);
 
@@ -93,10 +92,18 @@ public class UserService {
 		return user;
 	}
 
-	public Collection<User> findAllByAssociation(final Association association, final Pageable pageRequest) {
+	//	public Collection<User> findAllByAssociation(final Association association, final Pageable pageRequest) {
+	//
+	//		Collection<User> result;
+	//		result = this.userRepository.findAllByAssociation(association.getId(), pageRequest);
+	//		return result;
+	//
+	//	}
+
+	public Collection<User> findAllByAssociation(final Association association) {
 
 		Collection<User> result;
-		result = this.userRepository.findAllByAssociation(association.getId(), pageRequest);
+		result = this.userRepository.findAllByAssociation(association.getId());
 		return result;
 
 	}
@@ -160,4 +167,31 @@ public class UserService {
 		this.userRepository.flush();
 	}
 
+	public void phoneValidator(final User user) {
+
+		//returns exception if user number is not valid.
+
+		final String phoneNumber = user.getPhoneNumber();
+		final PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+		String number;
+		String cCode;
+		int code;
+		int num;
+		final String[] phone = phoneNumber.split(" ", 2);
+
+		number = phone[1];
+		cCode = phone[0];
+		cCode = cCode.replaceAll("+", "");
+		code = Integer.parseInt(cCode);
+		num = Integer.parseInt(number);
+
+		PhoneNumber checkNum;
+
+		checkNum = new PhoneNumber();
+		checkNum.setCountryCode(code);
+		checkNum.setNationalNumber(num);
+
+		Assert.isTrue(phoneUtil.isValidNumber(checkNum));
+
+	}
 }

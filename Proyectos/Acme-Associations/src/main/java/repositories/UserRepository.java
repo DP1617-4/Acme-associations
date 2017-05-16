@@ -12,7 +12,6 @@ package repositories;
 
 import java.util.Collection;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,8 +24,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("Select c from User c where c.userAccount.id = ?1")
 	User findByUserAccountId(int userAccountId);
 
+	//	@Query("select r.user from Roles r where r.association.id = ?1")
+	//	Collection<User> findAllByAssociation(int associationId, Pageable pageRequest);
+
 	@Query("select r.user from Roles r where r.association.id = ?1")
-	Collection<User> findAllByAssociation(int associationId, Pageable pageRequest);
+	Collection<User> findAllByAssociation(int associationId);
 
 	//Dashboard queries
 

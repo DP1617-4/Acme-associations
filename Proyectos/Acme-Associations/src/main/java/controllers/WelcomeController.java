@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
-import services.SystemConfigurationService;
 import domain.Actor;
 
 @Controller
@@ -36,10 +35,7 @@ public class WelcomeController extends AbstractController {
 
 
 	@Autowired
-	SystemConfigurationService	scService;
-
-	@Autowired
-	ActorService				actorService;
+	ActorService	actorService;
 
 
 	// Index ------------------------------------------------------------------		

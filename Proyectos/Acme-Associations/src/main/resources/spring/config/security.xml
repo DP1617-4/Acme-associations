@@ -51,6 +51,7 @@
 		 <!-- Association -->
 		 
 		 <security:intercept-url pattern="/association/list.do**" access="permitAll" /> 
+		 <security:intercept-url pattern="/association/**/display.do**" access="isAuthenticated()" /> 
 		 
 		<!-- Redirects --> 
 		<security:intercept-url pattern="/redirect/**" access="permitAll" /> 

@@ -6,8 +6,10 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.CommentRepository;
+import domain.Association;
 import domain.Comment;
 import domain.Commentable;
 import domain.User;
@@ -80,6 +82,16 @@ public class CommentService {
 		final User user = this.userService.findByPrincipal();
 		result = this.commentRepository.findAllByUserId(user.getId());
 		return result;
+	}
+
+	public void checkPrincipalCanComment(final Commentable commentable) {
+
+		User principal;
+
+		principal = this.userService.findByPrincipal();
+
+		if (commentable instanceof Association)
+			Assert.isTrue(this.userService.findAllByAssociation((Association) commentable).contains(principal));
 	}
 
 }
