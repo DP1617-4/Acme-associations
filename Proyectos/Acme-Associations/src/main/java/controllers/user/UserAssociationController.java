@@ -52,8 +52,8 @@ public class UserAssociationController extends AbstractController {
 		//Escoja una, hacer query en rolesRepo o hacer el método en association service.
 
 		//		this.associationService.leave(association);
-		//		Role role = this.rolesService.findByAssociationAndPrincipal(association);
-		//		this.rolesService.delete(role);
+		final Roles role = this.rolesService.findRolesByPrincipalAssociation(association);
+		this.rolesService.delete(role);
 
 		result = this.list();
 		result.addObject("flashMessage", "association.left");
