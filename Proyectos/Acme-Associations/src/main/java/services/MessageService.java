@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -196,18 +194,14 @@ public class MessageService {
 		message.setSender(principal);
 
 		Collection<User> recipients;
-		final Pageable page = new PageRequest(0, 100); //Second index is the size of the page
-		recipients = this.userService.findAllByAssociation(messageBroad.getAssociation(), page);
+		//		final Pageable page = new PageRequest(0, 100); //Second index is the size of the page
+		recipients = this.userService.findAllByAssociation(messageBroad.getAssociation());
 
-		while (!recipients.isEmpty()) {
-
-			for (final User c : recipients) {
-				final Folder recipientFolder = this.folderService.findSystemFolder(c, "Received");
-				message.setFolder(recipientFolder);
-				message.setRecipient(c);
-				this.messageRepository.save(message);
-			}
-			recipients = this.userService.findAllByAssociation(messageBroad.getAssociation(), page.next());
+		for (final User c : recipients) {
+			final Folder recipientFolder = this.folderService.findSystemFolder(c, "Received");
+			message.setFolder(recipientFolder);
+			message.setRecipient(c);
+			this.messageRepository.save(message);
 		}
 
 		return message;

@@ -81,9 +81,6 @@
 	<br> </br>
 	<br> </br>
 	<div>
-		<h1>
-			<tiles:insertAttribute name="title" />
-		</h1>
 		<tiles:insertAttribute name="body" />	
 		<jstl:if test="${message != null}">
 			<br />

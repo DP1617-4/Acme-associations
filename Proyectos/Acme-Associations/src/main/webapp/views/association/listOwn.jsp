@@ -1,13 +1,3 @@
-<%--
- * list.jsp
- *
- * Copyright (C) 2016 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- --%>
-
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -26,19 +16,25 @@
 
 
 <display:table pagesize="5" keepStatus="true"
-	name="associations" requestURI="${requestURI}" id="row">
+	name="roles" requestURI="${requestURI}" id="row">
 	<security:authentication property="principal" var ="loggedactor"/>
 	
 	<spring:message code="association.name" var="nameHeader" />
 	<spring:message code="association.description" var="descriptionHeader" />
 	<spring:message code="association.creationDate" var="creationDateHeader" />
 	<spring:message code="association.address" var="addressHeader" />
+	<spring:message code="association.role" var="roleHeader" />
 	
 
-			<display:column property="row.name" title="${titleHeader}"/>
-			<display:column property="row.description" title="${descriptionHeader}" />
-			<display:column property="row.creationDate" title="${creationDateHeader}" />
-			<display:column property="row.address" title="${addressHeader}"/>	
+			<display:column property="row.association.name" title="${titleHeader}"/>
+			<display:column property="row.association.description" title="${descriptionHeader}" />
+			<display:column property="row.association.creationDate" title="${creationDateHeader}" />
+			<display:column property="row.association.address" title="${addressHeader}"/>
+			<display:column property="row.type" title="${typeHeader}" sortable="true"/>
+			
+			
+			
+			
 	
 </display:table>
 
@@ -47,4 +43,4 @@
 <input type="button" name="back"
 		value="<spring:message code="comment.back" />"
 		onclick="location.href = 'welcome/index.do';" />&nbsp;
-<br/>		
+<br/>	

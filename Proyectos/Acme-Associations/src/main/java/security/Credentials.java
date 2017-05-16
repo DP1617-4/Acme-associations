@@ -1,11 +1,11 @@
-/*
- * Credentials.java
- * 
+/* Credentials.java
+ *
  * Copyright (C) 2017 Universidad de Sevilla
  * 
- * The use of this project is hereby constrained to the conditions of the
- * TDG Licence, a copy of which you may download from
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
  * http://www.tdg-seville.info/License.html
+ * 
  */
 
 package security;
@@ -20,28 +20,26 @@ public class Credentials {
 		super();
 	}
 
-
 	// Attributes -------------------------------------------------------------
 
-	private String	username;
-	private String	password;
-
+	private String username;
+	private String password;
 
 	@Size(min = 5, max = 32)
 	public String getUsername() {
-		return this.username;
+		return username;
 	}
 
-	public void setJ_username(final String username) {
+	public void setJ_username(String username) {
 		this.username = username;
 	}
 
 	@Size(min = 5, max = 32)
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
 
-	public void setPassword(final String password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
