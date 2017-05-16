@@ -7,9 +7,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.AssociationRepository;
 import domain.Association;
+import domain.Roles;
 import domain.User;
 
 @Service
@@ -38,6 +40,8 @@ public class AssociationService {
 
 	//Basic CRUD methods ---------------------------------------
 	public Association create() {
+		final User user = this.userService.findByPrincipal();
+		Assert.notNull(user);
 		Association created;
 		created = new Association();
 		return created;
@@ -56,6 +60,10 @@ public class AssociationService {
 	}
 
 	public Association save(final Association association) {
+		final User user = this.userService.findByPrincipal();
+		Assert.notNull(user);
+		if (association.getId() == 0)
+			this.rolesService.assignRoles(user, association, Roles.MANAGER);
 		Association result;
 		result = this.associationRepository.save(association);
 		return result;
@@ -70,6 +78,7 @@ public class AssociationService {
 		this.associationRepository.flush();
 	}
 
+	//Our other bussiness methods ------------------------------
 	public void banAssociation(final int associationId) {
 		this.adminService.checkAdministrator();
 		Association association;
@@ -98,16 +107,4 @@ public class AssociationService {
 		return result;
 	}
 
-	//Our other bussiness methods ------------------------------
-	//	public Collection<Association> listByManager() {
-	//		Collection<Association> result;
-	//		User principal;
-	//		principal = this.userService.findByPrincipal();
-	//		final Collection<Roles> rols = this.rolesService.findAllByPrincipal();
-	//		if (Roles.getType() == Roles.MANAGER) {
-	//
-	//		}
-	//		result = this.associationRepository.findAllByPrincipal(principal.getId());
-	//		return result;
-	//	}
 }
