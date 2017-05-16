@@ -120,4 +120,11 @@ public class AdministratorService {
 		return result;
 	}
 
+	public Administrator findSystemAdministrator() {
+
+		Administrator administrator;
+		administrator = this.administratorRepository.findSystemAdministrator();
+		return administrator;
+	}
+
 }

@@ -8,6 +8,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -25,6 +26,8 @@ public class Association extends Commentable {
 	private String	statutes;
 	private String	announcements;
 	private String	picture;
+	private Boolean	closedAssociation;
+	private Boolean	adminClosed;
 
 
 	// Constructors -----------------------------------------------------------
@@ -58,6 +61,7 @@ public class Association extends Commentable {
 		this.address = address;
 	}
 
+	@NotNull
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -90,6 +94,20 @@ public class Association extends Commentable {
 	}
 	public void setPicture(final String picture) {
 		this.picture = picture;
+	}
+
+	public Boolean getClosedAssociation() {
+		return this.closedAssociation;
+	}
+	public void setClosedAssociation(final Boolean closedAssociation) {
+		this.closedAssociation = closedAssociation;
+	}
+
+	public Boolean getAdminClosed() {
+		return this.adminClosed;
+	}
+	public void setAdminClosed(final Boolean adminClosed) {
+		this.adminClosed = adminClosed;
 	}
 
 	// Relationships ----------------------------------------------------------

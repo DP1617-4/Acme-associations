@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import utilities.AbstractTest;
-import domain.Chorbi;
+import domain.Actor;
 import domain.Folder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,7 +26,7 @@ public class FolderServiceTest extends AbstractTest {
 	private FolderService	folderService;
 
 	@Autowired
-	private ChorbiService	chorbiService;
+	private UserService		chorbiService;
 
 
 	// Tests ---------------------------------------------------------------
@@ -49,7 +49,7 @@ public class FolderServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(username);
-			final Chorbi chorbi = this.chorbiService.findOne(this.extract(username));
+			final Actor chorbi = this.actorService.findOne(this.extract(username));
 			final Collection<Folder> init = this.folderService.initFolders(chorbi);
 			this.folderService.flush();
 		} catch (final Throwable oops) {
