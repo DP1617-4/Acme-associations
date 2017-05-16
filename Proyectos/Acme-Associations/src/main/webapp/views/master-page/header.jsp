@@ -21,7 +21,7 @@
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->	
 		<security:authorize access="hasRole('ADMIN')">
-			<li><a class="fNiv" href="association/administrator/list.do"><spring:message code="master.page.admin.list.association" /></a></li>
+			<li><a class="fNiv" href="association/list.do"><spring:message code="master.page.association.list" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
@@ -34,16 +34,14 @@
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
-		*
+			<li><a class="fNiv" href="association/list.do"><spring:message code="master.page.association.list" /></a></li>
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 			<li><a class="fNiv" href="user/register.do"><spring:message	code="master.page.register.as.user" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('USER')">
-			
-			
-			
-			
+			<li><a class="fNiv" href="association/list.do"><spring:message code="master.page.association.list" /></a></li>
+			<li><a class="fNiv" href="association/user/listOwn.do"><spring:message code="master.page.association.list.own" /></a></li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 
