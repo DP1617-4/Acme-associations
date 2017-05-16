@@ -30,32 +30,48 @@
 
 <security:authorize access="hasRole('ADMIN')">
 
-          <li><a href="owner/register.do"><spring:message
-                code="master.page.admin.registerOwner" /></a></li>
+         <li><a class="fNiv" href="association/administrator/list.do"><spring:message code="master.page.association.list" /></a></li>
+		<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
+				<ul>
+					<li class="dropdown"></li>
+					<li><a href="systemConfiguration/administrator/edit.do"><spring:message code="master.page.system" /></a></li>
+					<li><a href="systemConfiguration/administrator/dashboard.do"><spring:message code="master.page.dashboard" /></a></li>	
+					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>				
+				</ul>
+			</li>
 </security:authorize>
 
-        <security:authorize access="hasRole('OWNER')">
-          <li><a href="owner/edit.do"><spring:message
-                code="master.page.owner.editOwner" /></a></li>
-          <li><a href="worker/owner/register.do"><spring:message
-                code="master.page.owner.createWorker" /></a></li>
-          <li><a href="establishment/owner/listByOwner.do"><spring:message
-                code="master.page.owner.list" /></a></li>
-          <li><a class="fNiv" href="establishment/owner/0/edit.do"><spring:message
-                code="master.page.establishments.create" /></a></li>
+        <security:authorize access="hasRole('USER')">
+			<li class="dropdown"></li>
+			<li><a href="association/user/list.do"><spring:message code="master.page.association.list" /></a></li>
+			<li><a href="association/user/listOwn.do"><spring:message code="master.page.association.list.own" /></a></li>
+			<li>
+				<a class="fNiv"> 
+					<spring:message code="master.page.profile" /> 
+			        (<security:authentication property="principal.username" />)
+				</a>
+				<ul>
+					<li class="dropdown"></li>
+					<li><a href="user/user/display.do"><spring:message code="master.page.user.display" /></a></li>
+					<li><a href="user/user/edit.do"><spring:message code="master.page.user.edit" /></a></li>
+					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
+				</ul>
+			</li>
         </security:authorize>
 
-        <li><a class="fNiv" href="association/list.do"><spring:message
-              code="master.page.association" /></a></li>
+        
 
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <security:authorize access="isAnonymous()">
-            <li class="dropdown"><a href="security/login.do" ><b>Login</b> </a>
-              </li>
+        	<li><a class="fNiv" href="association/list.do"><spring:message
+              code="master.page.association" /></a></li>
+            <li class="Fniv"><a href="security/login.do" ><b>Login</b> </a></li>
+             <li><a class="fNiv" href="user/register.do"><spring:message code="master.page.register.as.user" /></a></li>
         </security:authorize>
         <security:authorize access="isAuthenticated()">
+        		
               <li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
         </security:authorize>
       </ul>
