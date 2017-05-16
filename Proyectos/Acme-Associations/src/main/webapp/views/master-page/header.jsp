@@ -11,7 +11,7 @@
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->	
 		<security:authorize access="hasRole('ADMIN')">
-			<li><a class="fNiv" href="association/list.do"><spring:message code="master.page.association.list" /></a></li>
+			<li><a class="fNiv" href="association/administrator/list.do"><spring:message code="master.page.association.list" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
