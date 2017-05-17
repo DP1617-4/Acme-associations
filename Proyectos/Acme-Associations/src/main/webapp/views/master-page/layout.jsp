@@ -80,10 +80,6 @@
 	</div>
 	<br> </br>
 	<br> </br>
-	<br> </br>
-	<br> </br>
-	<br> </br>
-	<br> </br>
 	<div>
 		<tiles:insertAttribute name="body" />	
 		<jstl:if test="${errorMessage != null}">
