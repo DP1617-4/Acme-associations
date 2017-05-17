@@ -53,7 +53,7 @@
 		 <security:intercept-url pattern="/association/list.do**" access="permitAll" /> 
 		 <security:intercept-url pattern="/association/**/display.do**" access="permitAll" /> 
 		 <security:intercept-url pattern="/user/association/**" access="hasRole('USER')" />
-		 <security:intercept-url pattern="/association/administrator/**" access="hasRole('ADMINISTRATOR')" />
+		 <security:intercept-url pattern="/association/administrator/**" access="hasRole('ADMIN')" />
 		 
 		 <!-- Request -->
 		  <security:intercept-url pattern="/user/request/**" access="hasRole('USER')" /> 
