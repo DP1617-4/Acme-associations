@@ -11,13 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.AssociationService;
 import services.CommentService;
 import services.RequestService;
 import services.RolesService;
+import domain.Actor;
 import domain.Association;
 import domain.Comment;
 import domain.Roles;
+import domain.User;
 import forms.MessageBroadcast;
 
 @Controller
@@ -43,6 +46,9 @@ public class AssociationController extends AbstractController {
 	private CommentService		commentService;
 
 	@Autowired
+	private ActorService		actorService;
+
+	@Autowired
 	private RolesService		rolesService;
 
 
@@ -58,13 +64,14 @@ public class AssociationController extends AbstractController {
 		String role = null;
 
 		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		final Actor actPrincipal = this.actorService.findByPrincipal();
 
 		result = new ModelAndView("welcome/index");
-		if (principal != "anonymousUser") {
-
-			application = this.requestService.isRequestedByPrincipal(association);
-			roles = this.rolesService.findRolesByPrincipalAssociation(association);
-		}
+		if (principal != "anonymousUser")
+			if (actPrincipal instanceof User) {
+				application = this.requestService.isRequestedByPrincipal(association);
+				roles = this.rolesService.findRolesByPrincipalAssociation(association);
+			}
 
 		if (roles != null)
 			role = roles.getType();

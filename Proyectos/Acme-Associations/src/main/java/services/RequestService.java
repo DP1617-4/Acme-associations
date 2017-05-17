@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.RequestRepository;
 import domain.Association;
@@ -60,12 +61,18 @@ public class RequestService {
 	}
 
 	public Request save(final Request request) {
+
+		final Roles roles = this.rolesService.findRolesByPrincipalAssociation(request.getAssociation());
+
+		Assert.isTrue(this.isRequestedByPrincipal(request.getAssociation()) == false, "request.requested");
+		Assert.isTrue(roles == null, "request.inside");
+
 		Request saved;
+
 		saved = this.requestRepository.save(request);
 		return saved;
 
 	}
-
 	public void delete(final Request request) {
 
 		this.requestRepository.delete(request.getId());

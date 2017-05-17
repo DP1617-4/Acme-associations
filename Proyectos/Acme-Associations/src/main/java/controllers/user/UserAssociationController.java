@@ -74,7 +74,7 @@ public class UserAssociationController extends AbstractController {
 				final User user = this.userService.findByPrincipal();
 				this.rolesService.checkManager(user, association);
 				association = this.associationService.save(association);
-				result = new ModelAndView("redirect: /association/" + association.getId() + "/display.do");
+				result = new ModelAndView("redirect:/association/" + association.getId() + "/display.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(association, "association.commit.error");
 			}
@@ -116,7 +116,7 @@ public class UserAssociationController extends AbstractController {
 
 		this.associationService.closeAssociationByManager(association.getId());
 
-		result = new ModelAndView("redirect: /association/" + association.getId() + "/display.do");
+		result = new ModelAndView("redirect:/association/" + association.getId() + "/display.do");
 
 		return result;
 	}
@@ -127,7 +127,7 @@ public class UserAssociationController extends AbstractController {
 
 		this.associationService.closeAssociationByManager(association.getId());
 
-		result = new ModelAndView("redirect: /association/" + association.getId() + "/display.do");
+		result = new ModelAndView("redirect:/association/" + association.getId() + "/display.do");
 
 		return result;
 	}
