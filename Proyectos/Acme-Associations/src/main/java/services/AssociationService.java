@@ -62,10 +62,14 @@ public class AssociationService {
 	public Association save(final Association association) {
 		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
-		if (association.getId() == 0)
-			this.rolesService.assignRoles(user, association, Roles.MANAGER);
 		Association result;
-		result = this.associationRepository.save(association);
+		if (association.getId() == 0) {
+			result = this.associationRepository.save(association);
+			this.rolesService.assignRoles(user, association, Roles.MANAGER);
+		} else {
+			this.rolesService.checkManager(user, association);
+			result = this.associationRepository.save(association);
+		}
 		return result;
 	}
 
