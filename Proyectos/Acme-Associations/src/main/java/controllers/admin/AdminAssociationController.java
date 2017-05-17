@@ -15,7 +15,7 @@ import controllers.AbstractController;
 import domain.Association;
 
 @Controller
-@RequestMapping("/admin/association")
+@RequestMapping("association/administrator")
 public class AdminAssociationController extends AbstractController {
 
 	public AdminAssociationController() {
