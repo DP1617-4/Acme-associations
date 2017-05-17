@@ -35,25 +35,23 @@
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
 
 
+
 <script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/tether.js"></script>
 
 <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
    <!--  <link href="css/bootstrap-grid.min.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap-reboot.css" rel="stylesheet" type="text/css">
-    <link href="css/bootstrap-reboot.min.css" rel="stylesheet" type="text/css">
-    <link href="css/bootstrap-grid.css" rel="stylesheet" type="text/css"> -->
-
+    <link href="css/bootstrap-reboot.min.css" rel="stylesheet" type="text/css">-->
+    <link href="css/bootstrap-grid.css" rel="stylesheet" type="text/css"> 
+	<link href="css/tether.css" rel="stylesheet" type="text/css">
     <!-- Custom styles for this template -->
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("#jMenu").jMenu();
-	});
-
 	function askSubmission(msg, form) {
 		if (confirm(msg))
 			form.submit();
@@ -71,27 +69,39 @@
 			window.location.replace(loc);
 		}
 	</script>
+	
+	<script type="text/javascript">
+		function alertMessage(str) {
+			alert(str);
+		}
+	</script>
 </head>
 
 <body>
+
 
 	<div>
 		<tiles:insertAttribute name="header" />
 	</div>
 	<br> </br>
 	<br> </br>
-	<div>
+	<div class= "container">
 		<tiles:insertAttribute name="body" />	
 		<jstl:if test="${errorMessage != null}">
 			<br />
 			<span class="message"><spring:message code="${errorMessage}" /></span>
 		</jstl:if>	
 	</div>
-	<div>
+	<hr>
+	<div class = "container">
 		<tiles:insertAttribute name="footer" />
 	</div>
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<jstl:if test="${not empty flashMessage}">
+	<script>alertMessage('<spring:message code="${flashMessage}"/>'); </script>
+</jstl:if>
 
 </body>
 </html>
