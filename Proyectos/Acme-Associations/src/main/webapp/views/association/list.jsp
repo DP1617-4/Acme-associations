@@ -44,7 +44,8 @@
 	<display:column property="address" title="${addressHeader}"/>	
 	
 </display:table>
-
+<br><br/>
+<div><a href="user/association/create.do"><spring:message code="association.create"/></a></div>
 <br/>
 
 		

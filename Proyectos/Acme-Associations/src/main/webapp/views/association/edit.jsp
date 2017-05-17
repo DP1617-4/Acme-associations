@@ -19,7 +19,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme"	tagdir="/WEB-INF/tags"%>
 
-<form:form action="${requestURI}" modelAttribute="event">
+<form:form action="${requestURI}" modelAttribute="association">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />

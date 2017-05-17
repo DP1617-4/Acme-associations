@@ -71,8 +71,6 @@ public class UserAssociationController extends AbstractController {
 			result = this.createEditModelAndView(association);
 		else
 			try {
-				final User user = this.userService.findByPrincipal();
-				this.rolesService.checkManager(user, association);
 				association = this.associationService.save(association);
 				result = new ModelAndView("redirect:/association/" + association.getId() + "/display.do");
 			} catch (final Throwable oops) {
