@@ -38,9 +38,9 @@
 <script type="text/javascript" src="js/bootstrap.js"></script>
 
 <!-- Bootstrap core CSS -->
-    <!-- <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
-    <!-- <link href="css/bootstrap-grid.min.css" rel="stylesheet" type="text/css">
+   <!--  <link href="css/bootstrap-grid.min.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap-reboot.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap-reboot.min.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap-grid.css" rel="stylesheet" type="text/css"> -->
@@ -78,10 +78,6 @@
 	<div>
 		<tiles:insertAttribute name="header" />
 	</div>
-	<br> </br>
-	<br> </br>
-	<br> </br>
-	<br> </br>
 	<br> </br>
 	<br> </br>
 	<div>
