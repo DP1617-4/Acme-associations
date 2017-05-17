@@ -1,6 +1,11 @@
 
 package domain;
 
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -69,6 +74,17 @@ public class Roles extends DomainEntity {
 	}
 	public void setUser(final User user) {
 		this.user = user;
+	}
+
+	public static List<String> values() {
+		Field[] declaredFields = String.class.getDeclaredFields();
+		List<String> staticFields = new ArrayList<String>();
+		for (Field field : declaredFields) {
+		    if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
+		        staticFields.add(field.toString());
+		    }
+		}
+		return staticFields;
 	}
 
 }
