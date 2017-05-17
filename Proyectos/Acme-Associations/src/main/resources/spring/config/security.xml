@@ -66,6 +66,8 @@
 		<security:intercept-url pattern="/user/edit.do**" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/actor/user/display.do" access="isAuthenticated()"/>
 		
+		<security:intercept-url pattern="/actor/user/**" access="isAuthenticated()"/>
+		
 		
 		<security:intercept-url pattern="/user/user/edit.do**" access="hasRole('USER')" /> 
 		 
