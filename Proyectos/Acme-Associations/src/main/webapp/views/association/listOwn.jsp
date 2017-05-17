@@ -26,11 +26,13 @@
 	<spring:message code="association.role" var="roleHeader" />
 	
 
-			<display:column property="row.association.name" title="${titleHeader}"/>
-			<display:column property="row.association.description" title="${descriptionHeader}" />
-			<display:column property="row.association.creationDate" title="${creationDateHeader}" />
-			<display:column property="row.association.address" title="${addressHeader}"/>
-			<display:column property="row.type" title="${typeHeader}" sortable="true"/>
+	<display:column title="${titleHeader}">
+		<a href="association/${row.association.id}/display.do"> <jstl:out value="${row.association.name }"/></a>
+	</display:column>
+	<display:column property="association.description" title="${descriptionHeader}" />
+	<display:column property="association.creationDate" title="${creationDateHeader}" />
+	<display:column property="association.address" title="${addressHeader}"/>
+	<display:column property="type" title="${roleHeader}" sortable="true"/>
 			
 			
 			
@@ -39,8 +41,4 @@
 </display:table>
 
 <br/>
-
-<input type="button" name="back"
-		value="<spring:message code="comment.back" />"
-		onclick="location.href = 'welcome/index.do';" />&nbsp;
-<br/>	
+	

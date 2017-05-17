@@ -36,6 +36,7 @@ public class UserRequestController extends AbstractController {
 
 		result = new ModelAndView("request/list");
 		result.addObject("requests", requests);
+		result.addObject("requestURI", "/user/request/list.do");
 
 		return result;
 	}
@@ -44,10 +45,16 @@ public class UserRequestController extends AbstractController {
 	public ModelAndView list(@PathVariable final Association association) {
 		ModelAndView result;
 
-		final Collection<Request> requests = this.requestService.findAllByAssociation(association);
+		try {
+			final Collection<Request> requests = this.requestService.findAllByAssociation(association);
+			result = new ModelAndView("request/list");
+			result.addObject("requests", requests);
+		} catch (final Exception exc) {
 
-		result = new ModelAndView("request/list");
-		result.addObject("requests", requests);
+			result = new ModelAndView("redirect:/welcome/index.do");
+			result.addObject("errorMessage", exc.getMessage());
+			result.addObject("requestURI", "/user/request/" + association.getId() + "/list.do");
+		}
 
 		return result;
 	}
@@ -57,7 +64,7 @@ public class UserRequestController extends AbstractController {
 		ModelAndView result;
 
 		final Request request = this.requestService.create(association);
-		result = new ModelAndView("redirect: /welcome/index.do");
+		result = new ModelAndView("redirect:/association/" + association.getId() + "/display.do");
 		try {
 			this.requestService.save(request);
 			result.addObject("flashMessage", "request.success");
@@ -74,7 +81,7 @@ public class UserRequestController extends AbstractController {
 
 		this.requestService.delete(request);
 
-		result = new ModelAndView("redirect: /user/request/list.do");
+		result = new ModelAndView("redirect:/user/request/list.do");
 		result.addObject("flashMessage", "request.deleted");
 
 		return result;
@@ -83,11 +90,15 @@ public class UserRequestController extends AbstractController {
 	@RequestMapping(value = "/{request}/accept", method = RequestMethod.GET)
 	public ModelAndView accept(@PathVariable final Request request) {
 		ModelAndView result;
-
+		//		try {
 		this.requestService.accept(request);
-
-		result = new ModelAndView("redirect: /user/request/" + request.getAssociation().getId() + "/list.do");
+		result = new ModelAndView("redirect:/user/request/" + request.getAssociation().getId() + "/list.do");
 		result.addObject("flashMessage", "request.accepted");
+		//		} catch (final Exception exc) {
+		//
+		//			result = new ModelAndView("redirect:/welcome/index.do");
+		//			result.addObject("errorMessage", "no eres manager de la asociación. Este mensaje no está internacionalizado");
+		//		}
 
 		return result;
 	}
@@ -96,10 +107,15 @@ public class UserRequestController extends AbstractController {
 	public ModelAndView deny(@PathVariable final Request request) {
 		ModelAndView result;
 
+		//		try {
 		this.requestService.deny(request);
+		result = new ModelAndView("redirect:/user/request/" + request.getAssociation().getId() + "/list.do");
+		result.addObject("flashMessage", "request.accepted");
+		//		} catch (final Exception exc) {
 
-		result = new ModelAndView("redirect: /user/request/" + request.getAssociation().getId() + "/list.do");
-		result.addObject("flashMessage", "request.denied");
+		//			result = new ModelAndView("redirect:/welcome/index.do");
+		//			result.addObject("errorMessage", "no eres manager de la asociación. Este mensaje no está internacionalizado");
+		//		}
 
 		return result;
 	}

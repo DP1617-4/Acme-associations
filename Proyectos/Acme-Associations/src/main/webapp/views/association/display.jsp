@@ -40,7 +40,7 @@
 
         <div class="col-12 col-md-9">
           <div class="jumbotron">
-          <img src="<jstl:out value="http://www.zoonewengland.org/media/813822/redpanda_gallery10.jpg"/>" align="right" width="300">
+          <img src="<jstl:out value="${association.picture }"/>" align="right"  height="150" >
             <h1><jstl:out value="${association.name}" /></h1>
             <p><jstl:out value="${association.description}" /></p>
           </div>
@@ -84,6 +84,12 @@
 	            </form:form>
             </div>
             </jstl:if>
+             <jstl:if test="${role == null && application == false}">
+             <div class="col-6 col-lg-4">
+	            <a class="btn btn-primary" href="user/request/${association.id}/apply.do"><spring:message code="association.request.apply"/></a>
+	            
+            </div>
+            </jstl:if>
           </div><!--/row-->
         </div><!--/span-->
 
@@ -94,6 +100,9 @@
             <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
             <a href="sanction/user/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>
             <a href="loan/user/list.do" class="list-group-item"><spring:message code="association.loan"/></a>
+            </jstl:if>
+            <jstl:if test="${role eq 'MANAGER'}">
+            <a href="user/request/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
             </jstl:if>
             <a href="activity/user/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
           </div>

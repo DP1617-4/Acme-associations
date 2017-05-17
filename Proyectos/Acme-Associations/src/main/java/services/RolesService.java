@@ -45,7 +45,7 @@ public class RolesService {
 
 	public Roles assignRoles(final User user, final Association association, final String roleType) {
 
-		this.checkManager(user, association);
+		this.checkManagerPrincipal(association);
 
 		Roles role;
 		role = this.roleRepository.findRolesByUserAssociation(user.getId(), association.getId());
@@ -128,6 +128,39 @@ public class RolesService {
 
 		Roles role;
 		role = this.roleRepository.findRolesByUserAssociation(user.getId(), association.getId());
+		Assert.notNull(role, "association.role.associate.error");
+
+	}
+
+	public void checkManagerPrincipal(final Association association) {
+
+		User principal;
+		principal = this.userService.findByPrincipal();
+
+		Roles role;
+		role = this.roleRepository.findRolesByUserAssociation(principal.getId(), association.getId());
+		Assert.isTrue(role.getType().equals("MANAGER"), "association.role.manager.error");
+
+	}
+
+	public void checkCollaboratorPrincipal(final Association association) {
+
+		User principal;
+		principal = this.userService.findByPrincipal();
+
+		Roles role;
+		role = this.roleRepository.findRolesByUserAssociation(principal.getId(), association.getId());
+		Assert.isTrue(role.getType().equals("MANAGER") || role.getType().equals("COLLABORATOR"), "association.role.collaborator.error");
+
+	}
+
+	public void checkAssociatePrincipal(final Association association) {
+
+		User principal;
+		principal = this.userService.findByPrincipal();
+
+		Roles role;
+		role = this.roleRepository.findRolesByUserAssociation(principal.getId(), association.getId());
 		Assert.notNull(role, "association.role.associate.error");
 
 	}

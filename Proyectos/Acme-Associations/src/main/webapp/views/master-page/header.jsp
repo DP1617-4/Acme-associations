@@ -44,8 +44,8 @@
 
         <security:authorize access="hasRole('USER')">
 			<li class="dropdown"></li>
-			<li><a href="association/user/list.do"><spring:message code="master.page.association.list" /></a></li>
-			<li><a href="association/user/listOwn.do"><spring:message code="master.page.association.list.own" /></a></li>
+			<li><a href="association/list.do"><spring:message code="master.page.association.list" /></a></li>
+			<li><a href="user/association/listOwn.do"><spring:message code="master.page.association.list.own" /></a></li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 

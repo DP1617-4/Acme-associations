@@ -116,7 +116,7 @@ public class MessageService {
 		Folder senderFolder;
 		Actor sender;
 
-		sender = this.userService.findByPrincipal();
+		sender = message.getSender();
 		recipient = message.getRecipient();
 
 		recipientFolder = this.folderService.findSystemFolder(recipient, "Received");
@@ -221,7 +221,16 @@ public class MessageService {
 		message.setText("You have been accepted in the association " + association.getName());
 		message.setTitle("AUTO: Request warning");
 
-		this.send(message);
+		Actor recipient;
+		Folder recipientFolder;
+
+		recipient = message.getRecipient();
+
+		recipientFolder = this.folderService.findSystemFolder(recipient, "Received");
+		message.setMoment(new Date(System.currentTimeMillis() - 1));
+		message.setFolder(recipientFolder);
+
+		this.messageRepository.save(message);
 
 		return message;
 	}
@@ -241,7 +250,16 @@ public class MessageService {
 		message.setText("your request for the association " + association.getName() + " has been denied");
 		message.setTitle("AUTO: Request warning");
 
-		this.send(message);
+		Actor recipient;
+		Folder recipientFolder;
+
+		recipient = message.getRecipient();
+
+		recipientFolder = this.folderService.findSystemFolder(recipient, "Received");
+		message.setMoment(new Date(System.currentTimeMillis() - 1));
+		message.setFolder(recipientFolder);
+
+		this.messageRepository.save(message);
 
 		return message;
 	}
