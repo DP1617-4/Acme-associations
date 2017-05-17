@@ -87,7 +87,7 @@ public class UserAssociationController extends AbstractController {
 
 		final Collection<Roles> roles = this.rolesService.findAllByPrincipal();
 
-		result = new ModelAndView("association/list");
+		result = new ModelAndView("association/listOwn");
 		result.addObject("roles", roles);
 		result.addObject("requestURI", "/user/association/listOwn.do");
 

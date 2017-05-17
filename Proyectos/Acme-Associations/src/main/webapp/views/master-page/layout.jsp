@@ -80,11 +80,15 @@
 	</div>
 	<br> </br>
 	<br> </br>
+	<br> </br>
+	<br> </br>
+	<br> </br>
+	<br> </br>
 	<div>
 		<tiles:insertAttribute name="body" />	
-		<jstl:if test="${message != null}">
+		<jstl:if test="${errorMessage != null}">
 			<br />
-			<span class="message"><spring:message code="${message}" /></span>
+			<span class="message"><spring:message code="${errorMessage}" /></span>
 		</jstl:if>	
 	</div>
 	<div>

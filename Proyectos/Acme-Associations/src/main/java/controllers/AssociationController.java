@@ -4,6 +4,7 @@ package controllers;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,9 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AssociationService;
 import services.CommentService;
+import services.RequestService;
 import services.RolesService;
 import domain.Association;
 import domain.Comment;
+import domain.Roles;
 import forms.MessageBroadcast;
 
 @Controller
@@ -34,6 +37,9 @@ public class AssociationController extends AbstractController {
 	private AssociationService	associationService;
 
 	@Autowired
+	private RequestService		requestService;
+
+	@Autowired
 	private CommentService		commentService;
 
 	@Autowired
@@ -46,8 +52,22 @@ public class AssociationController extends AbstractController {
 		Collection<Comment> comments;
 		comments = this.commentService.findAllByCommentableId(association.getId());
 		final MessageBroadcast messageBroad = new MessageBroadcast();
-		String role;
-		role = this.rolesService.findRolesByPrincipalAssociation(association).getType();
+
+		Roles roles = null;
+		Boolean application = true;
+		String role = null;
+
+		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		result = new ModelAndView("welcome/index");
+		if (principal != "anonymousUser") {
+
+			application = this.requestService.isRequestedByPrincipal(association);
+			roles = this.rolesService.findRolesByPrincipalAssociation(association);
+		}
+
+		if (roles != null)
+			role = roles.getType();
 
 		result = new ModelAndView("association/display");
 		result.addObject("association", association);
@@ -55,6 +75,7 @@ public class AssociationController extends AbstractController {
 		result.addObject("requestURI", "/association/" + association.getId() + "/display.do");
 		result.addObject("messageBroad", messageBroad);
 		result.addObject("role", role);
+		result.addObject("application", application);
 		return result;
 	}
 
