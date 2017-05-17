@@ -107,4 +107,9 @@ public class AssociationService {
 		return result;
 	}
 
+	public void checkClosedBanned(final Association association) {
+
+		Assert.isTrue(association.getAdminClosed() == false && association.getClosedAssociation() == false, "association.closed.error");
+	}
+
 }
