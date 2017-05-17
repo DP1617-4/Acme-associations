@@ -47,7 +47,7 @@
 				<li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><spring:message code="master.page.profile" /> <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="user/user/display.do"><spring:message code="master.page.user.display" /></a></li>
+                <li><a href="actor/user/displayOwn.do"><spring:message code="master.page.user.display" /></a></li>
                 <li><a href="user/user/edit.do"><spring:message code="master.page.user.edit" /></a></li>
               </ul>
             </li>

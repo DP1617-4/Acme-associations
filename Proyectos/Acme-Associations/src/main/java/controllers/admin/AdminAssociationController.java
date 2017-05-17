@@ -15,7 +15,7 @@ import controllers.AbstractController;
 import domain.Association;
 
 @Controller
-@RequestMapping("/admin/association")
+@RequestMapping("association/administrator")
 public class AdminAssociationController extends AbstractController {
 
 	public AdminAssociationController() {
@@ -35,7 +35,7 @@ public class AdminAssociationController extends AbstractController {
 
 		result = new ModelAndView("association/list");
 		result.addObject("associations", associations);
-		result.addObject("requestURI", "/admin/association/list.do");
+		result.addObject("requestURI", "/association/administrator/list.do");
 
 		return result;
 	}
@@ -47,7 +47,6 @@ public class AdminAssociationController extends AbstractController {
 		this.associationService.banAssociation(association.getId());
 
 		result = this.list();
-		result.addObject("flashMessage", "association.ban");
 		return result;
 	}
 
