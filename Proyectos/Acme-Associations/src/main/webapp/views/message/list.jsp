@@ -38,7 +38,7 @@
 	
 	<spring:message code="message.title" var="titleHeader" />
 	<display:column title="${titleHeader}" sortable="true" >
-		${mask:mask(row.subject) } 
+		${mask:mask(row.title) } 
 	</display:column>
 
 	<spring:message code="message.moment" var="momentHeader" />
@@ -49,55 +49,18 @@
 		${mask:mask(row.text) }
 	</display:column>
 	
-	<spring:message code="message.attachment" var="attachmentHeader"/>
-	<display:column title="${attachmentHeader}">
-	<ul>
-	<jstl:forEach items="${row.attachments}" var="thisAttachment">
-		<li><a href="${thisAttachment}" target="_blank">${thisAttachment}</a>
-	</jstl:forEach>
-	</ul>
-	</display:column> 
-	
-	
 	
 	<spring:message code="message.sender" var="senderHeader"/>
 	<display:column title="${senderHeader}">
-		<a href="actor/actor/display.do?actorId=${row.sender.id}"> ${mask:mask(row.sender.name) } ${mask:mask(row.sender.surname) }</a>
+		<a href="actor/user/${row.sender.id}/display.do"> ${mask:mask(row.sender.name) } ${mask:mask(row.sender.surname) }</a>
 	</display:column>
 	
 	
 	<spring:message code="message.recipient" var="recipientHeader"/>
 	<display:column title="${recipientHeader}">
-		<a href="actor/actor/display.do?actorId=${row.recipient.id }">${row.recipient.name } ${row.recipient.surname }</a>
+		<a href="actor/user/${row.recipient.id}/display.do">${row.recipient.name } ${row.recipient.surname }</a>
 	</display:column> 
 	
-	<jstl:if test="${folder.name eq 'Sent'}">
-		<spring:message code="chirp.resend" var="resendHeader"/>
-		<display:column title="${resendHeader}">
-			<form:form action="chirp/chorbi/resend.do"
-				modelAttribute="resendChirp" >
-
-				<form:hidden path="chirpId" value="${row.id}" />
-
-				<form:label path="recipientId">
-					<spring:message code="chirp.resend.recipient" />:
-				</form:label>
-				<form:select id="chorbies" path="recipientId">
-					<form:option value="0" label="----" />
-					<form:options items="${chorbies}" itemValue="id" itemLabel="completeName" />
-				</form:select>
-				<form:errors cssClass="error" path="recipientId" />
-				<input type="submit" name="save"
-					value="<spring:message code="chirp.resend" />" />&nbsp;
-			</form:form>
-		</display:column>
-	</jstl:if>
-	<jstl:if test="${folder.name eq 'Received' }">
-		<spring:message code="chirp.reply" var="replyHeader"/>
-		<display:column title="${replyHeader}">
-			<a href="chirp/chorbi/reply.do?chirpId=${row.id }"><spring:message code="chirp.reply"/></a>
-		</display:column>
-	</jstl:if>
 	
 
 </display:table>
