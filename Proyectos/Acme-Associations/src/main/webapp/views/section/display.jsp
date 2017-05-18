@@ -21,31 +21,6 @@
 <body>
 <security:authentication property="principal" var ="loggedactor"/>
     <div class="container">
-    
-    
-    <jstl:if test="${association.closedAssociation}">
-    
-    	<spring:message code="association.closed"/>
-    	<br/>
-        <jstl:if test="${role eq 'MANAGER'}">
-      	 	<a class="btn btn-primary" href="user/association/${association.id}/open.do"><spring:message code="association.open"/></a>
-     	 </jstl:if>
-    	
-    
-    </jstl:if>
-    
-    <jstl:if test="${association.adminClosed}">
-    
-    	<spring:message code="association.banned"/>
-    	<br/>
-        <security:authorize access="hasRole('ADMIN')">
-      		<a class="btn btn-primary" href="association/administrator/${association.id}/ban.do"><spring:message code="association.unban"/></a>
-        </security:authorize>
-    	
-    
-    </jstl:if>
-
-	<jstl:if test="${!association.closedAssociation && !association.adminClosed}">
       <div class="row row-offcanvas row-offcanvas-right">
 
         <div class="col-12 col-md-9">
@@ -88,13 +63,10 @@
             <jstl:if test="${role eq 'MANAGER'}">
             <div class="col-6 col-lg-4">
 	            <form:form action="message/actor/broadcast.do" modelAttribute="messageBroad">
-	            	<form:hidden path="association"/>
+	            	<form:hidden path="association" value="${association}"/>
 	            	<acme:textarea code="association.message.broadcast" path="text"/>
 	            	<acme:submit name="broadcast" code="association.message.post.broadcast"/>
 	            </form:form>
-	            <jstl:if test="${broadError != null}">
-					<span class="message"><spring:message code="${broadError}" /></span>
-				</jstl:if>	
             </div>
             </jstl:if>
              <jstl:if test="${role == null && application == false}">
@@ -116,10 +88,6 @@
             </jstl:if>
             <jstl:if test="${role eq 'MANAGER'}">
             <a href="user/request/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
-            <a href="user/association/${association.id}/changeManager.do" class="list-group-item"><spring:message code="association.manager.change"/></a>
-            </jstl:if>
-            <jstl:if test="${role eq 'ASSOCIATE' || role eq 'COLLABORATOR'}">
-            <a href="user/association/${association.id}/leave.do" class="list-group-item"><spring:message code="association.leave"/></a>
             </jstl:if>
             <a href="activity/user/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
           </div>
@@ -127,15 +95,10 @@
       </div><!--/row-->
       <jstl:if test="${role eq 'MANAGER'}">
       	 <a class="btn btn-primary" href="user/association/${association.id}/close.do"><spring:message code="association.close"/></a>
-      	 <br>
-      	 </br>
-      	 <a class="btn btn-primary" href="user/association/edit.do?associationId=${association.id}"><spring:message code="association.edit"/></a>
       </jstl:if>
       
       <security:authorize access="hasRole('ADMIN')">
       	<a class="btn btn-primary" href="association/administrator/${association.id}/ban.do"><spring:message code="association.ban"/></a>
       </security:authorize>
-      
-      </jstl:if>
 </div>
 

@@ -19,31 +19,26 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme"	tagdir="/WEB-INF/tags"%>
 
-<form:form action="${requestURI}" modelAttribute="association">
+<form:form action="user/association/changeManager.do" modelAttribute="changeManager">
 
-	<form:hidden path="id" />
-	<form:hidden path="version" />
-	<form:hidden path="closedAssociation"/>
-	<form:hidden path="adminClosed"/>
-	<form:hidden path="creationDate"/>
+	<form:hidden path="association" />
 
-	<acme:textbox code="association.name" path="name"/><br />
-	
-	<acme:textbox code="association.description" path="description"/><br />
-	
-	<acme:textbox code="association.address" path="address"/><br />
-	
-	<acme:textbox code="association.statutes" path="statutes"/><br />
-	
-	<acme:textbox code="association.announcements" path="announcements"/><br />
-	
-	<acme:textbox code="association.picture" path="picture"/><br />
+	<form:label path="user">
+		<spring:message code="association.manager.choose" />:
+	</form:label>
+	<form:select id="user" path="user">
+		<jstl:forEach items="${users}" var="thisUser">
+			<form:option value="${thisUser}" label="${thisUser.completeName}" />
+		</jstl:forEach>
+	</form:select>
+<form:errors cssClass="error" path="user" />
+</br>
 	
 	<input type="submit" name="save"
 		value="<spring:message code="association.save" />" />&nbsp; 
 	<input type="button" name="cancel"
 		value="<spring:message code="association.cancel" />"
-		onclick="location.href = ('association/list.do');" />
+		onclick="location.href = ('association/${association.id}/display.do');" />
 	<br />
 
 	

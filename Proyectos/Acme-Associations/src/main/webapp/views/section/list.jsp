@@ -45,7 +45,7 @@
 	
 </display:table>
 <br><br/>
-<div><a class="btn btn-primary" href="user/association/create.do"><spring:message code="association.create"/></a></div>
+<div><a href="user/association/create.do"><spring:message code="association.create"/></a></div>
 <br/>
 
 		

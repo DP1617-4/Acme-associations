@@ -204,4 +204,23 @@ public class UserService {
 		Assert.isTrue(phoneUtil.isValidNumber(checkNum));
 
 	}
+
+	public User findAssociationManager(final Association association) {
+
+		return this.userRepository.findAssociationManager(association.getId());
+	}
+
+	public Collection<User> findAssociationCollaborators(final Association association) {
+
+		return this.userRepository.findAssociationCollaborators(association.getId());
+	}
+
+	public Collection<User> findAssociationCollaboratorsAndManager(final Association association) {
+
+		final Collection<User> result = new ArrayList<User>();
+		result.add(this.findAssociationManager(association));
+		result.addAll(this.findAssociationCollaborators(association));
+
+		return result;
+	}
 }
