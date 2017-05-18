@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.AssociationService;
 import services.RolesService;
@@ -44,39 +45,42 @@ public class UserAssociationController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
-		final Association association = this.associationService.create();
-		result = this.createEditModelAndView(association);
+		final Association newAssociation = this.associationService.create();
+		result = this.createEditModelAndView(newAssociation);
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int associationId) {
+	public ModelAndView edit(@RequestParam final int associationId, final RedirectAttributes redir) {
 		ModelAndView result;
 		Association association;
-		final User user = this.userService.findByPrincipal();
+		try {
+			final User user = this.userService.findByPrincipal();
 
-		association = this.associationService.findOne(associationId);
-		this.rolesService.checkManager(user, association);
+			association = this.associationService.findOne(associationId);
+			this.rolesService.checkManagerPrincipal(association);
 
-		result = this.createEditModelAndView(association);
+			result = this.createEditModelAndView(association);
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+			redir.addFlashAttribute("errorMessage", oops.getMessage());
+		}
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Association association, final BindingResult binding) {
+	public ModelAndView save(@Valid Association newAssociation, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(association);
+			result = this.createEditModelAndView(newAssociation);
 		else
 			try {
-				final User user = this.userService.findByPrincipal();
-				this.rolesService.checkManager(user, association);
-				association = this.associationService.save(association);
-				result = new ModelAndView("redirect:/association/" + association.getId() + "/display.do");
+				newAssociation = this.associationService.save(newAssociation);
+				result = new ModelAndView("redirect:/association/" + newAssociation.getId() + "/display.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(association, "association.commit.error");
+				result = this.createEditModelAndView(newAssociation, "association.commit.error");
 			}
 		return result;
 	}
@@ -143,11 +147,11 @@ public class UserAssociationController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Association association, final String message) {
 		ModelAndView result;
 
-		final String requestURI = "association/edit.do";
+		final String requestURI = "user/association/edit.do";
 
 		result = new ModelAndView("association/edit");
 		result.addObject("association", association);
-		result.addObject("message", message);
+		result.addObject("errorMessage", message);
 		result.addObject("requestURI", requestURI);
 
 		return result;
