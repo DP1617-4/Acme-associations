@@ -50,7 +50,7 @@
 			
 			<jstl:if test="${not empty role && (role eq 'COLLABORATOR' || role eq 'MANAGER')}">
 				<display:column>
-					<a href="loan/user/${row.id}/end.do"><spring:message code="loan.end" /></a>
+					<a href="loan/user/${association.id}/${row.id}/end.do"><spring:message code="loan.end" /></a>
 				</display:column>
 				
 				<spring:message code="loan.sanction" var="sanctionHeader"/>
