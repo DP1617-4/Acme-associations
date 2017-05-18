@@ -35,4 +35,9 @@
 		<put-attribute name="title" value="Listar de mis asociaciones" />
 		<put-attribute name="body" value="/views/association/listOwn.jsp" />
 	</definition>
+	
+	<definition name="association/changeManager" extends="master.page">	
+		<put-attribute name="title" value="Cambio de manager" />
+		<put-attribute name="body" value="/views/association/changeManager.jsp" />
+	</definition>
 </tiles-definitions>
