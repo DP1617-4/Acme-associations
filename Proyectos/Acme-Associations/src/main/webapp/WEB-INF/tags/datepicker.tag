@@ -33,7 +33,7 @@
 
 <%-- Definition --%>
 
-<div>
+<div class="datepicker">
 	<form:label path="${path}">
 		<spring:message code="${code}" />
 	</form:label>	
