@@ -13,10 +13,10 @@ import domain.Loan;
 @Repository
 public interface LoanRepository extends JpaRepository<Loan, Integer> {
 
-	@Query("select l from Loan l where floor(datediff(Current_date, l.expectedDate)) >= 1 AND l.finalDate != null")
+	@Query("select l from Loan l where floor(datediff(Current_date, l.expectedDate)) >= 1 AND l.finalDate = null")
 	List<Loan> findOverdueLoans(Pageable page);
 
-	@Query("select l from Loan l where l.finalDate != null AND l.item.section.association.id = ?1")
+	@Query("select l from Loan l where l.finalDate = null AND l.item.section.association.id = ?1")
 	List<Loan> findPendingByAssociation(int id);
 
 	@Query("select l from Loan l where l.item.section.association.id = ?1")

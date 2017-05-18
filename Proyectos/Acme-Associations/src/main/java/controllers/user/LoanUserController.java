@@ -54,6 +54,7 @@ public class LoanUserController extends AbstractController {
 		result.addObject("loans", loans);
 		result.addObject("association", association);
 		result.addObject("role", role.getType());
+		result.addObject("requestURI", "loan/user/" + association.getId() + "list.do");
 
 		return result;
 	}
@@ -67,7 +68,8 @@ public class LoanUserController extends AbstractController {
 		result = new ModelAndView("loan/list");
 		result.addObject("loans", loans);
 		result.addObject("association", association);
-		result.addObject("role", role);
+		result.addObject("role", role.getType());
+		result.addObject("requestURI", "loan/user/" + association.getId() + "listPending.do");
 
 		return result;
 	}
@@ -87,7 +89,7 @@ public class LoanUserController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/{association}/{item}/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/{association}/{item}/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@PathVariable final Association association, @PathVariable final Item item, Loan loan, final BindingResult binding, final RedirectAttributes redir) {
 		ModelAndView result;
 
@@ -103,6 +105,20 @@ public class LoanUserController extends AbstractController {
 				result = new ModelAndView("redirect:/welcome/index.do");
 				redir.addFlashAttribute("errorMessage", e.getMessage());
 			}
+		return result;
+	}
+
+	@RequestMapping(value = "/{association}/{loan}/end", method = RequestMethod.GET)
+	public ModelAndView end(@PathVariable final Association association, @PathVariable final Loan loan, final RedirectAttributes redir) {
+		ModelAndView result;
+		try {
+			this.rolesService.checkCollaboratorPrincipal(association);
+			this.loanService.end(loan);
+			result = this.listPending(association);
+		} catch (final IllegalArgumentException e) {
+			result = new ModelAndView("redirect:/association/" + association.getId() + "/display.do");
+			redir.addFlashAttribute("flashMessage", "association.role.collaborator.error");
+		}
 		return result;
 	}
 
