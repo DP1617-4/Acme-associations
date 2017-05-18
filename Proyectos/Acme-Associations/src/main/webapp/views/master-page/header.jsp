@@ -13,62 +13,60 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-<nav class="navbar navbar-inverse navbar-fixed-top navbar-collapse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed"
         data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">MyLooks</span> <span class="icon-bar"></span>
+        <span class="sr-only">Acme Associations</span> <span class="icon-bar"></span>
         <span class="icon-bar"></span> <span class="icon-bar"></span>
       </button>
-      <a href="#" class="navbar-brand"><img onError="imgError(this);"
-        src="images/YTijeraBlanco.png" width="80px" height="25px" /></a>
+      <a href="welcome/index.do" class="navbar-brand"><img onError="imgError(this);"
+        src="https://i.imgur.com/i8YWDoL.png" height="35px" /></a>
     </div>
-    <div class="collapse navbar-collapse"
-      id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
+    <div class="navbar-collapse collapse">
+   	 <ul class="nav navbar-nav navbar-right">
 
-<security:authorize access="hasRole('ADMIN')">
+	<security:authorize access="hasRole('ADMIN')">
 
-          <li><a href="owner/register.do"><spring:message
-                code="master.page.admin.registerOwner" /></a></li>
-</security:authorize>
+        <li><a class="fNiv" href="association/administrator/list.do"><spring:message code="master.page.association.list" /></a></li>
+				<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><spring:message	code="master.page.administrator" /><span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="systemConfiguration/administrator/edit.do"><spring:message code="master.page.system" /></a></li>
+					<li><a href="systemConfiguration/administrator/dashboard.do"><spring:message code="master.page.dashboard" /></a></li>
+              </ul>
+            </li>
+		</security:authorize>
 
-        <security:authorize access="hasRole('OWNER')">
-          <li><a href="owner/edit.do"><spring:message
-                code="master.page.owner.editOwner" /></a></li>
-          <li><a href="worker/owner/register.do"><spring:message
-                code="master.page.owner.createWorker" /></a></li>
-          <li><a href="establishment/owner/listByOwner.do"><spring:message
-                code="master.page.owner.list" /></a></li>
-          <li><a class="fNiv" href="establishment/owner/0/edit.do"><spring:message
-                code="master.page.establishments.create" /></a></li>
-        </security:authorize>
-
-        <li><a class="fNiv" href="establishment/list.do"><spring:message
-              code="master.page.establishments" /></a></li>
-
-
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
+        <security:authorize access="hasRole('USER')">
+			<li><a href="association/list.do"><spring:message code="master.page.association.list" /></a></li>
+			<li><a href="user/association/listOwn.do"><spring:message code="master.page.association.list.own" /></a></li>
+			 <li>
+				<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><spring:message code="master.page.profile" /> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="actor/user/displayOwn.do"><spring:message code="master.page.user.display" /></a></li>
+                <li><a href="user/user/edit.do"><spring:message code="master.page.user.edit" /></a></li>
+              </ul>
+            </li>
+           </security:authorize>
+      
+      
         <security:authorize access="isAnonymous()">
-            <li class="dropdown"><a href="security/login.do" ><b>Login</b> </a>
-              </li>
-        </security:authorize>
+        	<li><a class="fNiv" href="association/list.do"><spring:message
+              code="master.page.association" /></a></li>
+             <li><a class="fNiv" href="user/register.do"><spring:message code="master.page.register.as.user" /></a></li>
+             <li class="Fniv"><a href="security/login.do" ><b>Login</b> </a></li>
+			</security:authorize>
+        
         <security:authorize access="isAuthenticated()">
-          <li class="dropdown"><a href="#" class="dropdown-toggle fNiv" data-toggle="dropdown" type="button">
-              <div class="avatar">
-                <img onError="imgError(this);" src="${actor.picture }" />
-              </div>
-          </a>
-            <ul class="dropdown-menu">
-              <li class="arrow"></li>
-
-              
+        		
               <li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
-            </ul></li>
         </security:authorize>
       </ul>
     </div>
   </div>
-</nav>
+</nav> 
+

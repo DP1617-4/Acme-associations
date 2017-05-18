@@ -20,9 +20,9 @@
 
 
 <display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="folders" requestURI="folder/chorbi/list.do" id="row" >
+	name="folders" requestURI="folder/actor/list.do" id="row" >
 	<display:column>
-		<a href="chirp/chorbi/list.do?folderId=${row.id}">${row.name}</a>
+		<a href="message/actor/list.do?folderId=${row.id}">${row.name}</a>
 	</display:column>
 	
 

@@ -16,7 +16,7 @@
 
 <jsp:useBean id="date" class="java.util.Date" />
 
-<hr />
+
 
 <div>
 	<a href="?language=en">en</a> | <a href="?language=es">es</a>

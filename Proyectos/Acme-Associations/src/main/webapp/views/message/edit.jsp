@@ -20,7 +20,7 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
-<form:form action="chirp/chorbi/edit.do" modelAttribute="message">
+<form:form action="message/actor/edit.do" modelAttribute="message">
 
 	<form:hidden path="sender"/>
 	<form:hidden path="folder"/>

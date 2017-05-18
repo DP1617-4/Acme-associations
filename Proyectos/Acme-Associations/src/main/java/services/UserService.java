@@ -7,7 +7,6 @@ import java.util.Collection;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -18,6 +17,10 @@ import repositories.UserRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
+
 import domain.Association;
 import domain.User;
 import forms.RegisterUser;
@@ -27,19 +30,13 @@ import forms.RegisterUser;
 public class UserService {
 
 	@Autowired
-	private UserRepository			userRepository;
+	private UserRepository	userRepository;
 
 	@Autowired
-	private AdministratorService	administratorService;
+	private FolderService	folderService;
 
 	@Autowired
-	private FolderService			folderService;
-
-	@Autowired
-	private AssociationService		associationService;
-
-	@Autowired
-	private Validator				validator;
+	private Validator		validator;
 
 
 	public UserService() {
@@ -57,7 +54,6 @@ public class UserService {
 		authority.setAuthority(Authority.USER);
 		authorities.add(authority);
 		userAccount.setAuthorities(authorities);
-		userAccount.setEnabled(true);
 
 		result.setUserAccount(userAccount);
 
@@ -90,13 +86,13 @@ public class UserService {
 		return user;
 	}
 
-	public Collection<User> findAllByAssociation(final Association association, final Pageable pageRequest) {
-
-		Collection<User> result;
-		result = this.userRepository.findAllByAssociation(association.getId(), pageRequest);
-		return result;
-
-	}
+	//	public Collection<User> findAllByAssociation(final Association association, final Pageable pageRequest) {
+	//
+	//		Collection<User> result;
+	//		result = this.userRepository.findAllByAssociation(association.getId(), pageRequest);
+	//		return result;
+	//
+	//	}
 
 	public Collection<User> findAllByAssociation(final Association association) {
 
@@ -112,20 +108,36 @@ public class UserService {
 		return result;
 	}
 
-	public User reconstruct(final RegisterUser registerUser, final BindingResult binding) {
+	public User reconstruct(final RegisterUser user, final BindingResult binding) {
 		User result;
-		Assert.isTrue(registerUser.isAccept());
+		Assert.isTrue(user.isAccept());
 		result = this.create();
 
-		result.setEmail(registerUser.getEmail());
-		result.setIdNumber(registerUser.getIdNumber());
-		result.setName(registerUser.getName());
-		result.setPhoneNumber(registerUser.getPhoneNumber());
-		result.setPostalAddress(registerUser.getPostalAddress());
-		result.setSurname(registerUser.getSurname());
+		result.setEmail(user.getEmail());
+		result.setIdNumber(user.getIdNumber());
+		result.setName(user.getName());
+		result.setPhoneNumber(user.getPhoneNumber());
+		result.setPostalAddress(user.getPostalAddress());
+		result.setSurname(user.getSurname());
 
-		result.getUserAccount().setUsername(registerUser.getUsername());
-		result.getUserAccount().setPassword(registerUser.getPassword());
+		result.getUserAccount().setUsername(user.getUsername());
+		result.getUserAccount().setPassword(user.getPassword());
+
+		this.validator.validate(result, binding);
+
+		return result;
+	}
+
+	public User reconstructPrincipal(final User user, final BindingResult binding) {
+		User result;
+		result = this.findByPrincipal();
+
+		result.setEmail(user.getEmail());
+		result.setIdNumber(user.getIdNumber());
+		result.setName(user.getName());
+		result.setPhoneNumber(user.getPhoneNumber());
+		result.setPostalAddress(user.getPostalAddress());
+		result.setSurname(user.getSurname());
 
 		this.validator.validate(result, binding);
 
@@ -165,4 +177,31 @@ public class UserService {
 		this.userRepository.flush();
 	}
 
+	public void phoneValidator(final User user) {
+
+		//returns exception if user number is not valid.
+
+		final String phoneNumber = user.getPhoneNumber();
+		final PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+		String number;
+		String cCode;
+		int code;
+		int num;
+		final String[] phone = phoneNumber.split(" ", 2);
+
+		number = phone[1];
+		cCode = phone[0];
+		cCode = cCode.replaceAll("\\+", "");
+		code = Integer.parseInt(cCode);
+		num = Integer.parseInt(number);
+
+		PhoneNumber checkNum;
+
+		checkNum = new PhoneNumber();
+		checkNum.setCountryCode(code);
+		checkNum.setNationalNumber(num);
+
+		Assert.isTrue(phoneUtil.isValidNumber(checkNum));
+
+	}
 }
