@@ -21,3 +21,4 @@
 
 <p><spring:message code="welcome.greeting.current.time" /> ${moment}</p> 
 
+

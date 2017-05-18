@@ -204,4 +204,9 @@ public class UserService {
 		Assert.isTrue(phoneUtil.isValidNumber(checkNum));
 
 	}
+
+	public User findAssociationManager(final Association association) {
+
+		return this.userRepository.findAssociationManager(association.getId());
+	}
 }

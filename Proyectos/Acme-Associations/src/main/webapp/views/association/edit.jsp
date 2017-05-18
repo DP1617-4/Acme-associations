@@ -25,6 +25,7 @@
 	<form:hidden path="version" />
 	<form:hidden path="closedAssociation"/>
 	<form:hidden path="adminClosed"/>
+	<form:hidden path="creationDate"/>
 
 	<acme:textbox code="association.name" path="name"/><br />
 	

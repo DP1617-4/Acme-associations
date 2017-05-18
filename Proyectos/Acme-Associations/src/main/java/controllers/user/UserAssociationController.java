@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.AssociationService;
 import services.RolesService;
@@ -50,15 +51,20 @@ public class UserAssociationController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int associationId) {
+	public ModelAndView edit(@RequestParam final int associationId, final RedirectAttributes redir) {
 		ModelAndView result;
 		Association association;
-		final User user = this.userService.findByPrincipal();
+		try {
+			final User user = this.userService.findByPrincipal();
 
-		association = this.associationService.findOne(associationId);
-		this.rolesService.checkManager(user, association);
+			association = this.associationService.findOne(associationId);
+			this.rolesService.checkManagerPrincipal(association);
 
-		result = this.createEditModelAndView(association);
+			result = this.createEditModelAndView(association);
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+			redir.addFlashAttribute("errorMessage", oops.getMessage());
+		}
 
 		return result;
 	}
@@ -145,7 +151,7 @@ public class UserAssociationController extends AbstractController {
 
 		result = new ModelAndView("association/edit");
 		result.addObject("association", association);
-		result.addObject("message", message);
+		result.addObject("errorMessage", message);
 		result.addObject("requestURI", requestURI);
 
 		return result;

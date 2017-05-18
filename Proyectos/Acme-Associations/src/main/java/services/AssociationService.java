@@ -44,7 +44,11 @@ public class AssociationService {
 		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
 		Association created;
+
 		created = new Association();
+		created.setCreationDate(new Date(System.currentTimeMillis() - 100));
+		created.setAdminClosed(false);
+		created.setClosedAssociation(false);
 		return created;
 	}
 
@@ -65,9 +69,9 @@ public class AssociationService {
 		Assert.notNull(user);
 		Association result;
 		if (association.getId() == 0) {
-			association.setCreationDate(new Date());
+			association.setCreationDate(new Date(System.currentTimeMillis() - 100));
 			result = this.associationRepository.save(association);
-			this.rolesService.assignRoles(user, association, Roles.MANAGER);
+			this.rolesService.assignRoles(user, result, Roles.MANAGER);
 		} else {
 			this.rolesService.checkManager(user, association);
 			result = this.associationRepository.save(association);

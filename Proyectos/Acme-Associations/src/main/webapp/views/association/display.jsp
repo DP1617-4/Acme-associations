@@ -123,6 +123,9 @@
       </div><!--/row-->
       <jstl:if test="${role eq 'MANAGER'}">
       	 <a class="btn btn-primary" href="user/association/${association.id}/close.do"><spring:message code="association.close"/></a>
+      	 <br>
+      	 </br>
+      	 <a class="btn btn-primary" href="user/association/edit.do?associationId=${association.id}"><spring:message code="association.edit"/></a>
       </jstl:if>
       
       <security:authorize access="hasRole('ADMIN')">
