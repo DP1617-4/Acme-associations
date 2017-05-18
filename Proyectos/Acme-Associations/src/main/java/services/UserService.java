@@ -30,13 +30,13 @@ import forms.RegisterUser;
 public class UserService {
 
 	@Autowired
-	private UserRepository			userRepository;
+	private UserRepository	userRepository;
 
 	@Autowired
-	private FolderService			folderService;
+	private FolderService	folderService;
 
 	@Autowired
-	private Validator				validator;
+	private Validator		validator;
 
 
 	public UserService() {
@@ -108,20 +108,36 @@ public class UserService {
 		return result;
 	}
 
-	public User reconstruct(final RegisterUser registerUser, final BindingResult binding) {
+	public User reconstruct(final RegisterUser user, final BindingResult binding) {
 		User result;
-		Assert.isTrue(registerUser.isAccept());
+		Assert.isTrue(user.isAccept());
 		result = this.create();
 
-		result.setEmail(registerUser.getEmail());
-		result.setIdNumber(registerUser.getIdNumber());
-		result.setName(registerUser.getName());
-		result.setPhoneNumber(registerUser.getPhoneNumber());
-		result.setPostalAddress(registerUser.getPostalAddress());
-		result.setSurname(registerUser.getSurname());
+		result.setEmail(user.getEmail());
+		result.setIdNumber(user.getIdNumber());
+		result.setName(user.getName());
+		result.setPhoneNumber(user.getPhoneNumber());
+		result.setPostalAddress(user.getPostalAddress());
+		result.setSurname(user.getSurname());
 
-		result.getUserAccount().setUsername(registerUser.getUsername());
-		result.getUserAccount().setPassword(registerUser.getPassword());
+		result.getUserAccount().setUsername(user.getUsername());
+		result.getUserAccount().setPassword(user.getPassword());
+
+		this.validator.validate(result, binding);
+
+		return result;
+	}
+
+	public User reconstructPrincipal(final User user, final BindingResult binding) {
+		User result;
+		result = this.findByPrincipal();
+
+		result.setEmail(user.getEmail());
+		result.setIdNumber(user.getIdNumber());
+		result.setName(user.getName());
+		result.setPhoneNumber(user.getPhoneNumber());
+		result.setPostalAddress(user.getPostalAddress());
+		result.setSurname(user.getSurname());
 
 		this.validator.validate(result, binding);
 

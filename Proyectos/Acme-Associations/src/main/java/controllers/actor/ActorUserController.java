@@ -50,18 +50,21 @@ public class ActorUserController extends AbstractController {
 	public ModelAndView display(@PathVariable final Actor actor) {
 		ModelAndView result;
 		Folder folder;
-		folder = this.folderService.findSystemFolder(actor, "Received");
-		final Collection<Message> messages;
-		messages = this.messageService.findAllByFolder(folder.getId());
+		Collection<Message> messages = null;
+		if (this.actorService.findByPrincipal().equals(actor)) {
+			folder = this.folderService.findSystemFolder(actor, "Received");
+
+			messages = this.messageService.findAllByFolder(folder.getId());
+		}
 
 		result = new ModelAndView("actor/display");
 		result.addObject("actor", actor);
 		result.addObject("messages", messages);
+		result.addObject("requestURI", "actor/user/" + actor.getId() + "/display.do");
 
 		return result;
 
 	}
-
 	@RequestMapping(value = "/displayOwn", method = RequestMethod.GET)
 	public ModelAndView displayOwn() {
 		ModelAndView result;
@@ -74,6 +77,7 @@ public class ActorUserController extends AbstractController {
 		result = new ModelAndView("actor/display");
 		result.addObject("actor", actor);
 		result.addObject("messages", messages);
+		result.addObject("requestURI", "actor/user/displayOwn.do");
 
 		return result;
 
