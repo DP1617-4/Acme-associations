@@ -30,13 +30,13 @@
 			</display:column>
 			
 			<spring:message code="loan.startDate" var="startHeader" />	
-			<display:column property="startDate" title="${startHeader}" sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
+			<display:column property="startDate" title="${startHeader}" sortable="true" format="{0,date,dd/MM/yyyy}" />
 			
 			<spring:message code="loan.expectedDate" var="expectedDate" />	
-			<display:column property="expectedDate" title="${expectedDate}" sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
+			<display:column property="expectedDate" title="${expectedDate}" sortable="true" format="{0,date,dd/MM/yyyy}" />
 			
 			<spring:message code="loan.finalDate" var="finalDate" />	
-			<display:column property="finalDate" title="${finalDate}" sortable="true" format="{0,date,dd/MM/yyyy HH:mm}" />
+			<display:column property="finalDate" title="${finalDate}" sortable="true" format="{0,date,dd/MM/yyyy}" />
 		
 			<spring:message code="loan.borrower" var="borrowerHeader"/>
 			<display:column title="${borrowerHeader}">
@@ -48,9 +48,9 @@
 				<a href="actor/actor/${row.lender.id}/display.do">${mask:mask(row.lender.completeName) }</a>
 			</display:column>
 			
-			<jstl:if test="${not empty role && (role.type eq 'COLLABORATOR' || role.type eq 'MANAGER')}">
+			<jstl:if test="${not empty role && (role eq 'COLLABORATOR' || role eq 'MANAGER')}">
 				<display:column>
-					<a href="loan/user/${row.id}/end.do"><spring:message code="loan.end" /></a>
+					<a href="loan/user/${association.id}/${row.id}/end.do"><spring:message code="loan.end" /></a>
 				</display:column>
 				
 				<spring:message code="loan.sanction" var="sanctionHeader"/>

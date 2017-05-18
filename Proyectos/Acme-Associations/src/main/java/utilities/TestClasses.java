@@ -5,16 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
-import utilities.internal.ConsoleReader;
-
 public class TestClasses {
 
 	/**
 	 * @param args
 	 */
 	public static void main(final String[] args) {
-		final ConsoleReader reader;
-		final String line;
+		
 
 		//		try {
 		//			System.out.printf("Test your method");

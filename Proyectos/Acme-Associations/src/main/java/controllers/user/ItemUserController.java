@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ItemService;
 import services.RolesService;
-import services.UserService;
 import controllers.AbstractController;
 import domain.Association;
 import domain.Item;
@@ -27,13 +25,9 @@ public class ItemUserController extends AbstractController {
 
 
 	@Autowired
-	private ItemService		itemService;
-
-	@Autowired
 	private RolesService	rolesService;
 
-	@Autowired
-	private UserService		userService;
+	
 
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)

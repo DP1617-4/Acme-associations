@@ -16,9 +16,7 @@ public class CommentableService {
 	@Autowired
 	private CommentableRepository	commentableRepository;
 
-	//supporting services-------------------
-	@Autowired
-	private UserService				userService;
+	
 
 
 	//Basic CRUD methods-------------------

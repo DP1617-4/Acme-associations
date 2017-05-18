@@ -113,6 +113,7 @@ public class MessageServiceTest extends AbstractTest {
 
 	//	- An actor who is authenticated as a manager must be able to:
 	//		o Broadcast a chirp to the useres who have registered to any of the events that he or she manages.
+	@SuppressWarnings("unchecked")
 	@Test
 	public void driverSendBroadcast() {
 		final Collection<String> attachments = new ArrayList<String>();
