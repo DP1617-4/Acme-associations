@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -64,6 +65,7 @@ public class AssociationService {
 		Assert.notNull(user);
 		Association result;
 		if (association.getId() == 0) {
+			association.setCreationDate(new Date());
 			result = this.associationRepository.save(association);
 			this.rolesService.assignRoles(user, association, Roles.MANAGER);
 		} else {

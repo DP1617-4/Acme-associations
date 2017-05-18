@@ -44,8 +44,8 @@ public class UserAssociationController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
-		final Association association = this.associationService.create();
-		result = this.createEditModelAndView(association);
+		final Association newAssociation = this.associationService.create();
+		result = this.createEditModelAndView(newAssociation);
 		return result;
 	}
 
@@ -64,17 +64,17 @@ public class UserAssociationController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Association association, final BindingResult binding) {
+	public ModelAndView save(@Valid Association newAssociation, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(association);
+			result = this.createEditModelAndView(newAssociation);
 		else
 			try {
-				association = this.associationService.save(association);
-				result = new ModelAndView("redirect:/association/" + association.getId() + "/display.do");
+				newAssociation = this.associationService.save(newAssociation);
+				result = new ModelAndView("redirect:/association/" + newAssociation.getId() + "/display.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(association, "association.commit.error");
+				result = this.createEditModelAndView(newAssociation, "association.commit.error");
 			}
 		return result;
 	}
@@ -141,7 +141,7 @@ public class UserAssociationController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Association association, final String message) {
 		ModelAndView result;
 
-		final String requestURI = "association/edit.do";
+		final String requestURI = "user/association/edit.do";
 
 		result = new ModelAndView("association/edit");
 		result.addObject("association", association);

@@ -32,6 +32,14 @@
 	
 	<acme:textbox code="association.address" path="address"/><br />
 	
+	<div>
+		<form:label path="creationDate">
+			<spring:message code="association.creationDate" />:
+		</form:label>
+		<form:input placeholder="dd/MM/yyyy HH:mm" path="creationDate" />
+		<form:errors cssClass="error" path="creationDate" />
+	</div> </br>
+	
 	<acme:textbox code="association.statutes" path="statutes"/><br />
 	
 	<acme:textbox code="association.announcements" path="announcements"/><br />
