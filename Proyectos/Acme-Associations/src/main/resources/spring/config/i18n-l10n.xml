@@ -29,7 +29,8 @@
 		<value>/views/terms/messages</value>
 		<value>/views/user/messages</value>
 		<value>/views/request/messages</value>
-		<value>/views/actor/messages</value>
+		<value>/views/actor/messages</value>		
+		<value>/views/loan/messages</value>
 	</util:list>
 
 </beans>
