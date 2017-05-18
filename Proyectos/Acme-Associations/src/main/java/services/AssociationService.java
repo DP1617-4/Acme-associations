@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.transaction.Transactional;
 
@@ -43,7 +44,11 @@ public class AssociationService {
 		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
 		Association created;
+
 		created = new Association();
+		created.setCreationDate(new Date(System.currentTimeMillis() - 100));
+		created.setAdminClosed(false);
+		created.setClosedAssociation(false);
 		return created;
 	}
 
@@ -62,10 +67,15 @@ public class AssociationService {
 	public Association save(final Association association) {
 		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
-		if (association.getId() == 0)
-			this.rolesService.assignRoles(user, association, Roles.MANAGER);
 		Association result;
-		result = this.associationRepository.save(association);
+		if (association.getId() == 0) {
+			association.setCreationDate(new Date(System.currentTimeMillis() - 100));
+			result = this.associationRepository.save(association);
+			this.rolesService.assignRoles(user, result, Roles.MANAGER);
+		} else {
+			this.rolesService.checkManager(user, association);
+			result = this.associationRepository.save(association);
+		}
 		return result;
 	}
 
