@@ -80,11 +80,10 @@
 <body>
 
 
-	<div>
+	<div class="container-nav">
 		<tiles:insertAttribute name="header" />
 	</div>
-	<br> </br>
-	<br> </br>
+	
 	<div class= "container">
 		<tiles:insertAttribute name="body" />	
 		<jstl:if test="${errorMessage != null}">
