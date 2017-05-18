@@ -53,7 +53,7 @@ public class LoanUserController extends AbstractController {
 		result = new ModelAndView("loan/list");
 		result.addObject("loans", loans);
 		result.addObject("association", association);
-		result.addObject("role", role);
+		result.addObject("role", role.getType());
 
 		return result;
 	}
@@ -109,8 +109,8 @@ public class LoanUserController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Association association, final Item item, final Loan loan, final String message) {
 		ModelAndView result;
 
-		final String requestURI = "/loan/user/" + association.getId() + "/" + item.getId() + "/create.do";
-		final String cancelURI = "/association/" + association.getId() + "/display.do";
+		final String requestURI = "loan/user/" + association.getId() + "/" + item.getId() + "/create.do";
+		final String cancelURI = "association/" + association.getId() + "/display.do";
 		final Collection<User> users = this.userService.findAllByAssociation(association);
 		result = new ModelAndView("loan/edit");
 		result.addObject("loan", loan);
