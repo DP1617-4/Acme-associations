@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,8 +14,8 @@ import services.ItemService;
 import services.RolesService;
 import services.UserService;
 import controllers.AbstractController;
+import domain.Association;
 import domain.Item;
-import domain.Roles;
 
 @Controller
 @RequestMapping("/item/user")
@@ -35,13 +36,13 @@ public class ItemUserController extends AbstractController {
 	private UserService		userService;
 
 
-	//	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	//	public ModelAndView create() {
-	//		ModelAndView result;
-	//		final Item newItem = this.itemService.create();
-	//		result = this.createEditModelAndView(newItem);
-	//		return result;
-	//	}
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+		ModelAndView result;
+		final Item item = this.itemService.create();
+		result = this.createEditModelAndView(item);
+		return result;
+	}
 
 	//	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	//	public ModelAndView save(@Valid Item newItem, final BindingResult binding) {
@@ -60,18 +61,25 @@ public class ItemUserController extends AbstractController {
 	//	}
 
 	@RequestMapping(value = "/{association}/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(@PathVariable final Association association) {
 		final ModelAndView result;
 
-		final Collection<Roles> roles = this.rolesService.findAllByPrincipal();
+		final Collection<Item> items = this.itemService.findAllByAssociation(association);
 
-		result = new ModelAndView("item/listOwn");
-		result.addObject("roles", roles);
-		result.addObject("requestURI", "/user/item/listOwn.do");
+		result = new ModelAndView("item/list");
+		result.addObject("items", items);
+		result.addObject("requestURI", "/item/user/" + association.getId() + "/list.do");
 
 		return result;
 	}
-	//En esta debería haber un mensaje de confirmación al acceder al enlace
+
+	protected ModelAndView createEditModelAndView(final Item item) {
+		ModelAndView result;
+
+		result = this.createEditModelAndView(item, null);
+
+		return result;
+	}
 
 	protected ModelAndView createEditModelAndView(final Item item, final String message) {
 		ModelAndView result;
