@@ -58,6 +58,7 @@ public class AssociationController extends AbstractController {
 		Collection<Comment> comments;
 		comments = this.commentService.findAllByCommentableId(association.getId());
 		final MessageBroadcast messageBroad = new MessageBroadcast();
+		messageBroad.setAssociation(association);
 
 		Roles roles = null;
 		Boolean application = true;

@@ -88,10 +88,13 @@
             <jstl:if test="${role eq 'MANAGER'}">
             <div class="col-6 col-lg-4">
 	            <form:form action="message/actor/broadcast.do" modelAttribute="messageBroad">
-	            	<form:hidden path="association" value="${association}"/>
+	            	<form:hidden path="association"/>
 	            	<acme:textarea code="association.message.broadcast" path="text"/>
 	            	<acme:submit name="broadcast" code="association.message.post.broadcast"/>
 	            </form:form>
+	            <jstl:if test="${broadError != null}">
+					<span class="message"><spring:message code="${broadError}" /></span>
+				</jstl:if>	
             </div>
             </jstl:if>
              <jstl:if test="${role == null && application == false}">

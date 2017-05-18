@@ -25,10 +25,9 @@
 	<form:hidden path="version" />
 	<form:hidden path="userAccount.authorities" />
 	<form:hidden path="userAccount.username" />
+	<form:hidden path="userAccount.password" />
 	
 	<p><spring:message code="user.useraccount.username"/>: <jstl:out value="${user.userAccount.username}" /></p> 
-
-    <acme:password code="user.useraccount.password" path="userAccount.password"/>
     
 	<acme:textbox code="user.name" path="name"/>
 	
