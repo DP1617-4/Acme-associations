@@ -18,28 +18,40 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="${requestURI}" modelAttribute="likes">
+
+<form:form action="item/user/edit.do" modelAttribute="item">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="user" />
-	<form:hidden path="commentable" />
-	
+	<form:hidden path="section" />
+	<form:hidden path="identifier" />
 
-    <acme:textbox code="comment.title" path="title"/>
     
-    <acme:textbox code="comment.text" path="text"/>
-    
-    
+	<acme:textbox code="item.name" path="name"/>
+	
+	<acme:textbox code="item.description" path="description"/>
+	
+	<form:label path="itemCondition">
+	<spring:message code="item.condition" />:
+	</form:label>
+	<form:select id="condition" path="itemCondition">
+		<form:option value="EXCELENT" label="EXCELENT" />
+		<form:option value="GOOD" label="GOOD" />
+		<form:option value="MODERATE" label="MODERATE" />
+		<form:option value="BAD" label="BAD" />
+	</form:select>
+	<form:errors cssClass="error" path="itemCondition" />
+	
+	<acme:textbox code="item.picture" path="picture"/>
+	
 	<br/>
 	
 	<button type="submit" name="save" class="btn btn-primary" id="save">
-		<spring:message code="chorbi.save" />
+		<spring:message code="user.save" />
 	</button>
 	
-	<acme:cancel url="welcome/index.do" code="chorbi.cancel"/>
-	
-	
-	
+	<input type="button" name="cancel"
+		value="<spring:message code="user.cancel" />"
+		onclick="location.href = ('association/${item.section.association.id}/display.do');" />	
 	
 </form:form>

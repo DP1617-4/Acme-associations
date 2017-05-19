@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ItemRepository;
-import utilities.TestClasses;
 import domain.Association;
 import domain.Item;
 import domain.Section;
@@ -38,6 +37,9 @@ public class ItemService {
 
 	@Autowired
 	private RolesService	roleService;
+
+	@Autowired
+	private SectionService	sectionService;
 
 
 	public Item create() {
@@ -94,14 +96,13 @@ public class ItemService {
 	}
 
 	public Item save(final Item item) {
-		final User principal = this.userService.findByPrincipal();
-		this.roleService.checkCollaborator(principal, item.getSection().getAssociation());
+
+		this.sectionService.checkResponsiblePrincipal(item.getSection().getId());
 
 		final Item result = this.itemRepository.save(item);
 
 		return result;
 	}
-
 	public Item reconstruct() {
 		final Item result = new Item();
 
@@ -115,17 +116,28 @@ public class ItemService {
 		final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
 		final String moment = simpleDateFormat.format(new Date());
 		String code = "";
-		code += "-" + TestClasses.randomLetter() + TestClasses.randomLetter() + TestClasses.randomLetter();
+		code += "-" + this.randomLetter() + this.randomLetter() + this.randomLetter();
 		result = moment + code;
 		return result;
 
 	}
 
-	public static String randomLetter() {
+	public String randomLetter() {
 		char result;
 		final String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 		final Random random = new Random();
 		result = alphabet.charAt(random.nextInt(62));
 		return Character.toString(result);
+	}
+
+	public void changeCondition(final Item item, final String condition) {
+
+		item.setItemCondition(condition);
+		this.save(item);
+	}
+
+	public Collection<Item> findAllBySection(final Section section) {
+
+		return this.itemRepository.findAllBySection(section.getId());
 	}
 }

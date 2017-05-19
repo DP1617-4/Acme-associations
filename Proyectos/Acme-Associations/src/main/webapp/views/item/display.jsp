@@ -16,20 +16,56 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="/WEB-INF/tags/functions" prefix="mask" %>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<body>
 <security:authentication property="principal" var ="loggedactor"/>
-<jstl:set var="likes" value="${likes}"/> 
+    <div class="container">
 
-<h2><spring:message code="likes" /></h2>
-<p><spring:message code="likes.liked"/>: <jstl:out value="${mask:mask(likes.liked.name) }" /> <jstl:out value="${likes.liked.surname}" /></p>
-<p><spring:message code="likes.moment"/>: <jstl:out value="${likes.moment }" /></p> 
-<p><spring:message code="likes.comment"/>: <jstl:out value="${mask:mask(likes.comment) }" /></p> 
+      <div class="row row-offcanvas row-offcanvas-right">
 
-<br/>
+        <div class="col-12 col-md-9">
+          <div class="jumbotron">
+          	<img src="<jstl:out value="${item.picture }"/>" align="right"  height="150" >
+            <h1><jstl:out value="${item.name}" /></h1>
+            <p><jstl:out value="${item.identifier}" /></p>
+          </div>
+          <div><jstl:out value="${item.description}" /></div>
+          <div><b><spring:message code="item.condition"/>: </b>
+          <jstl:out value="${item.itemCondition}" /></div>
+          <jstl:if test="${item.condition != 'LOAN' || item.condition != 'PRIZE' || item.condition != 'BAD'}">
+	          </br>
+	           <a class="btn btn-primary" href="item/user/${association.id}/${item.id }/create.do"><spring:message code="item.loan"/></a>
+	           </br>
+           </jstl:if>
+          
+          <jstl:if test="${isCharge == true }">
+          <div>
+          	<form:form action="item/user/${association.id}/${item.id}/changeCondition.do" modelAttribute="changeCondition">
 
-<a href="likes/chorbi/list.do?"> <spring:message code="likes.back" /></a>
-<jstl:if test="${likes.chorbi.userAccount.username==loggedactor.username}">
-	<a href="likes/chorbi/edit.do?"> <spring:message code="likes.edit" /></a>
-</jstl:if>
-
-
+				<form:hidden path="item" />
+			
+				<form:label path="condition">
+					<spring:message code="item.condition.change" />:
+				</form:label>
+				<form:select id="condition" path="condition">
+					<form:option value="EXCELENT" label="EXCELENT" />
+					<form:option value="GOOD" label="GOOD" />
+					<form:option value="MODERATE" label="MODERATE" />
+					<form:option value="BAD" label="BAD" />
+				</form:select>
+			<form:errors cssClass="error" path="condition" />
+			</br>
+				
+				<acme:submit name="save" code="item.change"/>&nbsp; 
+				<br />
+			
+				
+			
+			</form:form>
+          </div>
+          </jstl:if>
+           
+     </div>
+    </div>
+</div>
