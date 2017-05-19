@@ -44,7 +44,9 @@
 </form:form>
 
 <!-- Requiere pulirse un tanto más, pero oye, funciona. -->
+
 <script>
+$.fn.datepicker.defaults.format	= "${pageContext.request.locale.language}";
 $.fn.datepicker.defaults.format = "dd/mm/yyyy";
 $('#datepicker input').datepicker({
     format: "dd/MM/yyyy",
