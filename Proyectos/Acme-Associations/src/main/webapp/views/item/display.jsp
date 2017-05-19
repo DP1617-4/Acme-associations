@@ -26,7 +26,7 @@
 
         <div class="col-12 col-md-9">
           <div class="jumbotron">
-          	<img src="<jstl:out value="${association.picture }"/>" align="right"  height="150" >
+          	<img src="<jstl:out value="${item.picture }"/>" align="right"  height="150" >
             <h1><jstl:out value="${item.name}" /></h1>
             <p><jstl:out value="${item.identifier}" /></p>
           </div>

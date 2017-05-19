@@ -38,6 +38,9 @@ public class ItemService {
 	@Autowired
 	private RolesService	roleService;
 
+	@Autowired
+	private SectionService	sectionService;
+
 
 	public Item create() {
 		Item result;
@@ -94,13 +97,12 @@ public class ItemService {
 
 	public Item save(final Item item) {
 
-		this.roleService.checkCollaboratorPrincipal(item.getSection().getAssociation());
+		this.sectionService.checkResponsiblePrincipal(item.getSection().getId());
 
 		final Item result = this.itemRepository.save(item);
 
 		return result;
 	}
-
 	public Item reconstruct() {
 		final Item result = new Item();
 
