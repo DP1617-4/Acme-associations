@@ -57,10 +57,14 @@
 		 <security:intercept-url pattern="/association/administrator/**" access="hasRole('ADMIN')" />
 		 <security:intercept-url pattern="/association/edit.do" access="hasRole('USER')" />
 		 
-		 <!-- Request -->
+
+		  
+		  <!-- Comment -->
+		  <security:intercept-url pattern="/comment/user/**" access="hasRole('USER')" />
+			<!-- Comment -->
 		  <security:intercept-url pattern="/request/user/**" access="hasRole('USER')" />
 
-		 <!-- Request -->
+		 <!-- Item -->
 		  <security:intercept-url pattern="/item/user/**" access="hasRole('USER')" /> 
 		 
 		<!-- Redirects --> 
