@@ -46,15 +46,10 @@
 <!-- Requiere pulirse un tanto más, pero oye, funciona. -->
 
 <script>
-$.fn.datepicker.defaults.format	= "${pageContext.request.locale.language}";
-$.fn.datepicker.defaults.format = "dd/mm/yyyy";
-$('#datepicker input').datepicker({
-    format: "dd/MM/yyyy",
-    weekStart: 0,
-    startView: 1,
+$('#datepicker').datepicker({
+    format: "dd/mm/yyyy",
     todayBtn: true,
-    language: "en",
-    multidate: false,
-    daysOfWeekDisabled: "5,6"
+    language: "es"
 });
 </script>
+
