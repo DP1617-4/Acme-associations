@@ -61,6 +61,7 @@
 			
 		</display:table>
 	</div>
+
 	<jstl:if test="${not empty association}">
 		<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
 	          <div class="list-group">
@@ -71,10 +72,11 @@
 	            <a href="loan/user/${association.id}/listPending.do" class="list-group-item"><spring:message code="association.loan"/></a>
 	            </jstl:if>
 	            <jstl:if test="${role eq 'MANAGER'}">
-	            <a href="user/request/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
+	            <a href="request/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
 	            </jstl:if>
 	            <a href="activity/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
 	          </div>
 	    </div><!--/span-->
      </jstl:if>
+
 </div>

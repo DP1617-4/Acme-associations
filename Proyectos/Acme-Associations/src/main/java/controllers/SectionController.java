@@ -39,7 +39,7 @@ public class SectionController extends AbstractController {
 
 		result = new ModelAndView("section/list");
 		result.addObject("sections", sections);
-		result.addObject("requestURI", "/section/" + association.getId() + "/display.do");
+		result.addObject("requestURI", "/section/" + association.getId() + "/list.do");
 
 		return result;
 	}

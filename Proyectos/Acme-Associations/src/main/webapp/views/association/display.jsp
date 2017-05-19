@@ -58,11 +58,11 @@
           <div><jstl:out value="${association.creationDate}" /></div>
           <div><a href="${association.statutes}"><spring:message code="association.statutes"/></a></div>
           <div class="row">
-            <div class="col-6 col-lg-4">
+            <div class="col-6 col-md-6 col-lg-4">
               <h2><spring:message code="association.announcements"/></h2>
               <p><jstl:out value="${association.announcements}" /></p>
             </div><!--/span-->
-            <div class="col-6 col-lg-4">
+            <div class="col-6 col-md-6 col-lg-8">
               <h2><spring:message code="association.comments"/></h2>
               <%-- <display:table pagesize="5" class="displaytag" keepStatus="true" name="associationComments" requestURI="${requestURI}" id="row"> </display:table> --%>
               <display:table pagesize="5" class="displaytag" keepStatus="true"
@@ -80,13 +80,37 @@
 					
 					<spring:message code="comment.user" var="userHeader"/>
 					<display:column title="${userHeader}">
-						<a href="actor/user/display.do?actorId=${row.user.id}"> ${row.user.name} ${row.user.surname}</a>
+						<a href="actor/user/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
 					</display:column>
 					
 				</display:table>
             </div><!--/span-->
+          </div><!--/row-->
+        </div><!--/span-->
+
+        <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+          <div class="list-group">
+          	<security:authorize access="isAuthenticated()"> 
+          		<a href="user/association/${association.id}/listUsers.do" class="list-group-item"><spring:message code="association.user.list"/></a>
+          	</security:authorize>
+            <a href="section/${association.id}/list.do" class="list-group-item"><spring:message code="association.section"/></a>
+            <a href="item/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.item"/></a>
+            <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
+            <a href="sanction/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>
+            <a href="loan/user/${association.id}/listPending.do" class="list-group-item"><spring:message code="association.loanPending"/></a>
+            <a href="meeting/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.meeting"/></a>
+            </jstl:if>
             <jstl:if test="${role eq 'MANAGER'}">
-            <div class="col-6 col-lg-4">
+            <a href="user/request/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
+            <a href="user/association/${association.id}/changeManager.do" class="list-group-item"><spring:message code="association.manager.change"/></a>
+            </jstl:if>
+            <jstl:if test="${role eq 'ASSOCIATE' || role eq 'COLLABORATOR'}">
+            <a href="user/association/${association.id}/leave.do" class="list-group-item"><spring:message code="association.leave"/></a>
+            </jstl:if>
+            <a href="activity/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
+          </div>
+           <jstl:if test="${role eq 'MANAGER'}">
+            <div>
 	            <form:form action="message/actor/broadcast.do" modelAttribute="messageBroad">
 	            	<form:hidden path="association"/>
 	            	<acme:textarea code="association.message.broadcast" path="text"/>
@@ -98,31 +122,11 @@
             </div>
             </jstl:if>
              <jstl:if test="${role == null && application == false}">
-             <div class="col-6 col-lg-4">
+             <div>
 	            <a class="btn btn-primary" href="user/request/${association.id}/apply.do"><spring:message code="association.request.apply"/></a>
 	            
             </div>
             </jstl:if>
-          </div><!--/row-->
-        </div><!--/span-->
-
-        <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
-          <div class="list-group">
-            <a href="section/${association.id}/list.do" class="list-group-item active"><spring:message code="association.section"/></a>
-            <a href="item/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.item"/></a>
-            <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
-            <a href="sanction/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>
-            <a href="loan/user/${association.id}/listPending.do" class="list-group-item"><spring:message code="association.loan"/></a>
-            </jstl:if>
-            <jstl:if test="${role eq 'MANAGER'}">
-            <a href="user/request/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
-            <a href="user/association/${association.id}/changeManager.do" class="list-group-item"><spring:message code="association.manager.change"/></a>
-            </jstl:if>
-            <jstl:if test="${role eq 'ASSOCIATE' || role eq 'COLLABORATOR'}">
-            <a href="user/association/${association.id}/leave.do" class="list-group-item"><spring:message code="association.leave"/></a>
-            </jstl:if>
-            <a href="activity/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
-          </div>
         </div><!--/span-->
       </div><!--/row-->
       <jstl:if test="${role eq 'MANAGER'}">

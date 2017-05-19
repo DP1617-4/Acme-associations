@@ -114,6 +114,19 @@ public class AssociationUserController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "{association}/listUsers", method = RequestMethod.GET)
+	public ModelAndView list(@PathVariable final Association association) {
+		final ModelAndView result;
+
+		final Collection<Roles> roles = this.rolesService.findAllByAssociation(association);
+
+		result = new ModelAndView("association/listUsers");
+		result.addObject("roles", roles);
+		result.addObject("requestURI", "/user/association/" + association.getId() + "/listUsers.do");
+
+		return result;
+	}
+
 	@RequestMapping(value = "/{association}/changeManager", method = RequestMethod.GET)
 	public ModelAndView changeManager(@PathVariable final Association association, final RedirectAttributes redir) {
 		ModelAndView result;
