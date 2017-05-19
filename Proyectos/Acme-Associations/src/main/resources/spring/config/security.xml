@@ -65,6 +65,10 @@
 		 
 		<!-- Redirects --> 
 		<security:intercept-url pattern="/redirect/**" access="permitAll" /> 
+		
+		<!-- Section -->
+      	<security:intercept-url pattern="/section/**" access="permitAll" /> 
+     	<security:intercept-url pattern="/user/section/**" access="hasRole('USER')" />
 				
 		<!-- User --> 
 		<security:intercept-url pattern="/user/register.do**" access="isAnonymous()" /> 
