@@ -99,12 +99,12 @@ public class ItemUserController extends AbstractController {
 		String role = null;
 
 		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		final Actor actPrincipal = this.actorService.findByPrincipal();
 
-		if (principal != "anonymousUser")
+		if (principal != "anonymousUser") {
+			final Actor actPrincipal = this.actorService.findByPrincipal();
 			if (actPrincipal instanceof User)
 				roles = this.rolesService.findRolesByPrincipalAssociation(association);
-
+		}
 		if (roles != null)
 			role = roles.getType();
 

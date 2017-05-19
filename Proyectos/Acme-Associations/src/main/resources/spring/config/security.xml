@@ -59,6 +59,9 @@
 		 
 		 <!-- Request -->
 		  <security:intercept-url pattern="/user/request/**" access="hasRole('USER')" />
+		  
+		  <!-- Request -->
+		  <security:intercept-url pattern="/comment/user/**" access="hasRole('USER')" />
 
 		 <!-- Request -->
 		  <security:intercept-url pattern="/item/user/**" access="hasRole('USER')" /> 

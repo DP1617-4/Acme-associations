@@ -22,6 +22,7 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 import domain.Association;
+import domain.Item;
 import domain.User;
 import forms.RegisterUser;
 
@@ -222,5 +223,10 @@ public class UserService {
 		result.addAll(this.findAssociationCollaborators(association));
 
 		return result;
+	}
+
+	public Collection<User> findAllRelatedItem(final Item item) {
+
+		return this.userRepository.findAllRelatedItem(item.getId());
 	}
 }
