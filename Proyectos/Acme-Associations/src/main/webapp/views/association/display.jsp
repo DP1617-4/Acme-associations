@@ -90,7 +90,10 @@
 
         <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
           <div class="list-group">
-            <a href="section/${association.id}/list.do" class="list-group-item active"><spring:message code="association.section"/></a>
+          	<security:authorize access="isAuthenticated()"> 
+          		<a href="user/association/${association.id}/listUsers.do" class="list-group-item"><spring:message code="association.user.list"/></a>
+          	</security:authorize>
+            <a href="section/${association.id}/list.do" class="list-group-item"><spring:message code="association.section"/></a>
             <a href="item/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.item"/></a>
             <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
             <a href="sanction/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>

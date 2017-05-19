@@ -65,14 +65,15 @@ public class AssociationController extends AbstractController {
 		String role = null;
 
 		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		final Actor actPrincipal = this.actorService.findByPrincipal();
 
 		result = new ModelAndView("welcome/index");
-		if (principal != "anonymousUser")
+		if (principal != "anonymousUser") {
+			final Actor actPrincipal = this.actorService.findByPrincipal();
 			if (actPrincipal instanceof User) {
 				application = this.requestService.isRequestedByPrincipal(association);
 				roles = this.rolesService.findRolesByPrincipalAssociation(association);
 			}
+		}
 
 		if (roles != null)
 			role = roles.getType();
@@ -86,7 +87,6 @@ public class AssociationController extends AbstractController {
 		result.addObject("application", application);
 		return result;
 	}
-
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
