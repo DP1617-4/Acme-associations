@@ -21,14 +21,6 @@ public class ActivityService {
 	@Autowired
 	private ActivityRepository	activityRepository;
 
-	//supporting services --------------------------------------
-	@Autowired
-	private UserService			userService;
-
-	@Autowired
-	private ItemService			itemService;
-
-
 	// Constructors --------------------------------------------
 	public ActivityService() {
 		super();

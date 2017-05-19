@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.LoanRepository;
 import domain.Association;
@@ -34,6 +37,9 @@ public class LoanService {
 
 	@Autowired
 	private UserService		userService;
+
+	@Autowired
+	private Validator		validator;
 
 
 	// Auxiliary services
@@ -75,22 +81,50 @@ public class LoanService {
 		Association association;
 		association = loan.getItem().getSection().getAssociation();
 		this.roleService.checkCollaborator(principal, association);
-		Assert.isTrue(this.userService.findAllByAssociation(association).contains(loan.getBorrower()));
+		this.roleService.checkAssociate(loan.getBorrower(), association);
 		final Loan result = this.loanRepository.save(loan);
 
 		return result;
 	}
 
-	public Loan reconstruct() {
-		final Loan result = new Loan();
+	public Loan reconstruct(final Loan loan, final BindingResult binding) {
 
-		return result;
+		loan.setLender(this.userService.findByPrincipal());
+		loan.setStartDate(new Date(System.currentTimeMillis() - 1));
+
+		this.validator.validate(loan, binding);
+		return loan;
 	}
 
 	public List<Loan> findOverdueLoans(final Pageable page) {
 		List<Loan> result;
 
 		result = this.loanRepository.findOverdueLoans(page);
+
+		return result;
+	}
+
+	public List<Loan> findPendingByAssociation(final Association association) {
+		List<Loan> result;
+
+		result = this.loanRepository.findPendingByAssociation(association.getId());
+
+		return result;
+	}
+
+	public List<Loan> findByAssociation(final Association association) {
+		List<Loan> result;
+
+		result = this.loanRepository.findByAssociation(association.getId());
+
+		return result;
+	}
+
+	public Loan end(final Loan loan) {
+		Loan result;
+
+		loan.setFinalDate(new Date(System.currentTimeMillis() - 1));
+		result = this.loanRepository.save(loan);
 
 		return result;
 	}

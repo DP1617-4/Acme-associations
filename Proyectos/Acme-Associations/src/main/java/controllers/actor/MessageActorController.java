@@ -93,14 +93,12 @@ public class MessageActorController extends AbstractController {
 	public ModelAndView save(@Valid final Message message, final BindingResult binding) {
 		Actor principal;
 		ModelAndView result;
-		Message sent;
-
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(message);
 		else
 			try {
 
-				sent = this.messageService.send(message);
+				this.messageService.send(message);
 				principal = this.actorService.findByPrincipal();
 				result = new ModelAndView("redirect:/message/actor/list.do?folderId=" + this.folderService.findSystemFolder(principal, "Sent").getId());
 			} catch (final Throwable oops) {

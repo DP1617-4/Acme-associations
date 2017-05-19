@@ -25,9 +25,6 @@ public class RequestService {
 	private UserService			userService;
 
 	@Autowired
-	private AssociationService	associationService;
-
-	@Autowired
 	private MessageService		messageService;
 
 	@Autowired
@@ -118,11 +115,8 @@ public class RequestService {
 
 	public void deny(final Request request) {
 
-		final User user;
-		final Association association;
-
-		user = request.getUser();
-		association = request.getAssociation();
+		request.getUser();
+		request.getAssociation();
 
 		this.messageService.sendDenied(request);
 		this.delete(request);
