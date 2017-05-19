@@ -62,6 +62,9 @@
 
 		 <!-- Request -->
 		  <security:intercept-url pattern="/item/user/**" access="hasRole('USER')" /> 
+		  
+		  <!-- Request -->
+		  <security:intercept-url pattern="/meeting/user/**" access="hasRole('USER')" /> 
 		 
 		<!-- Redirects --> 
 		<security:intercept-url pattern="/redirect/**" access="permitAll" /> 
