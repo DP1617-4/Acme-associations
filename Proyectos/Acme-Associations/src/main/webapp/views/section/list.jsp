@@ -31,11 +31,13 @@
 	
 	<spring:message code="section.name" var="nameHeader" />
 	<spring:message code="section.user" var="userHeader" />
-	<spring:message code="section.addItem"/>
+	<spring:message code="section.addItem" var="newItemHeader"/>
+	<spring:message code="section.items" var="itemsHeader"/>
 	
 	<display:column property="name" title="${nameHeader}"/>
 	<display:column property="user" title="${userHeader}"/>	
-	<display:column> <a href="item/user/{association}/{section}/create"></a> </display:column>
+	<display:column> <a href="item/user/${association.id}/${section.id}/create.do"></a> </display:column>
+	<display:column> <a href="item/user/${association.id}/${section.id}/list.do"></a> </display:column>
 	
 </display:table>
 <br><br/>

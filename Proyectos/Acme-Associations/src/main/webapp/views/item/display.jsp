@@ -26,15 +26,20 @@
 
         <div class="col-12 col-md-9">
           <div class="jumbotron">
-          	<img src="<jstl:out value="${association.picture }"/>" align="right"  height="150" >
+          	<img src="<jstl:out value="${item.picture }"/>" align="right"  height="150" >
             <h1><jstl:out value="${item.name}" /></h1>
             <p><jstl:out value="${item.identifier}" /></p>
           </div>
           <div><jstl:out value="${item.description}" /></div>
           <div><b><spring:message code="item.condition"/>: </b>
           <jstl:out value="${item.itemCondition}" /></div>
+          <jstl:if test="${item.condition != 'LOAN' || item.condition != 'PRIZE' || item.condition != 'BAD'}">
+	          </br>
+	           <a class="btn btn-primary" href="item/user/${association.id}/${item.id }/create.do"><spring:message code="item.loan"/></a>
+	           </br>
+           </jstl:if>
           
-          
+          <jstl:if test="${isCharge == true }">
           <div>
           	<form:form action="item/user/${association.id}/${item.id}/changeCondition.do" modelAttribute="changeCondition">
 
@@ -59,6 +64,7 @@
 			
 			</form:form>
           </div>
+          </jstl:if>
            
      </div>
     </div>
