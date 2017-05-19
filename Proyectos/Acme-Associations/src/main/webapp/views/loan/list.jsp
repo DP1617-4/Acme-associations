@@ -26,7 +26,7 @@
 			
 			<spring:message code="loan.item" var="itemHeader"/>
 			<display:column title="${itemHeader}">
-				<a href="item/user/${association.id }/display.do?itemId=${row.item.id}">${mask:mask(row.item.name) }</a>
+				<a href="item/user/${row.item.section.association.id }/display.do?itemId=${row.item.id}">${mask:mask(row.item.name) }</a>
 			</display:column>
 			
 			<spring:message code="loan.startDate" var="startHeader" />	
@@ -61,18 +61,22 @@
 			
 		</display:table>
 	</div>
-	<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
-          <div class="list-group">
-            <a href="section/user/${association.id}/list.do" class="list-group-item active"><spring:message code="association.section"/></a>
-            <a href="item/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.item"/></a>
-            <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
-            <a href="sanction/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>
-            <a href="loan/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.loan"/></a>
-            </jstl:if>
-            <jstl:if test="${role eq 'MANAGER'}">
-            <a href="user/request/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
-            </jstl:if>
-            <a href="activity/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
-          </div>
-        </div><!--/span-->
+
+	<jstl:if test="${not empty association}">
+		<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+	          <div class="list-group">
+	            <a href="section/user/${association.id}/list.do" class="list-group-item active"><spring:message code="association.section"/></a>
+	            <a href="item/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.item"/></a>
+	            <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
+	            <a href="sanction/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>
+	            <a href="loan/user/${association.id}/listPending.do" class="list-group-item"><spring:message code="association.loan"/></a>
+	            </jstl:if>
+	            <jstl:if test="${role eq 'MANAGER'}">
+	            <a href="request/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
+	            </jstl:if>
+	            <a href="activity/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
+	          </div>
+	    </div><!--/span-->
+     </jstl:if>
+
 </div>

@@ -56,7 +56,7 @@ public class UserUserController extends AbstractController {
 		ModelAndView result;
 
 		try {
-			this.userService.phoneValidator(user);
+			this.userService.phoneValidator(user.getPhoneNumber());
 		} catch (final Throwable oops) {
 			binding.rejectValue("phoneNumber", "error.object", "The phone number is not valid");
 		}

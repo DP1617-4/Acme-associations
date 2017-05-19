@@ -35,15 +35,17 @@
 	<spring:message code="section.items" var="itemsHeader"/>
 	
 	<display:column property="name" title="${nameHeader}"/>
-	<display:column property="user" title="${userHeader}"/>
+	<display:column title="${userHeader}">
+						<a href="actor/user/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
+	</display:column>
 	<display:column> <a href="item/user/${association.id}/${row.id}/listSection.do">${itemsHeader}</a> </display:column>	
 	<jstl:if test="${loggedactor == row.user.userAccount }">
-		<display:column> <a href="item/user/${association.id}/${row.id}/create.do">${newItemHeader }</a> </display:column>	
+		<display:column> <a href="item/user/${association.id}/${row.id}/create.do">${newItemHeader}</a> </display:column>	
 	</jstl:if>
 	
 </display:table>
 <br><br/>
-<div><a href="user/section/create.do"><spring:message code="section.create"/></a></div>
+<div><a href="section/user/${association.id}/create.do"><spring:message code="section.create"/></a></div>
 <br/>
 
 		

@@ -22,6 +22,7 @@
 
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" mode="proxy" />
 	
+	
 	<bean id="persistenceProvider" class="org.hibernate.jpa.HibernatePersistenceProvider" />	
 
 	<bean id="entityManagerFactory" 

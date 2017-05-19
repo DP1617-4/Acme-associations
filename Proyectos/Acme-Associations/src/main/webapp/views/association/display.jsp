@@ -80,7 +80,7 @@
 					
 					<spring:message code="comment.user" var="userHeader"/>
 					<display:column title="${userHeader}">
-						<a href="actor/user/display.do?actorId=${row.user.id}"> ${row.user.name} ${row.user.surname}</a>
+						<a href="actor/user/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
 					</display:column>
 					
 				</display:table>
@@ -90,7 +90,10 @@
 
         <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
           <div class="list-group">
-            <a href="section/${association.id}/list.do" class="list-group-item active"><spring:message code="association.section"/></a>
+          	<security:authorize access="isAuthenticated()"> 
+          		<a href="user/association/${association.id}/listUsers.do" class="list-group-item"><spring:message code="association.user.list"/></a>
+          	</security:authorize>
+            <a href="section/${association.id}/list.do" class="list-group-item"><spring:message code="association.section"/></a>
             <a href="item/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.item"/></a>
             <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
             <a href="sanction/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>

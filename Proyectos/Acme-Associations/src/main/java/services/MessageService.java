@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ import forms.MessageBroadcast;
 
 @Service
 @Transactional
+@EnableScheduling
 public class MessageService {
 
 	//Constructor
@@ -78,7 +80,7 @@ public class MessageService {
 
 	public Message createBlank() {
 		final Message result = new Message();
-		result.setMoment(new Date());
+		result.setMoment(new Date(System.currentTimeMillis() - 1));
 
 		return result;
 	}
@@ -332,7 +334,7 @@ public class MessageService {
 		return result;
 	}
 
-	@Scheduled(cron = "30 * * * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	public void sendMessageOverdueLoan() {
 
 		List<Loan> loans;
@@ -360,5 +362,4 @@ public class MessageService {
 		}
 
 	}
-
 }

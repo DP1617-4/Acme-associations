@@ -32,7 +32,7 @@
 	</form:label>
 	<form:select id="user" path="user">
 		<jstl:forEach items="${users}" var="thisUser">
-			<form:option value="${thisUser}" label="${thisUser.completeName}" />
+			<form:option value="${thisUser.id}" label="${thisUser.completeName}" />
 		</jstl:forEach>
 	</form:select>
 <form:errors cssClass="error" path="user" />
