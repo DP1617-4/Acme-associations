@@ -72,7 +72,7 @@ public class UserMeetingController extends AbstractController {
 			try {
 				this.rolesService.checkManagerPrincipal(newMeeting.getAssociation());
 				newMeeting = this.meetingService.save(newMeeting);
-				result = new ModelAndView("redirect:/meeting/" + newMeeting.getId() + "/display.do");
+				result = new ModelAndView("redirect:/meeting/" + newMeeting.getId() + "/list.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(newMeeting, "meeting.commit.error");
 			}

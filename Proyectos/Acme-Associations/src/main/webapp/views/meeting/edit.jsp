@@ -46,6 +46,4 @@
 		onclick="javascript: window.location.replace('${cancelURI}');" />&nbsp;
 	<br />
 
-	
-
 </form:form>
