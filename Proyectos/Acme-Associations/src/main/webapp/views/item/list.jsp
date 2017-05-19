@@ -27,24 +27,13 @@
 
 	<!-- Attributes -->
 	<spring:message code="item.name" var="nameHeader" />
-	<display:column property="name" title="${momentHeader}" sortable="true" />
-
-	<spring:message code="likes.comment" var="commentHeader" />
-	<display:column property="comment" title="${commentHeader}" sortable="true" />
-	
-	<spring:message code="likes.view" var="likesHeader" />
-	<display:column title="${likesHeader}">
-		<a href="likes/chorbi/display.do?likesId=${row.id}"><spring:message code="likes.view" /></a>
+	<display:column title="${nameHeader}">
+		<a href="item/user/${association.id}/display.do?itemId=${row.id}"><jstl:out value="${row.name }"/></a>
 	</display:column>
+
+	<spring:message code="item.condition" var="conditionHeader" />
+	<display:column property="itemCondition" title="${conditionHeader}" sortable="true" />
 	
-	<security:authorize access="hasRole('CHORBI')">
-		<jstl:if test="${row.chorbi.userAccount.username==loggedactor.username}">
-			<spring:message code="likes.unlike" var="unlikeHeader" />
-			<display:column title="${unlikeHeader}">
-				<a href="likes/chorbi/delete.do?likesId=${row.liked.id}"><spring:message code="likes.unlike" /></a>
-			</display:column>
-		</jstl:if>
-	</security:authorize>
 	
 </display:table>
 <br/>
