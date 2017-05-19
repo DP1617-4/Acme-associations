@@ -33,10 +33,12 @@
           <div><jstl:out value="${item.description}" /></div>
           <div><b><spring:message code="item.condition"/>: </b>
           <jstl:out value="${item.itemCondition}" /></div>
-          <jstl:if test="${item.condition != 'LOAN' || item.condition != 'PRIZE' || item.condition != 'BAD'}">
+          <jstl:if test="${item.itemCondition != 'LOAN' || item.itemCondition != 'PRIZE' || item.itemCondition != 'BAD' }">
+          <jstl:if test="${role == 'MANAGER' || role == 'COLLABORATOR' }">
 	          </br>
-	           <a class="btn btn-primary" href="item/user/${association.id}/${item.id }/create.do"><spring:message code="item.loan"/></a>
+	           <a class="btn btn-primary" href="loan/user/${association.id}/${item.id }/create.do"><spring:message code="item.loan"/></a>
 	           </br>
+	       </jstl:if>
            </jstl:if>
           
           <jstl:if test="${isCharge == true }">

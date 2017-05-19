@@ -117,8 +117,8 @@ public class ItemUserController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/{association}/{section}/list", method = RequestMethod.GET)
-	public ModelAndView list(@PathVariable final Association association, @PathVariable final Section section) {
+	@RequestMapping(value = "/{association}/{section}/listSection", method = RequestMethod.GET)
+	public ModelAndView listSection(@PathVariable final Association association, @PathVariable final Section section) {
 		final ModelAndView result;
 
 		final Collection<Item> items = this.itemService.findAllBySection(section);
