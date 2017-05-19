@@ -94,7 +94,6 @@ public class UserRequestController extends AbstractController {
 		try {
 			this.requestService.accept(request);
 			result = new ModelAndView("redirect:/user/request/" + request.getAssociation().getId() + "/list.do");
-			redir.addFlashAttribute("flashMessage", "request.accepted");
 		} catch (final Exception exc) {
 
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -111,7 +110,6 @@ public class UserRequestController extends AbstractController {
 		try {
 			this.requestService.deny(request);
 			result = new ModelAndView("redirect:/user/request/" + request.getAssociation().getId() + "/list.do");
-			redir.addFlashAttribute("flashMessage", "request.accepted");
 		} catch (final Exception exc) {
 
 			result = new ModelAndView("redirect:/welcome/index.do");

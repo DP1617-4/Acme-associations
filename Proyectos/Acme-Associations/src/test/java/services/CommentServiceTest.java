@@ -10,22 +10,21 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import utilities.AbstractTest;
-import domain.Chorbi;
-import domain.Likes;
+import domain.Comment;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
 })
 @Transactional
-public class LikesServiceTest extends AbstractTest {
+public class CommentServiceTest extends AbstractTest {
 
 	// The SUT -------------------------------------------------------------
 	@Autowired
 	private CommentService	likesService;
 
 	@Autowired
-	private UserService	chorbiService;
+	private UserService		userService;
 
 
 	// Teoria pagina 107 y 108
@@ -35,36 +34,36 @@ public class LikesServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation() {
 		final Object testingData[][] = {
-			{		// Creación correcta de un Likes.
-				"chorbi1", "correcto", 2, null
-			}, {	// Creación correcta de un Likes: Text vacío.
-				"chorbi3", "", 2, null
-			}, {	// Creación erronea de un Likes: Segundo like a una segunda persona, el mensaje que de error en la consola es esperado.
-				"chorbi4", "", 2, DataIntegrityViolationException.class
-			}, {	// Creación errónea de un Likes: sin autenticar.
+			{		// Creación correcta de un Comment.
+				"user1", "correcto", 2, null
+			}, {	// Creación correcta de un Comment: Text vacío.
+				"user3", "", 2, null
+			}, {	// Creación erronea de un Comment: Segundo like a una segunda persona, el mensaje que de error en la consola es esperado.
+				"user4", "", 2, DataIntegrityViolationException.class
+			}, {	// Creación errónea de un Comment: sin autenticar.
 				null, "correcto", 2, IllegalArgumentException.class
-			}, {	// Creación incorrecta de un Likes: a sí mismo
-				"chorbi2", "correcto", 2, IllegalArgumentException.class
-			}, {	// Creación incorrecta de un Likes: estrellas fuera de rango
-				"chorbi1", "correcto", 4, DataIntegrityViolationException.class
+			}, {	// Creación incorrecta de un Comment: a sí mismo
+				"user2", "correcto", 2, IllegalArgumentException.class
+			}, {	// Creación incorrecta de un Comment: estrellas fuera de rango
+				"user1", "correcto", 4, DataIntegrityViolationException.class
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
 			this.templateCreation((String) testingData[i][0], (String) testingData[i][1], (Integer) testingData[i][2], (Class<?>) testingData[i][3]);
 	}
 
-	//An actor who is authenticated as a chorbi must be able to:
+	//An actor who is authenticated as a user must be able to:
 	//	o Unlike a user he has liked
 
 	@Test
 	public void driverUnlike() {
 		final Object testingData[][] = {
-			{		// Borrado correcta de un Likes.
-				"chorbi1", "chorbi1", null
-			}, {	// Borrado erronea de un Likes: distinto usuario.
-				"chorbi1", "chorbi2", IllegalArgumentException.class
-			}, {	// Borrado errónea de un Likes: sin autenticar.
-				"chorbi1", null, IllegalArgumentException.class
+			{		// Borrado correcta de un Comment.
+				"user1", "user1", null
+			}, {	// Borrado erronea de un Comment: distinto usuario.
+				"user1", "user2", IllegalArgumentException.class
+			}, {	// Borrado errónea de un Comment: sin autenticar.
+				"user1", null, IllegalArgumentException.class
 			}
 
 		};
@@ -78,10 +77,9 @@ public class LikesServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(username);
-			final Chorbi chorbi = this.chorbiService.findOne(this.extract("chorbi2"));
-			final Likes c = this.likesService.create(chorbi);
-			c.setComment(text);
-			c.setStars(stars);
+			this.userService.findOne(this.extract("user2"));
+			final Comment c = this.likesService.create(null);
+			
 
 			this.likesService.save(c);
 			this.likesService.flush();
@@ -99,11 +97,11 @@ public class LikesServiceTest extends AbstractTest {
 		try {
 
 			this.authenticate(username);
-			final Chorbi chorbi = this.chorbiService.findOne(this.extract("chorbi2"));
-			final Likes comment = this.likesService.create(chorbi);
-			final Likes result = this.likesService.save(comment);
+			this.userService.findOne(this.extract("user2"));
+			final Comment comment = this.likesService.create(null);
+			this.likesService.save(comment);
 			this.authenticate(username2);
-			this.likesService.delete(result);
+			//			this.likesService.delete(result);
 			this.unauthenticate();
 
 			this.likesService.flush();

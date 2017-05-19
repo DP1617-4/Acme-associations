@@ -35,7 +35,8 @@
 		<security:intercept-url pattern="/styles/**" access="permitAll" />
 		<security:intercept-url pattern="/bootstrap/**" access="permitAll" /> 
 		<security:intercept-url pattern="/css/**" access="permitAll" /> 
-		<security:intercept-url pattern="/js/**" access="permitAll" /> 
+		<security:intercept-url pattern="/js/**" access="permitAll" />
+		<security:intercept-url pattern="/locales/**" access="permitAll" /> 
 		
 
 		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" /> 
@@ -66,6 +67,9 @@
 		<security:intercept-url pattern="/user/register.do**" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/user/edit.do**" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/actor/user/display.do" access="isAuthenticated()"/>
+		
+		<!-- Loan -->
+		<security:intercept-url pattern="/loan/user/**" access="hasRole('USER')"/>
 		
 		<security:intercept-url pattern="/actor/user/**" access="isAuthenticated()"/>
 		
