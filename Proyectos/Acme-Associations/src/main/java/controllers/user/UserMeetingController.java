@@ -34,12 +34,11 @@ public class UserMeetingController extends AbstractController {
 	private RolesService	rolesService;
 
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	@RequestMapping(value = "{association}/create", method = RequestMethod.GET)
 	public ModelAndView create(@PathVariable final Association association) {
 		ModelAndView result;
 		final Meeting meeting = this.meetingService.create(association.getId());
 		result = this.createEditModelAndView(meeting);
-		result.addObject("meeting", meeting);
 		return result;
 	}
 
@@ -79,7 +78,7 @@ public class UserMeetingController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping(value = "{association}/list", method = RequestMethod.GET)
 	public ModelAndView list(@PathVariable final Association association) {
 		final ModelAndView result;
 
