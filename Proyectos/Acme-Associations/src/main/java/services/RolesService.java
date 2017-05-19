@@ -172,4 +172,11 @@ public class RolesService {
 		this.roleRepository.flush();
 	}
 
+	public Collection<Roles> findAllByAssociation(final Association association) {
+
+		Collection<Roles> result;
+		result = this.roleRepository.findAllByAssociation(association.getId());
+		return result;
+	}
+
 }

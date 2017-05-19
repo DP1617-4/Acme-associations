@@ -21,12 +21,12 @@ import domain.Message;
 import domain.User;
 
 @Controller
-@RequestMapping("/actor/user")
-public class ActorUserController extends AbstractController {
+@RequestMapping("/actor/actor")
+public class ActorActorController extends AbstractController {
 
 	// Constructors -----------------------------------------------------------
 
-	public ActorUserController() {
+	public ActorActorController() {
 		super();
 	}
 

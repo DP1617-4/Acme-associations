@@ -120,6 +120,14 @@ public class LoanService {
 		return result;
 	}
 
+	public List<Loan> findByUser(final User user) {
+		List<Loan> result;
+
+		result = this.loanRepository.findByUser(user.getId());
+
+		return result;
+	}
+
 	public Loan end(final Loan loan) {
 		Loan result;
 

@@ -24,9 +24,9 @@ import domain.User;
 
 @Controller
 @RequestMapping("/section/user")
-public class UserSectionController extends AbstractController {
+public class SectionUserController extends AbstractController {
 
-	public UserSectionController() {
+	public SectionUserController() {
 		super();
 	}
 
