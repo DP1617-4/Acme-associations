@@ -135,4 +135,9 @@ public class ItemService {
 		item.setItemCondition(condition);
 		this.save(item);
 	}
+
+	public Collection<Item> findAllBySection(final Section section) {
+
+		return this.itemRepository.findAllBySection(section.getId());
+	}
 }

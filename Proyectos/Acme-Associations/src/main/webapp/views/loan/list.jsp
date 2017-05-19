@@ -26,7 +26,7 @@
 			
 			<spring:message code="loan.item" var="itemHeader"/>
 			<display:column title="${itemHeader}">
-				<a href="item/actor/${row.item.id}/display.do">${mask:mask(row.item.name) }</a>
+				<a href="item/user/${association.id }/display.do?itemId=${row.item.id}">${mask:mask(row.item.name) }</a>
 			</display:column>
 			
 			<spring:message code="loan.startDate" var="startHeader" />	
@@ -40,12 +40,12 @@
 		
 			<spring:message code="loan.borrower" var="borrowerHeader"/>
 			<display:column title="${borrowerHeader}">
-				<a href="actor/actor/${row.borrower.id}/display.do">${mask:mask(row.borrower.completeName) }</a>
+				<a href="actor/user/${row.borrower.id}/display.do">${mask:mask(row.borrower.completeName) }</a>
 			</display:column>
 			
 			<spring:message code="loan.lender" var="lenderHeader"/>
 			<display:column title="${lenderHeader}">
-				<a href="actor/actor/${row.lender.id}/display.do">${mask:mask(row.lender.completeName) }</a>
+				<a href="actor/user/${row.lender.id}/display.do">${mask:mask(row.lender.completeName) }</a>
 			</display:column>
 			
 			<jstl:if test="${not empty role && (role eq 'COLLABORATOR' || role eq 'MANAGER')}">

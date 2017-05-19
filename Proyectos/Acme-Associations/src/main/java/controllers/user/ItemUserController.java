@@ -117,17 +117,11 @@ public class ItemUserController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/{association}/display", method = RequestMethod.GET)
-	public ModelAndView list(@PathVariable final Association association, @RequestParam final int itemId) {
+	@RequestMapping(value = "/{association}/{section}/list", method = RequestMethod.GET)
+	public ModelAndView list(@PathVariable final Association association, @PathVariable final Section section) {
 		final ModelAndView result;
 
-		Item item;
-		ChangeCondition changeCondition;
-
-		item = this.itemService.findOne(itemId);
-		changeCondition = new ChangeCondition();
-
-		changeCondition.setItem(item);
+		final Collection<Item> items = this.itemService.findAllBySection(section);
 
 		Roles roles = null;
 		String role = null;
@@ -142,12 +136,52 @@ public class ItemUserController extends AbstractController {
 		if (roles != null)
 			role = roles.getType();
 
+		result = new ModelAndView("item/list");
+		result.addObject("items", items);
+		result.addObject("requestURI", "/item/user/" + association.getId() + "/list.do");
+		result.addObject("association", association);
+		result.addObject("role", role);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/{association}/display", method = RequestMethod.GET)
+	public ModelAndView list(@PathVariable final Association association, @RequestParam final int itemId) {
+		final ModelAndView result;
+
+		Item item;
+		ChangeCondition changeCondition;
+
+		final Actor actPrincipal = this.actorService.findByPrincipal();
+
+		item = this.itemService.findOne(itemId);
+		changeCondition = new ChangeCondition();
+
+		changeCondition.setItem(item);
+
+		Roles roles = null;
+		String role = null;
+
+		boolean isCharge = false;
+		if (item.getSection().getUser().equals(actPrincipal))
+			isCharge = true;
+
+		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (principal != "anonymousUser")
+			if (actPrincipal instanceof User)
+				roles = this.rolesService.findRolesByPrincipalAssociation(association);
+
+		if (roles != null)
+			role = roles.getType();
+
 		result = new ModelAndView("item/display");
 		result.addObject("item", item);
 		result.addObject("requestURI", "/item/user/" + association.getId() + "/display.do?itemId=" + itemId);
 		result.addObject("association", association);
 		result.addObject("changeCondition", changeCondition);
 		result.addObject("role", role);
+		result.addObject("isCharge", isCharge);
 
 		return result;
 	}
