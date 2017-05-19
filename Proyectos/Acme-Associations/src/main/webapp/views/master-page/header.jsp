@@ -41,13 +41,14 @@
 		</security:authorize>
 
         <security:authorize access="hasRole('USER')">
+        	<li><a href="loan/user/listOwn.do"><spring:message code="master.page.loan.own"/></a></li>
 			<li><a href="association/list.do"><spring:message code="master.page.association.list" /></a></li>
-			<li><a href="user/association/listOwn.do"><spring:message code="master.page.association.list.own" /></a></li>
+			<li><a href="association/user/listOwn.do"><spring:message code="master.page.association.list.own" /></a></li>
 			 <li>
 				<li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><spring:message code="master.page.profile" /> <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="actor/user/displayOwn.do"><spring:message code="master.page.user.display" /></a></li>
+                <li><a href="actor/actor/displayOwn.do"><spring:message code="master.page.user.display" /></a></li>
                 <li><a href="user/user/edit.do"><spring:message code="master.page.user.edit" /></a></li>
               </ul>
             </li>
@@ -58,7 +59,7 @@
         	<li><a class="fNiv" href="association/list.do"><spring:message
               code="master.page.association" /></a></li>
              <li><a class="fNiv" href="user/register.do"><spring:message code="master.page.register.as.user" /></a></li>
-             <li class="Fniv"><a href="security/login.do" ><b>Login</b> </a></li>
+             <li class="Fniv"><a href="security/login.do" ><b><spring:message code="master.page.login"/></b> </a></li>
 			</security:authorize>
         
         <security:authorize access="isAuthenticated()">

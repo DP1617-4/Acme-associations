@@ -17,10 +17,10 @@ import domain.Association;
 import domain.Request;
 
 @Controller
-@RequestMapping("/user/request")
-public class UserRequestController extends AbstractController {
+@RequestMapping("/request/user")
+public class RequestUserController extends AbstractController {
 
-	public UserRequestController() {
+	public RequestUserController() {
 		super();
 	}
 
@@ -37,7 +37,7 @@ public class UserRequestController extends AbstractController {
 
 		result = new ModelAndView("request/list");
 		result.addObject("requests", requests);
-		result.addObject("requestURI", "/user/request/list.do");
+		result.addObject("requestURI", "/request/user/list.do");
 
 		return result;
 	}
@@ -54,7 +54,6 @@ public class UserRequestController extends AbstractController {
 
 			result = new ModelAndView("redirect:/welcome/index.do");
 			redir.addFlashAttribute("errorMessage", exc.getMessage());
-			result.addObject("requestURI", "/user/request/" + association.getId() + "/list.do");
 		}
 
 		return result;
@@ -82,7 +81,7 @@ public class UserRequestController extends AbstractController {
 
 		this.requestService.delete(request);
 
-		result = new ModelAndView("redirect:/user/request/list.do");
+		result = new ModelAndView("redirect:/request/user/list.do");
 		redir.addFlashAttribute("flashMessage", "request.deleted");
 
 		return result;
@@ -93,7 +92,7 @@ public class UserRequestController extends AbstractController {
 		ModelAndView result;
 		try {
 			this.requestService.accept(request);
-			result = new ModelAndView("redirect:/user/request/" + request.getAssociation().getId() + "/list.do");
+			result = new ModelAndView("redirect:request/user/" + request.getAssociation().getId() + "/list.do");
 		} catch (final Exception exc) {
 
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -109,7 +108,7 @@ public class UserRequestController extends AbstractController {
 
 		try {
 			this.requestService.deny(request);
-			result = new ModelAndView("redirect:/user/request/" + request.getAssociation().getId() + "/list.do");
+			result = new ModelAndView("redirect:request/user/" + request.getAssociation().getId() + "/list.do");
 		} catch (final Exception exc) {
 
 			result = new ModelAndView("redirect:/welcome/index.do");

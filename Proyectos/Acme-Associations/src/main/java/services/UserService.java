@@ -178,11 +178,10 @@ public class UserService {
 		this.userRepository.flush();
 	}
 
-	public void phoneValidator(final User user) {
+	public void phoneValidator(final String phoneNumber) {
 
 		//returns exception if user number is not valid.
 
-		final String phoneNumber = user.getPhoneNumber();
 		final PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
 		String number;
 		String cCode;

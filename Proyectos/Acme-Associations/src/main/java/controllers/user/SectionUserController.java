@@ -1,6 +1,8 @@
 
 package controllers.user;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import services.AssociationService;
 import services.SectionService;
 import services.UserService;
 import controllers.AbstractController;
@@ -23,43 +24,39 @@ import domain.User;
 
 @Controller
 @RequestMapping("/section/user")
-public class UserSectionController extends AbstractController {
+public class SectionUserController extends AbstractController {
 
-	public UserSectionController() {
+	public SectionUserController() {
 		super();
 	}
 
 
 	@Autowired
-	private AssociationService	associationService;
+	private SectionService	sectionService;
 
 	@Autowired
-	private SectionService		sectionService;
-
-	@Autowired
-	private UserService			userService;
+	private UserService		userService;
 
 
 	@RequestMapping(value = "/{association}/create", method = RequestMethod.GET)
 	public ModelAndView create(@PathVariable final Association association) {
 		ModelAndView result;
+		Collection<User> users;
+		users = this.userService.findAssociationCollaboratorsAndManager(association);
 		final Section newSection = this.sectionService.create(association);
-		result = this.createEditModelAndView(newSection);
+		result = this.createEditModelAndView(newSection, association);
+		result.addObject("users", users);
 		return result;
 	}
-
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int sectionId, final RedirectAttributes redir) {
+	@RequestMapping(value = "/{association}/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam final int sectionId, final RedirectAttributes redir, @PathVariable final Association association) {
 		ModelAndView result;
 		final Section section;
 		try {
-			User user;
-			user = this.userService.findByPrincipal();
-
 			section = this.sectionService.findOne(sectionId);
 			this.sectionService.checkResponsiblePrincipal(sectionId);
 
-			result = this.createEditModelAndView(section);
+			result = this.createEditModelAndView(section, association);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 			redir.addFlashAttribute("errorMessage", oops.getMessage());
@@ -68,41 +65,45 @@ public class UserSectionController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Section newSection, final BindingResult binding, final Association association) {
+	@RequestMapping(value = "/{association}/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid Section newSection, final BindingResult binding, @PathVariable final Association association) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(newSection);
+			result = this.createEditModelAndView(newSection, association);
 		else
 			try {
 				newSection = this.sectionService.save(newSection);
 				result = new ModelAndView("redirect:/section/" + association.getId() + "/list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(newSection, "section.commit.error");
+				result = this.createEditModelAndView(newSection, association, "section.commit.error");
 			}
 		return result;
 	}
 
 	// Ancillary methods ---------------------------------------------------------
-	protected ModelAndView createEditModelAndView(final Section section) {
+	protected ModelAndView createEditModelAndView(final Section section, final Association association) {
 		ModelAndView result;
 
-		result = this.createEditModelAndView(section, null);
+		result = this.createEditModelAndView(section, association, null);
 
 		return result;
 	}
-	protected ModelAndView createEditModelAndView(final Section section, final String message) {
+	protected ModelAndView createEditModelAndView(final Section section, final Association association, final String message) {
 		ModelAndView result;
 
-		final String requestURI = "user/section/edit.do";
-		final String cancelURI = "/section/" + section.getAssociation().getId() + "/list.do";
+		final String requestURI = "section/user/" + association.getId() + "/edit.do";
+		final String cancelURI = "section/" + association.getId() + "/list.do";
+
+		Collection<User> users;
+		users = this.userService.findAssociationCollaboratorsAndManager(association);
 
 		result = new ModelAndView("section/edit");
 		result.addObject("section", section);
 		result.addObject("errorMessage", message);
 		result.addObject("requestURI", requestURI);
 		result.addObject("cancelURI", cancelURI);
+		result.addObject("users", users);
 
 		return result;
 	}

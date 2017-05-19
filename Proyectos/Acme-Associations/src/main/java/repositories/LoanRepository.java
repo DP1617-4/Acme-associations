@@ -22,4 +22,7 @@ public interface LoanRepository extends JpaRepository<Loan, Integer> {
 	@Query("select l from Loan l where l.item.section.association.id = ?1")
 	List<Loan> findByAssociation(int id);
 
+	@Query("select l from Loan l where l.borrower.id = ?1 AND l.finalDate = null")
+	List<Loan> findByUser(int id);
+
 }

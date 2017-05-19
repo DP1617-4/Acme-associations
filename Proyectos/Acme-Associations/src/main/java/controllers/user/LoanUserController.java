@@ -59,6 +59,19 @@ public class LoanUserController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/listOwn", method = RequestMethod.GET)
+	public ModelAndView listOwn() {
+		ModelAndView result;
+
+		final User user = this.userService.findByPrincipal();
+		final List<Loan> loans = this.loanService.findByUser(user);
+		result = new ModelAndView("loan/list");
+		result.addObject("loans", loans);
+		result.addObject("requestURI", "loan/user/listOwn.do");
+
+		return result;
+	}
+
 	@RequestMapping(value = "/{association}/listPending", method = RequestMethod.GET)
 	public ModelAndView listPending(@PathVariable final Association association) {
 		ModelAndView result;
