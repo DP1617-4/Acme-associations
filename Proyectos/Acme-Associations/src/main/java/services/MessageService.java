@@ -332,7 +332,7 @@ public class MessageService {
 		return result;
 	}
 
-	@Scheduled(cron = "0 0 * * * *")
+	@Scheduled(cron = "30 * * * * *")
 	public void sendMessageOverdueLoan() {
 
 		List<Loan> loans;
