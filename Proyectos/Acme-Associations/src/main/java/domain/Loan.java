@@ -44,7 +44,6 @@ public class Loan extends DomainEntity {
 		this.startDate = startDate;
 	}
 
-	@Past
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@NotNull
@@ -55,6 +54,7 @@ public class Loan extends DomainEntity {
 		this.expectedDate = expectedDate;
 	}
 
+	@Past
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public Date getFinalDate() {
