@@ -84,6 +84,12 @@
 					</display:column>
 					
 				</display:table>
+				<form:form action="comment/user/${association.id }/edit.do" modelAttribute="comment">
+	            	<form:hidden path="commentable"/>
+	            	<form:input path="title" /></br>
+	            	<form:textarea path="text"/></br>
+	            	<acme:submit name="save" code="comment.new.save"/>
+	            </form:form>
             </div><!--/span-->
           </div><!--/row-->
         </div><!--/span-->
@@ -121,15 +127,8 @@
 				</jstl:if>	
             </div>
             </jstl:if>
-             <jstl:if test="${role == null && application == false}">
-             <div>
-	            <a class="btn btn-primary" href="user/request/${association.id}/apply.do"><spring:message code="association.request.apply"/></a>
-	            
-            </div>
-            </jstl:if>
-        </div><!--/span-->
-      </div><!--/row-->
-      <jstl:if test="${role eq 'MANAGER'}">
+            </br></br></br>
+            <jstl:if test="${role eq 'MANAGER'}">
       	 <a class="btn btn-primary" href="user/association/${association.id}/close.do"><spring:message code="association.close"/></a>
       	 <br>
       	 </br>
@@ -139,6 +138,16 @@
       <security:authorize access="hasRole('ADMIN')">
       	<a class="btn btn-primary" href="association/administrator/${association.id}/ban.do"><spring:message code="association.ban"/></a>
       </security:authorize>
+            
+             <jstl:if test="${role == null && application == false}">
+             <div>
+	            <a class="btn btn-primary" href="user/request/${association.id}/apply.do"><spring:message code="association.request.apply"/></a>
+	            
+            </div>
+            </jstl:if>
+        </div><!--/span-->
+      </div><!--/row-->
+      
       
       </jstl:if>
 </div>
