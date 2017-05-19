@@ -36,11 +36,17 @@ public class SectionService {
 
 	// Auxiliary services
 
-	public Section create() {
+	public Section create(final Association association) {
 		Section result;
 
 		result = new Section();
+		result.setAssociation(association);
+		return result;
+	}
 
+	public Collection<Section> findAllByAssociation(final int associationId) {
+		Collection<Section> result;
+		result = this.sectionRepository.findAllByAssociation(associationId);
 		return result;
 	}
 
@@ -82,6 +88,22 @@ public class SectionService {
 		final Section result = new Section();
 
 		return result;
+	}
+
+	public void checkResponsible(final User user, final Section section) {
+		Boolean checker = false;
+		checker = this.sectionRepository.findResponsible(section.getId()) == user;
+		Assert.isTrue(checker, "section.responsible.error");
+
+	}
+
+	public void checkResponsiblePrincipal(final int sectionId) {
+		User user;
+		user = this.userService.findByPrincipal();
+		Boolean checker = false;
+		checker = this.sectionRepository.findResponsible(sectionId) == user;
+		Assert.isTrue(checker, "section.responsible.error");
+
 	}
 
 }
