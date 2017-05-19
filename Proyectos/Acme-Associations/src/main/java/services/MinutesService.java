@@ -77,6 +77,14 @@ public class MinutesService {
 
 	}
 
+	public Minutes save(final Minutes minutes) {
+		Assert.notNull(minutes);
+		Minutes result;
+
+		result = this.minutesRepository.save(minutes);
+		return result;
+	}
+
 	public void addParticipant(final int participantId, final int minutesId) {
 		Minutes minutes;
 		final User participant = this.userService.findOne(participantId);
@@ -87,11 +95,9 @@ public class MinutesService {
 		this.save(minutes);
 	}
 
-	public Minutes save(final Minutes minutes) {
-		Assert.notNull(minutes);
+	public Minutes findOneByMeeting(final Meeting meeting) {
 		Minutes result;
-
-		result = this.minutesRepository.save(minutes);
+		result = this.minutesRepository.findOneByMeeting(meeting.getId());
 		return result;
 	}
 
