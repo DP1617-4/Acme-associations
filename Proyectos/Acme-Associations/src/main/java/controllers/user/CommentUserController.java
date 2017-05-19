@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.CommentService;
 import services.CommentableService;
-import services.UserService;
 import domain.Comment;
 import domain.Commentable;
 
@@ -31,8 +30,7 @@ public class CommentUserController {
 	@Autowired
 	private CommentableService	commentableService;
 
-	@Autowired
-	private UserService			userService;
+	
 
 
 	//Constructor

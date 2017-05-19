@@ -57,7 +57,7 @@ public class UserAssociationController extends AbstractController {
 		ModelAndView result;
 		Association association;
 		try {
-			final User user = this.userService.findByPrincipal();
+			this.userService.findByPrincipal();
 
 			association = this.associationService.findOne(associationId);
 			this.rolesService.checkManagerPrincipal(association);

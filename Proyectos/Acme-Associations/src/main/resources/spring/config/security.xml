@@ -35,7 +35,8 @@
 		<security:intercept-url pattern="/styles/**" access="permitAll" />
 		<security:intercept-url pattern="/bootstrap/**" access="permitAll" /> 
 		<security:intercept-url pattern="/css/**" access="permitAll" /> 
-		<security:intercept-url pattern="/js/**" access="permitAll" /> 
+		<security:intercept-url pattern="/js/**" access="permitAll" />
+		<security:intercept-url pattern="/locales/**" access="permitAll" /> 
 		
 
 		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" /> 

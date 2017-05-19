@@ -119,4 +119,13 @@ public class LoanService {
 
 		return result;
 	}
+
+	public Loan end(final Loan loan) {
+		Loan result;
+
+		loan.setFinalDate(new Date(System.currentTimeMillis() - 1));
+		result = this.loanRepository.save(loan);
+
+		return result;
+	}
 }

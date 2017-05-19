@@ -37,6 +37,7 @@
 
 
 <script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="js/tether.js"></script>
 
 <!-- Bootstrap core CSS -->
@@ -47,6 +48,7 @@
     <link href="css/bootstrap-reboot.min.css" rel="stylesheet" type="text/css">-->
     <link href="css/bootstrap-grid.css" rel="stylesheet" type="text/css"> 
 	<link href="css/tether.css" rel="stylesheet" type="text/css">
+	<link href="css/bootstrap-datepicker3.standalone.css" rel="stylesheet" type="text/css">
     <!-- Custom styles for this template -->
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>

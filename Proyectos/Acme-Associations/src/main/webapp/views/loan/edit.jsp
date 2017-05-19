@@ -42,6 +42,17 @@
 	
 
 </form:form>
+
+<!-- Requiere pulirse un tanto más, pero oye, funciona. -->
 <script>
-	$('.datepicker').datepicker();
+$.fn.datepicker.defaults.format = "dd/mm/yyyy";
+$('#datepicker input').datepicker({
+    format: "dd/MM/yyyy",
+    weekStart: 0,
+    startView: 1,
+    todayBtn: true,
+    language: "en",
+    multidate: false,
+    daysOfWeekDisabled: "5,6"
+});
 </script>

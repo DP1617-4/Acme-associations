@@ -31,9 +31,7 @@ public class ActorService {
 	@Autowired
 	private ActorRepository			actorRepository;
 
-	// Supporting services ----------------------------------------------------
-	@Autowired
-	private AdministratorService	administratorService;
+	
 
 
 	// Constructors -----------------------------------------------------------

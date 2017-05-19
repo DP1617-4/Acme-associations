@@ -2,7 +2,6 @@
 package services;
 
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -16,18 +15,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import utilities.AbstractTest;
-import domain.Event;
+import domain.Activity;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
 })
 @Transactional
-public class EventServiceTest extends AbstractTest {
+public class ActivityServiceTest extends AbstractTest {
 
 	// The SUT -------------------------------------------------------------
 	@Autowired
-	private EventService	eventService;
+	private ActivityService	activityService;
 
 	Calendar				calendarValida	= new GregorianCalendar(1995, 12, 14);
 	Date					fechaValida		= this.calendarValida.getTime();
@@ -41,19 +40,19 @@ public class EventServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation() {
 		final Object testingData[][] = {
-			{		// Creación correcta de un Event.
+			{		// Creación correcta de un Activity.
 				"manager1", "blae", this.fechaFutura, "equisdejajajaxdxdxd", "http://www.imagen.com.mx/assets/img/imagen_share.png", 10, null
-			}, {	// Creación errónea de un Event: title vacío.
+			}, {	// Creación errónea de un Activity: title vacío.
 				"manager1", null, this.fechaFutura, "equisdejajajaxdxdxd", "http://www.imagen.com.mx/assets/img/imagen_share.png", 1, ConstraintViolationException.class
-			}, {	// Creación errónea de un Event: description vacío.
+			}, {	// Creación errónea de un Activity: description vacío.
 				"manager1", "blae", this.fechaFutura, null, "http://www.imagen.com.mx/assets/img/imagen_share.png", 1, ConstraintViolationException.class
-			}, {	// Creación errónea de un Event: picture que no es url.
+			}, {	// Creación errónea de un Activity: picture que no es url.
 				"manager1", "blae", this.fechaFutura, "equisdejajajaxdxdxd", "no soy una url jiji", 1, ConstraintViolationException.class
-			}, {	// Creación errónea de un Event: moment nulo vacío.
+			}, {	// Creación errónea de un Activity: moment nulo vacío.
 				"manager1", "blae", null, "equisdejajajaxdxdxd", "http://www.imagen.com.mx/assets/img/imagen_share.png", 1, ConstraintViolationException.class
-			}, {	// Creación errónea de un Event: numberSeat negativo.
+			}, {	// Creación errónea de un Activity: numberSeat negativo.
 				"manager1", "blae", this.fechaFutura, "equisdejajajaxdxdxd", "http://www.imagen.com.mx/assets/img/imagen_share.png", -1, ConstraintViolationException.class
-			}, {	// Creación errónea de un Event: no es un manager el logueado.
+			}, {	// Creación errónea de un Activity: no es un manager el logueado.
 				"chorbi1", "blae", this.fechaFutura, "equisdejajajaxdxdxd", "http://www.imagen.com.mx/assets/img/imagen_share.png", 1, ConstraintViolationException.class
 			}
 		};
@@ -93,9 +92,9 @@ public class EventServiceTest extends AbstractTest {
 	@Test
 	public void driverRegister() {
 		final Object testingData[][] = {
-			{		// Un chorbi registrándose a un event
+			{		// Un chorbi registrándose a un activity
 				"chorbi1", 142, null
-			}, {	// Un manager registrándose a un event
+			}, {	// Un manager registrándose a un activity
 				"manager1", 142, IllegalArgumentException.class
 			}, {	// Alguien no logueado
 				null, 142, IllegalArgumentException.class
@@ -111,18 +110,14 @@ public class EventServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(username);
-			final Event e = this.eventService.create();
+			final Activity e = this.activityService.create();
 
 			e.setDescription(description);
-			e.setMoment(moment);
-			e.setNumberSeat(numberSeat);
-			e.setPicture(picture);
-			e.setTitle(title);
 
-			final Event saved = this.eventService.save(e);
-			this.eventService.delete(saved);
+			final Activity saved = this.activityService.save(e);
+			this.activityService.delete(saved);
 			this.unauthenticate();
-			this.eventService.flush();
+			this.activityService.flush();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		}
@@ -134,7 +129,7 @@ public class EventServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(username);
-			final Collection<Event> e = this.eventService.findAllByPrincipalChorbi();
+			//			final Collection<Activity> e = this.activityService.findAllByPrincipalChorbi();
 			this.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
@@ -147,8 +142,7 @@ public class EventServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(username);
-			final Collection<Event> e = this.eventService.findAll();
-			final Collection<Event> ev = this.eventService.findAllEventsInOneMonth();
+			this.activityService.findAll();
 
 			this.unauthenticate();
 		} catch (final Throwable oops) {
@@ -157,16 +151,16 @@ public class EventServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
-	protected void templateRegister(final String username, final int eventId, final Class<?> expected) {
+	protected void templateRegister(final String username, final int activityId, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {
 			this.authenticate(username);
-			final Event e = this.eventService.findOne(eventId);
-			this.eventService.register(e);
-			this.eventService.register(e);
+			this.activityService.findOne(activityId);
+			//			this.activityService.register(e);
+			//			this.activityService.register(e);
 			this.unauthenticate();
-			this.eventService.flush();
+			this.activityService.flush();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		}
