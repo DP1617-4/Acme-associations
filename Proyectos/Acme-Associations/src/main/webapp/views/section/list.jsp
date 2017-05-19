@@ -27,25 +27,17 @@
 
 
 <security:authentication property="principal" var ="loggedactor"/>
-<display:table pagesize="5" keepStatus="true" name="associations" requestURI="${requestURI}" id="row">
+<display:table pagesize="5" keepStatus="true" name="sections" requestURI="${requestURI}" id="row">
 	
-	<spring:message code="association.name" var="nameHeader" />
-	<spring:message code="association.description" var="descriptionHeader" />
-	<spring:message code="association.creationDate" var="creationDateHeader" />
-	<spring:message code="association.address" var="addressHeader" />
+	<spring:message code="section.name" var="nameHeader" />
+	<spring:message code="section.user" var="userHeader" />
 	
-
-	<display:column title="${titleHeader}">
-			<a href="association/${row.id}/display.do"> <jstl:out value="${row.name }"/></a>
-	</display:column>
-	<display:column property="name" title="${titleHeader}"/>
-	<display:column property="description" title="${descriptionHeader}" />
-	<display:column property="creationDate" title="${creationDateHeader}" />
-	<display:column property="address" title="${addressHeader}"/>	
+	<display:column property="name" title="${nameHeader}"/>
+	<display:column property="user" title="${userHeader}"/>	
 	
 </display:table>
 <br><br/>
-<div><a href="user/association/create.do"><spring:message code="association.create"/></a></div>
+<div><a href="user/section/create.do"><spring:message code="section.create"/></a></div>
 <br/>
 
 		

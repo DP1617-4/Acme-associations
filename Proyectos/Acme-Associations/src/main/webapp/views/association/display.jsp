@@ -108,7 +108,7 @@
 
         <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
           <div class="list-group">
-            <a href="section/user/${association.id}/list.do" class="list-group-item active"><spring:message code="association.section"/></a>
+            <a href="section/${association.id}/list.do" class="list-group-item active"><spring:message code="association.section"/></a>
             <a href="item/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.item"/></a>
             <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
             <a href="sanction/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>
