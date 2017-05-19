@@ -65,6 +65,9 @@
 		  
 		  <!-- Request -->
 		  <security:intercept-url pattern="/meeting/user/**" access="hasRole('USER')" /> 
+		  <security:intercept-url pattern="/user/meeting/**" access="hasRole('USER')" />
+		  <security:intercept-url pattern="/minutes/user/**" access="hasRole('USER')" /> 
+		  <security:intercept-url pattern="/user/minutes/**" access="hasRole('USER')" />
 		 
 		<!-- Redirects --> 
 		<security:intercept-url pattern="/redirect/**" access="permitAll" /> 

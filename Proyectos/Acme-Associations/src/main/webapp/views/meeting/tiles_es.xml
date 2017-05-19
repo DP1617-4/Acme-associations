@@ -16,12 +16,12 @@
       
 <tiles-definitions>
 
-	<definition name="folder/list" extends="master.page">	
+	<definition name="meeting/list" extends="master.page">	
 		<put-attribute name="title" value="Listar reuniones" />
 		<put-attribute name="body" value="/views/meeting/list.jsp" />
 	</definition>
 	
-	<definition name="folder/edit" extends="master.page">	
+	<definition name="meeting/edit" extends="master.page">	
 		<put-attribute name="title" value="Editar reunión" />
 		<put-attribute name="body" value="/views/meeting/edit.jsp" />
 	</definition>

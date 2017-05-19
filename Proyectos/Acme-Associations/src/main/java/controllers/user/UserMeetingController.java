@@ -1,6 +1,8 @@
 
 package controllers.user;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +14,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import services.CommentService;
 import services.MeetingService;
+import services.MinutesService;
 import services.RolesService;
 import controllers.AbstractController;
 import domain.Association;
+import domain.Comment;
 import domain.Meeting;
+import domain.Minutes;
 
 @Controller
-@RequestMapping("/user/meeting")
+@RequestMapping("/meeting/user")
 public class UserMeetingController extends AbstractController {
 
 	public UserMeetingController() {
@@ -31,7 +37,13 @@ public class UserMeetingController extends AbstractController {
 	private MeetingService	meetingService;
 
 	@Autowired
+	private MinutesService	minutesService;
+
+	@Autowired
 	private RolesService	rolesService;
+
+	@Autowired
+	private CommentService	commentService;
 
 
 	@RequestMapping(value = "{association}/create", method = RequestMethod.GET)
@@ -61,6 +73,7 @@ public class UserMeetingController extends AbstractController {
 
 		return result;
 	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Meeting newMeeting, final BindingResult binding) {
 		ModelAndView result;
@@ -71,11 +84,35 @@ public class UserMeetingController extends AbstractController {
 			try {
 				this.rolesService.checkManagerPrincipal(newMeeting.getAssociation());
 				newMeeting = this.meetingService.save(newMeeting);
-				result = new ModelAndView("redirect:/meeting/" + newMeeting.getId() + "/list.do");
+				result = new ModelAndView("redirect:/meeting/user/" + newMeeting.getAssociation().getId() + "/list.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(newMeeting, "meeting.commit.error");
 			}
 		return result;
+	}
+
+	@RequestMapping(value = "/{association}/{meeting}/display", method = RequestMethod.GET)
+	public ModelAndView display(@PathVariable final Association association, final Meeting meeting) {
+		final ModelAndView result;
+
+		final Minutes minute = this.minutesService.findOneByMeeting(meeting);
+
+		Collection<Comment> commentsMeeting;
+		commentsMeeting = this.commentService.findAllByCommentableId(meeting.getId());
+		result = new ModelAndView("minutes/display");
+		result.addObject("association", association);
+		result.addObject("meeting", meeting);
+		result.addObject("commentsMeeting", commentsMeeting);
+		result.addObject("requestURI", "/meeting/user/" + association.getId() + "/" + meeting.getId() + "/display.do");
+
+		if (minute != null) {
+			Collection<Comment> commentsMinutes;
+			commentsMinutes = this.commentService.findAllByCommentableId(minute.getId());
+			result.addObject("minute", minute);
+			result.addObject("commentsMinutes", commentsMinutes);
+		}
+		return result;
+
 	}
 
 	@RequestMapping(value = "{association}/list", method = RequestMethod.GET)
@@ -83,9 +120,11 @@ public class UserMeetingController extends AbstractController {
 		final ModelAndView result;
 
 		this.rolesService.checkCollaboratorPrincipal(association);
+		final Collection<Meeting> meetings = this.meetingService.findAllByAssociation(association);
 
 		result = new ModelAndView("meeting/list");
-		result.addObject("requestURI", "/user/meeting/list.do");
+		result.addObject("meetings", meetings);
+		result.addObject("requestURI", "/meeting/user/" + association.getId() + "/list.do");
 
 		return result;
 	}
@@ -101,12 +140,14 @@ public class UserMeetingController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Meeting meeting, final String message) {
 		ModelAndView result;
 
-		final String requestURI = "meeting/edit.do";
+		final String requestURI = "meeting/user/edit.do";
+		final String cancelURI = "meeting/user/" + meeting.getAssociation().getId() + "/list.do";
 
 		result = new ModelAndView("meeting/edit");
 		result.addObject("meeting", meeting);
 		result.addObject("errorMessage", message);
 		result.addObject("requestURI", requestURI);
+		result.addObject("cancel", cancelURI);
 
 		return result;
 	}

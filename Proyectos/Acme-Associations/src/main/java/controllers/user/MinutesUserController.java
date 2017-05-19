@@ -130,7 +130,7 @@ public class MinutesUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView list(@PathVariable final Association association) {
+	public ModelAndView display(@PathVariable final Association association, @PathVariable final Meeting meeting) {
 		final ModelAndView result;
 
 		Roles roles = null;
@@ -147,13 +147,14 @@ public class MinutesUserController extends AbstractController {
 			role = roles.getType();
 
 		this.rolesService.checkCollaboratorPrincipal(association);
+		final Minutes minutes = this.minutesService.findOneByMeeting(meeting);
 
 		result = new ModelAndView("minutes/display");
-		result.addObject("requestURI", "/user/minutes/display.do");
+		result.addObject("minutes", minutes);
+		result.addObject("requestURI", "/minutes/user/" + association.getId() + "/" + meeting.getId() + "/display.do");
 
 		return result;
 	}
-
 	// Ancillary methods ---------------------------------------------------------
 	protected ModelAndView createEditModelAndView(final Minutes minutes) {
 		ModelAndView result;
