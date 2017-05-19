@@ -95,7 +95,7 @@
             <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
             <a href="sanction/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>
             <a href="loan/user/${association.id}/listPending.do" class="list-group-item"><spring:message code="association.loanPending"/></a>
-            <a href="meeting/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.loan"/></a>
+            <a href="meeting/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.meeting"/></a>
             </jstl:if>
             <jstl:if test="${role eq 'MANAGER'}">
             <a href="user/request/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
