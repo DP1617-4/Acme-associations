@@ -22,10 +22,10 @@ import domain.Section;
 import domain.User;
 
 @Controller
-@RequestMapping("/user/section")
-public class UserSectionController extends AbstractController {
+@RequestMapping("/section/user")
+public class SectionUserController extends AbstractController {
 
-	public UserSectionController() {
+	public SectionUserController() {
 		super();
 	}
 

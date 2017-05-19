@@ -26,10 +26,10 @@ import domain.User;
 import forms.ChangeManager;
 
 @Controller
-@RequestMapping("/user/association")
-public class UserAssociationController extends AbstractController {
+@RequestMapping("/association/user")
+public class AssociationUserController extends AbstractController {
 
-	public UserAssociationController() {
+	public AssociationUserController() {
 		super();
 	}
 
@@ -109,7 +109,7 @@ public class UserAssociationController extends AbstractController {
 
 		result = new ModelAndView("association/listOwn");
 		result.addObject("roles", roles);
-		result.addObject("requestURI", "/user/association/listOwn.do");
+		result.addObject("requestURI", "/association/user/listOwn.do");
 
 		return result;
 	}
@@ -132,7 +132,7 @@ public class UserAssociationController extends AbstractController {
 			result = new ModelAndView("association/changeManager");
 			result.addObject("users", users);
 			result.addObject("changeManager", changeManager);
-			result.addObject("requestURI", "user/association/" + association.getId() + "/changeManager.do");
+			result.addObject("requestURI", "association/user/" + association.getId() + "/changeManager.do");
 		} catch (final Exception e) {
 
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -198,7 +198,7 @@ public class UserAssociationController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Association association, final String message) {
 		ModelAndView result;
 
-		final String requestURI = "user/association/edit.do";
+		final String requestURI = "association/user/edit.do";
 
 		result = new ModelAndView("association/edit");
 		result.addObject("association", association);
