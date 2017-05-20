@@ -38,6 +38,8 @@
 
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/locales/bootstrap-datepicker.en-GB.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="js/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
 <script type="text/javascript" src="js/tether.js"></script>
 
 <!-- Bootstrap core CSS -->
@@ -71,6 +73,11 @@
 			window.location.replace(loc);
 		}
 	</script>
+	<script type="text/javascript">
+		function changeLocale(lang){
+			$.fn.datepicker.defaults.language	= lang;
+		}
+	</script>
 	
 	<script type="text/javascript">
 		function alertMessage(str) {
@@ -85,7 +92,6 @@
 	<div class="container-nav">
 		<tiles:insertAttribute name="header" />
 	</div>
-	
 	<div class= "container">
 		<tiles:insertAttribute name="body" />	
 		<jstl:if test="${errorMessage != null}">
