@@ -21,6 +21,7 @@ public class ActivityService {
 	@Autowired
 	private ActivityRepository	activityRepository;
 
+
 	// Constructors --------------------------------------------
 	public ActivityService() {
 		super();
@@ -68,6 +69,13 @@ public class ActivityService {
 		winner = user;
 		activity.setWinner(winner);
 		this.save(activity);
+	}
+
+	public Collection<Activity> findAllByAssociation(final int associationId) {
+		Collection<Activity> result;
+		result = this.activityRepository.findAllByAssociation(associationId);
+
+		return result;
 	}
 
 }
