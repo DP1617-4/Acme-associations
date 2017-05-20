@@ -59,6 +59,8 @@ public class AssociationController extends AbstractController {
 		comments = this.commentService.findAllByCommentableId(association.getId());
 		final MessageBroadcast messageBroad = new MessageBroadcast();
 		messageBroad.setAssociation(association);
+		Comment comment;
+		comment = this.commentService.create(association.getId());
 
 		Roles roles = null;
 		Boolean application = true;
@@ -85,6 +87,7 @@ public class AssociationController extends AbstractController {
 		result.addObject("messageBroad", messageBroad);
 		result.addObject("role", role);
 		result.addObject("application", application);
+		result.addObject("comment", comment);
 		return result;
 	}
 	@RequestMapping(value = "/list", method = RequestMethod.GET)

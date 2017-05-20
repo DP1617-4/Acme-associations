@@ -36,6 +36,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("select r.user from Roles r where r.type='COLLABORATOR' and r.association.id=?1")
 	Collection<User> findAssociationCollaborators(int associationId);
 
+	@Query("select l.borrower from Loan l where l.item.id = ?1")
+	Collection<User> findAllRelatedItem(int itemId);
+
 	//Dashboard queries
 
 	// User 2.0

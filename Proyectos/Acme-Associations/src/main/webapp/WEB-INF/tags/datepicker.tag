@@ -37,6 +37,6 @@
 	<form:label path="${path}">
 		<spring:message code="${code}" />
 	</form:label>	
-	<input type="text" name="${path}" data-provide="datepicker" readonly="${readonly}" />	
+	<input id="datepicker" class="form-control" type="text" name="${path}" data-provide="datepicker" readonly="${readonly}" />	
 	<form:errors path="${path}" cssClass="error" />
 </div>	
