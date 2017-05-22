@@ -26,9 +26,8 @@
 	
 	<display:column title="${meetingHeader}">
 			<a href="meeting/user/${row.association.id}/${row.id}/display.do"> 
-			<spring:message code="meeting.meeting"></spring:message></a>
+			<jstl:out value="${row.issue}"/></a>
 	</display:column>
-	<display:column property="issue" title="${issueHeader}"/>
 	
 </display:table>
 

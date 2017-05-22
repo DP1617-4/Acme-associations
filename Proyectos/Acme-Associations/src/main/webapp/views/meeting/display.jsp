@@ -22,7 +22,7 @@
 <security:authentication property="principal" var ="loggedactor"/>
 
 	<div class="jumbotron">
-		<p><jstl:out value="${meeting.issue}" /></p>
+		<h2><jstl:out value="${meeting.issue}" /></h2>
 	</div>
           
   	<div class="row">
@@ -35,7 +35,7 @@
 	  			
 	  		<h2><spring:message code="meeting.comments"/></h2>
 				
-				<display:table pagesize="5" class="displaytag" keepStatus="true" name="commentsMeeting" requestURI="${requestURI}" id="row">
+				<display:table pagesize="5" class="displaytag" keepStatus="true" name="comments" requestURI="${requestURI}" id="row">
 					<!--Attributes -->
 					<spring:message code="comment.title" var="titleHeader" />
 					<spring:message code="comment.text" var="textHeader" />
@@ -93,6 +93,33 @@
 						<acme:submit name="save" code="meeting.addParticipant"/>
 					</form:form>
 				</jstl:if>
+				
+				<h2><spring:message code="meeting.comments"/></h2>
+				
+				<display:table pagesize="5" class="displaytag" keepStatus="true" name="commentsSecond" requestURI="${requestURI}" id="row">
+					<!--Attributes -->
+					<spring:message code="comment.title" var="titleHeader" />
+					<spring:message code="comment.text" var="textHeader" />
+					<spring:message code="comment.moment" var="momentHeader" />
+					<spring:message code="comment.user" var="userHeader"/>
+					
+					<display:column property="title" title="${titleHeader}" sortable="true" />
+					<display:column property="text" title="${textHeader}" sortable="true" />
+					<display:column property="moment" title="${momentHeader}"  format="{0,date,dd/MM/yyyy HH:mm}"/>
+					<display:column title="${userHeader}">
+						<a href="actor/actor/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
+					</display:column>
+					
+				</display:table>
+				
+				<jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
+					<form:form action="comment/user/${meeting.id}/edit.do" modelAttribute="commentSecond">
+	            		<form:hidden path="commentable"/>
+	            		<form:input path="title" /> </br>
+	            		<form:textarea path="text"/> </br>
+	            		<acme:submit name="save" code="comment.new.save"/>
+	            	</form:form>
+	            </jstl:if>
 			</jstl:if>
 			
 			<jstl:if test="${minutes == null}">
@@ -101,6 +128,8 @@
 					<div><a class="btn btn-primary" href="minutes/user/${association.id}/${meeting.id}/create.do"><spring:message code="minute.create"/></a></div>
 				</jstl:if>
 			</jstl:if>
+			
+			
 		</div><!--/span-->
     
 	</div>
