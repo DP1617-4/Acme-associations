@@ -93,9 +93,14 @@ public class AssociationUserController extends AbstractController {
 
 		final User principal = this.userService.findByPrincipal();
 
-		this.rolesService.assignRoles(principal, changeManager.getAssociation(), "COLLABORATOR");
-		this.rolesService.assignRoles(changeManager.getUser(), changeManager.getAssociation(), "MANAGER");
-
+		if(changeManager.getRole().equals(Roles.MANAGER)){
+			this.rolesService.assignRoles(principal, changeManager.getAssociation(), "COLLABORATOR");
+			this.rolesService.assignRoles(changeManager.getUser(), changeManager.getAssociation(), "MANAGER");
+		}
+		else{
+			
+			this.rolesService.assignRoles(changeManager.getUser(), changeManager.getAssociation(), changeManager.getRole());
+		}
 		result = new ModelAndView("redirect:/association/" + changeManager.getAssociation().getId() + "/display.do");
 		redir.addFlashAttribute("flashMessage", "association.change.manager.correct");
 
@@ -140,7 +145,9 @@ public class AssociationUserController extends AbstractController {
 			this.rolesService.checkManagerPrincipal(association);
 
 			Collection<User> users;
-			users = this.userService.findAssociationCollaborators(association);
+			users = this.userService.findAllByAssociation(association);
+			User manager = this.userService.findAssociationManager(association);
+			users.remove(manager);
 			final ChangeManager changeManager = new ChangeManager();
 			changeManager.setAssociation(association);
 

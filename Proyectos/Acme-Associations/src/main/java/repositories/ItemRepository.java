@@ -12,7 +12,7 @@ import domain.Item;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer> {
 
-	@Query("select i from Item i where i.section.association.id=?1 and (i.itemCondition = 'EXCELENT' or i.itemCondition = 'MODERATE' or i.itemCondition = 'GOOD')")
+	@Query("select l.item from Loan l right JOIN l.item i where l.finalDate!=null and i.section.association.id=?1 and i.itemCondition != 'BAD' and i.itemCondition != 'PRIZE' and i.itemCondition !='LOAN'")
 	Collection<Item> findAllByAssociation(int associationId);
 
 	@Query("select i from Item i where i.section.id=?1")

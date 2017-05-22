@@ -66,6 +66,12 @@
 
 		 <!-- Item -->
 		  <security:intercept-url pattern="/item/user/**" access="hasRole('USER')" /> 
+		  
+		  <!-- Request -->
+		  <security:intercept-url pattern="/meeting/user/**" access="hasRole('USER')" /> 
+		  <security:intercept-url pattern="/user/meeting/**" access="hasRole('USER')" />
+		  <security:intercept-url pattern="/minutes/user/**" access="hasRole('USER')" /> 
+		  <security:intercept-url pattern="/user/minutes/**" access="hasRole('USER')" />
 		 
 		<!-- Redirects --> 
 		<security:intercept-url pattern="/redirect/**" access="permitAll" /> 
@@ -83,7 +89,7 @@
 		<!-- User --> 
 		<security:intercept-url pattern="/user/register.do**" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/user/edit.do**" access="isAnonymous()" /> 
-		<security:intercept-url pattern="/actor/actor/display.do" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/actor/actor/**" access="isAuthenticated()"/>
 		
 		<!-- Loan -->
 		<security:intercept-url pattern="/loan/user/**" access="hasRole('USER')"/>

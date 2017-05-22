@@ -22,8 +22,8 @@
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="association"/>
 	<form:hidden path="meeting"/>
+	<form:hidden path="users"/>
 
     <acme:textbox code="minutes.document" path="document"/>
 	<br/>
@@ -32,7 +32,7 @@
 		<spring:message code="minutes.save" />
 	</button>
 	
-	<input type="button" name="cancel"
+	<input type="button" name="cancel" class="btn btn-primary"
 		value="<spring:message code="minutes.cancel" />"
 		onclick="javascript: window.location.replace('${cancelURI}');" />&nbsp;
 	<br />
