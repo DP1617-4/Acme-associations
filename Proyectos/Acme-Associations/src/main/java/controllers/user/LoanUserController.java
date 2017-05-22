@@ -3,8 +3,10 @@ package controllers.user;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -140,6 +142,7 @@ public class LoanUserController extends AbstractController {
 
 		final String requestURI = "loan/user/" + association.getId() + "/" + item.getId() + "/create.do";
 		final String cancelURI = "association/" + association.getId() + "/display.do";
+		final Locale locale = LocaleContextHolder.getLocale();
 		final Collection<User> users = this.userService.findAllByAssociation(association);
 		result = new ModelAndView("loan/edit");
 		result.addObject("loan", loan);
@@ -147,6 +150,7 @@ public class LoanUserController extends AbstractController {
 		result.addObject("requestURI", requestURI);
 		result.addObject("cancelURI", cancelURI);
 		result.addObject("errorMessage", message);
+		result.addObject("Locale", locale.getDisplayLanguage());
 
 		return result;
 	}

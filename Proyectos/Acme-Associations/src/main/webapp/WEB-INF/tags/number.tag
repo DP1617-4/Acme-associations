@@ -24,6 +24,9 @@
  
 <%@ attribute name="path" required="true" %>
 <%@ attribute name="code" required="true" %>
+<%@ attribute name="min" required="true" %>
+<%@ attribute name="max" required="true" %>
+<%@ attribute name="step" required="true" %>
 
 <%@ attribute name="readonly" required="false" %>
 
@@ -33,10 +36,10 @@
 
 <%-- Definition --%>
 
-<div class="datepicker">
+<div>
 	<form:label path="${path}">
 		<spring:message code="${code}" />
 	</form:label>	
-	<input id="datepicker" class="form-control" type="text" name="${path}" data-provide="datepicker" readonly="${readonly}" />	
+	<form:input type="number" min="${min}" max="${max}" step="${step}" path="${path}" readonly="${readonly}" />	
 	<form:errors path="${path}" cssClass="error" />
 </div>	
