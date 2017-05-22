@@ -90,19 +90,19 @@ public class UserMeetingController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Meeting newMeeting, final BindingResult binding) {
+	public ModelAndView save(@Valid final Meeting meeting, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(newMeeting);
+			result = this.createEditModelAndView(meeting);
 		else
 			try {
-				this.rolesService.checkManagerPrincipal(newMeeting.getAssociation());
-				newMeeting = this.meetingService.save(newMeeting);
+				this.rolesService.checkManagerPrincipal(meeting.getAssociation());
+				final Meeting newMeeting = this.meetingService.save(meeting);
 				final Association association = newMeeting.getAssociation();
 				result = new ModelAndView("redirect:/meeting/user/" + association.getId() + "/list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(newMeeting, "meeting.commit.error");
+				result = this.createEditModelAndView(meeting, "meeting.commit.error");
 			}
 		return result;
 	}
@@ -138,17 +138,24 @@ public class UserMeetingController extends AbstractController {
 		result.addObject("comments", comments);
 		result.addObject("comment", comment);
 		result.addObject("role", role);
+		result.addObject("minutes", minute);
 
 		if (minute != null) {
 			Collection<Comment> commentsSecond;
 			final AddParticipant addParticipant = new AddParticipant();
 			commentsSecond = this.commentService.findAllByCommentableId(minute.getId());
 			final Comment commentSecond = this.commentService.create(minute.getId());
+			final Collection<User> users = this.userService.findAssociationCollaboratorsAndManager(association);
+			final Collection<User> participants = minute.getUsers();
+			users.removeAll(minute.getUsers());
 
 			addParticipant.setMinute(minute);
 			result.addObject("minute", minute);
 			result.addObject("commentsSecond", commentsSecond);
 			result.addObject("commentSecond", commentSecond);
+			result.addObject("addParticipant", addParticipant);
+			result.addObject("users", users);
+			result.addObject("participants", participants);
 		}
 
 		result.addObject("requestURI", "/meeting/user/" + association.getId() + "/" + meeting.getId() + "/display.do");

@@ -29,7 +29,7 @@
   	
 		<div class="col-6 col-md-6 col-lg-8">
     		<h2><spring:message code="meeting.description"/></h2>
-	        	<div><b><spring:message code="meeting.agenda"/>:</b> <jstl:out value="${meeting.agenda}" /></div>
+	        	<div><b><spring:message code="meeting.agenda"/>:</b> <a href=${meeting.agenda}><jstl:out value="${meeting.agenda}" /></a></div>
 	        	<div><b><spring:message code="meeting.address"/>:</b> <jstl:out value="${meeting.address}" /></div>
 	  			<div><b><spring:message code="meeting.moment"/>:</b> <jstl:out value="${meeting.moment}" /></div>
 	  			
@@ -46,7 +46,7 @@
 					<display:column property="text" title="${textHeader}" sortable="true" />
 					<display:column property="moment" title="${momentHeader}"  format="{0,date,dd/MM/yyyy HH:mm}"/>
 					<display:column title="${userHeader}">
-						<a href="actor/user/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
+						<a href="actor/actor/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
 					</display:column>
 					
 				</display:table>
@@ -65,23 +65,21 @@
     	<div class="col-6 col-md-6 col-lg-4">
 			<h2><spring:message code="meeting.minute.description"/></h2>
 			<jstl:if test="${minutes != null}">
-				<div><b><spring:message code="meeting.minute.document"/>:</b> <jstl:out value="${minutes.document}" /></div>
-				<b><spring:message code="meeting.minute.users"/></b> 
+				<div><b><spring:message code="meeting.minute.document"/>:</b><a href="${minutes.document}" ><jstl:out value="${minutes.document}" /></a></div>
+				<b><spring:message code="meeting.minute.users"/></b> </br>
 				<display:table pagesize="5" class="displaytag" keepStatus="true" name="participants" requestURI="${requestURI}" id="row">
 					
 					<spring:message code="meeting.minute.user" var="userHeader"/>
-					<spring:message code="meeting.minutes.user.role" var="roleHeader" />
 					
 					<display:column title="${userHeader}">
-						<a href="actor/user/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
+						<a href="actor/actor/${row.id}/display.do"> ${row.name} ${row.surname}</a>
 					</display:column>
-					<display:column property="type" title="${roleHeader}" sortable="true"/>
 					
 				</display:table>
 			
 				<jstl:if test="${role eq 'MANAGER'}">
-					<form:form action="minutes/user/addParticipants" modelAttribute="addParticipant">
-						<form:hidden path="minutes"/>
+					<form:form action="minutes/user/addParticipants.do" modelAttribute="addParticipant">
+						<form:hidden path="minute"/>
 						<form:label path="user">
 							<spring:message code="meeting.addParticipant" />:
 						</form:label>
@@ -89,9 +87,10 @@
 							<jstl:forEach items="${users}" var="thisUser">
 								<form:option value="${thisUser.id}" label="${thisUser.completeName}" />
 							</jstl:forEach>
-							<a class="btn btn-primary" href="minutes/user/${association.id}/${meeting.id}/addParticipant.do">
 							<spring:message code="meeting.addParticipant"/></a>
 						</form:select>
+						</br>
+						<acme:submit name="save" code="meeting.addParticipant"/>
 					</form:form>
 				</jstl:if>
 			</jstl:if>
