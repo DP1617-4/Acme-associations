@@ -90,7 +90,7 @@ public class CommentUserController {
 					final Meeting meeting = (Meeting) commentable;
 					result = new ModelAndView("redirect:/meeting/user/" + meeting.getAssociation().getId() + "/" + commentable.getId() + "/display.do");
 				}
-				if (commentable instanceof Meeting) {
+				if (commentable instanceof Minutes) {
 					final Minutes minutes = (Minutes) commentable;
 					final Meeting meeting = minutes.getMeeting();
 					result = new ModelAndView("redirect:/meeting/user/" + meeting.getAssociation().getId() + "/" + meeting.getId() + "/display.do");
@@ -102,11 +102,12 @@ public class CommentUserController {
 					result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
 				if (commentable instanceof Meeting || commentable instanceof Minutes)
 					result = new ModelAndView("redirect:/meeting/user/" + ((Meeting) commentable).getAssociation() + "/" + commentable.getId() + "/display.do");
+				redir.addFlashAttribute("flashMessage", oops.getMessage());
 			}
 		return result;
 	}
 	@RequestMapping(value = "{commentable}/editSecond", method = RequestMethod.POST, params = "save")
-	public ModelAndView saveSecond(Comment commentSecond, final BindingResult binding, @PathVariable final Commentable commentable) {
+	public ModelAndView saveSecond(Comment commentSecond, final BindingResult binding, @PathVariable final Commentable commentable, final RedirectAttributes redir) {
 		ModelAndView result;
 
 		result = new ModelAndView("redirect:/welcome/index.do");
@@ -118,6 +119,7 @@ public class CommentUserController {
 				result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
 			if (commentable instanceof Meeting || commentable instanceof Minutes)
 				result = new ModelAndView("redirect:/meeting/user/" + ((Meeting) commentable).getAssociation() + "/" + commentable.getId() + "/display.do");
+
 		} else
 			try {
 				commentSecond = this.commentService.reconstruct(commentSecond, binding);
