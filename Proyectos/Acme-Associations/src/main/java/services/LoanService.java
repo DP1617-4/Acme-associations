@@ -41,6 +41,9 @@ public class LoanService {
 	@Autowired
 	private Validator		validator;
 
+	@Autowired
+	private ItemService		itemService;
+
 
 	// Auxiliary services
 
@@ -80,6 +83,7 @@ public class LoanService {
 		final User principal = this.userService.findByPrincipal();
 		Association association;
 		association = loan.getItem().getSection().getAssociation();
+		Assert.isTrue(this.itemService.isLoanable(loan.getItem()));
 		this.roleService.checkCollaborator(principal, association);
 		this.roleService.checkAssociate(loan.getBorrower(), association);
 		final Loan result = this.loanRepository.save(loan);
