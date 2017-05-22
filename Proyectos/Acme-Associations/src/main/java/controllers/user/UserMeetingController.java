@@ -29,6 +29,7 @@ import domain.Meeting;
 import domain.Minutes;
 import domain.Roles;
 import domain.User;
+import forms.AddParticipant;
 
 @Controller
 @RequestMapping("/meeting/user")
@@ -112,18 +113,26 @@ public class UserMeetingController extends AbstractController {
 
 		final Minutes minute = this.minutesService.findOneByMeeting(meeting);
 
-		Collection<Comment> commentsMeeting;
-		commentsMeeting = this.commentService.findAllByCommentableId(meeting.getId());
-		result = new ModelAndView("minutes/display");
+		Collection<Comment> comments;
+		comments = this.commentService.findAllByCommentableId(meeting.getId());
+		final Comment comment = this.commentService.create(association.getId());
+
+		result = new ModelAndView("meeting/display");
 		result.addObject("association", association);
 		result.addObject("meeting", meeting);
-		result.addObject("commentsMeeting", commentsMeeting);
+		result.addObject("comments", comments);
+		result.addObject("comment", comment);
 
 		if (minute != null) {
-			Collection<Comment> commentsMinutes;
-			commentsMinutes = this.commentService.findAllByCommentableId(minute.getId());
+			Collection<Comment> commentsSecond;
+			final AddParticipant addParticipant = new AddParticipant();
+			commentsSecond = this.commentService.findAllByCommentableId(minute.getId());
+			final Comment commentSecond = this.commentService.create(association.getId());
+
+			addParticipant.setMinute(minute);
 			result.addObject("minute", minute);
-			result.addObject("commentsMinutes", commentsMinutes);
+			result.addObject("commentsSecond", commentsSecond);
+			result.addObject("commentSecond", commentSecond);
 		}
 
 		result.addObject("requestURI", "/meeting/user/" + association.getId() + "/" + meeting.getId() + "/display.do");
@@ -166,6 +175,7 @@ public class UserMeetingController extends AbstractController {
 
 		return result;
 	}
+
 	protected ModelAndView createEditModelAndView(final Meeting meeting, final String message) {
 		ModelAndView result;
 		final Association association = meeting.getAssociation();

@@ -24,10 +24,6 @@
 	<div class="jumbotron">
 		<p><jstl:out value="${meeting.issue}" /></p>
 	</div>
-  
-	<div><jstl:out value="${meeting.agenda}" /></div>
-  	<div><jstl:out value="${meeting.address}" /></div>
-  	<div><jstl:out value="${meeting.moment}" /></div>
           
   	<div class="row">
   	
@@ -39,7 +35,7 @@
 	  			
 	  		<h2><spring:message code="meeting.comments"/></h2>
 				
-				<display:table pagesize="5" class="displaytag" keepStatus="true" name="comments" requestURI="${requestURI}" id="row">
+				<display:table pagesize="5" class="displaytag" keepStatus="true" name="commentsMeeting" requestURI="${requestURI}" id="row">
 					<!--Attributes -->
 					<spring:message code="comment.title" var="titleHeader" />
 					<spring:message code="comment.text" var="textHeader" />
@@ -55,7 +51,7 @@
 					
 				</display:table>
 				
-				<form:form action="comment/user/${association.id}/${meeting.id}/edit.do" modelAttribute="comment">
+				<form:form action="comment/user/${meeting.id}/edit.do" modelAttribute="comment">
 	            	<form:hidden path="commentable"/>
 	            	<form:input path="title" /> </br>
 	            	<form:textarea path="text"/> </br>
@@ -64,7 +60,7 @@
 	            
     	</div><!--/span-->
     
-    	<div class="col-6 col-md-6 col-lg-8">
+    	<div class="col-6 col-md-6 col-lg-4">
 			<h2><spring:message code="meeting.minute.description"/></h2>
 			
 			<jstl:if test="${minute != null}">
@@ -82,20 +78,24 @@
 				</display:table>
 			
 				<jstl:if test="${role eq 'MANAGER'}">
-					<form:label path="user">
-						<spring:message code="meeting.addParticipant" />:
-					</form:label>
-					<form:select id="user" path="user">
-						<jstl:forEach items="${users}" var="thisUser">
-							<form:option value="${thisUser.id}" label="${thisUser.completeName}" />
-						</jstl:forEach>
-						<a class="btn btn-primary" href="minutes/user/${association.id}/${meeting.id}/addParticipant.do">
-						<spring:message code="meeting.addParticipant"/></a>
-					</form:select>
+					<form:form action="minutes/user/addParticipants" modelAttribute="addParticipant">
+						<form:hidden path="minutes"/>
+						<form:label path="user">
+							<spring:message code="meeting.addParticipant" />:
+						</form:label>
+						<form:select id="user" path="user">
+							<jstl:forEach items="${users}" var="thisUser">
+								<form:option value="${thisUser.id}" label="${thisUser.completeName}" />
+							</jstl:forEach>
+							<a class="btn btn-primary" href="minutes/user/${association.id}/${meeting.id}/addParticipant.do">
+							<spring:message code="meeting.addParticipant"/></a>
+						</form:select>
+					</form:form>
 				</jstl:if>
 			</jstl:if>
 			
 			<jstl:if test="${minute == null}">
+				<spring:message code="meeting.noMinute"/>
 				<jstl:if test="${role eq 'MANAGER'}">
 					<div><a class="btn btn-primary" href="minutes/user/${association.id}/${meeting.id}/create.do"><spring:message code="minute.create"/></a></div>
 				</jstl:if>

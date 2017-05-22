@@ -85,6 +85,48 @@ public class CommentUserController {
 					result = new ModelAndView("redirect:/association/" + commentable.getId() + "/display.do");
 				if (commentable instanceof Item)
 					result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
+				if (commentable instanceof Meeting) {
+					final Meeting meeting = (Meeting) commentable;
+					result = new ModelAndView("redirect:/meeting/user/" + meeting.getAssociation().getId() + "/" + commentable.getId() + "/display.do");
+				}
+				if (commentable instanceof Meeting) {
+					final Minutes minutes = (Minutes) commentable;
+					final Meeting meeting = minutes.getMeeting();
+					result = new ModelAndView("redirect:/meeting/user/" + meeting.getAssociation().getId() + "/" + meeting.getId() + "/display.do");
+				}
+			} catch (final Throwable oops) {
+				if (commentable instanceof Association)
+					result = new ModelAndView("redirect:/association/" + commentable.getId() + "/display.do");
+				if (commentable instanceof Item)
+					result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
+				if (commentable instanceof Meeting || commentable instanceof Minutes)
+					result = new ModelAndView("redirect:/meeting/user/" + ((Meeting) commentable).getAssociation() + "/" + commentable.getId() + "/display.do");
+			}
+		return result;
+	}
+	@RequestMapping(value = "{commentable}/editSecond", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveSecond(Comment commentSecond, final BindingResult binding, @PathVariable final Commentable commentable) {
+		ModelAndView result;
+
+		result = new ModelAndView("redirect:/welcome/index.do");
+
+		if (binding.hasErrors()) {
+			if (commentable instanceof Association)
+				result = new ModelAndView("redirect:/association/" + commentable.getId() + "/display.do");
+			if (commentable instanceof Item)
+				result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
+			if (commentable instanceof Meeting || commentable instanceof Minutes)
+				result = new ModelAndView("redirect:/meeting/user/" + ((Meeting) commentable).getAssociation() + "/" + commentable.getId() + "/display.do");
+		} else
+			try {
+				commentSecond = this.commentService.reconstruct(commentSecond, binding);
+				this.commentService.checkPrincipalCanComment(commentable);
+				this.commentService.save(commentSecond);
+				result = new ModelAndView("redirect:/welcome/index.do");
+				if (commentable instanceof Association)
+					result = new ModelAndView("redirect:/association/" + commentable.getId() + "/display.do");
+				if (commentable instanceof Item)
+					result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
 				if (commentable instanceof Meeting || commentable instanceof Minutes)
 					result = new ModelAndView("redirect:/meeting/user/" + ((Meeting) commentable).getAssociation() + "/" + commentable.getId() + "/display.do");
 

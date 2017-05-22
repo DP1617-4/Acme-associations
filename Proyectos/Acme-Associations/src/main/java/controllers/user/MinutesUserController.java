@@ -1,6 +1,8 @@
 
 package controllers.user;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import domain.Meeting;
 import domain.Minutes;
 import domain.Roles;
 import domain.User;
+import forms.AddParticipant;
 
 @Controller
 @RequestMapping("minutes/user")
@@ -156,7 +159,29 @@ public class MinutesUserController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/addParticipant", method = RequestMethod.GET)
+	@RequestMapping(value = "/addParticipants", method = RequestMethod.POST, params = "save")
+	public ModelAndView addPicture(@Valid final AddParticipant addParticipant, final BindingResult binding) {
+
+		ModelAndView result;
+		Minutes minute = addParticipant.getMinute();
+		final Meeting meeting = minute.getMeeting();
+		final Association association = meeting.getAssociation();
+		final Collection<User> users = minute.getUsers();
+
+		if (binding.hasErrors())
+			result = this.createEditModelAndView(minute);
+		else
+			try {
+				this.rolesService.checkManagerPrincipal(minute.getMeeting().getAssociation());
+				users.add(addParticipant.getUser());
+				minute.setUsers(users);
+				minute = this.minutesService.save(minute);
+				result = new ModelAndView("redirect: /meeting/user/" + association.getId() + "/" + meeting.getId() + "/display.do");
+			} catch (final Throwable oops) {
+				result = this.createEditModelAndView(minute, "minutes.commit.error");
+			}
+		return result;
+	}
 	// Ancillary methods ---------------------------------------------------------
 	protected ModelAndView createEditModelAndView(final Minutes minutes) {
 		ModelAndView result;
@@ -165,15 +190,21 @@ public class MinutesUserController extends AbstractController {
 
 		return result;
 	}
+
 	protected ModelAndView createEditModelAndView(final Minutes minutes, final String message) {
 		ModelAndView result;
 
+		final Meeting meeting = minutes.getMeeting();
+		final Association association = meeting.getAssociation();
+
 		final String requestURI = "minutes/edit.do";
+		final String cancelURI = "meeting/user/" + association.getId() + "/" + meeting.getId() + "/display.do";
 
 		result = new ModelAndView("minutes/edit");
 		result.addObject("minutes", minutes);
 		result.addObject("errorMessage", message);
 		result.addObject("requestURI", requestURI);
+		result.addObject("cancelURI", cancelURI);
 
 		return result;
 	}
