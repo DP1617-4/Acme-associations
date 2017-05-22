@@ -35,13 +35,14 @@
 	</form:label>
 	<form:input placeholder="dd/MM/yyyy HH:mm" path="moment" />
 	<form:errors cssClass="error" path="moment" />
-	</div></br>
+	</div> <br />
 	
 	<acme:textbox code="meeting.address" path="address"/><br />
 	
-	<input type="submit" name="save"
+	<input class="btn btn-primary" type="submit" name="save"
 		value="<spring:message code="meeting.save" />" />&nbsp; 
-	<input type="button" name="cancel"
+		
+	<input class="btn btn-primary" type="button" name="cancel"
 		value="<spring:message code="meeting.cancel" />"
 		onclick="location.href = ('${cancelURI}');" />
 	<br />

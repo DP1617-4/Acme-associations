@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,15 +15,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import services.ActorService;
 import services.CommentService;
 import services.MeetingService;
 import services.MinutesService;
 import services.RolesService;
+import services.UserService;
 import controllers.AbstractController;
+import domain.Actor;
 import domain.Association;
 import domain.Comment;
 import domain.Meeting;
 import domain.Minutes;
+import domain.Roles;
+import domain.User;
 
 @Controller
 @RequestMapping("/meeting/user")
@@ -45,10 +51,18 @@ public class UserMeetingController extends AbstractController {
 	@Autowired
 	private CommentService	commentService;
 
+	@Autowired
+	private UserService		userService;
+
+	@Autowired
+	private ActorService	actorService;
+
 
 	@RequestMapping(value = "{association}/create", method = RequestMethod.GET)
 	public ModelAndView create(@PathVariable final Association association) {
 		ModelAndView result;
+		this.userService.findByPrincipal();
+		this.rolesService.checkManagerPrincipal(association);
 		final Meeting meeting = this.meetingService.create(association.getId());
 		result = this.createEditModelAndView(meeting);
 		return result;
@@ -84,7 +98,8 @@ public class UserMeetingController extends AbstractController {
 			try {
 				this.rolesService.checkManagerPrincipal(newMeeting.getAssociation());
 				newMeeting = this.meetingService.save(newMeeting);
-				result = new ModelAndView("redirect:/meeting/user/" + newMeeting.getAssociation().getId() + "/list.do");
+				final Association association = newMeeting.getAssociation();
+				result = new ModelAndView("redirect:/meeting/user/" + association.getId() + "/list.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(newMeeting, "meeting.commit.error");
 			}
@@ -103,7 +118,6 @@ public class UserMeetingController extends AbstractController {
 		result.addObject("association", association);
 		result.addObject("meeting", meeting);
 		result.addObject("commentsMeeting", commentsMeeting);
-		result.addObject("requestURI", "/meeting/user/" + association.getId() + "/" + meeting.getId() + "/display.do");
 
 		if (minute != null) {
 			Collection<Comment> commentsMinutes;
@@ -111,6 +125,8 @@ public class UserMeetingController extends AbstractController {
 			result.addObject("minute", minute);
 			result.addObject("commentsMinutes", commentsMinutes);
 		}
+
+		result.addObject("requestURI", "/meeting/user/" + association.getId() + "/" + meeting.getId() + "/display.do");
 		return result;
 
 	}
@@ -118,12 +134,25 @@ public class UserMeetingController extends AbstractController {
 	@RequestMapping(value = "{association}/list", method = RequestMethod.GET)
 	public ModelAndView list(@PathVariable final Association association) {
 		final ModelAndView result;
+		Roles roles = null;
+		String role = null;
 
-		this.rolesService.checkCollaboratorPrincipal(association);
+		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (principal != "anonymousUser") {
+			final Actor actPrincipal = this.actorService.findByPrincipal();
+			this.rolesService.checkCollaboratorPrincipal(association);
+			if (actPrincipal instanceof User)
+				roles = this.rolesService.findRolesByPrincipalAssociation(association);
+		}
+		if (roles != null)
+			role = roles.getType();
+
 		final Collection<Meeting> meetings = this.meetingService.findAllByAssociation(association);
 
 		result = new ModelAndView("meeting/list");
 		result.addObject("meetings", meetings);
+		result.addObject("role", role);
 		result.addObject("requestURI", "/meeting/user/" + association.getId() + "/list.do");
 
 		return result;
@@ -139,15 +168,16 @@ public class UserMeetingController extends AbstractController {
 	}
 	protected ModelAndView createEditModelAndView(final Meeting meeting, final String message) {
 		ModelAndView result;
+		final Association association = meeting.getAssociation();
 
 		final String requestURI = "meeting/user/edit.do";
-		final String cancelURI = "meeting/user/" + meeting.getAssociation().getId() + "/list.do";
+		final String cancelURI = "meeting/user/" + association.getId() + "/list.do";
 
 		result = new ModelAndView("meeting/edit");
 		result.addObject("meeting", meeting);
 		result.addObject("errorMessage", message);
 		result.addObject("requestURI", requestURI);
-		result.addObject("cancel", cancelURI);
+		result.addObject("cancelURI", cancelURI);
 
 		return result;
 	}

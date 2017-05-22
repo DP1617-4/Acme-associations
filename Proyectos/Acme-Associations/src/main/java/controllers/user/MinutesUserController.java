@@ -155,6 +155,8 @@ public class MinutesUserController extends AbstractController {
 
 		return result;
 	}
+
+	@RequestMapping(value = "/addParticipant", method = RequestMethod.GET)
 	// Ancillary methods ---------------------------------------------------------
 	protected ModelAndView createEditModelAndView(final Minutes minutes) {
 		ModelAndView result;
