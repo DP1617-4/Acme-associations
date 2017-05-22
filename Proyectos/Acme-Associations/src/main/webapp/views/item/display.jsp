@@ -67,6 +67,37 @@
 			</form:form>
           </div>
           </jstl:if>
+          <div class="col-6 col-md-6 col-lg-4">
+              <h2><spring:message code="item.comment.list"/></h2>
+              <%-- <display:table pagesize="5" class="displaytag" keepStatus="true" name="associationComments" requestURI="${requestURI}" id="row"> </display:table> --%>
+              <display:table pagesize="5" class="displaytag" keepStatus="true"
+					name="comments" requestURI="${requestURI }" id="row">
+				
+					<!--Attributes -->
+					<spring:message code="comment.title" var="titleHeader" />
+					<display:column property="title" title="${titleHeader}" sortable="true" />
+				
+					<spring:message code="comment.text" var="textHeader" />
+					<display:column property="text" title="${textHeader}" sortable="true" />
+				
+					<spring:message code="comment.moment" var="momentHeader" />
+					<display:column property="moment" title="${momentHeader}"  format="{0,date,dd/MM/yyyy HH:mm}"/>
+					
+					<spring:message code="comment.user" var="userHeader"/>
+					<display:column title="${userHeader}">
+						<a href="actor/user/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
+					</display:column>
+					
+				</display:table>
+				<jstl:if test="${loaned == true}">
+				<form:form action="comment/user/${item.id }/edit.do" modelAttribute="comment">
+	            	<form:hidden path="commentable"/>
+	            	<form:input path="title" /></br>
+	            	<form:textarea path="text"/></br>
+	            	<acme:submit name="save" code="comment.new.save"/>
+	            </form:form>
+	            </jstl:if>
+            </div><!--/span-->
            
      </div>
     </div>

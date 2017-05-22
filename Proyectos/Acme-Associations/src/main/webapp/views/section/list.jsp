@@ -35,6 +35,7 @@
 	<spring:message code="section.items" var="itemsHeader"/>
 	
 	<display:column property="name" title="${nameHeader}"/>
+	<security:authorize access="isAuthenticated()">
 	<display:column title="${userHeader}">
 						<a href="actor/user/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
 	</display:column>
@@ -42,6 +43,7 @@
 	<jstl:if test="${loggedactor == row.user.userAccount }">
 		<display:column> <a href="item/user/${association.id}/${row.id}/create.do">${newItemHeader}</a> </display:column>	
 	</jstl:if>
+	</security:authorize>
 	
 </display:table>
 <br><br/>

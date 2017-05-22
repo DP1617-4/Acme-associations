@@ -59,8 +59,8 @@ public class AssociationController extends AbstractController {
 		comments = this.commentService.findAllByCommentableId(association.getId());
 		final MessageBroadcast messageBroad = new MessageBroadcast();
 		messageBroad.setAssociation(association);
-		Comment comment;
-		comment = this.commentService.create(association.getId());
+		Comment comment = null;
+		
 
 		Roles roles = null;
 		Boolean application = true;
@@ -72,6 +72,7 @@ public class AssociationController extends AbstractController {
 		if (principal != "anonymousUser") {
 			final Actor actPrincipal = this.actorService.findByPrincipal();
 			if (actPrincipal instanceof User) {
+				comment = this.commentService.create(association.getId());
 				application = this.requestService.isRequestedByPrincipal(association);
 				roles = this.rolesService.findRolesByPrincipalAssociation(association);
 			}

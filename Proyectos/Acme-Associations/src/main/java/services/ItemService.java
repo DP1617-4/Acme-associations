@@ -140,4 +140,20 @@ public class ItemService {
 
 		return this.itemRepository.findAllBySection(section.getId());
 	}
+	
+	public Boolean isLoaned(Item item, User user){
+		
+		boolean result = false;
+		if (userService.findAllRelatedItem(item).contains(user)){
+			result = true;
+		}
+		return result;
+	}
+	
+	public Boolean isLoanedByPrincipal(Item item){
+		
+		User principal = userService.findByPrincipal();
+		return this.isLoaned(item, principal);
+	}
+	
 }
