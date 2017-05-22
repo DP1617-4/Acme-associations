@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.CommentService;
 import services.CommentableService;
@@ -63,7 +64,7 @@ public class CommentUserController {
 	//edit
 
 	@RequestMapping(value = "{commentable}/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(Comment comment, final BindingResult binding, @PathVariable final Commentable commentable) {
+	public ModelAndView save(Comment comment, final BindingResult binding, @PathVariable final Commentable commentable, final RedirectAttributes redir) {
 		ModelAndView result;
 
 		result = new ModelAndView("redirect:/welcome/index.do");
@@ -137,6 +138,7 @@ public class CommentUserController {
 					result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
 				if (commentable instanceof Meeting || commentable instanceof Minutes)
 					result = new ModelAndView("redirect:/meeting/user/" + ((Meeting) commentable).getAssociation() + "/" + commentable.getId() + "/display.do");
+				redir.addFlashAttribute("flashMessage", oops.getMessage());
 			}
 		return result;
 	}

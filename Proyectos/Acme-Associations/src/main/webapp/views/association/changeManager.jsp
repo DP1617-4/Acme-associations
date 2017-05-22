@@ -19,7 +19,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme"	tagdir="/WEB-INF/tags"%>
 
-<form:form action="user/association/changeManager.do" modelAttribute="changeManager">
+<form:form action="association/user/changeManager.do" modelAttribute="changeManager">
 
 	<form:hidden path="association" />
 
@@ -32,6 +32,17 @@
 		</jstl:forEach>
 	</form:select>
 <form:errors cssClass="error" path="user" />
+</br>
+
+	<form:label path="role">
+		<spring:message code="association.role" />:
+	</form:label>
+	<form:select id="role" path="role">
+			<form:option value="MANAGER" label="MANAGER" />
+			<form:option value="COLLABORATOR" label="COLLABORATOR" />
+			<form:option value="ASSOCIATE" label="ASSOCIATE" />
+	</form:select>
+<form:errors cssClass="error" path="role" />
 </br>
 	
 	<input type="submit" name="save"
