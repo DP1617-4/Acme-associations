@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.ActorService;
+import services.CommentService;
 import services.ItemService;
 import services.RolesService;
 import services.SectionService;
@@ -24,6 +25,7 @@ import services.UserService;
 import controllers.AbstractController;
 import domain.Actor;
 import domain.Association;
+import domain.Comment;
 import domain.Item;
 import domain.Roles;
 import domain.Section;
@@ -54,6 +56,8 @@ public class ItemUserController extends AbstractController {
 	@Autowired
 	private SectionService	sectionService;
 
+	@Autowired
+	private CommentService	commentService;
 
 	@RequestMapping(value = "/{association}/{section}/create", method = RequestMethod.GET)
 	public ModelAndView create(@PathVariable final Association association, @PathVariable final Section section, final RedirectAttributes redir) {
@@ -151,12 +155,19 @@ public class ItemUserController extends AbstractController {
 
 		Item item;
 		ChangeCondition changeCondition;
+		Comment comment = null;
+		Collection<Comment> comments;
+		Boolean loaned = false;
+		Boolean loanable = false;
+
 
 		final Actor actPrincipal = this.actorService.findByPrincipal();
 
 		item = this.itemService.findOne(itemId);
 		changeCondition = new ChangeCondition();
 
+		
+		comments = commentService.findAllByCommentableId(item.getId());
 		changeCondition.setItem(item);
 
 		Roles roles = null;
@@ -169,9 +180,12 @@ public class ItemUserController extends AbstractController {
 		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (principal != "anonymousUser")
-			if (actPrincipal instanceof User)
+			if (actPrincipal instanceof User){
+				comment = this.commentService.create(item.getId());
+				loaned = this.itemService.isLoanedByPrincipal(item);
 				roles = this.rolesService.findRolesByPrincipalAssociation(association);
-
+				loanable = this.itemService.isLoanable(item);
+			}
 		if (roles != null)
 			role = roles.getType();
 
@@ -182,7 +196,10 @@ public class ItemUserController extends AbstractController {
 		result.addObject("changeCondition", changeCondition);
 		result.addObject("role", role);
 		result.addObject("isCharge", isCharge);
-
+		result.addObject("comment", comment);
+		result.addObject("comments", comments);
+		result.addObject("loaned", loaned);
+		result.addObject("loanable", loanable);
 		return result;
 	}
 
