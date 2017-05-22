@@ -156,4 +156,14 @@ public class ItemService {
 		return this.isLoaned(item, principal);
 	}
 	
+	public Boolean isLoanable(Item item){
+		boolean result = false;
+		Collection<Item> items = this.itemRepository.findAllByAssociation(item.getSection().getAssociation().getId());
+		if(items.contains(item)){
+			result = true;
+		}
+		return result;
+	
+	}
+	
 }

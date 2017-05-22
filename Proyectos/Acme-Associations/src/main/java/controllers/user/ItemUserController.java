@@ -158,6 +158,7 @@ public class ItemUserController extends AbstractController {
 		Comment comment = null;
 		Collection<Comment> comments;
 		Boolean loaned = false;
+		Boolean loanable = false;
 
 
 		final Actor actPrincipal = this.actorService.findByPrincipal();
@@ -183,6 +184,7 @@ public class ItemUserController extends AbstractController {
 				comment = this.commentService.create(item.getId());
 				loaned = this.itemService.isLoanedByPrincipal(item);
 				roles = this.rolesService.findRolesByPrincipalAssociation(association);
+				loanable = this.itemService.isLoanable(item);
 			}
 		if (roles != null)
 			role = roles.getType();
@@ -197,6 +199,7 @@ public class ItemUserController extends AbstractController {
 		result.addObject("comment", comment);
 		result.addObject("comments", comments);
 		result.addObject("loaned", loaned);
+		result.addObject("loanable", loanable);
 		return result;
 	}
 
