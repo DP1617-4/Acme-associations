@@ -39,8 +39,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("select l.borrower from Loan l where l.item.id = ?1")
 	Collection<User> findAllRelatedItem(int itemId);
 
-	//Dashboard queries
+	//Dashboard queries Admin
+	// ▪ El mínimo, el máximo y la media de miembros por asociación.
+	@Query("select count(r)*1.0/(select count(a)*1.0 from Association a) from Roles r")
+	Double avgMembers();
 
-	// User 2.0
+	@Query("select count(r) from Roles r group by r.association order by count(r) ASC")
+	Collection<Float> findCountMembers();
 
 }
