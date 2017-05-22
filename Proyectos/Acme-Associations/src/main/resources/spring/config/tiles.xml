@@ -35,6 +35,7 @@
 		<value>/views/item/tiles.xml</value>
 		<value>/views/section/tiles.xml</value>
 		<value>/views/activity/tiles.xml</value>
+		<value>/views/sanction/tiles.xml</value>
 	</util:list>
 
 </beans>

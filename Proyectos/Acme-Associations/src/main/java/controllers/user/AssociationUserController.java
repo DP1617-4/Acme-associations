@@ -119,10 +119,12 @@ public class AssociationUserController extends AbstractController {
 		final ModelAndView result;
 
 		final Collection<Roles> roles = this.rolesService.findAllByAssociation(association);
+		final Roles role = this.rolesService.findRolesByPrincipalAssociation(association);
 
 		result = new ModelAndView("association/listUsers");
 		result.addObject("roles", roles);
-		result.addObject("requestURI", "/user/association/" + association.getId() + "/listUsers.do");
+		result.addObject("role", role);
+		result.addObject("requestURI", "/association/user/" + association.getId() + "/listUsers.do");
 
 		return result;
 	}
