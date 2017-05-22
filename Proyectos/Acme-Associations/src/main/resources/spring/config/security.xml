@@ -77,7 +77,7 @@
 		<!-- User --> 
 		<security:intercept-url pattern="/user/register.do**" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/user/edit.do**" access="isAnonymous()" /> 
-		<security:intercept-url pattern="/actor/actor/display.do" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/actor/actor/**" access="isAuthenticated()"/>
 		
 		<!-- Loan -->
 		<security:intercept-url pattern="/loan/user/**" access="hasRole('USER')"/>
