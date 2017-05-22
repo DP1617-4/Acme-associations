@@ -148,6 +148,10 @@ public class UserMeetingController extends AbstractController {
 			final Collection<User> users = this.userService.findAssociationCollaboratorsAndManager(association);
 			final Collection<User> participants = minute.getUsers();
 			users.removeAll(minute.getUsers());
+			final User principalUser = this.userService.findByPrincipal();
+			Boolean isParticipant = false;
+			if (participants.contains(principalUser))
+				isParticipant = true;
 
 			addParticipant.setMinute(minute);
 			result.addObject("minute", minute);
@@ -155,6 +159,7 @@ public class UserMeetingController extends AbstractController {
 			result.addObject("commentSecond", commentSecond);
 			result.addObject("addParticipant", addParticipant);
 			result.addObject("users", users);
+			result.addObject("isParticipant", isParticipant);
 			result.addObject("participants", participants);
 		}
 

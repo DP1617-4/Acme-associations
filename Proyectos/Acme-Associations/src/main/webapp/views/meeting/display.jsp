@@ -112,7 +112,7 @@
 					
 				</display:table>
 				
-				<jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
+				<jstl:if test="${isParticipant == true}">
 					<form:form action="comment/user/${meeting.id}/edit.do" modelAttribute="commentSecond">
 	            		<form:hidden path="commentable"/>
 	            		<form:input path="title" /> </br>
@@ -128,6 +128,8 @@
 					<div><a class="btn btn-primary" href="minutes/user/${association.id}/${meeting.id}/create.do"><spring:message code="minute.create"/></a></div>
 				</jstl:if>
 			</jstl:if>
+			
+			${isParticipant }
 			
 			
 		</div><!--/span-->
