@@ -29,9 +29,9 @@
   	
 		<div class="col-6 col-md-6 col-lg-8">
     		<h2><spring:message code="meeting.description"/></h2>
-	        	<div><jstl:out value="${meeting.agenda}" /></div>
-	        	<div><jstl:out value="${meeting.address}" /></div>
-	  			<div><jstl:out value="${meeting.moment}" /></div>
+	        	<div><b><spring:message code="meeting.agenda"/>:</b> <jstl:out value="${meeting.agenda}" /></div>
+	        	<div><b><spring:message code="meeting.address"/>:</b> <jstl:out value="${meeting.address}" /></div>
+	  			<div><b><spring:message code="meeting.moment"/>:</b> <jstl:out value="${meeting.moment}" /></div>
 	  			
 	  		<h2><spring:message code="meeting.comments"/></h2>
 				
@@ -51,20 +51,22 @@
 					
 				</display:table>
 				
-				<form:form action="comment/user/${meeting.id}/edit.do" modelAttribute="comment">
-	            	<form:hidden path="commentable"/>
-	            	<form:input path="title" /> </br>
-	            	<form:textarea path="text"/> </br>
-	            	<acme:submit name="save" code="comment.new.save"/>
-	            </form:form>
+				<jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
+					<form:form action="comment/user/${meeting.id}/edit.do" modelAttribute="comment">
+	            		<form:hidden path="commentable"/>
+	            		<form:input path="title" /> </br>
+	            		<form:textarea path="text"/> </br>
+	            		<acme:submit name="save" code="comment.new.save"/>
+	            	</form:form>
+	            </jstl:if>
 	            
     	</div><!--/span-->
     
     	<div class="col-6 col-md-6 col-lg-4">
 			<h2><spring:message code="meeting.minute.description"/></h2>
-			
-			<jstl:if test="${minute != null}">
-				<div><jstl:out value="${minute.document}" /></div>
+			<jstl:if test="${minutes != null}">
+				<div><b><spring:message code="meeting.minute.document"/>:</b> <jstl:out value="${minutes.document}" /></div>
+				<b><spring:message code="meeting.minute.users"/></b> 
 				<display:table pagesize="5" class="displaytag" keepStatus="true" name="participants" requestURI="${requestURI}" id="row">
 					
 					<spring:message code="meeting.minute.user" var="userHeader"/>
@@ -94,7 +96,7 @@
 				</jstl:if>
 			</jstl:if>
 			
-			<jstl:if test="${minute == null}">
+			<jstl:if test="${minutes == null}">
 				<spring:message code="meeting.noMinute"/>
 				<jstl:if test="${role eq 'MANAGER'}">
 					<div><a class="btn btn-primary" href="minutes/user/${association.id}/${meeting.id}/create.do"><spring:message code="minute.create"/></a></div>

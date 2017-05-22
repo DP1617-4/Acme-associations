@@ -109,25 +109,41 @@ public class UserMeetingController extends AbstractController {
 
 	@RequestMapping(value = "/{association}/{meeting}/display", method = RequestMethod.GET)
 	public ModelAndView display(@PathVariable final Association association, final Meeting meeting) {
-		final ModelAndView result;
+		ModelAndView result;
 
 		final Minutes minute = this.minutesService.findOneByMeeting(meeting);
 
 		Collection<Comment> comments;
 		comments = this.commentService.findAllByCommentableId(meeting.getId());
-		final Comment comment = this.commentService.create(association.getId());
+		final Comment comment = this.commentService.create(meeting.getId());
+
+		Roles roles = null;
+		String role = null;
+
+		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		result = new ModelAndView("welcome/index");
+		if (principal != "anonymousUser") {
+			final Actor actPrincipal = this.actorService.findByPrincipal();
+			if (actPrincipal instanceof User)
+				roles = this.rolesService.findRolesByPrincipalAssociation(association);
+		}
+
+		if (roles != null)
+			role = roles.getType();
 
 		result = new ModelAndView("meeting/display");
 		result.addObject("association", association);
 		result.addObject("meeting", meeting);
 		result.addObject("comments", comments);
 		result.addObject("comment", comment);
+		result.addObject("role", role);
 
 		if (minute != null) {
 			Collection<Comment> commentsSecond;
 			final AddParticipant addParticipant = new AddParticipant();
 			commentsSecond = this.commentService.findAllByCommentableId(minute.getId());
-			final Comment commentSecond = this.commentService.create(association.getId());
+			final Comment commentSecond = this.commentService.create(minute.getId());
 
 			addParticipant.setMinute(minute);
 			result.addObject("minute", minute);
