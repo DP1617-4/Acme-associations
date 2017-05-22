@@ -22,7 +22,6 @@
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="association"/>
 	<form:hidden path="meeting"/>
 
     <acme:textbox code="minutes.document" path="document"/>
