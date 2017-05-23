@@ -18,4 +18,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	@Query("select i from Item i where i.section.id=?1")
 	Collection<Item> findAllBySection(int sectionId);
 
+	@Query("select i from Item i where i.name like ?1 or i.identifier=?1 or i.itemCondition=?1 or i.description like ?1 and i.itemCondition!='LOAN'")
+	Collection<Item> filterItems(String filter);
 }
