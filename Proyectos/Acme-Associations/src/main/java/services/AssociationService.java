@@ -140,16 +140,13 @@ public class AssociationService {
 		return result;
 	}
 
-	public Association findOrderedBySanctionsDesc() {
+	public Collection<Association> findOrderedBySanctionsDesc() {
 		Collection<Association> result;
 
-		result = this.associationRepository.findOrderedBySanctionsDesc();
-		if (result.isEmpty())
-			return null;
-		else
-			return result.iterator().next();
-	}
+		result = this.associationRepository.findMostSanctionsAssociation();
 
+		return result;
+	}
 	public Collection<Association> inactiveAssociations() {
 		Collection<Association> result;
 

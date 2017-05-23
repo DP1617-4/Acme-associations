@@ -47,7 +47,7 @@ public class DashboardAdminController extends AbstractController {
 		final Collection<Association> assoAvG = this.associationService.findAssociationsAroundAVGMembers();
 		final Collection<Association> assoLoan = this.associationService.findMostLoansAssociation();
 		final Collection<Association> assoInac = this.associationService.inactiveAssociations();
-		final Association association = this.associationService.findOrderedBySanctionsDesc();
+		final Collection<Association> assoSanct = this.associationService.findOrderedBySanctionsDesc();
 		final Object[] avgMinMaxMembers = this.userService.minMaxAvgMembers();
 		final Collection<User> mostSanctionedUsers = this.userService.mostSanctionedUsers();
 		final Collection<Activity> activeActivities = this.activityService.activeActivitiesWithMostUsers();
@@ -57,11 +57,11 @@ public class DashboardAdminController extends AbstractController {
 		result.addObject("assoAVG", assoAvG);
 		result.addObject("assoLoan", assoLoan);
 		result.addObject("assoInac", assoInac);
-		result.addObject("sanctionator", association);
+		result.addObject("sanctionator", assoSanct);
 		result.addObject("avgMembers", avgMinMaxMembers[0]);
 		result.addObject("minMembers", avgMinMaxMembers[1]);
 		result.addObject("maxMembers", avgMinMaxMembers[2]);
-		result.addObject("sanctionated", mostSanctionedUsers);
+		result.addObject("sanctioned", mostSanctionedUsers);
 		result.addObject("activeties", activeActivities);
 		result.addObject("avgLoans", avgMinMaxLoans[0]);
 		result.addObject("minLoans", avgMinMaxLoans[1]);
