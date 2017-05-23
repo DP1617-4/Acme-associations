@@ -23,7 +23,7 @@
         <span class="icon-bar"></span> <span class="icon-bar"></span>
       </button>
       <a href="welcome/index.do" class="navbar-brand"><img onError="imgError(this);"
-        src="https://i.imgur.com/i8YWDoL.png" height="35px" /></a>
+        src="http://i.imgur.com/El7I1xd.png" height="65px" /></a>
     </div>
     <div class="navbar-collapse collapse">
     
