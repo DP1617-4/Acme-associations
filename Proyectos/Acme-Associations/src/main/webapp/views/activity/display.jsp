@@ -34,7 +34,7 @@
           <div><jstl:out value="${activity.place.address}" /></div>
           <div><jstl:out value="${activity.place.latitude}" /></div>
           <div><jstl:out value="${activity.place.longitude}" /></div>
-          <div><jstl:out value="${activity.prize}" /></div>
+          <div><jstl:out value="${activity.item}" /></div>
           <div><jstl:out value="${activity.winner}" /></div>
         </div><!--/span-->
 

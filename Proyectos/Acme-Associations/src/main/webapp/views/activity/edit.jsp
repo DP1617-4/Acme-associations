@@ -43,39 +43,24 @@
 		<form:errors cssClass="error" path="endMoment" />
 	</div> <br />
 	<acme:textbox code="activity.maximumAttendants" path="maximumAttendants"/><br />
-	<fieldset>
-		<legend><spring:message code="activity.place" /></legend>
-		<acme:textbox code="activity.place" path="place"/>
-		<acme:number max="85" min="-85" step="any" code="post.place.latitude" path="origin.latitude"/>
-		<acme:number max="180" min="-180" step="any" code="post.place.longitude" path="origin.longitude"/>
-  	</fieldset> <br />
   	
-  	<form:label path="winner">
-		<spring:message code="activity.winner" />:
+	<form:label path="item">
+		<spring:message code="activity.item" />:
 	</form:label>
-	<form:select id="winner" path="winner">
-		<jstl:forEach items="${attendants}" var="thisWinner">
-			<form:option value="${thisWinner}" label="${thisWinner.completeName}" />
+	<form:select id="item" path="item">
+		<form:option value="0" label="-------" />
+		<jstl:forEach items="${item}" var="thisItem">
+			<form:option value="${thisItem}" label="${thisItem.name}" />
 		</jstl:forEach>
 	</form:select>
-	<form:errors cssClass="error" path="winner" /> <br />
-	
-	<form:label path="prize">
-		<spring:message code="activity.prize" />:
-	</form:label>
-	<form:select id="prize" path="prize">
-		<jstl:forEach items="${items}" var="thisPrize">
-			<form:option value="${thisPrize}" label="${thisPrize.name}" />
-		</jstl:forEach>
-	</form:select>
-	<form:errors cssClass="error" path="prize" /> <br />
+	<form:errors cssClass="error" path="item" /> <br />
 
 
 	<input type="submit" name="save"
 		value="<spring:message code="activity.save" />" />&nbsp; 
 	<input type="button" name="cancel"
 		value="<spring:message code="activity.cancel" />"
-		onclick="location.href = ('activity/user/${activity.id}/display.do');" />
+		onclick="location.href = ('activity/${activity.id}/display.do');" />
 	<br />
 
 	

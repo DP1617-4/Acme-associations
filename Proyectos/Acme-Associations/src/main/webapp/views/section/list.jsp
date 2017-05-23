@@ -45,7 +45,7 @@
 	
 </display:table>
 <br><br/>
-<div><a href="section/user/${association.id}/create.do"><spring:message code="section.create"/></a></div>
+<div><a class="btn btn-primary" href="section/user/${association.id}/create.do"><spring:message code="section.create"/></a></div>
 <br/>
 
 		
