@@ -11,6 +11,7 @@
 package repositories;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -45,6 +46,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	Double avgMembers();
 
 	@Query("select count(r) from Roles r group by r.association order by count(r) ASC")
-	Collection<Float> findCountMembers();
+	List<Long> findCountMembers();
+	// Usuarios con más sanciones.
+	@Query("select u from User u where (select count(s) from Sanction s where s.user = u) >= ALL(select count(s) from Sanction s group by s.user)")
+	Collection<User> mostSanctionedUsers();
 
 }

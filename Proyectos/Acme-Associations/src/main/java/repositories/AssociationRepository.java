@@ -31,7 +31,8 @@ public interface AssociationRepository extends JpaRepository<Association, Intege
 	@Query("select a from Sanction s right join s.association a group by a order by count(s) DESC")
 	Collection<Association> findOrderedBySanctionsDesc();
 
-	// · Asociaciones inactivas más de 3 meses.
-	@Query("select ass from Activity a right join a.association ass where datediff(DATE_SUB(current_date, INTERVAL 90 DAY),a.endMoment)/30 >=3")
+	//· Asociaciones inactivas más de 3 meses, o inactivas desde su creación.
+	@Query("select ass from Association ass where (select count(a) from Activity a where a.association = ass and datediff(current_date,a.endMoment) < 90) = 0")
 	Collection<Association> inactiveAssociations();
+
 }

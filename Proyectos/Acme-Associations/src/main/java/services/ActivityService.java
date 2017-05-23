@@ -78,4 +78,12 @@ public class ActivityService {
 		return result;
 	}
 
+	public Collection<Activity> activeActivitiesWithMostUsers() {
+		Collection<Activity> result;
+
+		result = this.activityRepository.activeActivitiesWithMostUsers();
+
+		return result;
+	}
+
 }

@@ -1,7 +1,6 @@
 
 package repositories;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -29,9 +28,9 @@ public interface LoanRepository extends JpaRepository<Loan, Integer> {
 	//Dashboard
 	// · El mínimo, el máximo y la media de préstamos por asociación.
 	@Query("select count(r)*1.0/(select count(a)*1.0 from Association a) from Loan r")
-	Double avgMembers();
+	Double avgLoans();
 
 	@Query("select count(r) from Loan r right join r.item.section.association a group by r.item.section.association order by count(r) ASC")
-	Collection<Float> findCountMembers();
+	List<Long> findCountLoans();
 
 }

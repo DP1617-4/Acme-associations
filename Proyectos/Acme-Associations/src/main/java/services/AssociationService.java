@@ -122,4 +122,39 @@ public class AssociationService {
 		Assert.isTrue(association.getAdminClosed() == false && association.getClosedAssociation() == false, "association.closed.error");
 	}
 
+	//Admin Dashboard
+
+	public Collection<Association> findAssociationsAroundAVGMembers() {
+		Collection<Association> result;
+
+		result = this.associationRepository.findAssociationsAroundAVGMembers();
+
+		return result;
+	}
+
+	public Collection<Association> findMostLoansAssociation() {
+		Collection<Association> result;
+
+		result = this.associationRepository.findMostLoansAssociation();
+
+		return result;
+	}
+
+	public Association findOrderedBySanctionsDesc() {
+		Collection<Association> result;
+
+		result = this.associationRepository.findOrderedBySanctionsDesc();
+		if (result.isEmpty())
+			return null;
+		else
+			return result.iterator().next();
+	}
+
+	public Collection<Association> inactiveAssociations() {
+		Collection<Association> result;
+
+		result = this.associationRepository.inactiveAssociations();
+
+		return result;
+	}
 }

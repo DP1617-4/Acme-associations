@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -227,5 +228,24 @@ public class UserService {
 	public Collection<User> findAllRelatedItem(final Item item) {
 
 		return this.userRepository.findAllRelatedItem(item.getId());
+	}
+
+	public Object[] minMaxAvgMembers() {
+		final Object[] result = new Object[3];
+
+		result[0] = this.userRepository.avgMembers();
+		final List<Long> counts = this.userRepository.findCountMembers();
+		result[1] = counts.get(0);
+		result[2] = counts.get(counts.size() - 1);
+
+		return result;
+	}
+
+	public Collection<User> mostSanctionedUsers() {
+		Collection<User> result;
+
+		result = this.userRepository.mostSanctionedUsers();
+
+		return result;
 	}
 }
