@@ -66,6 +66,7 @@
 
 		 <!-- Item -->
 		  <security:intercept-url pattern="/item/user/**" access="hasRole('USER')" /> 
+		  <security:intercept-url pattern="/item/filter**" access="permitAll" /> 
 		  
 		  <!-- Request -->
 		  <security:intercept-url pattern="/meeting/user/**" access="hasRole('USER')" /> 

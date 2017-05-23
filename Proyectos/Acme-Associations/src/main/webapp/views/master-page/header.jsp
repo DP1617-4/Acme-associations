@@ -27,13 +27,22 @@
     </div>
     <div class="navbar-collapse collapse">
     
-    	<div>	
-			<input type="text" name="filter"/>
-		</div>
+    
 		
    	 <ul class="nav navbar-nav navbar-right">
 	
+	<form id="form1" method="get" action="item/filter.do" class = "navbar-nav mr-auto" >
+		<div class="col-sm-3 col-md-3">
+			<button class="btn navbar-btn" type="submit" form="form1" value="filter"><spring:message code="header.filter"/></button>
+		</div>
+		<div class="col-sm-8 col-md-8">
+			<input class="form-control mr-sm-2" placeholder="<spring:message code="header.search"/>" type="text" name="filter"/>
+		</div>
+	</form>
+	
 	<security:authorize access="hasRole('ADMIN')">
+	
+		
 
         <li><a class="fNiv" href="association/administrator/list.do"><spring:message code="master.page.association.list" /></a></li>
 				<li class="dropdown">
