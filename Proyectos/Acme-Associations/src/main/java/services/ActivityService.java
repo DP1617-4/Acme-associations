@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -147,7 +149,12 @@ public class ActivityService {
 
 	public Activity findMostAttendedByAssociation(final Association association) {
 
-		return this.activityRepository.findMostAttendedByAssociation(association.getId());
+		Activity activity = null;
+		List<Activity> activities = new ArrayList<Activity>(this.activityRepository.findMostAttendedByAssociation(association.getId()));
+		if (!activities.isEmpty())
+			activity = activities.get(0);
+
+		return activity;
 
 	}
 

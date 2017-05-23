@@ -40,26 +40,32 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("select l.borrower from Loan l where l.item.id = ?1")
 	Collection<User> findAllRelatedItem(int itemId);
 
+	@Query("select s.user from Sanction s where s.association.id=?1 group by s.user order by count(s) DESC")
+	Collection<User> selectUserWithMostSanctionsByAssociation(int associationId);
+
+	@Query("select l.lender from Loan l where l.item.section.association.id=?1 group by l.lender order by count(l) DESC")
+	Collection<User> findCollaboratorMostLoans(int associationId);
+
+	@Query("select l.lender from Loan l where l.item.section.association.id=?1 group by l.lender order by count(l) ASC")
+	Collection<User> findCollaboratorLeastLoans(int associationId);
+
+	@Query("select count(l) from Loan l where l.item.section.association.id=?2 and l.lender.id=?1")
+	Integer countLoansCollaborator(int userId, int associationId);
+
+	//Dashboard queries
+
+	// User 2.0
+
 	//Dashboard queries Admin
 
 	// El mínimo, el máximo y la media de miembros por asociación.
 	@Query("select count(r)*1.0/(select count(a)*1.0 from Association a) from Roles r")
 	Double avgMembers();
 
-	@Query("select count(r) from Roles r group by r.association order by count(r) ASC")
-	List<Long> findCountMembers();
 	// Usuarios con más sanciones.
 	@Query("select u from User u where (select count(s) from Sanction s where s.user = u) >= ALL(select count(s) from Sanction s group by s.user)")
 	Collection<User> mostSanctionedUsers();
 
-	//Dashboard queries
-	@Query("select s.user from Sanction s where s.association.id=?1 group by s.user order by count(s) DESC")
-	User selectUserWithMostSanctionsByAssociation(int associationId);
-
-	@Query("select l.lender from Loan l where l.item.section.association.id=?1 group by l.lender order by count(l) DESC")
-	User findCollaboratorMostLoans(int associationId);
-
-	@Query("select l.lender from Loan l where l.item.section.association.id=?1 group by l.lender order by count(l) ASC")
-	Collection<User> findCollaboratorLeastLoans(int associationId);
-
+	@Query("select count(r) from Roles r group by r.association order by count(r) ASC")
+	List<Long> findCountMembers();
 }

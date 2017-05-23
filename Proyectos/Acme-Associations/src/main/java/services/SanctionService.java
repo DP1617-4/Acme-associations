@@ -64,11 +64,8 @@ public class SanctionService {
 
 		rolesService.checkCollaboratorPrincipal(result.getAssociation());
 
-		rolesService.checkCollaboratorPrincipal(result.getAssociation());
-
 		return result;
 	}
-
 	public Collection<Sanction> findAll() {
 		Collection<Sanction> result;
 
@@ -128,6 +125,7 @@ public class SanctionService {
 		rolesService.checkCollaboratorPrincipal(association);
 
 		rolesService.checkCollaboratorPrincipal(association);
+
 		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUserActive(association.getId(), userId);
 		return result;
 	}
