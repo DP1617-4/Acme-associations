@@ -21,22 +21,18 @@
 <security:authentication property="principal" var ="loggedactor"/>
 <display:table pagesize="5" keepStatus="true" name="meetings" requestURI="${requestURI}" id="row">
 
-	<spring:message code="meeting.moment" var="momentHeader" />
-	<spring:message code="meeting.address" var="addressHeader" />
-	<spring:message code="meeting.agenda" var="agendaHeader" />
+	<spring:message code="meeting.meetings" var="meetingHeader"/>
 	<spring:message code="meeting.issue" var="issueHeader" />
 	
-	<display:column title="${minutesHeader}">
-			<a href="minutes/user/${row.association.id}/${row.id}/display.do"> 
-			<spring:message code="meeting.minutes"></spring:message></a>
+	<display:column title="${meetingHeader}">
+			<a href="meeting/user/${row.association.id}/${row.id}/display.do"> 
+			<jstl:out value="${row.issue}"/></a>
 	</display:column>
 	
-	<display:column property="moment" title="${momentHeader}"/>
-	<display:column property="address" title="${addressHeader}" />
-	<display:column property="agenda" title="${agendaHeader}" />
-	<display:column property="issue" title="${issueHeader}"/>
-
 </display:table>
-<br><br/>
-<div><a class="btn btn-primary" href="user/meeting/create.do"><spring:message code="meeting.create"/></a></div>
+
+<jstl:if test="${role eq 'MANAGER'}">
+	<div><a class="btn btn-primary" href="meeting/user/${association.id}/create.do"><spring:message code="meeting.create"/></a></div>
+</jstl:if>
+
 <br/>

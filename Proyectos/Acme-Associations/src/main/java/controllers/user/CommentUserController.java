@@ -11,8 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.CommentService;
-import services.CommentableService;
-import services.RolesService;
 import domain.Association;
 import domain.Comment;
 import domain.Commentable;
@@ -28,12 +26,6 @@ public class CommentUserController {
 
 	@Autowired
 	private CommentService		commentService;
-
-	@Autowired
-	private CommentableService	commentableService;
-
-	@Autowired
-	private RolesService		rolesService;
 
 
 	//Constructor
@@ -81,6 +73,50 @@ public class CommentUserController {
 				comment = this.commentService.reconstruct(comment, binding);
 				this.commentService.checkPrincipalCanComment(commentable);
 				this.commentService.save(comment);
+				result = new ModelAndView("redirect:/welcome/index.do");
+				if (commentable instanceof Association)
+					result = new ModelAndView("redirect:/association/" + commentable.getId() + "/display.do");
+				if (commentable instanceof Item)
+					result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
+				if (commentable instanceof Meeting) {
+					final Meeting meeting = (Meeting) commentable;
+					result = new ModelAndView("redirect:/meeting/user/" + meeting.getAssociation().getId() + "/" + commentable.getId() + "/display.do");
+				}
+				if (commentable instanceof Minutes) {
+					final Minutes minutes = (Minutes) commentable;
+					final Meeting meeting = minutes.getMeeting();
+					result = new ModelAndView("redirect:/meeting/user/" + meeting.getAssociation().getId() + "/" + meeting.getId() + "/display.do");
+				}
+			} catch (final Throwable oops) {
+				if (commentable instanceof Association)
+					result = new ModelAndView("redirect:/association/" + commentable.getId() + "/display.do");
+				if (commentable instanceof Item)
+					result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
+				if (commentable instanceof Meeting || commentable instanceof Minutes)
+					result = new ModelAndView("redirect:/meeting/user/" + ((Meeting) commentable).getAssociation() + "/" + commentable.getId() + "/display.do");
+				redir.addFlashAttribute("flashMessage", oops.getMessage());
+			}
+		return result;
+	}
+	@RequestMapping(value = "{commentable}/editSecond", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveSecond(Comment commentSecond, final BindingResult binding, @PathVariable final Commentable commentable, final RedirectAttributes redir) {
+		ModelAndView result;
+
+		result = new ModelAndView("redirect:/welcome/index.do");
+
+		if (binding.hasErrors()) {
+			if (commentable instanceof Association)
+				result = new ModelAndView("redirect:/association/" + commentable.getId() + "/display.do");
+			if (commentable instanceof Item)
+				result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
+			if (commentable instanceof Meeting || commentable instanceof Minutes)
+				result = new ModelAndView("redirect:/meeting/user/" + ((Meeting) commentable).getAssociation() + "/" + commentable.getId() + "/display.do");
+
+		} else
+			try {
+				commentSecond = this.commentService.reconstruct(commentSecond, binding);
+				this.commentService.checkPrincipalCanComment(commentable);
+				this.commentService.save(commentSecond);
 				result = new ModelAndView("redirect:/welcome/index.do");
 				if (commentable instanceof Association)
 					result = new ModelAndView("redirect:/association/" + commentable.getId() + "/display.do");

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.SanctionRepository;
+import domain.Association;
 import domain.Sanction;
 import domain.User;
 
@@ -29,16 +30,19 @@ public class SanctionService {
 	// Auxiliary services
 
 	@Autowired
-	private UserService			userService;
+	private UserService				userService;
 
 	@Autowired
-	private RolesService		rolesService;
+	private RolesService			rolesService;
 
 
-	public Sanction create() {
+	public Sanction create(final int userId, final Association association) {
 		Sanction result;
+		final User user = userService.findOne(userId);
 
 		result = new Sanction();
+		result.setUser(user);
+		result.setAssociation(association);
 
 		return result;
 	}
@@ -47,6 +51,14 @@ public class SanctionService {
 		Sanction result;
 
 		result = this.sanctionRepository.findOne(SanctionId);
+
+		return result;
+	}
+	
+	public Sanction findOneToEdit(final int SanctionId) {
+		Sanction result;
+		result = this.sanctionRepository.findOne(SanctionId);
+		rolesService.checkCollaboratorPrincipal(result.getAssociation());	
 
 		return result;
 	}
@@ -80,6 +92,38 @@ public class SanctionService {
 	public Sanction reconstruct() {
 		final Sanction result = new Sanction();
 
+		return result;
+	}
+
+	public Collection<Sanction> findByAssociationAndUser(Association association, int userId) {
+		rolesService.checkCollaboratorPrincipal(association);
+		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUser(association.getId(), userId);
+		return result;
+	}
+	
+	public Collection<Sanction> findByAssociationAndPrincipal(Association association) {
+		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUser(association.getId(), userService.findByPrincipal().getId());
+		return result;
+	}
+
+	public Collection<Sanction> findAllByPrincipal() {
+		final Collection<Sanction> result = sanctionRepository.findAllByPrincipal(userService.findByPrincipal().getId());
+		return result;
+	}
+
+	public Collection<Sanction> findByAssociationAndPrincipalActive(Association association) {
+		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUserActive(association.getId(), userService.findByPrincipal().getId());
+		return result;
+	}
+
+	public Collection<Sanction> findByAssociationAndUserActive(Association association, int userId) {
+		rolesService.checkCollaboratorPrincipal(association);
+		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUserActive(association.getId(), userId);
+		return result;
+	}
+
+	public Collection<Sanction> findAllByPrincipalActive() {
+		final Collection<Sanction> result = sanctionRepository.findAllByPrincipalActive(userService.findByPrincipal().getId());
 		return result;
 	}
 

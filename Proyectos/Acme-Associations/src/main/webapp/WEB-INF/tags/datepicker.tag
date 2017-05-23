@@ -24,11 +24,15 @@
  
 <%@ attribute name="path" required="true" %>
 <%@ attribute name="code" required="true" %>
+<%@ attribute name="hour" required="false" %>
 
 <%@ attribute name="readonly" required="false" %>
 
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
+</jstl:if>
+<jstl:if test="${hour == null}">
+	<jstl:set var="hour" value="false" />
 </jstl:if>
 
 <%-- Definition --%>
@@ -37,6 +41,37 @@
 	<form:label path="${path}">
 		<spring:message code="${code}" />
 	</form:label>	
-	<input id="datepicker" class="form-control" type="text" name="${path}" data-provide="datepicker" readonly="${readonly}" />	
+	<input id="${path}" class="form-control" type="text" name="${path}" readonly="${readonly}"/>
+	<jstl:if test="${hour}">
+		<form:label path="${path}">
+			<spring:message code="${code}.hour" />
+		</form:label>
+		<input id="${path}hour" class="form-control" type="text" name="${path}hour" onKeyUp="addHour(this)"/>
+	</jstl:if>
 	<form:errors path="${path}" cssClass="error" />
 </div>	
+
+<script>
+	$(document).ready(function generarDatePicker(){
+		var $j = jQuery.noConflict();
+		var elem = document.getElementById("${path}")
+		$(elem).datepick({
+			dateFormat: 'dd/mm/yyyy',
+			altField: $(elem),
+			changeYear: true,
+			changeMonth: true
+		}).keyup(function(e) {
+		    if(e.keyCode == 8 || e.keyCode == 46) {
+		        $.datepicker._clearDate(this);
+		    }
+		});
+	})
+</script>
+<jstl:if test="${hour}">
+	<script>
+		function addHour(hour){
+			var elem = document.getElementById("${path}")
+			elem.value = elem.value.split(" ")[0] +" "+ hour.value			
+		}
+	</script>
+</jstl:if>

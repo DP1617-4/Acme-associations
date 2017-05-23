@@ -16,19 +16,19 @@
       
 <tiles-definitions>
 
-	<definition name="item/display" extends="master.page">	
-		<put-attribute name="title" value="Mostrar objeto" />
-		<put-attribute name="body" value="/views/item/display.jsp" />
+	<definition name="minutes/display" extends="master.page">	
+		<put-attribute name="title" value="Mostrar acta" />
+		<put-attribute name="body" value="/views/minutes/display.jsp" />
 	</definition>
 	
-	<definition name="item/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar objeto" />
-		<put-attribute name="body" value="/views/item/edit.jsp" />
+	<definition name="minutes/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar acta" />
+		<put-attribute name="body" value="/views/minutes/edit.jsp" />
 	</definition>
 	
-	<definition name="item/list" extends="master.page">	
-		<put-attribute name="title" value="Listar objetos" />
-		<put-attribute name="body" value="/views/item/list.jsp" />
+	<definition name="minutes/list" extends="master.page">	
+		<put-attribute name="title" value="Listar acta" />
+		<put-attribute name="body" value="/views/minutes/list.jsp" />
 	</definition>
 	
 </tiles-definitions>

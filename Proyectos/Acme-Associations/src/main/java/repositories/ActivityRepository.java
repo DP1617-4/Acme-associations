@@ -22,4 +22,8 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer> {
 
 	@Query("select a from Activity a where current_date between a.startMoment and a.endMoment AND a.attendants.size >= ALL(select a.attendants.size from Activity a)")
 	Collection<Activity> activeActivitiesWithMostUsers();
+
+	@Query("select a from Activity a where a.association.id=?1 order by a.attendants.size DESC")
+	Activity findMostAttendedByAssociation(int associationId);
+
 }

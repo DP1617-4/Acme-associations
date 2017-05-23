@@ -41,7 +41,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	Collection<User> findAllRelatedItem(int itemId);
 
 	//Dashboard queries Admin
-	// â–ª El mÃ­nimo, el mÃ¡ximo y la media de miembros por asociaciÃ³n.
+
+	// El mínimo, el máximo y la media de miembros por asociación.
 	@Query("select count(r)*1.0/(select count(a)*1.0 from Association a) from Roles r")
 	Double avgMembers();
 
@@ -50,5 +51,15 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	// Usuarios con más sanciones.
 	@Query("select u from User u where (select count(s) from Sanction s where s.user = u) >= ALL(select count(s) from Sanction s group by s.user)")
 	Collection<User> mostSanctionedUsers();
+
+	//Dashboard queries
+	@Query("select s.user from Sanction s where s.association.id=?1 group by s.user order by count(s) DESC")
+	User selectUserWithMostSanctionsByAssociation(int associationId);
+
+	@Query("select l.lender from Loan l where l.item.section.association.id=?1 group by l.lender order by count(l) DESC")
+	User findCollaboratorMostLoans(int associationId);
+
+	@Query("select l.lender from Loan l where l.item.section.association.id=?1 group by l.lender order by count(l) ASC")
+	Collection<User> findCollaboratorLeastLoans(int associationId);
 
 }

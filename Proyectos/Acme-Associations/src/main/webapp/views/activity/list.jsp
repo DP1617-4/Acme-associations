@@ -37,7 +37,9 @@
 	
 	<jstl:choose>
 		<jstl:when test="${row.attendants.size() == row.maximumAttendants}">
-			<display:column property="name" title="${nameHeader}" sortable="true" style="${full}"/>
+			<display:column title="${nameHeader}" sortable="true" style="${full}">
+				<a href="activity/${association.id}/${row.id}/display.do"> <jstl:out value="${row.name }"/></a>
+			</display:column>
 			<display:column property="description" title="${descriptionHeader}" sortable="true" style="${full}" />
 			<display:column property="startMoment" title="${startMomentHeader}" sortable="true" style="${full}" />
 			<display:column property="endMoment" title="${endMomentHeader}" sortable="true" style="${full}" />
@@ -48,22 +50,28 @@
 			<jstl:set var="now" value="${dateValue.time}" />
 			<jstl:set var="oneMonth" value="${dateValue.time + 2628000000}"/>
 			<jstl:choose>
-				<jstl:when test="${row.moment.time > now && row.moment.time < oneMonth}">
-					<display:column property="name" title="${nameHeader}" sortable="true" style="${Inminent}"/>
+				<jstl:when test="${row.startMoment.time > now && row.startMoment.time < oneMonth}">
+					<display:column title="${nameHeader}" sortable="true" style="${Inminent}">
+						<a href="activity/${association.id}/${row.id}/display.do"> <jstl:out value="${row.name }"/></a>
+					</display:column>
 					<display:column property="description" title="${descriptionHeader}" sortable="true" style="${Inminent}" />
 					<display:column property="startMoment" title="${startMomentHeader}" sortable="true" style="${Inminent}" />
 					<display:column property="endMoment" title="${endMomentHeader}" sortable="true" style="${Inminent}" />
 					<display:column property="maximumAttendants" title="${maximumAttendantsHeader}" sortable="true" style="${Inminent}" />
 				</jstl:when>
-				<jstl:when test="${row.moment.time < now}">
-					<display:column property="name" title="${nameHeader}" sortable="true" style="${passed}"/>
+				<jstl:when test="${row.startMoment.time < now}">
+					<display:column title="${nameHeader}" sortable="true" style="${passed}">
+						<a href="activity/${association.id}/${row.id}/display.do"> <jstl:out value="${row.name }"/></a>
+					</display:column>
 					<display:column property="description" title="${descriptionHeader}" sortable="true" style="${passed}" />
 					<display:column property="startMoment" title="${startMomentHeader}" sortable="true" style="${passed}" />
 					<display:column property="endMoment" title="${endMomentHeader}" sortable="true" style="${passed}" />
 					<display:column property="maximumAttendants" title="${maximumAttendantsHeader}" sortable="true" style="${passed}" />
 				</jstl:when>
 				<jstl:otherwise>
-					<display:column property="name" title="${nameHeader}" sortable="true" style="${available}"/>
+					<display:column title="${nameHeader}" sortable="true" style="${available}">
+						<a href="activity/${association.id}/${row.id}/display.do"> <jstl:out value="${row.name }"/></a>
+					</display:column>
 					<display:column property="description" title="${descriptionHeader}" sortable="true" style="${available}" />
 					<display:column property="startMoment" title="${startMomentHeader}" sortable="true" style="${available}" />
 					<display:column property="endMoment" title="${endMomentHeader}" sortable="true" style="${available}" />
@@ -77,7 +85,7 @@
 	<jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
 		<spring:message code="activity.edit" var="editHeader" />
 		<display:column title="${editHeader}">
-			<a href="activity/user/${row.id}/edit.do"><spring:message code="activity.edit" /> </a>
+			<a href="activity/user/${association.id}/${row.id}/edit.do"><spring:message code="activity.edit" /> </a>
 		</display:column>
 	
 	
@@ -147,9 +155,8 @@
 </ul>
 <br>
 <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
-	<input type="button" name="create"
-		value="<spring:message code="activity.create" />"
-		onclick="location.href = ('activity/user/${associationId}/create.do');" />
+	<br><br/>
+<div><a class="btn btn-primary" href="activity/user/${association.id}/create.do"><spring:message code="activity.create"/></a></div>
+<br/>
 </jstl:if>
-
 <br/>

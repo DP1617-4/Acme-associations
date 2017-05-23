@@ -28,6 +28,8 @@
 		<value>/views/terms/tiles.xml</value>
 		<value>/views/comment/tiles.xml</value>
 		<value>/views/association/tiles.xml</value>
+		<value>/views/meeting/tiles.xml</value>
+		<value>/views/minutes/tiles.xml</value>
 		<value>/views/user/tiles.xml</value>
 		<value>/views/request/tiles.xml</value>
 		<value>/views/actor/tiles.xml</value>
@@ -35,6 +37,8 @@
 		<value>/views/item/tiles.xml</value>
 		<value>/views/section/tiles.xml</value>
 		<value>/views/activity/tiles.xml</value>
+		<value>/views/sanction/tiles.xml</value>
+		<value>/views/place/tiles.xml</value>
 	</util:list>
 
 </beans>

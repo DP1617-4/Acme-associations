@@ -123,7 +123,7 @@ public class Activity extends DomainEntity {
 	}
 
 	@Valid
-	@ManyToOne(optional = true)
+	@OneToOne(optional = true)
 	public User getWinner() {
 		return this.winner;
 	}

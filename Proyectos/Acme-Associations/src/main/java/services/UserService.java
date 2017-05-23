@@ -248,4 +248,35 @@ public class UserService {
 
 		return result;
 	}
+
+	public User findCollaboratorLeastLoans(final Association association) {
+
+		List<User> users;
+		Collection<User> usersAux;
+		User user = null;
+
+		usersAux = this.findAssociationCollaborators(association);
+		users = new ArrayList<User>(this.userRepository.findCollaboratorLeastLoans(association.getId()));
+		if (users.size() > 0)
+			user = users.get(0);
+		for (final User u : usersAux)
+			if (!(users.contains(u))) {
+
+				user = u;
+				break;
+			}
+
+		return user;
+
+	}
+
+	public User findCollaboratorMostLoans(final Association association) {
+
+		return this.userRepository.findCollaboratorMostLoans(association.getId());
+	}
+
+	public User selectUserWithMostSanctionsByAssociation(final Association association) {
+
+		return this.userRepository.selectUserWithMostSanctionsByAssociation(association.getId());
+	}
 }

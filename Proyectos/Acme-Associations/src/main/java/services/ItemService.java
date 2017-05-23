@@ -140,30 +140,40 @@ public class ItemService {
 
 		return this.itemRepository.findAllBySection(section.getId());
 	}
-	
-	public Boolean isLoaned(Item item, User user){
-		
+
+	public Boolean isLoaned(Item item, User user) {
+
 		boolean result = false;
-		if (userService.findAllRelatedItem(item).contains(user)){
+		if (userService.findAllRelatedItem(item).contains(user)) {
 			result = true;
 		}
 		return result;
 	}
-	
-	public Boolean isLoanedByPrincipal(Item item){
-		
+
+	public Boolean isLoanedByPrincipal(Item item) {
+
 		User principal = userService.findByPrincipal();
 		return this.isLoaned(item, principal);
 	}
-	
-	public Boolean isLoanable(Item item){
+
+	public Boolean isLoanable(Item item) {
 		boolean result = false;
 		Collection<Item> items = this.itemRepository.findAllByAssociation(item.getSection().getAssociation().getId());
-		if(items.contains(item)){
+		if (items.contains(item)) {
 			result = true;
 		}
 		return result;
-	
+
 	}
-	
+
+	public Collection<Item> filterItems(String filter) {
+
+		return this.itemRepository.filterItems(filter);
+	}
+
+	public Item findMostLoanedItemByAssociation(Association association) {
+
+		return this.itemRepository.findMostLoanedItemByAssociation(association.getId());
+	}
+
 }

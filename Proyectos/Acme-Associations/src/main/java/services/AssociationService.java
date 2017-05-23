@@ -1,8 +1,11 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 import javax.transaction.Transactional;
 
@@ -121,6 +124,22 @@ public class AssociationService {
 
 		Assert.isTrue(association.getAdminClosed() == false && association.getClosedAssociation() == false, "association.closed.error");
 	}
+	
+	public Association getRandomAssociation(){
+		
+		Association result;
+		int randomNum;
+		Random rn = new Random();
+		Collection<Association> associations = this.findAllExceptBannedAndClosed();
+		
+		randomNum = rn.nextInt(associations.size());
+		List<Association> assList = new ArrayList<Association>(associations);
+		
+		result = assList.get(randomNum);
+		
+		return result;
+	}
+	
 
 	//Admin Dashboard
 

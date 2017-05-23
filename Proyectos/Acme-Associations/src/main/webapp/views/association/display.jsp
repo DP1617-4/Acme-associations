@@ -98,6 +98,9 @@
 
         <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
           <div class="list-group">
+          	<security:authorize access="hasRole('USER')"> 
+          		<a href="sanction/actor/${association.id}/mySanctions.do" class="list-group-item"><spring:message code="association.sanction"/></a>
+          	</security:authorize>
           	<security:authorize access="isAuthenticated()"> 
           		<a href="association/user/${association.id}/listUsers.do" class="list-group-item"><spring:message code="association.user.list"/></a>
           		<a href="item/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.item"/></a>
@@ -115,7 +118,7 @@
             <jstl:if test="${role eq 'ASSOCIATE' || role eq 'COLLABORATOR'}">
             <a href="association/user/${association.id}/leave.do" class="list-group-item"><spring:message code="association.leave"/></a>
             </jstl:if>
-            <a href="activity/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
+            <a href="activity/${association.id}/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
           </div>
            <jstl:if test="${role eq 'MANAGER'}">
             <div>
