@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ActivityService;
 import services.ActorService;
-import services.CommentService;
 import services.RolesService;
 import domain.Activity;
 import domain.Actor;
@@ -44,9 +43,6 @@ public class ActivityController extends AbstractController {
 	@Autowired
 	private ActorService	actorService;
 
-	@Autowired
-	private CommentService	commentService;
-
 
 	@RequestMapping(value = "/{association}/{activity}/display", method = RequestMethod.GET)
 	public ModelAndView display(@PathVariable final Activity activity, @PathVariable final Association association) {
@@ -57,7 +53,6 @@ public class ActivityController extends AbstractController {
 		addWinner.setActivity(activity);
 
 		Roles roles = null;
-		final Boolean application = true;
 		String role = null;
 
 		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -86,7 +81,6 @@ public class ActivityController extends AbstractController {
 		ModelAndView result;
 
 		Roles roles = null;
-		final Boolean application = true;
 		String role = null;
 
 		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -35,9 +35,6 @@ public class SanctionService {
 	@Autowired
 	private RolesService			rolesService;
 
-	@Autowired
-	private AdministratorService	administratorService;
-
 
 	public Sanction create(final int userId, final Association association) {
 		Sanction result;
@@ -61,9 +58,7 @@ public class SanctionService {
 	public Sanction findOneToEdit(final int SanctionId) {
 		Sanction result;
 		result = this.sanctionRepository.findOne(SanctionId);
-		if(!administratorService.checkAdministratorBool()){
-			rolesService.checkCollaboratorPrincipal(result.getAssociation());
-		}		
+		rolesService.checkCollaboratorPrincipal(result.getAssociation());	
 
 		return result;
 	}
@@ -101,9 +96,7 @@ public class SanctionService {
 	}
 
 	public Collection<Sanction> findByAssociationAndUser(Association association, int userId) {
-		if(!administratorService.checkAdministratorBool()){
-			rolesService.checkCollaboratorPrincipal(association);
-		}
+		rolesService.checkCollaboratorPrincipal(association);
 		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUser(association.getId(), userId);
 		return result;
 	}
@@ -124,9 +117,7 @@ public class SanctionService {
 	}
 
 	public Collection<Sanction> findByAssociationAndUserActive(Association association, int userId) {
-		if(!administratorService.checkAdministratorBool()){
-			rolesService.checkCollaboratorPrincipal(association);
-		}
+		rolesService.checkCollaboratorPrincipal(association);
 		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUserActive(association.getId(), userId);
 		return result;
 	}

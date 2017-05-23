@@ -138,7 +138,7 @@ public class SanctionActorController extends AbstractController {
 		else
 			try {
 				newSanction = this.sanctionService.save(newSanction);
-				result = new ModelAndView("redirect:/sanction/" + association.getId() + "/listByUser.do?userId="+newSanction.getUser().getId());
+				result = new ModelAndView("redirect:/sanction/actor/" + association.getId() + "/listByUser.do?userId="+newSanction.getUser().getId());
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(newSanction, association, "sanction.commit.error");
 			}

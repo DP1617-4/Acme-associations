@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.ActivityService;
-import services.AssociationService;
 import services.ItemService;
 import services.RolesService;
 import services.UserService;
@@ -43,9 +42,6 @@ public class ActivityUserController extends AbstractController {
 
 	@Autowired
 	private ActivityService		activityService;
-
-	@Autowired
-	private AssociationService	associationService;
 
 	@Autowired
 	private UserService			userService;
