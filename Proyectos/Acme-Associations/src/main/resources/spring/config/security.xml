@@ -79,6 +79,12 @@
 		<!-- Section -->
       	<security:intercept-url pattern="/section/**" access="permitAll" /> 
      	<security:intercept-url pattern="/section/user/**" access="hasRole('USER')" />
+     	
+		<!-- Sanction -->
+     	<security:intercept-url pattern="/sanction/myActiveSanctions.do" access="hasRole('USER')" />
+     	<security:intercept-url pattern="/sanction/mySanctions.do" access="hasRole('USER')" />
+     	<security:intercept-url pattern="/sanction/display.do**" access="hasRole('USER')" />
+     	<security:intercept-url pattern="/sanction/actor/**" access="isAuthenticated()" />
 				
 		<!-- User --> 
 		<security:intercept-url pattern="/user/register.do**" access="isAnonymous()" /> 
