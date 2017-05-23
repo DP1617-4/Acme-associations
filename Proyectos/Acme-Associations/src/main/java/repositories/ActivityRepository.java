@@ -19,5 +19,5 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer> {
 	Collection<Activity> findAllByAssociation(int associationId);
 
 	@Query("select a from Activity a where a.association.id=?1 order by a.attendants.size DESC")
-	Activity findMostAttendedByAssociation(int associationId);
+	Collection<Activity> findMostAttendedByAssociation(int associationId);
 }

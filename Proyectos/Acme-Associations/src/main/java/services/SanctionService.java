@@ -25,7 +25,7 @@ public class SanctionService {
 	// Repository
 
 	@Autowired
-	private SanctionRepository	sanctionRepository;
+	private SanctionRepository		sanctionRepository;
 
 	// Auxiliary services
 
@@ -57,13 +57,13 @@ public class SanctionService {
 
 		return result;
 	}
-	
+
 	public Sanction findOneToEdit(final int SanctionId) {
 		Sanction result;
 		result = this.sanctionRepository.findOne(SanctionId);
-		if(!administratorService.checkAdministratorBool()){
+		if (!administratorService.checkAdministratorBool()) {
 			rolesService.checkCollaboratorPrincipal(result.getAssociation());
-		}		
+		}
 
 		return result;
 	}
@@ -101,13 +101,13 @@ public class SanctionService {
 	}
 
 	public Collection<Sanction> findByAssociationAndUser(Association association, int userId) {
-		if(!administratorService.checkAdministratorBool()){
+		if (!administratorService.checkAdministratorBool()) {
 			rolesService.checkCollaboratorPrincipal(association);
 		}
 		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUser(association.getId(), userId);
 		return result;
 	}
-	
+
 	public Collection<Sanction> findByAssociationAndPrincipal(Association association) {
 		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUser(association.getId(), userService.findByPrincipal().getId());
 		return result;
@@ -124,7 +124,7 @@ public class SanctionService {
 	}
 
 	public Collection<Sanction> findByAssociationAndUserActive(Association association, int userId) {
-		if(!administratorService.checkAdministratorBool()){
+		if (!administratorService.checkAdministratorBool()) {
 			rolesService.checkCollaboratorPrincipal(association);
 		}
 		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUserActive(association.getId(), userId);
@@ -134,6 +134,11 @@ public class SanctionService {
 	public Collection<Sanction> findAllByPrincipalActive() {
 		final Collection<Sanction> result = sanctionRepository.findAllByPrincipalActive(userService.findByPrincipal().getId());
 		return result;
+	}
+
+	public Integer countSanctionsByUserAssociation(User user, Association association) {
+
+		return this.sanctionRepository.countSanctionsByUserAssociation(user.getId(), association.getId());
 	}
 
 }

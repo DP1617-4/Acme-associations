@@ -256,11 +256,26 @@ public class UserService {
 
 	public User findCollaboratorMostLoans(Association association) {
 
-		return this.userRepository.findCollaboratorMostLoans(association.getId());
+		User user = null;
+		List<User> users = new ArrayList<User>(this.userRepository.findCollaboratorMostLoans(association.getId()));
+		if (!users.isEmpty())
+			user = users.get(0);
+
+		return user;
 	}
 
 	public User selectUserWithMostSanctionsByAssociation(Association association) {
 
-		return this.userRepository.selectUserWithMostSanctionsByAssociation(association.getId());
+		User user = null;
+		List<User> users = new ArrayList<User>(this.userRepository.selectUserWithMostSanctionsByAssociation(association.getId()));
+		if (!users.isEmpty())
+			user = users.get(0);
+
+		return user;
+	}
+
+	public Integer countLoansCollaborator(User user, Association association) {
+
+		return this.userRepository.countLoansCollaborator(user.getId(), association.getId());
 	}
 }

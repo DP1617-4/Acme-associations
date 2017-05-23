@@ -16,12 +16,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import services.ActivityService;
 import services.AssociationService;
+import services.ItemService;
 import services.RolesService;
+import services.SanctionService;
+import services.SectionService;
 import services.UserService;
 import controllers.AbstractController;
+import domain.Activity;
 import domain.Association;
+import domain.Item;
 import domain.Roles;
+import domain.Section;
 import domain.User;
 import forms.ChangeManager;
 
@@ -42,6 +49,18 @@ public class AssociationUserController extends AbstractController {
 
 	@Autowired
 	private UserService			userService;
+
+	@Autowired
+	private SanctionService		sanctionService;
+
+	@Autowired
+	private SectionService		sectionService;
+
+	@Autowired
+	private ItemService			itemService;
+
+	@Autowired
+	private ActivityService		activityService;
 
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -93,12 +112,11 @@ public class AssociationUserController extends AbstractController {
 
 		final User principal = this.userService.findByPrincipal();
 
-		if(changeManager.getRole().equals(Roles.MANAGER)){
+		if (changeManager.getRole().equals(Roles.MANAGER)) {
 			this.rolesService.assignRoles(principal, changeManager.getAssociation(), "COLLABORATOR");
 			this.rolesService.assignRoles(changeManager.getUser(), changeManager.getAssociation(), "MANAGER");
-		}
-		else{
-			
+		} else {
+
 			this.rolesService.assignRoles(changeManager.getUser(), changeManager.getAssociation(), changeManager.getRole());
 		}
 		result = new ModelAndView("redirect:/association/" + changeManager.getAssociation().getId() + "/display.do");
@@ -194,6 +212,84 @@ public class AssociationUserController extends AbstractController {
 		this.associationService.closeAssociationByManager(association.getId());
 
 		result = new ModelAndView("redirect:/association/" + association.getId() + "/display.do");
+
+		return result;
+	}
+
+	@RequestMapping(value = "{association}/dashboard", method = RequestMethod.GET)
+	public ModelAndView dashboard(@PathVariable Association association, RedirectAttributes redir) {
+		ModelAndView result;
+		try {
+
+			User mostSanctioned;
+			Integer mostSanctionedSanctions;
+			mostSanctioned = this.userService.selectUserWithMostSanctionsByAssociation(association);
+			mostSanctionedSanctions = 0;
+			if (mostSanctioned != null)
+				mostSanctionedSanctions = this.sanctionService.countSanctionsByUserAssociation(mostSanctioned, association);
+
+			Section mostLoans;
+			Integer mostLoansNumber;
+			mostLoans = this.sectionService.findSectionWithMostLoansByAssociation(association);
+			mostLoansNumber = 0;
+			if (mostLoans != null)
+				mostLoansNumber = this.sectionService.countSanctionsByUserAssociation(mostLoans);
+
+			User mostLoansUser;
+			Integer mostLoansUserNumber;
+			mostLoansUser = this.userService.findCollaboratorMostLoans(association);
+			mostLoansUserNumber = 0;
+			if (mostLoansUser != null)
+				mostLoansUserNumber = this.userService.countLoansCollaborator(mostLoansUser, association);
+
+			User leastLoansUser;
+			Integer leastLoansUserNumber;
+			leastLoansUser = this.userService.findCollaboratorLeastLoans(association);
+			leastLoansUserNumber = 0;
+			if (leastLoansUser != null)
+				leastLoansUserNumber = this.userService.countLoansCollaborator(leastLoansUser, association);
+
+			Activity mostAttendants;
+			Integer attendants;
+			mostAttendants = this.activityService.findMostAttendedByAssociation(association);
+			attendants = 0;
+			if (mostAttendants != null)
+				attendants = mostAttendants.getAttendants().size();
+
+			Item item;
+			Integer itemLoans;
+			item = this.itemService.findMostLoanedItemByAssociation(association);
+			itemLoans = 0;
+			if (item != null)
+				itemLoans = this.itemService.countLoansItem(item);
+
+			result = new ModelAndView("association/dashboard");
+
+			result.addObject("mostSanctioned", mostSanctioned);
+			result.addObject("mostSanctionedSanctions", mostSanctionedSanctions);
+
+			result.addObject("mostLoans", mostLoans);
+			result.addObject("mostLoansNumber", mostLoansNumber);
+
+			result.addObject("mostLoansUser", mostLoansUser);
+			result.addObject("mostLoansUserNumber", mostLoansUserNumber);
+
+			result.addObject("leastLoansUser", leastLoansUser);
+			result.addObject("leastLoansUserNumber", leastLoansUserNumber);
+
+			result.addObject("mostAttendants", mostAttendants);
+			result.addObject("attendants", attendants);
+
+			result.addObject("item", item);
+			result.addObject("itemLoans", itemLoans);
+
+		} catch (Exception e) {
+
+			result = new ModelAndView("redirect:/welcome/index.do");
+			redir.addFlashAttribute("errorMessage", e.getMessage());
+		}
+
+		redir.addFlashAttribute("requestURI", "association/user/" + association.getId() + "dashboard.do");
 
 		return result;
 	}

@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,7 +110,17 @@ public class SectionService {
 
 	public Section findSectionWithMostLoansByAssociation(Association association) {
 
-		return this.sectionRepository.findSectionWithMostLoansByAssociation(association.getId());
+		Section section = null;
+		List<Section> sections = new ArrayList<Section>(this.sectionRepository.findSectionWithMostLoansByAssociation(association.getId()));
+		if (!sections.isEmpty())
+			section = sections.get(0);
+
+		return section;
+	}
+
+	public Integer countSanctionsByUserAssociation(Section section) {
+
+		return this.sectionRepository.countSanctionsByUserAssociation(section.getId());
 	}
 
 }

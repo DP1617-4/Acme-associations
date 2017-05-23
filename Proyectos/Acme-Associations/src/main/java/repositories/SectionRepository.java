@@ -20,6 +20,9 @@ public interface SectionRepository extends JpaRepository<Section, Integer> {
 	User findResponsible(int sectionId);
 
 	@Query("select l.item.section from Loan l where l.item.section.association.id=?1 group by l.item.section order by count(l) DESC")
-	Section findSectionWithMostLoansByAssociation(int associationId);
+	Collection<Section> findSectionWithMostLoansByAssociation(int associationId);
+
+	@Query("select count(l) from Loan l where l.item.section.id=?1")
+	Integer countSanctionsByUserAssociation(int sectionId);
 
 }
