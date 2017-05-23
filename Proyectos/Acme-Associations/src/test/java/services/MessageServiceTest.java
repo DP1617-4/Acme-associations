@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.validation.ConstraintViolationException;
 
@@ -16,10 +17,9 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Actor;
-import domain.Comment;
 import domain.Folder;
 import domain.Message;
-import domain.User;
+import forms.MessageBroadcast;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -37,9 +37,6 @@ public class MessageServiceTest extends AbstractTest {
 
 	@Autowired
 	private FolderService		folderService;
-
-	@Autowired
-	private ActorService		chorbiService;
 
 	@Autowired
 	private AssociationService	associationService;
@@ -65,25 +62,25 @@ public class MessageServiceTest extends AbstractTest {
 
 		final Object testingData[][] = {
 			{		// Creación correcta de un Chirp: Un adjunto
-				"chorbi1", "correcto", "correcto", attachments, null
+				"user1", "correcto", "correcto", attachments, null
 			}, {		// Creación correcta de un Chirp: Sin adjuntos;
-				"chorbi1", "correcto", "correcto", attachmentsEmpty, null
+				"user1", "correcto", "correcto", attachmentsEmpty, null
 			}, {		// Creación correcta de un Chirp: Muchos adjuntos;
-				"chorbi1", "correcto", "correcto", attachmentsFull, null
+				"user1", "correcto", "correcto", attachmentsFull, null
 			}, {	// Creación incorrecta de un Chirp: Admin intenta enviar un chirp, pero no tiene carpetas
 				"admin", "incorrecto", "incorrecto", attachments, NullPointerException.class
 			}, {	// Creación errónea de un Chirp: title vacío.
-				"chorbi1", "", "incorrecto", attachments, ConstraintViolationException.class
+				"user1", "", "incorrecto", attachments, ConstraintViolationException.class
 			}, {	// Creación errónea de un Chirp: title nulo.
-				"chorbi1", null, "incorrecto", attachments, ConstraintViolationException.class
+				"user1", null, "incorrecto", attachments, ConstraintViolationException.class
 			}, {	// Creación errónea de un Chirp: text vacío.
-				"chorbi1", "incorrecto", "", attachments, ConstraintViolationException.class
+				"user1", "incorrecto", "", attachments, ConstraintViolationException.class
 			}, {	// Creación errónea de un Chirp: text nulo.
-				"chorbi1", "incorrecto", null, attachments, ConstraintViolationException.class
+				"user1", "incorrecto", null, attachments, ConstraintViolationException.class
 			}, {	// Creación errónea de un Chirp: attachment nulo
-				"chorbi1", "incorrecto", "incorrecto", null, ConstraintViolationException.class
+				"user1", "incorrecto", "incorrecto", null, ConstraintViolationException.class
 			}, {	// Creación errónea de un Chirp: attachment Mal
-				"chorbi1", "incorrecto", "incorrecto", attachmentWrong, ConstraintViolationException.class
+				"user1", "incorrecto", "incorrecto", attachmentWrong, ConstraintViolationException.class
 			}
 
 		};
@@ -97,17 +94,17 @@ public class MessageServiceTest extends AbstractTest {
 	public void driverFindAllByFolderId() {
 		final Object testingData[][] = {
 			{
-				"chorbi1", "Received", null
+				"user1", "Received", null
 			}, {
-				"chorbi1", "Sent", null
+				"user1", "Sent", null
 			}, {
-				"chorbi2", "Received", null
+				"user2", "Received", null
 			}, {
-				"chorbi2", "Sent", null
+				"user2", "Sent", null
 			}, {
-				"chorbi3", "Received", null
+				"user3", "Received", null
 			}, {
-				"chorbi3", "Sent", null
+				"user3", "Sent", null
 			},
 		};
 		for (int i = 0; i < testingData.length; i++)
@@ -115,7 +112,8 @@ public class MessageServiceTest extends AbstractTest {
 	}
 
 	//	- An actor who is authenticated as a manager must be able to:
-	//		o Broadcast a chirp to the chorbies who have registered to any of the events that he or she manages.
+	//		o Broadcast a chirp to the useres who have registered to any of the events that he or she manages.
+	@SuppressWarnings("unchecked")
 	@Test
 	public void driverSendBroadcast() {
 		final Collection<String> attachments = new ArrayList<String>();
@@ -141,11 +139,22 @@ public class MessageServiceTest extends AbstractTest {
 
 		final Object testingData[][] = {
 			{
-				"chorbi1", "chirp2", "chorbi3", null
+				"user1", "chirp2", "user3", null
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
 			this.templateResendChirp((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
+	}
+	@Test
+	public void templateSendMessageOverdueLoan() {
+		this.authenticate("user2");
+		final List<Message> oldMessages = new ArrayList<Message>(this.chirpService.findAllByFolder(this.extract("received2")));
+		this.chirpService.sendMessageOverdueLoan();
+		final List<Message> newMessages = new ArrayList<Message>(this.chirpService.findAllByFolder(this.extract("received2")));
+		Assert.isTrue(newMessages.containsAll(oldMessages));
+		Assert.isTrue(newMessages.size() == oldMessages.size() + 3);
+
+		this.unauthenticate();
 	}
 
 	// Templates ----------------------------------------------------------
@@ -154,7 +163,7 @@ public class MessageServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(username);
-			final User cus = this.chorbiService.findOne(this.extract("chorbi2"));
+			final Actor cus = this.actorService.findOne(this.extract("user1"));
 			final Message m = this.chirpService.create();
 			m.setText(text);
 			m.setTitle(subject);
@@ -162,19 +171,19 @@ public class MessageServiceTest extends AbstractTest {
 
 			this.chirpService.send(m);
 
-			final User sender = this.chorbiService.findByPrincipal();
-			final User recipient = (User) m.getRecipient();
+			final Actor sender = this.actorService.findByPrincipal();
+			final Actor recipient = m.getRecipient();
 
 			Assert.isTrue(m.getSender().equals(sender) && m.getRecipient().equals(recipient));
 
 			final Folder recipientFolder = this.folderService.findSystemFolder(recipient, "Received");
 			final Folder senderFolder = this.folderService.findSystemFolder(sender, "Sent");
 
-			final Collection<Comment> recipientChirps = this.chirpService.findAllByFolderWithNoCheck(recipientFolder.getId());
-			final Collection<Comment> senderChirps = this.chirpService.findAllByFolderWithNoCheck(senderFolder.getId());
+			final Collection<Message> recipientChirps = this.chirpService.findAllByFolderWithNoCheck(recipientFolder.getId());
+			final Collection<Message> senderChirps = this.chirpService.findAllByFolderWithNoCheck(senderFolder.getId());
 
-			for (final Comment r : recipientChirps)
-				for (final Comment s : senderChirps)
+			for (final Message r : recipientChirps)
+				for (final Message s : senderChirps)
 					if (r.getTitle() == s.getTitle() && r.getMoment().equals(s.getMoment()) && r.getRecipient().equals(s.getRecipient()) && r.getText() == s.getText())
 						Assert.isTrue(r.getTitle() == s.getTitle() && r.getMoment().equals(s.getMoment()) && r.getRecipient().equals(s.getRecipient()) && r.getText() == s.getText());
 			this.chirpService.delete(m);
@@ -196,7 +205,7 @@ public class MessageServiceTest extends AbstractTest {
 
 		try {
 			this.authenticate(username);
-			final User actor = this.chorbiService.findByPrincipal();
+			final Actor actor = this.actorService.findByPrincipal();
 			final Folder folder = this.folderService.findSystemFolder(actor, folderName);
 			this.chirpService.findAllByFolder(folder.getId());
 			this.unauthenticate();
@@ -216,19 +225,18 @@ public class MessageServiceTest extends AbstractTest {
 		try {
 			this.authenticate(username);
 			final Actor sender = this.actorService.findByPrincipal();
-			final Message cB = new Message();
-			cB.setTitle(subject);
+			final MessageBroadcast cB = new MessageBroadcast();
 			cB.setText(text);
-			cB.setEvent(this.associationService.findOne(this.extract(eventName)));
+			cB.setAssociation(this.associationService.findOne(this.extract(eventName)));
 			this.chirpService.broadcast(cB);
 			this.unauthenticate();
 
-			this.authenticate("chorbi1");
-			final Folder recipientFolder = this.folderService.findSystemFolder(this.chorbiService.findOne(this.extract("chorbi1")), "Received");
+			this.authenticate("user1");
+			final Folder recipientFolder = this.folderService.findSystemFolder(this.actorService.findOne(this.extract("user1")), "Received");
 			final Collection<Message> chirps = this.chirpService.findAllByFolder(recipientFolder.getId());
 			for (final Message c : chirps)
-				if (c.getTitle() == cB.getTitle() && c.getSender() == sender && c.getText() == cB.getText())
-					Assert.isTrue(c.getTitle() == cB.getTitle() && c.getSender() == sender && c.getText() == cB.getText());
+				if (c.getSender() == sender && c.getText() == cB.getText())
+					Assert.isTrue(c.getSender() == sender && c.getText() == cB.getText());
 
 			this.unauthenticate();
 			this.chirpService.flush();
@@ -238,18 +246,17 @@ public class MessageServiceTest extends AbstractTest {
 		}
 		this.checkExceptions(expected, caught);
 	}
-
 	private void templateResendChirp(final String username, final String chirpToSend, final String receiver, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		final Message chirpToSendExtracted = this.chirpService.findOne(this.extract(chirpToSend));
 		try {
 			this.authenticate(username);
-			this.chirpService.reSend(chirpToSendExtracted, this.chorbiService.findOne(this.extract(receiver)));
+			this.chirpService.reSend(chirpToSendExtracted, this.actorService.findOne(this.extract(receiver)));
 			this.unauthenticate();
 
 			this.authenticate(receiver);
-			final Folder recipientFolder = this.folderService.findSystemFolder(this.chorbiService.findOne(this.extract(receiver)), "Received");
+			final Folder recipientFolder = this.folderService.findSystemFolder(this.actorService.findOne(this.extract(receiver)), "Received");
 			final Collection<Message> chirps = this.chirpService.findAllByFolder(recipientFolder.getId());
 			for (final Message c : chirps)
 				if (c.getTitle() == chirpToSendExtracted.getTitle() && c.getMoment().equals(chirpToSendExtracted.getMoment()) && c.getRecipient().equals(chirpToSendExtracted.getRecipient()) && c.getText() == chirpToSendExtracted.getText())

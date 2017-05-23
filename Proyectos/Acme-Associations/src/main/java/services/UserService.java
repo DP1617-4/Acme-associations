@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -22,6 +23,7 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 import domain.Association;
+import domain.Item;
 import domain.User;
 import forms.RegisterUser;
 
@@ -30,13 +32,13 @@ import forms.RegisterUser;
 public class UserService {
 
 	@Autowired
-	private UserRepository			userRepository;
+	private UserRepository	userRepository;
 
 	@Autowired
-	private FolderService			folderService;
+	private FolderService	folderService;
 
 	@Autowired
-	private Validator				validator;
+	private Validator		validator;
 
 
 	public UserService() {
@@ -108,20 +110,36 @@ public class UserService {
 		return result;
 	}
 
-	public User reconstruct(final RegisterUser registerUser, final BindingResult binding) {
+	public User reconstruct(final RegisterUser user, final BindingResult binding) {
 		User result;
-		Assert.isTrue(registerUser.isAccept());
+		Assert.isTrue(user.isAccept());
 		result = this.create();
 
-		result.setEmail(registerUser.getEmail());
-		result.setIdNumber(registerUser.getIdNumber());
-		result.setName(registerUser.getName());
-		result.setPhoneNumber(registerUser.getPhoneNumber());
-		result.setPostalAddress(registerUser.getPostalAddress());
-		result.setSurname(registerUser.getSurname());
+		result.setEmail(user.getEmail());
+		result.setIdNumber(user.getIdNumber());
+		result.setName(user.getName());
+		result.setPhoneNumber(user.getPhoneNumber());
+		result.setPostalAddress(user.getPostalAddress());
+		result.setSurname(user.getSurname());
 
-		result.getUserAccount().setUsername(registerUser.getUsername());
-		result.getUserAccount().setPassword(registerUser.getPassword());
+		result.getUserAccount().setUsername(user.getUsername());
+		result.getUserAccount().setPassword(user.getPassword());
+
+		this.validator.validate(result, binding);
+
+		return result;
+	}
+
+	public User reconstructPrincipal(final User user, final BindingResult binding) {
+		User result;
+		result = this.findByPrincipal();
+
+		result.setEmail(user.getEmail());
+		result.setIdNumber(user.getIdNumber());
+		result.setName(user.getName());
+		result.setPhoneNumber(user.getPhoneNumber());
+		result.setPostalAddress(user.getPostalAddress());
+		result.setSurname(user.getSurname());
 
 		this.validator.validate(result, binding);
 
@@ -161,11 +179,10 @@ public class UserService {
 		this.userRepository.flush();
 	}
 
-	public void phoneValidator(final User user) {
+	public void phoneValidator(final String phoneNumber) {
 
 		//returns exception if user number is not valid.
 
-		final String phoneNumber = user.getPhoneNumber();
 		final PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
 		String number;
 		String cCode;
@@ -187,5 +204,63 @@ public class UserService {
 
 		Assert.isTrue(phoneUtil.isValidNumber(checkNum));
 
+	}
+
+	public User findAssociationManager(final Association association) {
+
+		return this.userRepository.findAssociationManager(association.getId());
+	}
+
+	public Collection<User> findAssociationCollaborators(final Association association) {
+
+		return this.userRepository.findAssociationCollaborators(association.getId());
+	}
+
+	public Collection<User> findAssociationCollaboratorsAndManager(final Association association) {
+
+		final Collection<User> result = new ArrayList<User>();
+		result.add(this.findAssociationManager(association));
+		result.addAll(this.findAssociationCollaborators(association));
+
+		return result;
+	}
+
+	public Collection<User> findAllRelatedItem(final Item item) {
+
+		return this.userRepository.findAllRelatedItem(item.getId());
+	}
+
+	public User findCollaboratorLeastLoans(Association association) {
+
+		List<User> users;
+		Collection<User> usersAux;
+		User user = null;
+
+		usersAux = this.findAssociationCollaborators(association);
+		users = new ArrayList<User>(this.userRepository.findCollaboratorLeastLoans(association.getId()));
+		if (users.size() > 0) {
+			user = users.get(0);
+		}
+		for (User u : usersAux) {
+
+			if (!(users.contains(u))) {
+
+				user = u;
+				break;
+			}
+		}
+
+		return user;
+
+	}
+
+	public User findCollaboratorMostLoans(Association association) {
+
+		return this.userRepository.findCollaboratorMostLoans(association.getId());
+	}
+
+	public User selectUserWithMostSanctionsByAssociation(Association association) {
+
+		return this.userRepository.selectUserWithMostSanctionsByAssociation(association.getId());
 	}
 }

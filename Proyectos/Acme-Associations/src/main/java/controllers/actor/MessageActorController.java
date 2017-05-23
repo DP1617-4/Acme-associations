@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.ActorService;
 import services.FolderService;
@@ -92,14 +93,12 @@ public class MessageActorController extends AbstractController {
 	public ModelAndView save(@Valid final Message message, final BindingResult binding) {
 		Actor principal;
 		ModelAndView result;
-		Message sent;
-
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(message);
 		else
 			try {
 
-				sent = this.messageService.send(message);
+				this.messageService.send(message);
 				principal = this.actorService.findByPrincipal();
 				result = new ModelAndView("redirect:/message/actor/list.do?folderId=" + this.folderService.findSystemFolder(principal, "Sent").getId());
 			} catch (final Throwable oops) {
@@ -109,21 +108,25 @@ public class MessageActorController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "broadcast")
-	public ModelAndView broadcast(final MessageBroadcast messageBroad, final BindingResult binding) {
+	@RequestMapping(value = "/broadcast", method = RequestMethod.POST, params = "broadcast")
+	public ModelAndView broadcast(final MessageBroadcast messageBroad, final BindingResult binding, final RedirectAttributes redir) {
 		ModelAndView result;
 		Association association;
 
 		association = messageBroad.getAssociation();
 
 		if (binding.hasErrors())
-			result = new ModelAndView("redirect:/association/" + association.getId() + "/display");
+			result = new ModelAndView("redirect:/association/" + association.getId() + "/display.do");
 		else
 			try {
 
-				result = new ModelAndView("redirect:/association/" + association.getId() + "/display");
+				this.messageService.broadcast(messageBroad);
+				result = new ModelAndView("redirect:/association/" + association.getId() + "/display.do");
+				redir.addFlashAttribute("flashMessage", "message.correct");
 			} catch (final Throwable oops) {
-				result = new ModelAndView("redirect:/association/" + association.getId() + "/display");
+				result = new ModelAndView("redirect:/association/" + association.getId() + "/display.do");
+				redir.addFlashAttribute("broadError", oops.getMessage());
+
 			}
 
 		return result;

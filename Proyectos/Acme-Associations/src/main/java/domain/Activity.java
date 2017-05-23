@@ -99,6 +99,7 @@ public class Activity extends DomainEntity {
 	private Collection<User>	attendants;
 	private Place				place;
 	private User				winner;
+	private Item				item;
 
 
 	@Valid
@@ -122,7 +123,7 @@ public class Activity extends DomainEntity {
 	}
 
 	@Valid
-	@ManyToOne(optional = true)
+	@OneToOne(optional = true)
 	public User getWinner() {
 		return this.winner;
 	}
@@ -137,6 +138,15 @@ public class Activity extends DomainEntity {
 	}
 	public void setPlace(final Place place) {
 		this.place = place;
+	}
+
+	@Valid
+	@OneToOne(optional = true)
+	public Item getItem() {
+		return this.item;
+	}
+	public void setItem(final Item item) {
+		this.item = item;
 	}
 
 }

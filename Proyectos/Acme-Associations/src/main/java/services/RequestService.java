@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.RequestRepository;
 import domain.Association;
@@ -22,9 +23,6 @@ public class RequestService {
 	//supporting services-------------------
 	@Autowired
 	private UserService			userService;
-
-	@Autowired
-	private AssociationService	associationService;
 
 	@Autowired
 	private MessageService		messageService;
@@ -60,12 +58,18 @@ public class RequestService {
 	}
 
 	public Request save(final Request request) {
+
+		final Roles roles = this.rolesService.findRolesByPrincipalAssociation(request.getAssociation());
+
+		Assert.isTrue(this.isRequestedByPrincipal(request.getAssociation()) == false, "request.requested");
+		Assert.isTrue(roles == null, "request.inside");
+
 		Request saved;
+
 		saved = this.requestRepository.save(request);
 		return saved;
 
 	}
-
 	public void delete(final Request request) {
 
 		this.requestRepository.delete(request.getId());
@@ -89,11 +93,12 @@ public class RequestService {
 	}
 
 	public Collection<Request> findAllByAssociation(final Association association) {
+
 		Collection<Request> result;
+		this.rolesService.checkManagerPrincipal(association);
 		result = this.requestRepository.findAllByAssociation(association.getId());
 		return result;
 	}
-
 	public void accept(final Request request) {
 
 		final User user;
@@ -110,15 +115,31 @@ public class RequestService {
 
 	public void deny(final Request request) {
 
-		final User user;
-		final Association association;
-
-		user = request.getUser();
-		association = request.getAssociation();
+		request.getUser();
+		request.getAssociation();
 
 		this.messageService.sendDenied(request);
 		this.delete(request);
 
 	}
 
+	public Boolean isRequested(final User user, final Association association) {
+
+		Boolean res;
+		res = true;
+
+		final Request request = this.requestRepository.findByRequestAndUser(user.getId(), association.getId());
+
+		if (request == null)
+			res = false;
+
+		return res;
+	}
+
+	public Boolean isRequestedByPrincipal(final Association association) {
+
+		final User principal = this.userService.findByPrincipal();
+
+		return this.isRequested(principal, association);
+	}
 }

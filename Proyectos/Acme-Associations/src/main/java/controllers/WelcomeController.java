@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.AssociationService;
+import services.ItemService;
 import domain.Actor;
+import domain.Association;
 
 @Controller
 @RequestMapping("/welcome")
@@ -36,6 +39,12 @@ public class WelcomeController extends AbstractController {
 
 	@Autowired
 	ActorService	actorService;
+	
+	@Autowired
+	AssociationService	associationService;
+	
+	@Autowired
+	ItemService	itemService;
 
 
 	// Index ------------------------------------------------------------------		
@@ -50,6 +59,8 @@ public class WelcomeController extends AbstractController {
 
 		formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		moment = formatter.format(new Date());
+		
+		Association featured = this.associationService.getRandomAssociation();
 
 		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -63,6 +74,7 @@ public class WelcomeController extends AbstractController {
 
 		result.addObject("name", name1);
 		result.addObject("moment", moment);
+		result.addObject("featured", featured);
 
 		return result;
 	}

@@ -10,20 +10,6 @@
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="../../favicon.ico">
-
-    <!-- Bootstrap core CSS -->
-    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="offcanvas.css" rel="stylesheet">
-  </head>
-
 <%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -35,12 +21,36 @@
 <body>
 <security:authentication property="principal" var ="loggedactor"/>
     <div class="container">
+    
+    
+    <jstl:if test="${association.closedAssociation}">
+    
+    	<spring:message code="association.closed"/>
+    	<br/>
+        <jstl:if test="${role eq 'MANAGER'}">
+      	 	<a class="btn btn-primary" href="association/user/${association.id}/open.do"><spring:message code="association.open"/></a>
+     	 </jstl:if>
+    	
+    
+    </jstl:if>
+    
+    <jstl:if test="${association.adminClosed}">
+    
+    	<spring:message code="association.banned"/>
+    	<br/>
+        <security:authorize access="hasRole('ADMIN')">
+      		<a class="btn btn-primary" href="association/administrator/${association.id}/ban.do"><spring:message code="association.unban"/></a>
+        </security:authorize>
+    	
+    
+    </jstl:if>
 
+	<jstl:if test="${!association.closedAssociation && !association.adminClosed}">
       <div class="row row-offcanvas row-offcanvas-right">
 
         <div class="col-12 col-md-9">
           <div class="jumbotron">
-          <img src="<jstl:out value="http://www.zoonewengland.org/media/813822/redpanda_gallery10.jpg"/>" align="right" width="300">
+          <img src="<jstl:out value="${association.picture }"/>" align="right"  height="150" >
             <h1><jstl:out value="${association.name}" /></h1>
             <p><jstl:out value="${association.description}" /></p>
           </div>
@@ -48,11 +58,11 @@
           <div><jstl:out value="${association.creationDate}" /></div>
           <div><a href="${association.statutes}"><spring:message code="association.statutes"/></a></div>
           <div class="row">
-            <div class="col-6 col-lg-4">
+            <div class="col-6 col-md-6 col-lg-4">
               <h2><spring:message code="association.announcements"/></h2>
               <p><jstl:out value="${association.announcements}" /></p>
             </div><!--/span-->
-            <div class="col-6 col-lg-4">
+            <div class="col-6 col-md-6 col-lg-8">
               <h2><spring:message code="association.comments"/></h2>
               <%-- <display:table pagesize="5" class="displaytag" keepStatus="true" name="associationComments" requestURI="${requestURI}" id="row"> </display:table> --%>
               <display:table pagesize="5" class="displaytag" keepStatus="true"
@@ -70,94 +80,78 @@
 					
 					<spring:message code="comment.user" var="userHeader"/>
 					<display:column title="${userHeader}">
-						<a href="actor/user/display.do?actorId=${row.user.id}"> ${row.user.name} ${row.user.surname}</a>
+						<a href="actor/user/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
 					</display:column>
 					
 				</display:table>
-            </div><!--/span-->
-            <jstl:if test="${role eq 'MANAGER'}">
-            <div class="col-6 col-lg-4">
-	            <form:form action="message/actor/broadcast.do" modelAttribute="messageBroad">
-	            	<form:hidden path="association" value="${association}"/>
-	            	<acme:textarea code="association.message.broadcast" path="text"/>
-	            	<acme:submit name="broadcast" code="association.message.post.broadcast"/>
+				<jstl:if test="${role == 'ASSOCIATE' || role == 'COLLABORATOR' || role == 'MANAGER' }">
+				<form:form action="comment/user/${association.id }/edit.do" modelAttribute="comment">
+	            	<form:hidden path="commentable"/>
+	            	<form:input path="title" /></br>
+	            	<form:textarea path="text"/></br>
+	            	<acme:submit name="save" code="comment.new.save"/>
 	            </form:form>
-            </div>
-            </jstl:if>
+	            </jstl:if>
+            </div><!--/span-->
           </div><!--/row-->
         </div><!--/span-->
 
         <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
           <div class="list-group">
-            <a href="section/user/list.do" class="list-group-item active"><spring:message code="association.section"/></a>
-            <a href="item/user/list.do" class="list-group-item"><spring:message code="association.item"/></a>
+          	<security:authorize access="isAuthenticated()"> 
+          		<a href="association/user/${association.id}/listUsers.do" class="list-group-item"><spring:message code="association.user.list"/></a>
+          		<a href="sanction/actor/${association.id}/mySanctions.do" class="list-group-item"><spring:message code="association.sanction"/></a>
+          		<a href="item/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.item"/></a>
+          	</security:authorize>
+            <a href="section/${association.id}/list.do" class="list-group-item"><spring:message code="association.section"/></a>
             <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
-            <a href="sanction/user/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>
-            <a href="loan/user/list.do" class="list-group-item"><spring:message code="association.loan"/></a>
+            <a href="sanction/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>
+            <a href="loan/user/${association.id}/listPending.do" class="list-group-item"><spring:message code="association.loanPending"/></a>
+            <a href="meeting/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.meeting"/></a>
             </jstl:if>
-            <a href="activity/user/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
+            <jstl:if test="${role eq 'MANAGER'}">
+            <a href="user/request/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
+            <a href="association/user/${association.id}/changeManager.do" class="list-group-item"><spring:message code="association.manager.change"/></a>
+            </jstl:if>
+            <jstl:if test="${role eq 'ASSOCIATE' || role eq 'COLLABORATOR'}">
+            <a href="association/user/${association.id}/leave.do" class="list-group-item"><spring:message code="association.leave"/></a>
+            </jstl:if>
+            <a href="activity/${association.id}/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
           </div>
+           <jstl:if test="${role eq 'MANAGER'}">
+            <div>
+	            <form:form action="message/actor/broadcast.do" modelAttribute="messageBroad">
+	            	<form:hidden path="association"/>
+	            	<acme:textarea code="association.message.broadcast" path="text"/>
+	            	<acme:submit name="broadcast" code="association.message.post.broadcast"/>
+	            </form:form>
+	            <jstl:if test="${broadError != null}">
+					<span class="message"><spring:message code="${broadError}" /></span>
+				</jstl:if>	
+            </div>
+            </jstl:if>
+            </br></br></br>
+            <jstl:if test="${role eq 'MANAGER'}">
+      	 <a class="btn btn-primary" href="association/user/${association.id}/close.do"><spring:message code="association.close"/></a>
+      	 <br>
+      	 </br>
+      	 <a class="btn btn-primary" href="association/user/edit.do?associationId=${association.id}"><spring:message code="association.edit"/></a>
+      </jstl:if>
+      
+      <security:authorize access="hasRole('ADMIN')">
+      	<a class="btn btn-primary" href="association/administrator/${association.id}/ban.do"><spring:message code="association.ban"/></a>
+      </security:authorize>
+            
+             <jstl:if test="${role == null && application == false}">
+             <div>
+	            <a class="btn btn-primary" href="user/request/${association.id}/apply.do"><spring:message code="association.request.apply"/></a>
+	            
+            </div>
+            </jstl:if>
         </div><!--/span-->
       </div><!--/row-->
+      
+      
+      </jstl:if>
 </div>
 
- <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="offcanvas.js"></script>
-  </body>
-  
-  </html>
-
-
-
-<%-- <security:authentication property="principal" var ="loggedactor"/>
-    <div class="container">
-
-      <div class="row">
-
-        <div class="col-12 col-md-9">
-          <div class="jumbotron">
-            <h1><jstl:out value="${association.name}" /></h1>
-            <h1><jstl:out value="Titulo" /></h1>
-            <p><jstl:out value="${association.description}" /></p>
-            <p><jstl:out value="Descripcion" /></p>
-          </div>
-          <div><jstl:out value="${association.address}" /></div>
-          <div>Address</div>
-          <div><jstl:out value="${association.creationDate}" /></div>
-          <div>Creation date</div>
-          <div><a href="${association.statutes}"><spring:message code="association.statutes"/></a></div>
-          <div>Google<spring:message code="association.statutes"/></div>
-          <img src="<jstl:out value='${association.picture}'/>"  width="300">
-          <div class="row">
-            <div class="col-6 col-lg-4">
-              <h2>Announcements</h2>
-              <p><jstl:out value="${association.announcements}" /></p>
-              <p>Announcements</p>
-            </div><!--/span-->
-            <div class="col-6 col-lg-4">
-              <h2>Comments</h2>
-              <p><jstl:out value="${association.comments}" /></p>
-              <p>Comments</p>
-            </div><!--/span-->
-          </div><!--/row-->
-        </div><!--/span-->
-
-        <div class="col-6 col-md-3" id="sidebar">
-          <div class="list-group">
-            <a href="section/user/list.do" class="list-group-item active"><spring:message code="association.section"/></a>
-            <a href="item/user/list.do" class="list-group-item"><spring:message code="association.item"/></a>
-            <a href="sanction/user/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>
-            <a href="loan/user/list.do" class="list-group-item"><spring:message code="association.loan"/></a>
-            <a href="activity/user/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
-          </div>
-        </div><!--/span-->
-      </div><!--/row-->
-</div> --%>

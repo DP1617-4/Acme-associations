@@ -1,7 +1,10 @@
 
 package services;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ItemRepository;
+import domain.Association;
 import domain.Item;
+import domain.Section;
 import domain.User;
 
 @Service
@@ -33,11 +38,27 @@ public class ItemService {
 	@Autowired
 	private RolesService	roleService;
 
+	@Autowired
+	private SectionService	sectionService;
+
 
 	public Item create() {
 		Item result;
 
 		result = new Item();
+		final String itemId = this.itemKeyGenerator();
+		result.setIdentifier(itemId);
+
+		return result;
+	}
+
+	public Item create(final Section section) {
+		Item result;
+
+		result = new Item();
+		final String itemId = this.itemKeyGenerator();
+		result.setIdentifier(itemId);
+		result.setSection(section);
 
 		return result;
 	}
@@ -58,6 +79,13 @@ public class ItemService {
 		return result;
 	}
 
+	public Collection<Item> findAllByAssociation(final Association association) {
+
+		Collection<Item> result;
+		result = this.itemRepository.findAllByAssociation(association.getId());
+		return result;
+	}
+
 	public void delete(final Item item) {
 		final User principal = this.userService.findByPrincipal();
 		Assert.notNull(item);
@@ -68,17 +96,84 @@ public class ItemService {
 	}
 
 	public Item save(final Item item) {
-		final User principal = this.userService.findByPrincipal();
-		this.roleService.checkCollaborator(principal, item.getSection().getAssociation());
+
+		this.sectionService.checkResponsiblePrincipal(item.getSection().getId());
 
 		final Item result = this.itemRepository.save(item);
 
 		return result;
 	}
-
 	public Item reconstruct() {
 		final Item result = new Item();
 
 		return result;
 	}
+
+	public String itemKeyGenerator() {
+
+		String result;
+		final String datePattern = "yyyyMMdd";
+		final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
+		final String moment = simpleDateFormat.format(new Date());
+		String code = "";
+		code += "-" + this.randomLetter() + this.randomLetter() + this.randomLetter();
+		result = moment + code;
+		return result;
+
+	}
+
+	public String randomLetter() {
+		char result;
+		final String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+		final Random random = new Random();
+		result = alphabet.charAt(random.nextInt(62));
+		return Character.toString(result);
+	}
+
+	public void changeCondition(final Item item, final String condition) {
+
+		item.setItemCondition(condition);
+		this.save(item);
+	}
+
+	public Collection<Item> findAllBySection(final Section section) {
+
+		return this.itemRepository.findAllBySection(section.getId());
+	}
+
+	public Boolean isLoaned(Item item, User user) {
+
+		boolean result = false;
+		if (userService.findAllRelatedItem(item).contains(user)) {
+			result = true;
+		}
+		return result;
+	}
+
+	public Boolean isLoanedByPrincipal(Item item) {
+
+		User principal = userService.findByPrincipal();
+		return this.isLoaned(item, principal);
+	}
+
+	public Boolean isLoanable(Item item) {
+		boolean result = false;
+		Collection<Item> items = this.itemRepository.findAllByAssociation(item.getSection().getAssociation().getId());
+		if (items.contains(item)) {
+			result = true;
+		}
+		return result;
+
+	}
+
+	public Collection<Item> filterItems(String filter) {
+
+		return this.itemRepository.filterItems(filter);
+	}
+
+	public Item findMostLoanedItemByAssociation(Association association) {
+
+		return this.itemRepository.findMostLoanedItemByAssociation(association.getId());
+	}
+
 }

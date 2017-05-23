@@ -25,6 +25,9 @@ public class MeetingService {
 	@Autowired
 	private AssociationService	associationService;
 
+	@Autowired
+	private RolesService		rolesService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -38,6 +41,8 @@ public class MeetingService {
 		final Meeting result = new Meeting();
 
 		final Association association = this.associationService.findOne(associationId);
+
+		this.rolesService.checkManagerPrincipal(association);
 		result.setAssociation(association);
 
 		return result;
@@ -74,6 +79,12 @@ public class MeetingService {
 		Meeting result;
 
 		result = this.meetingRepository.save(meeting);
+		return result;
+	}
+
+	public Collection<Meeting> findAllByAssociation(final Association association) {
+		Collection<Meeting> result;
+		result = this.meetingRepository.findAllByAssociation(association.getId());
 		return result;
 	}
 }

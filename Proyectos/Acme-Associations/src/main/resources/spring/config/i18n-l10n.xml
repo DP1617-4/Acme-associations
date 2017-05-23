@@ -28,6 +28,16 @@
 		<value>/views/association/messages</value>
 		<value>/views/terms/messages</value>
 		<value>/views/user/messages</value>
+		<value>/views/request/messages</value>
+		<value>/views/actor/messages</value>		
+		<value>/views/loan/messages</value>
+		<value>/views/item/messages</value>
+		<value>/views/section/messages</value>
+		<value>/views/activity/messages</value>
+		<value>/views/sanction/messages</value>
+		<value>/views/meeting/messages</value>
+		<value>/views/minutes/messages</value>
+		<value>/views/place/messages</value>
 	</util:list>
 
 </beans>

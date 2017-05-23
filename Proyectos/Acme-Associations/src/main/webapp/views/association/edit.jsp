@@ -19,26 +19,19 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme"	tagdir="/WEB-INF/tags"%>
 
-<form:form action="${requestURI}" modelAttribute="event">
+<form:form action="${requestURI}" modelAttribute="association">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="closedAssociation"/>
 	<form:hidden path="adminClosed"/>
+	<form:hidden path="creationDate"/>
 
 	<acme:textbox code="association.name" path="name"/><br />
 	
 	<acme:textbox code="association.description" path="description"/><br />
 	
 	<acme:textbox code="association.address" path="address"/><br />
-	
-	<div>
-		<form:label path="creationDate">
-			<spring:message code="association.creationDate" />:
-		</form:label>
-		<form:input placeholder="dd/MM/yyyy HH:mm" path="creationDate" />
-		<form:errors cssClass="error" path="creationDate" />
-	</div> </br>
 	
 	<acme:textbox code="association.statutes" path="statutes"/><br />
 	

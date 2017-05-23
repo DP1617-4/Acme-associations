@@ -25,9 +25,9 @@
 <jstl:set var="available" value="background-color:green; color: black; font-weight:bold;" />
 
 
-<display:table pagesize="5" keepStatus="true"
-	name="associations" requestURI="${requestURI}" id="row">
-	<security:authentication property="principal" var ="loggedactor"/>
+
+<security:authentication property="principal" var ="loggedactor"/>
+<display:table pagesize="5" keepStatus="true" name="associations" requestURI="${requestURI}" id="row">
 	
 	<spring:message code="association.name" var="nameHeader" />
 	<spring:message code="association.description" var="descriptionHeader" />
@@ -35,16 +35,17 @@
 	<spring:message code="association.address" var="addressHeader" />
 	
 
-			<display:column property="row.name" title="${titleHeader}"/>
-			<display:column property="row.description" title="${descriptionHeader}" />
-			<display:column property="row.creationDate" title="${creationDateHeader}" />
-			<display:column property="row.address" title="${addressHeader}"/>	
+	<display:column title="${titleHeader}">
+			<a href="association/${row.id}/display.do"> <jstl:out value="${row.name }"/></a>
+	</display:column>
+	<display:column property="name" title="${titleHeader}"/>
+	<display:column property="description" title="${descriptionHeader}" />
+	<display:column property="creationDate" title="${creationDateHeader}" />
+	<display:column property="address" title="${addressHeader}"/>	
 	
 </display:table>
-
+<br><br/>
+<div><a class="btn btn-primary" href="user/association/create.do"><spring:message code="association.create"/></a></div>
 <br/>
 
-<input type="button" name="back"
-		value="<spring:message code="comment.back" />"
-		onclick="location.href = 'welcome/index.do';" />&nbsp;
-<br/>		
+		

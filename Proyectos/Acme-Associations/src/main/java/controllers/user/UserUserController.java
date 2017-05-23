@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.UserService;
 import controllers.AbstractController;
 import domain.User;
-import services.UserService;
 
 @Controller
 @RequestMapping("/user/user")
@@ -45,54 +45,55 @@ public class UserUserController extends AbstractController {
 		ModelAndView result;
 		User user;
 
-		user = userService.findByPrincipal();
-		result = createEditModelAndView(user);
+		user = this.userService.findByPrincipal();
+		result = this.createEditModelAndView(user);
 
 		return result;
-		
+
 	}
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid User user, BindingResult binding) {
+	public ModelAndView save(@Valid User user, final BindingResult binding) {
 		ModelAndView result;
-		
-		try{
-			userService.phoneValidator(user);
-		}catch (Throwable oops){
-			binding.rejectValue("phoneNumber","error.object","The phone number is not valid");
+
+		try {
+			this.userService.phoneValidator(user.getPhoneNumber());
+		} catch (final Throwable oops) {
+			binding.rejectValue("phoneNumber", "error.object", "The phone number is not valid");
 		}
-		
-		if (binding.hasErrors()) {
-			result = createEditModelAndView(user);
-		} else {
+
+		final User userR = this.userService.reconstructPrincipal(user, binding);
+
+		if (binding.hasErrors())
+			result = this.createEditModelAndView(user);
+		else
 			try {
-				user = userService.save(user);
-				result = new ModelAndView("redirect:/welcome/index.do");
-			} catch (Throwable oops) {
-				result = createEditModelAndView(user, "user.commit.error");
+				user = this.userService.save(userR);
+				result = new ModelAndView("redirect:/actor/user/displayOwn.do");
+			} catch (final Throwable oops) {
+				result = this.createEditModelAndView(user, "user.commit.error");
 			}
-		}
 		return result;
 	}
-	
+
 	// Ancillary methods
-	
-			protected ModelAndView createEditModelAndView(User user) {
-				ModelAndView result;
 
-				result = createEditModelAndView(user, null);
+	protected ModelAndView createEditModelAndView(final User user) {
+		ModelAndView result;
 
-				return result;
-			}
-			protected ModelAndView createEditModelAndView(User user, String message) {
-				ModelAndView result;
+		result = this.createEditModelAndView(user, null);
 
-				String requestURI = "user/user/edit.do";
+		return result;
+	}
+	protected ModelAndView createEditModelAndView(final User user, final String message) {
+		ModelAndView result;
 
-				result = new ModelAndView("user/edit");
-				result.addObject("user", user);
-				result.addObject("message", message);
-				result.addObject("requestURI", requestURI);
+		final String requestURI = "user/user/edit.do";
 
-				return result;
-			}
+		result = new ModelAndView("user/edit");
+		result.addObject("user", user);
+		result.addObject("errorMessage", message);
+		result.addObject("requestURI", requestURI);
+
+		return result;
+	}
 }

@@ -1,8 +1,6 @@
 
 package services;
 
-import java.util.Collection;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import utilities.AbstractTest;
 import domain.Actor;
-import domain.Folder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -26,7 +23,7 @@ public class FolderServiceTest extends AbstractTest {
 	private FolderService	folderService;
 
 	@Autowired
-	private UserService		chorbiService;
+	private UserService		actorService;
 
 
 	// Tests ---------------------------------------------------------------
@@ -34,7 +31,7 @@ public class FolderServiceTest extends AbstractTest {
 	public void driverInitFolder() {
 		final Object testingData[][] = {
 			{		// Comprobacion correcta: username con sus folders.
-				"chorbi1", null
+				"actor1", null
 			}, {	// Comprobacion erronea: username vacío.
 				"", IllegalArgumentException.class
 			}
@@ -49,8 +46,8 @@ public class FolderServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(username);
-			final Actor chorbi = this.actorService.findOne(this.extract(username));
-			final Collection<Folder> init = this.folderService.initFolders(chorbi);
+			final Actor actor = this.actorService.findOne(this.extract(username));
+			this.folderService.initFolders(actor);
 			this.folderService.flush();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

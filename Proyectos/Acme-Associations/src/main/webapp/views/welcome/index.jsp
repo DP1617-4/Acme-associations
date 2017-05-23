@@ -17,7 +17,10 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="/WEB-INF/tags/functions" prefix="mask" %>
 
-<p><spring:message code="welcome.greeting.prefix" /> ${name}<spring:message code="welcome.greeting.suffix" /></p>
+<p><spring:message code="welcome.greeting.prefix" /> <b>${name}</b><spring:message code="welcome.greeting.suffix" /></p>
 
 <p><spring:message code="welcome.greeting.current.time" /> ${moment}</p> 
+
+<p></p><br><fieldset><legend><spring:message code="welcome.greeting.association"/><b></legend><jstl:out value="${featured.name}"/></b></br> <a href="association/${featured.id}/display.do"><img src=${featured.picture } height="120"/></a></fieldset>
+
 

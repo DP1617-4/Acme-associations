@@ -66,6 +66,19 @@ public class AdministratorService {
 			}
 		Assert.isTrue(checker);
 	}
+	
+	public boolean checkAdministratorBool() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Boolean checker = false;
+		userAccount = LoginService.getPrincipal();
+		for (final Authority a : userAccount.getAuthorities())
+			if (a.getAuthority().equals(Authority.ADMIN)) {
+				checker = true;
+				break;
+			}
+		return checker;
+	}
 
 	public Administrator save(final Administrator administrator) {
 		Administrator result;

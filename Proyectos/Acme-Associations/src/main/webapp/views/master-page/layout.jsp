@@ -26,7 +26,7 @@
 
 <link rel="shortcut icon" href="favicon.ico"/> 
 
-<script type="text/javascript" src="scripts/jquery.js"></script>
+<script type="text/javascript" src="scripts/jquery1.12.4.min.js"></script>
 <script type="text/javascript" src="scripts/jquery-ui.js"></script>
 <script type="text/javascript" src="scripts/jmenu.js"></script>
 
@@ -34,26 +34,38 @@
 <link rel="stylesheet" href="styles/jmenu.css" media="screen" type="text/css" />
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
 
+<!-- Trasteado por Andres -->
 
-<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="scripts/datepick-js/jquery.plugin.js"></script>
+<script type="text/javascript" src="scripts/datepick-js/jquery.datepick.js"></script>
+<script type="text/javascript" src="scripts/datepick-js/jquery.datepick-es.js"></script>
 
-<!-- Bootstrap core CSS -->
-    <!-- <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
+<link rel="stylesheet" href="styles/datepick-css/jquery.datepick.css" type="text/css">
+<link rel="stylesheet" href="styles/datepick-css/ui.datepick.css" type="text/css">
+
+<!-- hasta aqui -->
+
+	<!--  
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datepicker.en-GB.min.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/tether.js"></script> -->
+
+	<!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
-    <!-- <link href="css/bootstrap-grid.min.css" rel="stylesheet" type="text/css">
+   <!--  <link href="css/bootstrap-grid.min.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap-reboot.css" rel="stylesheet" type="text/css">
-    <link href="css/bootstrap-reboot.min.css" rel="stylesheet" type="text/css">
-    <link href="css/bootstrap-grid.css" rel="stylesheet" type="text/css"> -->
-
+    <link href="css/bootstrap-reboot.min.css" rel="stylesheet" type="text/css">-->
+    <link href="css/bootstrap-grid.css" rel="stylesheet" type="text/css"> 
+	<link href="css/tether.css" rel="stylesheet" type="text/css">
+	<!--<link href="css/bootstrap-datepicker3.standalone.css" rel="stylesheet" type="text/css">
     <!-- Custom styles for this template -->
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("#jMenu").jMenu();
-	});
-
 	function askSubmission(msg, form) {
 		if (confirm(msg))
 			form.submit();
@@ -71,27 +83,42 @@
 			window.location.replace(loc);
 		}
 	</script>
+	<script type="text/javascript">
+		function changeLocale(lang){
+			$.fn.datepicker.defaults.language	= lang;
+		}
+	</script>
+	
+	<script type="text/javascript">
+		function alertMessage(str) {
+			alert(str);
+		}
+	</script>
 </head>
-
+<br>
 <body>
 
-	<div>
+
+	<div class="container-nav">
 		<tiles:insertAttribute name="header" />
 	</div>
-	<br> </br>
-	<br> </br>
-	<div>
+	<div class= "container">
 		<tiles:insertAttribute name="body" />	
-		<jstl:if test="${message != null}">
+		<jstl:if test="${errorMessage != null}">
 			<br />
-			<span class="message"><spring:message code="${message}" /></span>
+			<span class="message"><spring:message code="${errorMessage}" /></span>
 		</jstl:if>	
 	</div>
-	<div>
+	<hr>
+	<div class = "container">
 		<tiles:insertAttribute name="footer" />
 	</div>
 
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<jstl:if test="${not empty flashMessage}">
+	<script>alertMessage('<spring:message code="${flashMessage}"/>'); </script>
+</jstl:if>
 
 </body>
 </html>

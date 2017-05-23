@@ -16,10 +16,9 @@
 
 <jsp:useBean id="date" class="java.util.Date" />
 
-<hr />
 
 <div>
-	<a href="?language=en">en</a> | <a href="?language=es">es</a>
+	<a href="?language=en" onclick="changeLocale('en')">en</a> | <a href="?language=es" onclick="changeLocale('es')">es</a>
 </div>
 
 <b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme Associations Co., Inc.</b>

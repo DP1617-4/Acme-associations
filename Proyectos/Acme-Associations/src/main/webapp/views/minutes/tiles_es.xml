@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles_es.xml
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+
+	<definition name="minutes/display" extends="master.page">	
+		<put-attribute name="title" value="Mostrar acta" />
+		<put-attribute name="body" value="/views/minutes/display.jsp" />
+	</definition>
+	
+	<definition name="minutes/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar acta" />
+		<put-attribute name="body" value="/views/minutes/edit.jsp" />
+	</definition>
+	
+	<definition name="minutes/list" extends="master.page">	
+		<put-attribute name="title" value="Listar acta" />
+		<put-attribute name="body" value="/views/minutes/list.jsp" />
+	</definition>
+	
+</tiles-definitions>

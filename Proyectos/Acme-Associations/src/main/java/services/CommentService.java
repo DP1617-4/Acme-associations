@@ -7,11 +7,16 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.CommentRepository;
 import domain.Association;
 import domain.Comment;
 import domain.Commentable;
+import domain.Item;
+import domain.Meeting;
+import domain.Minutes;
 import domain.User;
 
 @Service
@@ -25,13 +30,25 @@ public class CommentService {
 	@Autowired
 	private UserService			userService;
 
+	@Autowired
+	private ItemService			itemService;
+
+	@Autowired
+	private CommentableService	commentableService;
+
+	@Autowired
+	private Validator			validator;
+
 
 	//Basic CRUD methods-------------------
 
-	public Comment create(final Commentable commentable) {
+	public Comment create(final int commentableId) {
 
 		Comment created;
 		created = new Comment();
+		Commentable commentable;
+
+		commentable = this.commentableService.findOne(commentableId);
 		final Date moment = new Date(System.currentTimeMillis() - 100);
 		final User principal = this.userService.findByPrincipal();
 		created.setUser(principal);
@@ -39,7 +56,6 @@ public class CommentService {
 		created.setCommentable(commentable);
 		return created;
 	}
-
 	public Comment findOne(final int commentId) {
 
 		Comment retrieved;
@@ -68,6 +84,17 @@ public class CommentService {
 
 	}
 
+	public Comment reconstruct(final Comment comment, final BindingResult binding) {
+
+		final Date moment = new Date(System.currentTimeMillis() - 100);
+		final User principal = this.userService.findByPrincipal();
+		comment.setUser(principal);
+		comment.setMoment(moment);
+
+		this.validator.validate(comment, binding);
+		return comment;
+	}
+
 	//Auxiliary methods
 
 	//Our other bussiness methods
@@ -91,7 +118,18 @@ public class CommentService {
 		principal = this.userService.findByPrincipal();
 
 		if (commentable instanceof Association)
-			Assert.isTrue(this.userService.findAllByAssociation((Association) commentable).contains(principal));
+			Assert.isTrue(this.userService.findAllByAssociation((Association) commentable).contains(principal), "commentable.association.error");
+		if (commentable instanceof Item)
+			Assert.isTrue(this.userService.findAllRelatedItem((Item) commentable).contains(principal), "commentable.item.error");
+		final Meeting meeting;
+		if (commentable instanceof Meeting) {
+			meeting = (Meeting) commentable;
+			Assert.isTrue(this.userService.findAllByAssociation(meeting.getAssociation()).contains(principal), "commentable.association.error");
+		}
+		Minutes minutes;
+		if (commentable instanceof Minutes) {
+			minutes = (Minutes) commentable;
+			Assert.isTrue(minutes.getUsers().contains(principal), "commentable.minutes.error");
+		}
 	}
-
 }

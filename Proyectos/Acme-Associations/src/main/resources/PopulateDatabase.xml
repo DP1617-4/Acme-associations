@@ -715,7 +715,6 @@
 		<property name="maximumAttendants" value="14"/>
 		<property name="publicActivity" value="true"/>
 		<property name="association" ref="association1"/>
-		<property name="place" ref="place1"/>
 		<property name="attendants">
 			<list>
 				<ref bean="user1"></ref>
@@ -732,7 +731,6 @@
 		<property name="maximumAttendants" value="21"/>
 		<property name="publicActivity" value="false"/>
 		<property name="association" ref="association1"/>
-		<property name="place" ref="place3"/>
 		<property name="attendants">
 			<list>
 				<ref bean="user2"></ref>
@@ -1061,54 +1059,54 @@
 	<!-- Loans -->
 	
 	<bean id="loan1" class="domain.Loan">
-		<property name="startDate" value="2017/03/21 14:00" />
-		<property name="expectedDate" value="2017/03/24 14:00" />
-		<property name="finalDate" value="2017/07/23 14:00" />
+		<property name="startDate" value="2017/03/21" />
+		<property name="expectedDate" value="2017/03/24" />
+		<property name="finalDate" value="2017/04/23" />
 		<property name="item" ref="item1" />
 		<property name="lender" ref="user1" />
 		<property name="borrower" ref="user2" />
 	</bean>
 	
 	<bean id="loan2" class="domain.Loan">
-		<property name="startDate" value="2017/03/21 14:00" />
-		<property name="expectedDate" value="2017/03/24 14:00" />
-		<property name="finalDate" value="2017/07/23 14:00" />
+		<property name="startDate" value="2017/03/21" />
+		<property name="expectedDate" value="2017/03/24" />
+		<property name="finalDate" value="2017/04/23" />
 		<property name="item" ref="item2" />
 		<property name="lender" ref="user1" />
 		<property name="borrower" ref="user2" />
 	</bean>
 	
 	<bean id="loan3" class="domain.Loan">
-		<property name="startDate" value="2017/03/21 14:00" />
-		<property name="expectedDate" value="2017/03/24 14:00" />
-		<property name="finalDate" value="2017/07/23 14:00" />
+		<property name="startDate" value="2017/03/21" />
+		<property name="expectedDate" value="2017/03/24" />
+		<property name="finalDate" value="2017/04/23" />
 		<property name="item" ref="item3" />
 		<property name="lender" ref="user1" />
 		<property name="borrower" ref="user2" />
 	</bean>
 	
 	<bean id="loan4" class="domain.Loan">
-		<property name="startDate" value="2017/03/21 14:00" />
-		<property name="expectedDate" value="2017/03/24 14:00" />
-		<property name="finalDate" value="2017/07/23 14:00" />
+		<property name="startDate" value="2017/03/21" />
+		<property name="expectedDate" value="2017/03/24" />
+		<property name="finalDate" > <null /> </property>
 		<property name="item" ref="item4" />
 		<property name="lender" ref="user1" />
 		<property name="borrower" ref="user2" />
 	</bean>
 	
 	<bean id="loan5" class="domain.Loan">
-		<property name="startDate" value="2017/03/21 14:00" />
-		<property name="expectedDate" value="2017/03/24 14:00" />
-		<property name="finalDate" value="2017/07/23 14:00" />
+		<property name="startDate" value="2017/03/21" />
+		<property name="expectedDate" value="2017/03/24" />
+		<property name="finalDate"> <null /> </property>
 		<property name="item" ref="item5" />
 		<property name="lender" ref="user1" />
 		<property name="borrower" ref="user2" />
 	</bean>
 	
 	<bean id="loan6" class="domain.Loan">
-		<property name="startDate" value="2017/03/21 14:00" />
-		<property name="expectedDate" value="2017/03/24 14:00" />
-		<property name="finalDate" value="2017/07/23 14:00" />
+		<property name="startDate" value="2017/03/21" />
+		<property name="expectedDate" value="2017/03/24" />
+		<property name="finalDate"> <null/> </property>
 		<property name="item" ref="item6" />
 		<property name="lender" ref="user1" />
 		<property name="borrower" ref="user2" />
