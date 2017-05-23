@@ -27,7 +27,7 @@
           
   	<div class="row">
   	
-		<div class="col-6 col-md-6 col-lg-8">
+		<div class="col-6 col-md-6 col-lg-6">
     		<h2><spring:message code="meeting.description"/></h2>
 	        	<div><b><spring:message code="meeting.agenda"/>:</b> <a href=${meeting.agenda}><jstl:out value="${meeting.agenda}" /></a></div>
 	        	<div><b><spring:message code="meeting.address"/>:</b> <jstl:out value="${meeting.address}" /></div>
@@ -62,7 +62,7 @@
 	            
     	</div><!--/span-->
     
-    	<div class="col-6 col-md-6 col-lg-4">
+    	<div class="col-6 col-md-6 col-lg-6">
 			<h2><spring:message code="meeting.minute.description"/></h2>
 			<jstl:if test="${minutes != null}">
 				<div><b><spring:message code="meeting.minute.document"/>:</b><a href="${minutes.document}" ><jstl:out value="${minutes.document}" /></a></div>
@@ -109,7 +109,6 @@
 					<display:column title="${userHeader}">
 						<a href="actor/actor/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
 					</display:column>
-					
 				</display:table>
 				
 				<jstl:if test="${isParticipant == true}">
@@ -128,10 +127,6 @@
 					<div><a class="btn btn-primary" href="minutes/user/${association.id}/${meeting.id}/create.do"><spring:message code="minute.create"/></a></div>
 				</jstl:if>
 			</jstl:if>
-			
-			${isParticipant }
-			
-			
 		</div><!--/span-->
     
 	</div>
