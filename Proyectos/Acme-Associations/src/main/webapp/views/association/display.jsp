@@ -116,7 +116,7 @@
             <jstl:if test="${role eq 'ASSOCIATE' || role eq 'COLLABORATOR'}">
             <a href="association/user/${association.id}/leave.do" class="list-group-item"><spring:message code="association.leave"/></a>
             </jstl:if>
-            <a href="activity/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
+            <a href="activity/${association.id}/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
           </div>
            <jstl:if test="${role eq 'MANAGER'}">
             <div>
