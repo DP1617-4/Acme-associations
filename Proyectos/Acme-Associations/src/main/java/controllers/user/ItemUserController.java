@@ -21,7 +21,6 @@ import services.CommentService;
 import services.ItemService;
 import services.RolesService;
 import services.SectionService;
-import services.UserService;
 import controllers.AbstractController;
 import domain.Actor;
 import domain.Association;
@@ -50,9 +49,6 @@ public class ItemUserController extends AbstractController {
 
 	@Autowired
 	private ActorService	actorService;
-
-	@Autowired
-	private UserService		userService;
 
 	@Autowired
 	private SectionService	sectionService;
