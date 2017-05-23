@@ -31,6 +31,7 @@ import domain.Roles;
 import domain.Section;
 import domain.User;
 import forms.ChangeCondition;
+import forms.FilterItem;
 
 @Controller
 @RequestMapping("/item/user")
@@ -212,6 +213,22 @@ public class ItemUserController extends AbstractController {
 
 		return result;
 	}
+	
+	
+	@RequestMapping(value = "/filter", method = RequestMethod.POST, params = "filterItem")
+	public ModelAndView filtr(final FilterItem filterItem, final BindingResult binding, final RedirectAttributes redir) {
+		final ModelAndView result;
+
+		Collection<Item> found;
+		
+		found = this.itemService.filterItems(filterItem.getText());
+		
+		result = new ModelAndView("item/list");
+		result.addObject("found", found);
+
+		return result;
+	}
+	
 
 	protected ModelAndView createEditModelAndView(final Item item) {
 		ModelAndView result;

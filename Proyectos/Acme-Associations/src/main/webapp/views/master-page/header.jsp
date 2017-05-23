@@ -26,9 +26,23 @@
         src="https://i.imgur.com/i8YWDoL.png" height="35px" /></a>
     </div>
     <div class="navbar-collapse collapse">
+    
+    
+		
    	 <ul class="nav navbar-nav navbar-right">
-
+	
+	<form class = "navbar-nav mr-auto" >
+		<div class="col-sm-3 col-md-3">
+			<button class="btn navbar-btn" type="submit"><spring:message code="header.filter"/></button>
+		</div>
+		<div class="col-sm-8 col-md-8">
+			<input class="form-control mr-sm-2" placeholder="<spring:message code="header.search"/>" type="text" name="filter"/>
+		</div>
+	</form>
+	
 	<security:authorize access="hasRole('ADMIN')">
+	
+		
 
         <li><a class="fNiv" href="association/administrator/list.do"><spring:message code="master.page.association.list" /></a></li>
 				<li class="dropdown">
