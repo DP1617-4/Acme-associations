@@ -221,6 +221,8 @@ public class AssociationUserController extends AbstractController {
 		ModelAndView result;
 		try {
 
+			this.rolesService.checkManagerPrincipal(association);
+
 			User mostSanctioned;
 			Integer mostSanctionedSanctions;
 			mostSanctioned = this.userService.selectUserWithMostSanctionsByAssociation(association);

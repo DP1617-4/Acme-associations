@@ -49,7 +49,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><spring:message	code="master.page.administrator" /><span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="systemConfiguration/administrator/edit.do"><spring:message code="master.page.system" /></a></li>
-					<li><a href="systemConfiguration/administrator/dashboard.do"><spring:message code="master.page.dashboard" /></a></li>
+					<li><a href="dashboard/admin/dashboard.do"><spring:message code="master.page.dashboard" /></a></li>
               </ul>
             </li>
 		</security:authorize>
