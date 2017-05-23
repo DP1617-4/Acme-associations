@@ -41,10 +41,17 @@
 		</security:authorize>
 
         <security:authorize access="hasRole('USER')">
-        	<li><a href="loan/user/listOwn.do"><spring:message code="master.page.loan.own"/></a></li>
+        	
+        	<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><spring:message code="master.page.association" /> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+               
 			<li><a href="association/list.do"><spring:message code="master.page.association.list" /></a></li>
 			<li><a href="association/user/listOwn.do"><spring:message code="master.page.association.list.own" /></a></li>
+			 <li><a href="loan/user/listOwn.do"><spring:message code="master.page.loan.own"/></a></li>
 			<li><a href="sanction/myActiveSanctions.do"><spring:message code="master.page.sanction.active.list.own" /></a></li>
+              </ul>
+        	
 			 <li>
 				<li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><spring:message code="master.page.profile" /> <span class="caret"></span></a>
@@ -52,6 +59,8 @@
                 <li><a href="actor/actor/displayOwn.do"><spring:message code="master.page.user.display" /></a></li>
                 <li><a href="user/user/edit.do"><spring:message code="master.page.user.edit" /></a></li>
               </ul>
+              
+        		
             </li>
            </security:authorize>
       
