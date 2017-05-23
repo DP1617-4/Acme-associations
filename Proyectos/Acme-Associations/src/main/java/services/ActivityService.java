@@ -129,7 +129,14 @@ public class ActivityService {
 
 			this.validator.validate(result, binding);
 		}
+		return result;
 
+	}
+
+	public Collection<Activity> activeActivitiesWithMostUsers() {
+		Collection<Activity> result;
+
+		result = this.activityRepository.activeActivitiesWithMostUsers();
 		return result;
 	}
 
@@ -140,7 +147,7 @@ public class ActivityService {
 		activity.setAttendants(attendants);
 	}
 
-	public Activity findMostAttendedByAssociation(Association association) {
+	public Activity findMostAttendedByAssociation(final Association association) {
 
 		Activity activity = null;
 		List<Activity> activities = new ArrayList<Activity>(this.activityRepository.findMostAttendedByAssociation(association.getId()));

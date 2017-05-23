@@ -1,58 +1,148 @@
-/*
- * ActorRepository.java
- * 
- * Copyright (C) 2017 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the
- * TDG Licence, a copy of which you may download from
- * http://www.tdg-seville.info/License.html
- */
 
-package repositories;
+package services;
 
 import java.util.Collection;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
+import services.AdministratorService;
+import services.RolesService;
+import services.UserService;
+import domain.Association;
+import domain.Sanction;
 import domain.User;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+@Service
+@Transactional
+public class SanctionService {
 
-	@Query("Select c from User c where c.userAccount.id = ?1")
-	User findByUserAccountId(int userAccountId);
+	public SanctionService() {
+		super();
+	}
 
-	//	@Query("select r.user from Roles r where r.association.id = ?1")
-	//	Collection<User> findAllByAssociation(int associationId, Pageable pageRequest);
 
-	@Query("select r.user from Roles r where r.association.id = ?1")
-	Collection<User> findAllByAssociation(int associationId);
+	// Repository
 
-	@Query("select r.user from Roles r where r.association.id = ?1 and r.type='MANAGER'")
-	User findAssociationManager(int associationId);
+	@Autowired
+	private SanctionRepository		sanctionRepository;
 
-	@Query("select r.user from Roles r where r.type='COLLABORATOR' and r.association.id=?1")
-	Collection<User> findAssociationCollaborators(int associationId);
+	// Auxiliary services
 
-	@Query("select l.borrower from Loan l where l.item.id = ?1")
-	Collection<User> findAllRelatedItem(int itemId);
+	@Autowired
+	private UserService				userService;
 
-	@Query("select s.user from Sanction s where s.association.id=?1 group by s.user order by count(s) DESC")
-	Collection<User> selectUserWithMostSanctionsByAssociation(int associationId);
+	@Autowired
+	private RolesService			rolesService;
 
-	@Query("select l.lender from Loan l where l.item.section.association.id=?1 group by l.lender order by count(l) DESC")
-	Collection<User> findCollaboratorMostLoans(int associationId);
+	@Autowired
+	private AdministratorService	administratorService;
 
-	@Query("select l.lender from Loan l where l.item.section.association.id=?1 group by l.lender order by count(l) ASC")
-	Collection<User> findCollaboratorLeastLoans(int associationId);
 
-	@Query("select count(l) from Loan l where l.item.section.association.id=?2 and l.lender.id=?1")
-	Integer countLoansCollaborator(int userId, int associationId);
+	public Sanction create(final int userId, final Association association) {
+		Sanction result;
+		final User user = userService.findOne(userId);
 
-	//Dashboard queries
+		result = new Sanction();
+		result.setUser(user);
+		result.setAssociation(association);
 
-	// User 2.0
+		return result;
+	}
+
+	public Sanction findOne(final int SanctionId) {
+		Sanction result;
+
+		result = this.sanctionRepository.findOne(SanctionId);
+
+		return result;
+	}
+
+	public Sanction findOneToEdit(final int SanctionId) {
+		Sanction result;
+		result = this.sanctionRepository.findOne(SanctionId);
+		if (!administratorService.checkAdministratorBool()) {
+			rolesService.checkCollaboratorPrincipal(result.getAssociation());
+		}
+
+		rolesService.checkCollaboratorPrincipal(result.getAssociation());
+
+		return result;
+	}
+
+	public Collection<Sanction> findAll() {
+		Collection<Sanction> result;
+
+		result = this.sanctionRepository.findAll();
+
+		return result;
+	}
+
+	public void delete(final Sanction sanction) {
+		final User principal = this.userService.findByPrincipal();
+		Assert.notNull(sanction);
+		Assert.isTrue(sanction.getId() != 0);
+		this.rolesService.checkCollaborator(principal, sanction.getAssociation());
+
+		this.sanctionRepository.delete(sanction);
+	}
+
+	public Sanction save(final Sanction sanction) {
+		final User principal = this.userService.findByPrincipal();
+		this.rolesService.checkCollaborator(principal, sanction.getAssociation());
+		Assert.isTrue(this.userService.findAllByAssociation(sanction.getAssociation()).contains(sanction.getUser()));
+		final Sanction result = this.sanctionRepository.save(sanction);
+
+		return result;
+	}
+
+	public Sanction reconstruct() {
+		final Sanction result = new Sanction();
+
+		return result;
+	}
+
+	public Collection<Sanction> findByAssociationAndUser(Association association, int userId) {
+		if (!administratorService.checkAdministratorBool()) {
+			rolesService.checkCollaboratorPrincipal(association);
+		}
+		rolesService.checkCollaboratorPrincipal(association);
+		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUser(association.getId(), userId);
+		return result;
+	}
+	public Collection<Sanction> findByAssociationAndPrincipal(Association association) {
+		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUser(association.getId(), userService.findByPrincipal().getId());
+		return result;
+	}
+
+	public Collection<Sanction> findAllByPrincipal() {
+		final Collection<Sanction> result = sanctionRepository.findAllByPrincipal(userService.findByPrincipal().getId());
+		return result;
+	}
+
+	public Collection<Sanction> findByAssociationAndPrincipalActive(Association association) {
+		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUserActive(association.getId(), userService.findByPrincipal().getId());
+		return result;
+	}
+
+	public Collection<Sanction> findByAssociationAndUserActive(Association association, int userId) {
+		if (!administratorService.checkAdministratorBool()) {
+			rolesService.checkCollaboratorPrincipal(association);
+		}
+		rolesService.checkCollaboratorPrincipal(association);
+		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUserActive(association.getId(), userId);
+		return result;
+	}
+	public Collection<Sanction> findAllByPrincipalActive() {
+		final Collection<Sanction> result = sanctionRepository.findAllByPrincipalActive(userService.findByPrincipal().getId());
+		return result;
+	}
+
+	public Integer countSanctionsByUserAssociation(User user, Association association) {
+
+		return this.sanctionRepository.countSanctionsByUserAssociation(user.getId(), association.getId());
+	}
 
 }

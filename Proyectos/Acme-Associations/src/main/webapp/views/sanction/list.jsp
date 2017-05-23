@@ -65,23 +65,12 @@
 			</jstl:if>
 		</display:column>
 	</jstl:if>
-	<security:authorize access="hasRole('ADMIN')">
-		<display:column title="${editHeader}">
-			<jstl:if test="${row.user.userAccount != loggedactor}">
-				<a href="sanction/actor/${association.id}/edit.do?sanctionId=${row.id}"><spring:message code="sanction.edit"/></a>
-			</jstl:if>
-		</display:column>
-	</security:authorize>
 	
 </display:table>
 <br><br/>
 	<jstl:if test="${not empty role && (role.type eq 'COLLABORATOR' || role.type eq 'MANAGER') && not requestURI.contains('my')}">
 		<div><a href="sanction/actor/${association.id}/create.do?userId=${userId}"><spring:message code="sanction.create"/></a></div>
 	</jstl:if>
-	<security:authorize access="hasRole('ADMIN')">
-		<div><a href="sanction/actor/${association.id}/create.do?userId=${userId}"><spring:message code="sanction.create"/></a></div>
-
-	</security:authorize>
 <br/>
 
 		

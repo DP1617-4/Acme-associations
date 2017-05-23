@@ -230,7 +230,26 @@ public class UserService {
 		return this.userRepository.findAllRelatedItem(item.getId());
 	}
 
-	public User findCollaboratorLeastLoans(Association association) {
+	public Object[] minMaxAvgMembers() {
+		final Object[] result = new Object[3];
+
+		result[0] = this.userRepository.avgMembers();
+		final List<Long> counts = this.userRepository.findCountMembers();
+		result[1] = counts.get(0);
+		result[2] = counts.get(counts.size() - 1);
+
+		return result;
+	}
+
+	public Collection<User> mostSanctionedUsers() {
+		Collection<User> result;
+
+		result = this.userRepository.mostSanctionedUsers();
+
+		return result;
+	}
+
+	public User findCollaboratorLeastLoans(final Association association) {
 
 		List<User> users;
 		Collection<User> usersAux;
@@ -238,23 +257,20 @@ public class UserService {
 
 		usersAux = this.findAssociationCollaborators(association);
 		users = new ArrayList<User>(this.userRepository.findCollaboratorLeastLoans(association.getId()));
-		if (users.size() > 0) {
+		if (users.size() > 0)
 			user = users.get(0);
-		}
-		for (User u : usersAux) {
-
+		for (final User u : usersAux)
 			if (!(users.contains(u))) {
 
 				user = u;
 				break;
 			}
-		}
 
 		return user;
 
 	}
 
-	public User findCollaboratorMostLoans(Association association) {
+	public User findCollaboratorMostLoans(final Association association) {
 
 		User user = null;
 		List<User> users = new ArrayList<User>(this.userRepository.findCollaboratorMostLoans(association.getId()));
@@ -264,7 +280,7 @@ public class UserService {
 		return user;
 	}
 
-	public User selectUserWithMostSanctionsByAssociation(Association association) {
+	public User selectUserWithMostSanctionsByAssociation(final Association association) {
 
 		User user = null;
 		List<User> users = new ArrayList<User>(this.userRepository.selectUserWithMostSanctionsByAssociation(association.getId()));

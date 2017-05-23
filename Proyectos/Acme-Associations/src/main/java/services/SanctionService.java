@@ -65,6 +65,8 @@ public class SanctionService {
 			rolesService.checkCollaboratorPrincipal(result.getAssociation());
 		}
 
+		rolesService.checkCollaboratorPrincipal(result.getAssociation());
+
 		return result;
 	}
 
@@ -104,10 +106,10 @@ public class SanctionService {
 		if (!administratorService.checkAdministratorBool()) {
 			rolesService.checkCollaboratorPrincipal(association);
 		}
+		rolesService.checkCollaboratorPrincipal(association);
 		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUser(association.getId(), userId);
 		return result;
 	}
-
 	public Collection<Sanction> findByAssociationAndPrincipal(Association association) {
 		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUser(association.getId(), userService.findByPrincipal().getId());
 		return result;
@@ -127,10 +129,10 @@ public class SanctionService {
 		if (!administratorService.checkAdministratorBool()) {
 			rolesService.checkCollaboratorPrincipal(association);
 		}
+		rolesService.checkCollaboratorPrincipal(association);
 		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUserActive(association.getId(), userId);
 		return result;
 	}
-
 	public Collection<Sanction> findAllByPrincipalActive() {
 		final Collection<Sanction> result = sanctionRepository.findAllByPrincipalActive(userService.findByPrincipal().getId());
 		return result;
