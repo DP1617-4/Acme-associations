@@ -1,0 +1,29 @@
+importar el css: 
+- jquery.datepick.css
+- ui.datepick.css
+importar los js
+- jquery.plugin.js
+- jquery.datepick.js
+- jquery.datepick-es.js
+
+crear un input de tipo text
+
+imbuirle la siguiente funcion:
+
+function generarDatePicker(elem){
+	$(elem).datepick({
+		dateFormat: 'dd/mm/yy',
+		altField: $(elem),
+		changeYear: true,
+		changeMonth: true,
+		defaultDate: null
+	}).keyup(function(e) {
+	    if(e.keyCode == 8 || e.keyCode == 46) {
+	        $.datepicker._clearDate(this);
+	    }
+	});
+}
+
+si se quiere hacer un rango, usar en los argumentos:
+
+rangeSelect: true
