@@ -166,4 +166,9 @@ public class ItemService {
 	
 	}
 	
+	public Collection<Item> filterItems(String filter){
+		
+		return this.itemRepository.filterItems(filter);
+	}
+	
 }

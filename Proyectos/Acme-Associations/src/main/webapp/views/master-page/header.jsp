@@ -26,8 +26,13 @@
         src="https://i.imgur.com/i8YWDoL.png" height="35px" /></a>
     </div>
     <div class="navbar-collapse collapse">
+    
+    	<div>	
+			<input type="text" name="filter"/>
+		</div>
+		
    	 <ul class="nav navbar-nav navbar-right">
-
+	
 	<security:authorize access="hasRole('ADMIN')">
 
         <li><a class="fNiv" href="association/administrator/list.do"><spring:message code="master.page.association.list" /></a></li>
