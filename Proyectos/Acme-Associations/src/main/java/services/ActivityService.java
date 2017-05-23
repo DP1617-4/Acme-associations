@@ -7,9 +7,12 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ActivityRepository;
 import domain.Activity;
+import domain.Association;
 import domain.Item;
 import domain.User;
 
@@ -21,6 +24,9 @@ public class ActivityService {
 	@Autowired
 	private ActivityRepository	activityRepository;
 
+	@Autowired
+	private Validator			validator;
+
 
 	// Constructors --------------------------------------------
 	public ActivityService() {
@@ -28,9 +34,10 @@ public class ActivityService {
 	}
 
 	//Basic CRUD methods ---------------------------------------
-	public Activity create() {
+	public Activity create(final Association association) {
 		Activity created;
 		created = new Activity();
+		created.setAssociation(association);
 		return created;
 	}
 
@@ -76,6 +83,58 @@ public class ActivityService {
 		result = this.activityRepository.findAllByAssociation(associationId);
 
 		return result;
+	}
+
+	public Activity reconstruct(final Activity activity, final Association association, final BindingResult binding) {
+		Activity result;
+
+		if (activity.getId() == 0) {
+			result = this.create(association);
+
+			if (activity.getPlace().getLatitude() == null) {
+				if (activity.getPlace().getLongitude() != null)
+					binding.rejectValue("place.latitude", "javax.validation.constraints.NotNull.message");
+			} else if (activity.getPlace().getLongitude() == null)
+				if (activity.getPlace().getLatitude() != null)
+					binding.rejectValue("place.longitude", "javax.validation.constraints.NotNull.message");
+
+			result.setName(activity.getName());
+			result.setStartMoment(activity.getStartMoment());
+			result.setDescription(activity.getDescription());
+			result.setEndMoment(activity.getEndMoment());
+			result.setMaximumAttendants(activity.getMaximumAttendants());
+			result.setAssociation(activity.getAssociation());
+			result.setAttendants(activity.getAttendants());
+			result.setPublicActivity(activity.getPublicActivity());
+			result.setWinner(activity.getWinner());
+			result.setItem(activity.getItem());
+			result.setPlace(activity.getPlace());
+		} else {
+			result = this.activityRepository.findOne(activity.getId());
+
+			result.setName(activity.getName());
+			result.setStartMoment(activity.getStartMoment());
+			result.setDescription(activity.getDescription());
+			result.setEndMoment(activity.getEndMoment());
+			result.setMaximumAttendants(activity.getMaximumAttendants());
+			result.setAssociation(activity.getAssociation());
+			result.setAttendants(activity.getAttendants());
+			result.setPublicActivity(activity.getPublicActivity());
+			result.setWinner(activity.getWinner());
+			result.setItem(activity.getItem());
+			result.setPlace(activity.getPlace());
+
+			this.validator.validate(result, binding);
+		}
+
+		return result;
+	}
+
+	public void addParticipant(final User user, final Activity activity) {
+		Collection<User> attendants;
+		attendants = activity.getAttendants();
+		attendants.add(user);
+		activity.setAttendants(attendants);
 	}
 
 }
