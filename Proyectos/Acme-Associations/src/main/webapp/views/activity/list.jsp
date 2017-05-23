@@ -85,7 +85,7 @@
 	<jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
 		<spring:message code="activity.edit" var="editHeader" />
 		<display:column title="${editHeader}">
-			<a href="activity/user/${row.id}/edit.do"><spring:message code="activity.edit" /> </a>
+			<a href="activity/user/${association.id}/${row.id}/edit.do"><spring:message code="activity.edit" /> </a>
 		</display:column>
 	
 	

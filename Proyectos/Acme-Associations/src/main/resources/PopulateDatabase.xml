@@ -715,7 +715,6 @@
 		<property name="maximumAttendants" value="14"/>
 		<property name="publicActivity" value="true"/>
 		<property name="association" ref="association1"/>
-		<property name="place" ref="place1"/>
 		<property name="attendants">
 			<list>
 				<ref bean="user1"></ref>
@@ -732,7 +731,6 @@
 		<property name="maximumAttendants" value="21"/>
 		<property name="publicActivity" value="false"/>
 		<property name="association" ref="association1"/>
-		<property name="place" ref="place3"/>
 		<property name="attendants">
 			<list>
 				<ref bean="user2"></ref>
