@@ -37,6 +37,25 @@
 	<form:label path="${path}">
 		<spring:message code="${code}" />
 	</form:label>	
-	<input id="datepicker" class="form-control" type="text" name="${path}" data-provide="datepicker" readonly="${readonly}" />	
+	<input id="${path}" class="form-control" type="text" name="${path}" readonly="${readonly}" />	
 	<form:errors path="${path}" cssClass="error" />
 </div>	
+
+<script>
+	$(document).ready(function generarDatePicker(){
+		var $j = jQuery.noConflict();
+		var elem = document.getElementById("${path}")
+		debugger
+		$(elem).datepick({
+			dateFormat: 'dd/mm/yy',
+			altField: $(elem),
+			changeYear: true,
+			changeMonth: true,
+			defaultDate: null
+		}).keyup(function(e) {
+		    if(e.keyCode == 8 || e.keyCode == 46) {
+		        $.datepicker._clearDate(this);
+		    }
+		});
+	})
+</script>
