@@ -53,7 +53,7 @@
 	<link href="css/bootstrap-datepicker3.standalone.css" rel="stylesheet" type="text/css">
     <!-- Custom styles for this template -->
 
-<title><tiles:insertAttribute name="title" ignore="true" /></title>
+<title><tiles:insertAttribute name="title"/></title>
 
 <script type="text/javascript">
 	function askSubmission(msg, form) {
@@ -93,6 +93,9 @@
 		<tiles:insertAttribute name="header" />
 	</div>
 	<div class= "container">
+		<h1>
+			<tiles:insertAttribute name="title" />
+		</h1>
 		<tiles:insertAttribute name="body" />	
 		<jstl:if test="${errorMessage != null}">
 			<br />
