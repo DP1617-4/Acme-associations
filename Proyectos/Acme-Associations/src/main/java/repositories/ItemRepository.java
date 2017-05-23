@@ -20,4 +20,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	@Query("select i from Item i where i.name like ?1 or i.identifier=?1 or i.itemCondition=?1 or i.description like ?1 and i.itemCondition!='LOAN'")
 	Collection<Item> filterItems(String filter);
+
+	@Query("select l.item from Loan l where l.item.section.association.id=?1 group by l.item order by count(l) DESC")
+	Item findMostLoanedItemByAssociation(int associationId);
+
 }

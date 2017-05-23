@@ -137,4 +137,9 @@ public class ActivityService {
 		activity.setAttendants(attendants);
 	}
 
+	public Activity findMostAttendedByAssociation(Association association) {
+
+		return this.activityRepository.findMostAttendedByAssociation(association.getId());
+	}
+
 }
