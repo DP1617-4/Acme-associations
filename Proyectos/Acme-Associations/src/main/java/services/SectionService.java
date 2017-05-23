@@ -106,4 +106,9 @@ public class SectionService {
 
 	}
 
+	public Section findSectionWithMostLoansByAssociation(Association association) {
+
+		return this.sectionRepository.findSectionWithMostLoansByAssociation(association.getId());
+	}
+
 }
