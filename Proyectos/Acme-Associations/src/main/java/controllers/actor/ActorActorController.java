@@ -60,7 +60,7 @@ public class ActorActorController extends AbstractController {
 		result = new ModelAndView("actor/display");
 		result.addObject("actor", actor);
 		result.addObject("messages", messages);
-		result.addObject("requestURI", "actor/user/" + actor.getId() + "/display.do");
+		result.addObject("requestURI", "actor/actor/" + actor.getId() + "/display.do");
 
 		return result;
 
@@ -77,7 +77,7 @@ public class ActorActorController extends AbstractController {
 		result = new ModelAndView("actor/display");
 		result.addObject("actor", actor);
 		result.addObject("messages", messages);
-		result.addObject("requestURI", "actor/user/displayOwn.do");
+		result.addObject("requestURI", "actor/actor/displayOwn.do");
 
 		return result;
 
@@ -94,7 +94,7 @@ public class ActorActorController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Actor actor, final String message) {
 		ModelAndView result;
 
-		final String requestURI = "actor/user/edit.do";
+		final String requestURI = "actor/actor/edit.do";
 
 		result = new ModelAndView("actor/edit");
 		result.addObject("actor", actor);
