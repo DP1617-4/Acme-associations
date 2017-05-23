@@ -21,18 +21,33 @@
 	
 	<spring:message code="association.name" var="nameHeader" />
 	<spring:message code="association.role" var="roleHeader" />
+	<spring:message code="association.sanction" var="sanctionsHeader" />
 	
 
 	<display:column title="${nameHeader}">
-		<a href="actor/user/${row.user.id}/display.do"> <jstl:out value="${row.user.name }"/> <jstl:out value="${row.user.surname }"/></a>
+		<a href="actor/user/${row.user.id}/display.do"> <jstl:out value="${row.user.name }"/> <jstl:out value="${row.user.surname}"/></a>
 	</display:column>
 	<display:column property="type" title="${roleHeader}" sortable="true"/>
+	
+	<jstl:if test="${not empty role && (role.type eq 'COLLABORATOR' || role.type eq 'MANAGER')}">
+		<display:column title="${sanctionsHeader}">
+			<jstl:if test="${row.user.userAccount != loggedactor}">
+				<a href="sanction/actor/${association.id}/listByUserActive.do?userId=${row.user.id}"><spring:message code="association.sanction"/></a>
+			</jstl:if>
+		</display:column>
+	</jstl:if>
+	<security:authorize access="hasRole('ADMIN')">
+		<display:column title="${sanctionsHeader}">
+			<jstl:if test=" ${row.user.userAccount != loggedactor}">
+				<a href="sanction/actor/${association.id}/listByUserActive.do?userId=${row.user.id}"><spring:message code="association.sanction"/></a>
+			</jstl:if>
+		</display:column>
+	</security:authorize>
 			
 			
 			
 			
 	
 </display:table>
-
 <br/>
 	
