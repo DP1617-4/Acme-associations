@@ -14,6 +14,7 @@ import repositories.ActivityRepository;
 import domain.Activity;
 import domain.Association;
 import domain.Item;
+import domain.Place;
 import domain.User;
 
 @Service
@@ -140,6 +141,13 @@ public class ActivityService {
 	public Activity findMostAttendedByAssociation(Association association) {
 
 		return this.activityRepository.findMostAttendedByAssociation(association.getId());
+
+	}
+
+	public void setPlace(final Place place, final Activity activity) {
+		activity.setPlace(place);
+		this.save(activity);
+
 	}
 
 }

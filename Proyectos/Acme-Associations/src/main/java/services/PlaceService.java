@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.PlaceRepository;
+import domain.Activity;
 import domain.Place;
 
 @Service
@@ -19,6 +20,9 @@ public class PlaceService {
 	//managed repository ---------------------------------------
 	@Autowired
 	private PlaceRepository	placeRepository;
+
+	@Autowired
+	private ActivityService	activityService;
 
 
 	//supporting services --------------------------------------
@@ -47,10 +51,12 @@ public class PlaceService {
 		return result;
 	}
 
-	public Place save(final Place place) {
+	public Place save(final Place place, final Activity activity) {
 		Assert.notNull(place);
 		Place result;
 		result = this.placeRepository.save(place);
+		if (activity.getPlace() == null)
+			this.activityService.setPlace(place, activity);
 		return result;
 	}
 
