@@ -81,4 +81,10 @@ public class MeetingService {
 		result = this.meetingRepository.save(meeting);
 		return result;
 	}
+
+	public Collection<Meeting> findAllByAssociation(final Association association) {
+		Collection<Meeting> result;
+		result = this.meetingRepository.findAllByAssociation(association.getId());
+		return result;
+	}
 }

@@ -18,6 +18,7 @@ public class ChangeManager {
 
 	private User		user;
 	private Association	association;
+	private String role;
 
 
 	@NotBlank
@@ -35,5 +36,13 @@ public class ChangeManager {
 	}
 	public void setAssociation(final Association association) {
 		this.association = association;
+	}
+	
+	@NotBlank
+	public String getRole(){
+		return this.role;
+	}
+	public void setRole(final String role){
+		this.role = role;
 	}
 }

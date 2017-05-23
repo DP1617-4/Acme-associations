@@ -56,7 +56,7 @@ public class LoanUserController extends AbstractController {
 		result.addObject("loans", loans);
 		result.addObject("association", association);
 		result.addObject("role", role.getType());
-		result.addObject("requestURI", "loan/user/" + association.getId() + "list.do");
+		result.addObject("requestURI", "loan/user/" + association.getId() + "/list.do");
 
 		return result;
 	}
@@ -84,7 +84,7 @@ public class LoanUserController extends AbstractController {
 		result.addObject("loans", loans);
 		result.addObject("association", association);
 		result.addObject("role", role.getType());
-		result.addObject("requestURI", "loan/user/" + association.getId() + "listPending.do");
+		result.addObject("requestURI", "loan/user/" + association.getId() + "/listPending.do");
 
 		return result;
 	}
