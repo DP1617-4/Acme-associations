@@ -31,9 +31,9 @@
 		
    	 <ul class="nav navbar-nav navbar-right">
 	
-	<form class = "navbar-nav mr-auto" >
+	<form id="form1" method="get" action="item/filter.do" class = "navbar-nav mr-auto" >
 		<div class="col-sm-3 col-md-3">
-			<button class="btn navbar-btn" type="submit"><spring:message code="header.filter"/></button>
+			<button class="btn navbar-btn" type="submit" form="form1" value="filter"><spring:message code="header.filter"/></button>
 		</div>
 		<div class="col-sm-8 col-md-8">
 			<input class="form-control mr-sm-2" placeholder="<spring:message code="header.search"/>" type="text" name="filter"/>
