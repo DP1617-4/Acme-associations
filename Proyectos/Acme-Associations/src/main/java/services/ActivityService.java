@@ -14,6 +14,7 @@ import repositories.ActivityRepository;
 import domain.Activity;
 import domain.Association;
 import domain.Item;
+import domain.Place;
 import domain.User;
 
 @Service
@@ -135,6 +136,11 @@ public class ActivityService {
 		attendants = activity.getAttendants();
 		attendants.add(user);
 		activity.setAttendants(attendants);
+	}
+
+	public void setPlace(final Place place, final Activity activity) {
+		activity.setPlace(place);
+		this.save(activity);
 	}
 
 }
