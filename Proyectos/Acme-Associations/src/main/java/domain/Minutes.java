@@ -47,7 +47,7 @@ public class Minutes extends Commentable {
 
 	@Valid
 	@NotNull
-	@OneToOne(optional = false)
+	@OneToOne
 	public Meeting getMeeting() {
 		return this.meeting;
 	}

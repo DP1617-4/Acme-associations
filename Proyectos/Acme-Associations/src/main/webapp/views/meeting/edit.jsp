@@ -25,25 +25,26 @@
 	<form:hidden path="version" />
 	<form:hidden path="association"/>
 
+	<acme:textbox code="meeting.issue" path="issue"/><br />
+	
+	<acme:textbox code="meeting.agenda" path="agenda"/><br />
+	
 	<div>
 	<form:label path="moment">
 		<spring:message code="meeting.moment" />:
 	</form:label>
 	<form:input placeholder="dd/MM/yyyy HH:mm" path="moment" />
 	<form:errors cssClass="error" path="moment" />
-	</div></br>
+	</div> <br />
 	
 	<acme:textbox code="meeting.address" path="address"/><br />
 	
-	<acme:textbox code="meeting.agenda" path="agenda"/><br />
-	
-	<acme:textbox code="meeting.issue" path="issue"/><br />
-	
-	<input type="submit" name="save"
+	<input class="btn btn-primary" type="submit" name="save"
 		value="<spring:message code="meeting.save" />" />&nbsp; 
-	<input type="button" name="cancel"
+		
+	<input class="btn btn-primary" type="button" name="cancel"
 		value="<spring:message code="meeting.cancel" />"
-		onclick="javascript: window.location.replace('${cancelURI}');" />&nbsp;
+		onclick="location.href = ('${cancelURI}');" />
 	<br />
 
 </form:form>

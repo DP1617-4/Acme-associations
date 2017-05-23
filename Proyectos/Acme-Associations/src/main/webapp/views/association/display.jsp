@@ -28,7 +28,7 @@
     	<spring:message code="association.closed"/>
     	<br/>
         <jstl:if test="${role eq 'MANAGER'}">
-      	 	<a class="btn btn-primary" href="user/association/${association.id}/open.do"><spring:message code="association.open"/></a>
+      	 	<a class="btn btn-primary" href="association/user/${association.id}/open.do"><spring:message code="association.open"/></a>
      	 </jstl:if>
     	
     
@@ -84,12 +84,14 @@
 					</display:column>
 					
 				</display:table>
+				<jstl:if test="${role == 'ASSOCIATE' || role == 'COLLABORATOR' || role == 'MANAGER' }">
 				<form:form action="comment/user/${association.id }/edit.do" modelAttribute="comment">
 	            	<form:hidden path="commentable"/>
 	            	<form:input path="title" /></br>
 	            	<form:textarea path="text"/></br>
 	            	<acme:submit name="save" code="comment.new.save"/>
 	            </form:form>
+	            </jstl:if>
             </div><!--/span-->
           </div><!--/row-->
         </div><!--/span-->
@@ -97,10 +99,10 @@
         <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
           <div class="list-group">
           	<security:authorize access="isAuthenticated()"> 
-          		<a href="user/association/${association.id}/listUsers.do" class="list-group-item"><spring:message code="association.user.list"/></a>
+          		<a href="association/user/${association.id}/listUsers.do" class="list-group-item"><spring:message code="association.user.list"/></a>
+          		<a href="item/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.item"/></a>
           	</security:authorize>
             <a href="section/${association.id}/list.do" class="list-group-item"><spring:message code="association.section"/></a>
-            <a href="item/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.item"/></a>
             <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
             <a href="sanction/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>
             <a href="loan/user/${association.id}/listPending.do" class="list-group-item"><spring:message code="association.loanPending"/></a>
@@ -108,10 +110,10 @@
             </jstl:if>
             <jstl:if test="${role eq 'MANAGER'}">
             <a href="user/request/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
-            <a href="user/association/${association.id}/changeManager.do" class="list-group-item"><spring:message code="association.manager.change"/></a>
+            <a href="association/user/${association.id}/changeManager.do" class="list-group-item"><spring:message code="association.manager.change"/></a>
             </jstl:if>
             <jstl:if test="${role eq 'ASSOCIATE' || role eq 'COLLABORATOR'}">
-            <a href="user/association/${association.id}/leave.do" class="list-group-item"><spring:message code="association.leave"/></a>
+            <a href="association/user/${association.id}/leave.do" class="list-group-item"><spring:message code="association.leave"/></a>
             </jstl:if>
             <a href="activity/${association.id}/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
           </div>
@@ -129,10 +131,10 @@
             </jstl:if>
             </br></br></br>
             <jstl:if test="${role eq 'MANAGER'}">
-      	 <a class="btn btn-primary" href="user/association/${association.id}/close.do"><spring:message code="association.close"/></a>
+      	 <a class="btn btn-primary" href="association/user/${association.id}/close.do"><spring:message code="association.close"/></a>
       	 <br>
       	 </br>
-      	 <a class="btn btn-primary" href="user/association/edit.do?associationId=${association.id}"><spring:message code="association.edit"/></a>
+      	 <a class="btn btn-primary" href="association/user/edit.do?associationId=${association.id}"><spring:message code="association.edit"/></a>
       </jstl:if>
       
       <security:authorize access="hasRole('ADMIN')">
