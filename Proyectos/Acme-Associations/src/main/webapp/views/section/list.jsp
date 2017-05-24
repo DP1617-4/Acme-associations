@@ -37,7 +37,7 @@
 	<display:column property="name" title="${nameHeader}"/>
 	<security:authorize access="isAuthenticated()">
 	<display:column title="${userHeader}">
-						<a href="actor/user/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
+						<a href="actor/actor/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
 	</display:column>
 	<display:column> <a href="item/user/${association.id}/${row.id}/listSection.do">${itemsHeader}</a> </display:column>	
 	<jstl:if test="${loggedactor == row.user.userAccount }">

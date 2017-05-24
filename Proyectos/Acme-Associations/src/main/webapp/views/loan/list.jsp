@@ -40,12 +40,12 @@
 		
 			<spring:message code="loan.borrower" var="borrowerHeader"/>
 			<display:column title="${borrowerHeader}">
-				<a href="actor/user/${row.borrower.id}/display.do">${mask:mask(row.borrower.completeName) }</a>
+				<a href="actor/actor/${row.borrower.id}/display.do">${mask:mask(row.borrower.completeName) }</a>
 			</display:column>
 			
 			<spring:message code="loan.lender" var="lenderHeader"/>
 			<display:column title="${lenderHeader}">
-				<a href="actor/user/${row.lender.id}/display.do">${mask:mask(row.lender.completeName) }</a>
+				<a href="actor/actor/${row.lender.id}/display.do">${mask:mask(row.lender.completeName) }</a>
 			</display:column>
 			
 			<jstl:if test="${not empty role && (role eq 'COLLABORATOR' || role eq 'MANAGER')}">

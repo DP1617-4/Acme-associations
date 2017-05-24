@@ -51,7 +51,7 @@
 					
 					<spring:message code="actor.message.sender" var="userHeader"/>
 					<display:column title="${userHeader}">
-						<a href="actor/user/${row.sender.id}/display.do"> ${row.sender.name} ${row.sender.surname}</a>
+						<a href="actor/actor${row.sender.id}/display.do"> ${row.sender.name} ${row.sender.surname}</a>
 					</display:column>
 					
 				</display:table>

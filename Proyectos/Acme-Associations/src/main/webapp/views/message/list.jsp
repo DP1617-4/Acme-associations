@@ -52,13 +52,13 @@
 	
 	<spring:message code="message.sender" var="senderHeader"/>
 	<display:column title="${senderHeader}">
-		<a href="actor/user/${row.sender.id}/display.do"> ${mask:mask(row.sender.name) } ${mask:mask(row.sender.surname) }</a>
+		<a href="actor/actor/${row.sender.id}/display.do"> ${mask:mask(row.sender.name) } ${mask:mask(row.sender.surname) }</a>
 	</display:column>
 	
 	
 	<spring:message code="message.recipient" var="recipientHeader"/>
 	<display:column title="${recipientHeader}">
-		<a href="actor/user/${row.recipient.id}/display.do">${row.recipient.name } ${row.recipient.surname }</a>
+		<a href="actor/actor/${row.recipient.id}/display.do">${row.recipient.name } ${row.recipient.surname }</a>
 	</display:column> 
 	
 	

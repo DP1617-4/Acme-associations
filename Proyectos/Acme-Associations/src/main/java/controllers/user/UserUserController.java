@@ -68,7 +68,7 @@ public class UserUserController extends AbstractController {
 		else
 			try {
 				user = this.userService.save(userR);
-				result = new ModelAndView("redirect:/actor/user/displayOwn.do");
+				result = new ModelAndView("redirect:/actor/actor/displayOwn.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(user, "user.commit.error");
 			}

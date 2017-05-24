@@ -105,4 +105,17 @@ public class ActivityController extends AbstractController {
 
 		return result;
 	}
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView listAll() {
+		ModelAndView result;
+
+		Collection<Activity> activities = this.activityService.findAllNotFinished();
+
+		result = new ModelAndView("activity/list");
+		result.addObject("activities", activities);
+		result.addObject("requestURI", "activity/list.do");
+
+		return result;
+	}
 }
