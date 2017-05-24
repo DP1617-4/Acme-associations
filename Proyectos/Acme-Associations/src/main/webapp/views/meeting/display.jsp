@@ -35,7 +35,7 @@
 	  			
 	  		<h2><spring:message code="meeting.comments"/></h2>
 				
-				<display:table pagesize="5" class="displaytag" keepStatus="true" name="comments" requestURI="${requestURI}" id="row">
+				<display:table pagesize="5" class="displaytag" keepStatus="false" name="comments" requestURI="${requestURI}" id="row">
 					<!--Attributes -->
 					<spring:message code="comment.title" var="titleHeader" />
 					<spring:message code="comment.text" var="textHeader" />
@@ -67,7 +67,7 @@
 			<jstl:if test="${minutes != null}">
 				<div><b><spring:message code="meeting.minute.document"/>:</b><a href="${minutes.document}" ><jstl:out value="${minutes.document}" /></a></div>
 				<b><spring:message code="meeting.minute.users"/></b> </br>
-				<display:table pagesize="5" class="displaytag" keepStatus="true" name="participants" requestURI="${requestURI}" id="row">
+				<display:table pagesize="5" class="displaytag" keepStatus="false" name="participants" requestURI="${requestURI}" id="row">
 					
 					<spring:message code="meeting.minute.user" var="userHeader"/>
 					
@@ -96,7 +96,7 @@
 				
 				<h2><spring:message code="meeting.comments"/></h2>
 				
-				<display:table pagesize="5" class="displaytag" keepStatus="true" name="commentsSecond" requestURI="${requestURI}" id="row">
+				<display:table pagesize="5" class="displaytag" keepStatus="false" name="commentsSecond" requestURI="${requestURI}" id="row">
 					<!--Attributes -->
 					<spring:message code="comment.title" var="titleHeader" />
 					<spring:message code="comment.text" var="textHeader" />

@@ -27,7 +27,7 @@
 
 
 <security:authentication property="principal" var ="loggedactor"/>
-<display:table pagesize="5" keepStatus="true" name="sections" requestURI="${requestURI}" id="row">
+<display:table pagesize="5" keepStatus="false" name="sections" requestURI="${requestURI}" id="row">
 	
 	<spring:message code="section.name" var="nameHeader" />
 	<spring:message code="section.user" var="userHeader" />

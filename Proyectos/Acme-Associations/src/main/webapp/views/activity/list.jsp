@@ -26,7 +26,7 @@
 
 
 
-<display:table pagesize="5" keepStatus="true"
+<display:table pagesize="5" keepStatus="false"
 	name="activities" requestURI="${requestURI}" id="row">
 	
 	<spring:message code="activity.name" var="nameHeader" />

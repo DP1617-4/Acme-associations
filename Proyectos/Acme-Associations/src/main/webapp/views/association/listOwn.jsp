@@ -15,7 +15,7 @@
 <jstl:set var="available" value="background-color:green; color: black; font-weight:bold;" />
 
 
-<display:table pagesize="5" keepStatus="true"
+<display:table pagesize="5" keepStatus="false"
 	name="roles" requestURI="${requestURI}" id="row">
 	<security:authentication property="principal" var ="loggedactor"/>
 	

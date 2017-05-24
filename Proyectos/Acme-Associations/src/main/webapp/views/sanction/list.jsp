@@ -40,7 +40,7 @@
 			</jstl:otherwise>
 		</jstl:choose>
 	</jstl:if>
-<display:table pagesize="5" keepStatus="true" name="sanctions" requestURI="${requestURI}" id="row">
+<display:table pagesize="5" keepStatus="false" name="sanctions" requestURI="${requestURI}" id="row">
 	
 	<jstl:if test="${association == null}">
 		<spring:message code="sanction.association" var="associationHeader"/>	
