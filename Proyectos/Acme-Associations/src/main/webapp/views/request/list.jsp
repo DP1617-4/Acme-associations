@@ -33,7 +33,7 @@
 	
 
 	<display:column title="${nameHeader}">
-		<a href="actor/user/display.do?userId=${row.user.id}"><jstl:out value="${row.user.name}"/> <jstl:out value="${row.user.surname}"/></a>
+		<a href="actor/actor/display.do?userId=${row.user.id}"><jstl:out value="${row.user.name}"/> <jstl:out value="${row.user.surname}"/></a>
 	</display:column>
 	
 	<jstl:if test="${association != null }">

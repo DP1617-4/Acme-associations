@@ -26,4 +26,7 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer> {
 	@Query("select a from Activity a where a.association.id=?1 order by a.attendants.size DESC")
 	Collection<Activity> findMostAttendedByAssociation(int associationId);
 
+	@Query("select a from Activity a where a.endMoment > current_date")
+	Collection<Activity> findAllNotFinished();
+
 }

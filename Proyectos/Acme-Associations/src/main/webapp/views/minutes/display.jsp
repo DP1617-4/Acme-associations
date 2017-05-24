@@ -65,7 +65,7 @@
 					<!--Attributes -->
 					<spring:message code="minutes.user" var="userHeader"/>
 					<display:column title="${userHeader}">
-						<a href="actor/user/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
+						<a href="actor/actor/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
 					</display:column>
 					
 			   </display:table>

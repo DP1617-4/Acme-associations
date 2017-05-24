@@ -164,4 +164,9 @@ public class ActivityService {
 
 	}
 
+	public Collection<Activity> findAllNotFinished() {
+
+		return this.activityRepository.findAllNotFinished();
+	}
+
 }
