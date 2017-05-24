@@ -43,11 +43,11 @@
 		<form:errors cssClass="error" path="endMoment" />
 	</div> <br />
 	<acme:textbox code="activity.maximumAttendants" path="maximumAttendants"/><br />
-		<form:label path="publicActivity">
+		<%-- <form:label path="publicActivity">
 			<spring:message code="activity.public" />:
 		</form:label>
 		<form:input type="checkbox" path="publicActivity"/>
-		<form:errors cssClass="error" path="publicActivity" />
+		<form:errors cssClass="error" path="publicActivity" /> --%>
   	
 	<form:label path="item">
 		<spring:message code="activity.item" />:
