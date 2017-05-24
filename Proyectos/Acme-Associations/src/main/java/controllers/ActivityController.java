@@ -110,7 +110,7 @@ public class ActivityController extends AbstractController {
 	public ModelAndView listAll() {
 		ModelAndView result;
 
-		Collection<Activity> activities = this.activityService.findAllNotFinished();
+		final Collection<Activity> activities = this.activityService.findAllNotFinished();
 
 		result = new ModelAndView("activity/list");
 		result.addObject("activities", activities);
