@@ -33,7 +33,7 @@
 	<jstl:if test="${not empty role && (role.type eq 'COLLABORATOR' || role.type eq 'MANAGER')}">
 		<display:column title="${sanctionsHeader}">
 			<jstl:if test="${row.user.userAccount != loggedactor}">
-				<a href="sanction/actor/${association.id}/listByUserActive.do?userId=${row.user.id}"><spring:message code="association.sanction"/></a>
+				<a href="sanction/user/${association.id}/listByUserActive.do?userId=${row.user.id}"><spring:message code="association.sanction"/></a>
 			</jstl:if>
 		</display:column>
 	</jstl:if>
@@ -49,7 +49,7 @@
 	<security:authorize access="hasRole('ADMIN')">
 		<display:column title="${sanctionsHeader}">
 			<jstl:if test=" ${row.user.userAccount != loggedactor}">
-				<a href="sanction/actor/${association.id}/listByUserActive.do?userId=${row.user.id}"><spring:message code="association.sanction"/></a>
+				<a href="sanction/user/${association.id}/listByUserActive.do?userId=${row.user.id}"><spring:message code="association.sanction"/></a>
 			</jstl:if>
 		</display:column>
 	</security:authorize>

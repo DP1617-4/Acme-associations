@@ -1,5 +1,5 @@
 
-package controllers.actor;
+package controllers.user;
 
 import java.util.Collection;
 
@@ -23,12 +23,12 @@ import domain.Roles;
 import domain.Sanction;
 
 @Controller
-@RequestMapping("/sanction/actor")
-public class SanctionActorController extends AbstractController {
+@RequestMapping("/sanction/user")
+public class SanctionUserController extends AbstractController {
 
 	//Constructor
 
-	public SanctionActorController() {
+	public SanctionUserController() {
 		super();
 	}
 
@@ -53,7 +53,7 @@ public class SanctionActorController extends AbstractController {
 		result.addObject("sanctions", sanctions);
 		result.addObject("role", role);
 		result.addObject("userId", userId);
-		result.addObject("requestURI", "/sanction/actor/" + association.getId() + "/listByUser.do?userId="+userId);
+		result.addObject("requestURI", "/sanction/user/" + association.getId() + "/listByUser.do?userId="+userId);
 
 		return result;
 	}
@@ -69,7 +69,7 @@ public class SanctionActorController extends AbstractController {
 		result.addObject("sanctions", sanctions);
 		result.addObject("role", role);
 		result.addObject("userId", userId);
-		result.addObject("requestURI", "/sanction/actor/" + association.getId() + "/listByUserActive.do?userId="+userId);
+		result.addObject("requestURI", "/sanction/user/" + association.getId() + "/listByUserActive.do?userId="+userId);
 
 		return result;
 	}
@@ -84,7 +84,7 @@ public class SanctionActorController extends AbstractController {
 		result = new ModelAndView("sanction/list");
 		result.addObject("sanctions", sanctions);
 		result.addObject("role", role);
-		result.addObject("requestURI", "/sanction/actor/" + association.getId() + "/mySanctions.do");
+		result.addObject("requestURI", "/sanction/user/" + association.getId() + "/mySanctions.do");
 
 		return result;
 	}
@@ -99,7 +99,7 @@ public class SanctionActorController extends AbstractController {
 		result = new ModelAndView("sanction/list");
 		result.addObject("sanctions", sanctions);
 		result.addObject("role", role);
-		result.addObject("requestURI", "/sanction/actor/" + association.getId() + "/myActiveSanctions.do");
+		result.addObject("requestURI", "/sanction/user/" + association.getId() + "/myActiveSanctions.do");
 
 		return result;
 	}
@@ -138,7 +138,7 @@ public class SanctionActorController extends AbstractController {
 		else
 			try {
 				newSanction = this.sanctionService.save(newSanction);
-				result = new ModelAndView("redirect:/sanction/actor/" + association.getId() + "/listByUser.do?userId="+newSanction.getUser().getId());
+				result = new ModelAndView("redirect:/sanction/user/" + association.getId() + "/listByUser.do?userId="+newSanction.getUser().getId());
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(newSanction, association, "sanction.commit.error");
 			}
@@ -155,8 +155,8 @@ public class SanctionActorController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Sanction sanction, final Association association, final String message) {
 		ModelAndView result;
 
-		final String requestURI = "sanction/actor/" + association.getId() + "/edit.do";
-		final String cancelURI = "sanction/actor/" + association.getId() + "/listByUserActive.do?userId="+sanction.getUser().getId();
+		final String requestURI = "sanction/user/" + association.getId() + "/edit.do";
+		final String cancelURI = "sanction/user/" + association.getId() + "/listByUserActive.do?userId="+sanction.getUser().getId();
 		final Roles role = this.rolesService.findRolesByPrincipalAssociation(association);
 		
 		result = new ModelAndView("sanction/edit");
