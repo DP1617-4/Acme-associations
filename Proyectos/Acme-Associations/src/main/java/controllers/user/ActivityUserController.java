@@ -12,12 +12,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.ActivityService;
-import services.AssociationService;
 import services.ItemService;
 import services.RolesService;
 import services.UserService;
@@ -27,6 +25,7 @@ import domain.Association;
 import domain.Item;
 import domain.Roles;
 import domain.User;
+import forms.AddWinner;
 
 @Controller
 @RequestMapping("/activity/user")
@@ -43,9 +42,6 @@ public class ActivityUserController extends AbstractController {
 
 	@Autowired
 	private ActivityService		activityService;
-
-	@Autowired
-	private AssociationService	associationService;
 
 	@Autowired
 	private UserService			userService;
@@ -90,14 +86,10 @@ public class ActivityUserController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int activityId, @RequestParam final int associationId, final RedirectAttributes redir) {
+	@RequestMapping(value = "/{association}/{activity}/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@PathVariable final Activity activity, @PathVariable final Association association, final RedirectAttributes redir) {
 		ModelAndView result;
-		Activity activity;
-		Association association;
 		try {
-			activity = this.activityService.findOne(activityId);
-			association = this.associationService.findOne(associationId);
 			this.roleService.checkManagerPrincipal(association);
 			this.roleService.checkCollaboratorPrincipal(association);
 
@@ -110,6 +102,22 @@ public class ActivityUserController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/addWinner", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(final AddWinner addWinner, final BindingResult binding, final RedirectAttributes redir) {
+		ModelAndView result;
+
+		try {
+			this.roleService.checkCollaboratorPrincipal(addWinner.getActivity().getAssociation());
+			Activity activity = addWinner.getActivity();
+			activity.setWinner(addWinner.getUser());
+			activity = this.activityService.save(activity);
+			result = new ModelAndView("redirect:/activity/" + activity.getAssociation().getId() + "/" + activity.getId() + "/display.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+			result.addObject("flashMessage", oops.getMessage());
+		}
+		return result;
+	}
 	@RequestMapping(value = "/{association}/{activity}/register", method = RequestMethod.GET)
 	public ModelAndView register(@PathVariable final Association association, final Activity activity, final RedirectAttributes redir) {
 		ModelAndView result;

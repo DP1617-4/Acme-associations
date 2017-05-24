@@ -26,7 +26,7 @@
 
 <link rel="shortcut icon" href="favicon.ico"/> 
 
-<script type="text/javascript" src="scripts/jquery.js"></script>
+<script type="text/javascript" src="scripts/jquery1.12.4.min.js"></script>
 <script type="text/javascript" src="scripts/jquery-ui.js"></script>
 <script type="text/javascript" src="scripts/jmenu.js"></script>
 
@@ -34,15 +34,29 @@
 <link rel="stylesheet" href="styles/jmenu.css" media="screen" type="text/css" />
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
 
+<!-- Trasteado por Andres -->
 
+<script type="text/javascript" src="scripts/datepick-js/jquery.plugin.js"></script>
+<script type="text/javascript" src="scripts/datepick-js/jquery.datepick.js"></script>
+<jstl:if test="${pageContext.response.locale.language == 'es'}">
+	<script type="text/javascript" src="scripts/datepick-js/jquery.datepick-es.js"></script>
+</jstl:if>
+<jstl:if test="${pageContext.response.locale.language == 'en'}">
+	<script type="text/javascript" src="scripts/datepick-js/jquery.datepick-en-GB.js"></script>
+</jstl:if>
+<link rel="stylesheet" href="styles/datepick-css/jquery.datepick.css" type="text/css">
+<link rel="stylesheet" href="styles/datepick-css/ui.datepick.css" type="text/css">
 
-<script type="text/javascript" src="js/bootstrap.js"></script>
-<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="js/locales/bootstrap-datepicker.en-GB.min.js" charset="UTF-8"></script>
-<script type="text/javascript" src="js/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
-<script type="text/javascript" src="js/tether.js"></script>
+<!-- hasta aqui -->
 
-<!-- Bootstrap core CSS -->
+	<!--  
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datepicker.en-GB.min.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/tether.js"></script> -->
+
+	<!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
    <!--  <link href="css/bootstrap-grid.min.css" rel="stylesheet" type="text/css">
@@ -50,10 +64,10 @@
     <link href="css/bootstrap-reboot.min.css" rel="stylesheet" type="text/css">-->
     <link href="css/bootstrap-grid.css" rel="stylesheet" type="text/css"> 
 	<link href="css/tether.css" rel="stylesheet" type="text/css">
-	<link href="css/bootstrap-datepicker3.standalone.css" rel="stylesheet" type="text/css">
+	<!--<link href="css/bootstrap-datepicker3.standalone.css" rel="stylesheet" type="text/css">
     <!-- Custom styles for this template -->
 
-<title><tiles:insertAttribute name="title" ignore="true" /></title>
+<title><tiles:insertAttribute name="title"/></title>
 
 <script type="text/javascript">
 	function askSubmission(msg, form) {
@@ -93,6 +107,9 @@
 		<tiles:insertAttribute name="header" />
 	</div>
 	<div class= "container">
+		<h1>
+			<tiles:insertAttribute name="title" />
+		</h1>
 		<tiles:insertAttribute name="body" />	
 		<jstl:if test="${errorMessage != null}">
 			<br />

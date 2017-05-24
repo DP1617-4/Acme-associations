@@ -23,7 +23,7 @@
         <span class="icon-bar"></span> <span class="icon-bar"></span>
       </button>
       <a href="welcome/index.do" class="navbar-brand"><img onError="imgError(this);"
-        src="https://i.imgur.com/i8YWDoL.png" height="35px" /></a>
+        src="http://i.imgur.com/El7I1xd.png" height="65px" /></a>
     </div>
     <div class="navbar-collapse collapse">
     
@@ -31,14 +31,17 @@
 		
    	 <ul class="nav navbar-nav navbar-right">
 	
-	<form class = "navbar-nav mr-auto" >
+	<form id="form1" method="get" action="item/filter.do" class = "navbar-nav mr-auto" >
 		<div class="col-sm-3 col-md-3">
-			<button class="btn navbar-btn" type="submit"><spring:message code="header.filter"/></button>
+			<button class="btn navbar-btn" type="submit" form="form1" value="filter"><spring:message code="header.filter"/></button>
 		</div>
 		<div class="col-sm-8 col-md-8">
 			<input class="form-control mr-sm-2" placeholder="<spring:message code="header.search"/>" type="text" name="filter"/>
 		</div>
 	</form>
+	
+	<li><a class="fNiv" href="activity/list.do"><spring:message
+              code="association.activity" /></a></li>
 	
 	<security:authorize access="hasRole('ADMIN')">
 	
@@ -49,7 +52,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><spring:message	code="master.page.administrator" /><span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="systemConfiguration/administrator/edit.do"><spring:message code="master.page.system" /></a></li>
-					<li><a href="systemConfiguration/administrator/dashboard.do"><spring:message code="master.page.dashboard" /></a></li>
+					<li><a href="dashboard/admin/dashboard.do"><spring:message code="master.page.dashboard" /></a></li>
               </ul>
             </li>
 		</security:authorize>

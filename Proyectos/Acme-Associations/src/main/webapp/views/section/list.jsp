@@ -27,7 +27,7 @@
 
 
 <security:authentication property="principal" var ="loggedactor"/>
-<display:table pagesize="5" keepStatus="true" name="sections" requestURI="${requestURI}" id="row">
+<display:table pagesize="5" keepStatus="false" name="sections" requestURI="${requestURI}" id="row">
 	
 	<spring:message code="section.name" var="nameHeader" />
 	<spring:message code="section.user" var="userHeader" />
@@ -37,7 +37,7 @@
 	<display:column property="name" title="${nameHeader}"/>
 	<security:authorize access="isAuthenticated()">
 	<display:column title="${userHeader}">
-						<a href="actor/user/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
+						<a href="actor/actor/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
 	</display:column>
 	<display:column> <a href="item/user/${association.id}/${row.id}/listSection.do">${itemsHeader}</a> </display:column>	
 	<jstl:if test="${loggedactor == row.user.userAccount }">

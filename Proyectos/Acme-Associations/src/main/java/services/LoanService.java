@@ -140,4 +140,15 @@ public class LoanService {
 
 		return result;
 	}
+
+	public Object[] minMaxAvgLoans() {
+		final Object[] result = new Object[3];
+
+		result[0] = this.loanRepository.avgLoans();
+		final List<Long> counts = this.loanRepository.findCountLoans();
+		result[1] = counts.get(0);
+		result[2] = counts.get(counts.size() - 1);
+
+		return result;
+	}
 }

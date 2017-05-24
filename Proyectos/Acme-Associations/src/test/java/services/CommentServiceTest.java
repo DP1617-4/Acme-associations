@@ -78,8 +78,7 @@ public class CommentServiceTest extends AbstractTest {
 		try {
 			this.authenticate(username);
 			this.userService.findOne(this.extract("user2"));
-			final Comment c = this.likesService.create(null);
-			
+			final Comment c = this.likesService.create(0);
 
 			this.likesService.save(c);
 			this.likesService.flush();
@@ -98,7 +97,7 @@ public class CommentServiceTest extends AbstractTest {
 
 			this.authenticate(username);
 			this.userService.findOne(this.extract("user2"));
-			final Comment comment = this.likesService.create(null);
+			final Comment comment = this.likesService.create(0);
 			this.likesService.save(comment);
 			this.authenticate(username2);
 			//			this.likesService.delete(result);

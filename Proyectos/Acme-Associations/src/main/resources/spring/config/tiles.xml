@@ -38,6 +38,8 @@
 		<value>/views/section/tiles.xml</value>
 		<value>/views/activity/tiles.xml</value>
 		<value>/views/sanction/tiles.xml</value>
+		<value>/views/place/tiles.xml</value>
+		<value>/views/dashboard/tiles.xml</value>
 	</util:list>
 
 </beans>

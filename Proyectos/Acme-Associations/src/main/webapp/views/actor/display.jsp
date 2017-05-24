@@ -36,7 +36,7 @@
           <div class="row">
             <div class="col-12 col-lg-6">
               <h2><spring:message code="actor.messages"/></h2>
-              <display:table pagesize="5" class="displaytag" keepStatus="true"
+              <display:table pagesize="5" class="displaytag" keepStatus="false"
 					name="messages" requestURI="${requestURI}" id="row">
 				
 					<!--Attributes -->
@@ -51,7 +51,7 @@
 					
 					<spring:message code="actor.message.sender" var="userHeader"/>
 					<display:column title="${userHeader}">
-						<a href="actor/user/${row.sender.id}/display.do"> ${row.sender.name} ${row.sender.surname}</a>
+						<a href="actor/actor${row.sender.id}/display.do"> ${row.sender.name} ${row.sender.surname}</a>
 					</display:column>
 					
 				</display:table>

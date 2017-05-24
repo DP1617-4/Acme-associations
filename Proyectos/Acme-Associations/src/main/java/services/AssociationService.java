@@ -141,4 +141,36 @@ public class AssociationService {
 	}
 	
 
+	//Admin Dashboard
+
+	public Collection<Association> findAssociationsAroundAVGMembers() {
+		Collection<Association> result;
+
+		result = this.associationRepository.findAssociationsAroundAVGMembers();
+
+		return result;
+	}
+
+	public Collection<Association> findMostLoansAssociation() {
+		Collection<Association> result;
+
+		result = this.associationRepository.findMostLoansAssociation();
+
+		return result;
+	}
+
+	public Collection<Association> findOrderedBySanctionsDesc() {
+		Collection<Association> result;
+
+		result = this.associationRepository.findMostSanctionsAssociation();
+
+		return result;
+	}
+	public Collection<Association> inactiveAssociations() {
+		Collection<Association> result;
+
+		result = this.associationRepository.inactiveAssociations();
+
+		return result;
+	}
 }

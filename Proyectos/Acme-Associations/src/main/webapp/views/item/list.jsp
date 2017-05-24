@@ -21,14 +21,19 @@
 
 <security:authentication property="principal" var ="loggedactor"/>
 
-<display:table pagesize="5" class="displaytag" keepStatus="true"
+<display:table pagesize="5" class="displaytag" keepStatus="false"
 	name="items" requestURI="${requestURI}" id="row">
 	
 
 	<!-- Attributes -->
 	<spring:message code="item.name" var="nameHeader" />
 	<display:column title="${nameHeader}">
-		<a href="item/user/${association.id}/display.do?itemId=${row.id}"><jstl:out value="${row.name }"/></a>
+		<jstl:if test="${ association!=null}">
+		<a href="item/user/${association.id}/display.do?itemId=${row.id}"><jstl:out value="${row.name}"/></a>
+		</jstl:if>
+		<jstl:if test="${ association==null}">
+		<jstl:out value="${row.name}"/>
+		</jstl:if>
 	</display:column>
 
 	<spring:message code="item.condition" var="conditionHeader" />

@@ -28,21 +28,46 @@
             <h1><jstl:out value="${activity.name}" /></h1>
             <p><jstl:out value="${activity.description}" /></p>
           </div>
+          <div class="col-6 col-md-6 col-lg-6">
           <div><jstl:out value="${activity.startMoment}" /></div>
           <div><jstl:out value="${activity.endMoment}" /></div>
           <div><jstl:out value="${activity.maximumAttendants}" /></div>
-          <div><jstl:out value="${activity.place.address}" /></div>
-          <div><jstl:out value="${activity.place.latitude}" /></div>
-          <div><jstl:out value="${activity.place.longitude}" /></div>
-          <div><jstl:out value="${activity.item}" /></div>
-          <div><jstl:out value="${activity.winner}" /></div>
-        </div><!--/span-->
-
-        <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
-          <div class="list-group">
-            <a href="association/${association.id}/display.do" class="list-group-item"><spring:message code="activity.associationDisplay"/></a>
+          <jstl:if test="${role eq 'MANAGER'|| role eq 'COLLABORATOR'}">
+				<jstl:if test="${activity.winner == null}">
+						<form:form action="activity/user/addWinner.do" modelAttribute="addWinner">
+						<form:hidden path="activity"/>
+							<form:label path="user">
+							<spring:message code="activity.winner.title"/>
+							</form:label>
+							<form:select id="user" path="user">
+								<jstl:forEach items="${users}" var="thisUser">
+									<form:option value="${thisUser.id}" label="${thisUser.completeName}" />
+								</jstl:forEach>
+							</form:select>
+							</br>
+							<acme:submit name="save" code="activity.winner.add"/>
+						</form:form>
+				</jstl:if>
+			</jstl:if>
+         </div>
+          
+          <div class="col-6 col-md-6 col-lg-6">
+			<h2><spring:message code="activity.place.description"/></h2>
+			<jstl:if test="${activity.place==null}">
+				<spring:message code="activity.noPlace"/>
+				<jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
+					<div><a class="btn btn-primary" href="place/user/${activity.id}/create.do"><spring:message code="activity.place.create"/></a></div>
+				</jstl:if>
+			</jstl:if>
+			<jstl:if test="${activity.place!=null}">
+				<div><jstl:out value="${activity.place.address}" /></div>
+				<div><jstl:out value="${activity.place.latitude}" /></div>
+				<div><jstl:out value="${activity.place.longitude}" /></div>
+			</jstl:if>
         </div><!--/span-->
       </div><!--/row-->
      </div>
-</div>
+ 
+				
+		</div><!--/span-->
 

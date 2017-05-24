@@ -59,13 +59,13 @@
           <div class="row">
             <div class="col-12 col-lg-6">
               <h2><spring:message code="minutes.users"/></h2>
-              <display:table pagesize="5" class="displaytag" keepStatus="true"
+              <display:table pagesize="5" class="displaytag" keepStatus="false"
 					name="users" requestURI="${requestURI}" id="row">
 				
 					<!--Attributes -->
 					<spring:message code="minutes.user" var="userHeader"/>
 					<display:column title="${userHeader}">
-						<a href="actor/user/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
+						<a href="actor/actor/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
 					</display:column>
 					
 			   </display:table>

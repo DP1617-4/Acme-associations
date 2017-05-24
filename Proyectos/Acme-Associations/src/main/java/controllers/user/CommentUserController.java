@@ -11,8 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.CommentService;
-import services.CommentableService;
-import services.RolesService;
 import domain.Association;
 import domain.Comment;
 import domain.Commentable;
@@ -28,12 +26,6 @@ public class CommentUserController {
 
 	@Autowired
 	private CommentService		commentService;
-
-	@Autowired
-	private CommentableService	commentableService;
-
-	@Autowired
-	private RolesService		rolesService;
 
 
 	//Constructor

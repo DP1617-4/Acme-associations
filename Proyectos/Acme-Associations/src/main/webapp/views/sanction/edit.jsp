@@ -20,7 +20,6 @@
 <%@taglib prefix="acme"	tagdir="/WEB-INF/tags"%>
 
 <security:authentication property="principal" var ="loggedactor"/>
-${sanction.user.userAccount != loggedactor}
 <form:form action="${requestURI}" modelAttribute="sanction">
 
 	<form:hidden path="id" />
@@ -30,7 +29,7 @@ ${sanction.user.userAccount != loggedactor}
 	
 	<jstl:choose>
 		<jstl:when test="${not empty role && (role.type eq 'COLLABORATOR' || role.type eq 'MANAGER') && sanction.user.userAccount != loggedactor}">
-			<acme:textbox code="sanction.end.date" path="endDate"/><br />
+			<acme:datepicker code="sanction.end.date" path="endDate" hour="true"/><br />
 			<acme:textarea code="sanction.motiff" path="motiff"/><br />
 			<br/>
 		
@@ -39,19 +38,11 @@ ${sanction.user.userAccount != loggedactor}
 				
 		</jstl:when>
 		<jstl:otherwise>
-			<acme:textbox code="sanction.end.date" path="endDate" readonly="true"/><br />
+			<acme:datepicker code="sanction.end.date" path="endDate" readonly="true"/><br />
 			<acme:textarea code="sanction.motiff" path="motiff" readonly="true"/><br />
 			<br/>
 		</jstl:otherwise>
 	</jstl:choose>
-	<security:authorize access="hasRole('ADMIN')">
-		<acme:textbox code="sanction.end.date" path="endDate"/><br />
-		<acme:textarea code="sanction.motiff" path="motiff"/><br />
-		<br/>
-	
-		<input type="submit" name="save"
-			value="<spring:message code="sanction.save" />" />&nbsp;				
-	</security:authorize>
 	
 	<input type="button" name="cancel"
 		value="<spring:message code="sanction.cancel" />"
