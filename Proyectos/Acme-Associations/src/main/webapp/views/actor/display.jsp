@@ -36,7 +36,7 @@
           <div class="row">
             <div class="col-12 col-lg-6">
               <h2><spring:message code="actor.messages"/></h2>
-              <display:table pagesize="5" class="displaytag" keepStatus="true"
+              <display:table pagesize="5" class="displaytag" keepStatus="false"
 					name="messages" requestURI="${requestURI}" id="row">
 				
 					<!--Attributes -->

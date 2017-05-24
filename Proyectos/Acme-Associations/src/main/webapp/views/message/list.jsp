@@ -22,7 +22,7 @@
 
 <h1> ${folder.name}</h1>
 
-<display:table pagesize="5" class="displaytag" keepStatus="true"
+<display:table pagesize="5" class="displaytag" keepStatus="false"
 	name="messages" requestURI="${requestURI}" id="row">
 	
 	<!-- Action links -->

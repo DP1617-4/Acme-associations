@@ -21,7 +21,7 @@
 
 <div class="row row-offcanvas row-offcanvas-right">
 	<div class="col-12 col-md-9">
-		<display:table pagesize="5" class="displaytag" keepStatus="true"
+		<display:table pagesize="5" class="displaytag" keepStatus="false"
 			name="loans" requestURI="${requestURI}" id="row" >
 			
 			<spring:message code="loan.item" var="itemHeader"/>
