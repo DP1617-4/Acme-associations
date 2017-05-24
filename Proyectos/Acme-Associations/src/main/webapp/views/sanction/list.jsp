@@ -29,14 +29,14 @@
 	<security:authentication property="principal" var ="loggedactor"/>
 	<jstl:if test="${requestURI.contains('Active')}">
 		<jstl:choose>
-			<jstl:when test="${not requestURI.contains('actor')}">
+			<jstl:when test="${not requestURI.contains('user')}">
 				<div><a href="sanction/mySanctions.do"><spring:message code="sanction.all"/></a></div>
 			</jstl:when>
 			<jstl:when test="${requestURI.contains('my')}">
-				<div><a href="sanction/actor/${association.id}/mySanctions.do"><spring:message code="sanction.all"/></a></div>
+				<div><a href="sanction/user/${association.id}/mySanctions.do"><spring:message code="sanction.all"/></a></div>
 			</jstl:when>
 			<jstl:otherwise>
-				<div><a href="sanction/actor/${association.id}/listByUser.do?userId=${userId}"><spring:message code="sanction.all"/></a></div>
+				<div><a href="sanction/user/${association.id}/listByUser.do?userId=${userId}"><spring:message code="sanction.all"/></a></div>
 			</jstl:otherwise>
 		</jstl:choose>
 	</jstl:if>
@@ -61,7 +61,7 @@
 	<jstl:if test="${not empty role && (role.type eq 'COLLABORATOR' || role.type eq 'MANAGER')}">
 		<display:column title="${editHeader}">
 			<jstl:if test="${row.user.userAccount != loggedactor}">
-				<a href="sanction/actor/${association.id}/edit.do?sanctionId=${row.id}"><spring:message code="sanction.edit"/></a>
+				<a href="sanction/user/${association.id}/edit.do?sanctionId=${row.id}"><spring:message code="sanction.edit"/></a>
 			</jstl:if>
 		</display:column>
 	</jstl:if>
@@ -69,7 +69,7 @@
 </display:table>
 <br><br/>
 	<jstl:if test="${not empty role && (role.type eq 'COLLABORATOR' || role.type eq 'MANAGER') && not requestURI.contains('my')}">
-		<div><a href="sanction/actor/${association.id}/create.do?userId=${userId}"><spring:message code="sanction.create"/></a></div>
+		<div><a href="sanction/user/${association.id}/create.do?userId=${userId}"><spring:message code="sanction.create"/></a></div>
 	</jstl:if>
 <br/>
 

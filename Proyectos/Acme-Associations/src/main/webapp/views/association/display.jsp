@@ -99,7 +99,7 @@
         <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
           <div class="list-group">
           	<security:authorize access="hasRole('USER')"> 
-          		<a href="sanction/actor/${association.id}/mySanctions.do" class="list-group-item"><spring:message code="association.sanction"/></a>
+          		<a href="sanction/user/${association.id}/mySanctions.do" class="list-group-item"><spring:message code="association.sanction"/></a>
           	</security:authorize>
           	<security:authorize access="isAuthenticated()"> 
           		<a href="association/user/${association.id}/listUsers.do" class="list-group-item"><spring:message code="association.user.list"/></a>

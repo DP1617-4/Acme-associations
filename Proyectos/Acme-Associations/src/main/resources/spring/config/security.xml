@@ -85,7 +85,7 @@
      	<security:intercept-url pattern="/sanction/myActiveSanctions.do" access="hasRole('USER')" />
      	<security:intercept-url pattern="/sanction/mySanctions.do" access="hasRole('USER')" />
      	<security:intercept-url pattern="/sanction/display.do**" access="hasRole('USER')" />
-     	<security:intercept-url pattern="/sanction/actor/**" access="isAuthenticated()" />
+     	<security:intercept-url pattern="/sanction/user/**" access="isAuthenticated()" />
      	<security:intercept-url pattern="/sanction/user/**" access="hasRole('USER')" />
 				
 		<!-- Activity -->
