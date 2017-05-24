@@ -1003,7 +1003,7 @@
 	<!-- Items -->
 	
 	<bean id="item1" class="domain.Item">
-		<property name="name" value="name" />
+		<property name="name" value="item1" />
 		<property name="identifier" value="20170521-b73" />
 		<property name="itemCondition" value="GOOD" />
 		<property name="description" value="description" />
@@ -1012,7 +1012,7 @@
 	</bean>
 	
 	<bean id="item2" class="domain.Item">
-		<property name="name" value="name" />
+		<property name="name" value="item2" />
 		<property name="identifier" value="20170521-b72" />
 		<property name="itemCondition" value="GOOD" />
 		<property name="description" value="description" />
@@ -1021,7 +1021,7 @@
 	</bean>
 	
 	<bean id="item3" class="domain.Item">
-		<property name="name" value="name" />
+		<property name="name" value="item3" />
 		<property name="identifier" value="20170521-b71" />
 		<property name="itemCondition" value="GOOD" />
 		<property name="description" value="description" />
@@ -1030,7 +1030,7 @@
 	</bean>
 	
 	<bean id="item4" class="domain.Item">
-		<property name="name" value="name" />
+		<property name="name" value="item4" />
 		<property name="identifier" value="20170521-b70" />
 		<property name="itemCondition" value="BAD" />
 		<property name="description" value="description" />
@@ -1039,7 +1039,7 @@
 	</bean>
 	
 	<bean id="item5" class="domain.Item">
-		<property name="name" value="name" />
+		<property name="name" value="item5" />
 		<property name="identifier" value="20170521-b79" />
 		<property name="itemCondition" value="LOAN" />
 		<property name="description" value="description" />
@@ -1048,7 +1048,7 @@
 	</bean>
 	
 	<bean id="item6" class="domain.Item">
-		<property name="name" value="name" />
+		<property name="name" value="item6" />
 		<property name="identifier" value="20170521-b78" />
 		<property name="itemCondition" value="EXCELENT" />
 		<property name="description" value="description" />
