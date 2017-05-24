@@ -21,7 +21,7 @@
 
 <security:authentication property="principal" var ="loggedactor"/>
 
-<display:table pagesize="5" class="displaytag" keepStatus="true"
+<display:table pagesize="5" class="displaytag" keepStatus="false"
 	name="items" requestURI="${requestURI}" id="row">
 	
 

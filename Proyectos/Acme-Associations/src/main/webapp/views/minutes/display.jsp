@@ -59,7 +59,7 @@
           <div class="row">
             <div class="col-12 col-lg-6">
               <h2><spring:message code="minutes.users"/></h2>
-              <display:table pagesize="5" class="displaytag" keepStatus="true"
+              <display:table pagesize="5" class="displaytag" keepStatus="false"
 					name="users" requestURI="${requestURI}" id="row">
 				
 					<!--Attributes -->

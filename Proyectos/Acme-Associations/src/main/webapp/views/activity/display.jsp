@@ -35,14 +35,14 @@
           <jstl:if test="${role eq 'MANAGER'|| role eq 'COLLABORATOR'}">
 				<jstl:if test="${activity.winner == null}">
 						<form:form action="activity/user/addWinner.do" modelAttribute="addWinner">
+						<form:hidden path="activity"/>
 							<form:label path="user">
-								añadir ganador:
+							<spring:message code="activity.winner.title"/>
 							</form:label>
 							<form:select id="user" path="user">
 								<jstl:forEach items="${users}" var="thisUser">
 									<form:option value="${thisUser.id}" label="${thisUser.completeName}" />
 								</jstl:forEach>
-								selecciona
 							</form:select>
 							</br>
 							<acme:submit name="save" code="activity.winner.add"/>

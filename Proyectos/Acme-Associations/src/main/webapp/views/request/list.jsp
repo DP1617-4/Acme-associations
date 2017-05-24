@@ -24,7 +24,7 @@
 
 
 <security:authentication property="principal" var ="loggedactor"/>
-<display:table pagesize="5" keepStatus="true" name="requests" requestURI="${requestURI}" id="row">
+<display:table pagesize="5" keepStatus="false" name="requests" requestURI="${requestURI}" id="row">
 	
 	<spring:message code="request.user.name" var="nameHeader" />
 	<spring:message code="request.accept" var="acceptHeader" />

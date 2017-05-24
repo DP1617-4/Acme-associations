@@ -27,7 +27,7 @@
 
 
 <security:authentication property="principal" var ="loggedactor"/>
-<display:table pagesize="5" keepStatus="true" name="associations" requestURI="${requestURI}" id="row">
+<display:table pagesize="5" keepStatus="false" name="associations" requestURI="${requestURI}" id="row">
 	
 	<spring:message code="association.name" var="nameHeader" />
 	<spring:message code="association.description" var="descriptionHeader" />

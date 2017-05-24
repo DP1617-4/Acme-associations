@@ -93,14 +93,11 @@ public class AssociationUserController extends AbstractController {
 
 		final User principal = this.userService.findByPrincipal();
 
-		if(changeManager.getRole().equals(Roles.MANAGER)){
+		if (changeManager.getRole().equals(Roles.MANAGER)) {
 			this.rolesService.assignRoles(principal, changeManager.getAssociation(), "COLLABORATOR");
 			this.rolesService.assignRoles(changeManager.getUser(), changeManager.getAssociation(), "MANAGER");
-		}
-		else{
-			
+		} else
 			this.rolesService.assignRoles(changeManager.getUser(), changeManager.getAssociation(), changeManager.getRole());
-		}
 		result = new ModelAndView("redirect:/association/" + changeManager.getAssociation().getId() + "/display.do");
 		redir.addFlashAttribute("flashMessage", "association.change.manager.correct");
 
@@ -120,7 +117,7 @@ public class AssociationUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "{association}/listUsers", method = RequestMethod.GET)
-	public ModelAndView list(@PathVariable final Association association) {
+	public ModelAndView listUsers(@PathVariable final Association association) {
 		final ModelAndView result;
 
 		final Collection<Roles> roles = this.rolesService.findAllByAssociation(association);
@@ -146,7 +143,7 @@ public class AssociationUserController extends AbstractController {
 
 			Collection<User> users;
 			users = this.userService.findAllByAssociation(association);
-			User manager = this.userService.findAssociationManager(association);
+			final User manager = this.userService.findAssociationManager(association);
 			users.remove(manager);
 			final ChangeManager changeManager = new ChangeManager();
 			changeManager.setAssociation(association);
@@ -187,6 +184,34 @@ public class AssociationUserController extends AbstractController {
 
 		return result;
 	}
+
+	@RequestMapping(value = "/{association}/kick", method = RequestMethod.GET)
+	public ModelAndView kick(@PathVariable final Association association, final RedirectAttributes redir, @RequestParam final int roleId) {
+		ModelAndView result;
+
+		//Escoja una, hacer query en rolesRepo o hacer el método en association service.
+
+		final Roles roles = this.rolesService.findOne(roleId);
+
+		//		this.associationService.leave(association);
+		try {
+
+			this.rolesService.checkManagerPrincipal(association);
+
+			Assert.isTrue(roles.getType() != "MANAGER");
+			this.rolesService.delete(roles);
+
+			result = this.listUsers(association);
+			result.addObject("flashMessage", "association.kick.success");
+		} catch (final Exception e) {
+
+			result = new ModelAndView("redirect:/welcome/index.do");
+			redir.addFlashAttribute("errorMessage", e.getMessage());
+		}
+
+		return result;
+	}
+
 	@RequestMapping(value = "/{association}/close", method = RequestMethod.GET)
 	public ModelAndView close(@PathVariable final Association association) {
 		ModelAndView result;

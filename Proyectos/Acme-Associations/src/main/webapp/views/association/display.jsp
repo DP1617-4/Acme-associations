@@ -64,8 +64,8 @@
             </div><!--/span-->
             <div class="col-6 col-md-6 col-lg-8">
               <h2><spring:message code="association.comments"/></h2>
-              <%-- <display:table pagesize="5" class="displaytag" keepStatus="true" name="associationComments" requestURI="${requestURI}" id="row"> </display:table> --%>
-              <display:table pagesize="5" class="displaytag" keepStatus="true"
+              <%-- <display:table pagesize="5" class="displaytag" keepStatus="false" name="associationComments" requestURI="${requestURI}" id="row"> </display:table> --%>
+              <display:table pagesize="5" class="displaytag" keepStatus="false"
 					name="comments" requestURI="${requestURI }" id="row">
 				
 					<!--Attributes -->
