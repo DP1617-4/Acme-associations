@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import controllers.AbstractController;
 import services.RolesService;
 import services.SanctionService;
+import services.UserService;
 import domain.Roles;
 import domain.Sanction;
 
@@ -35,6 +36,9 @@ public class SanctionController extends AbstractController {
 
 	@Autowired
 	private RolesService	rolesService;
+
+	@Autowired
+	private UserService		userService;
 
 
 	@RequestMapping(value = "/mySanctions", method = RequestMethod.GET)
@@ -89,8 +93,13 @@ public class SanctionController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Sanction sanction, final String message) {
 		ModelAndView result;
 
-		final String requestURI = "sanction/actor/" + sanction.getAssociation().getId() + "/edit.do";
-		final String cancelURI = "sanction/actor/" + sanction.getAssociation().getId() + "/myActiveSanctions.do?userId="+sanction.getUser().getId();
+		final String requestURI = "sanction/user/" + sanction.getAssociation().getId() + "/edit.do";
+		String cancelURI = "";
+		if(sanction.getUser().getId() == userService.findByPrincipal().getId()){
+			cancelURI = "sanction/user/" + sanction.getAssociation().getId() + "/myActiveSanctions.do?userId="+sanction.getUser().getId();
+		}else{
+			cancelURI = "sanction/user/" + sanction.getAssociation().getId() + "/listByUserActive.do?userId="+sanction.getUser().getId();
+		}
 		final Roles role = this.rolesService.findRolesByPrincipalAssociation(sanction.getAssociation());
 		
 		result = new ModelAndView("sanction/edit");
