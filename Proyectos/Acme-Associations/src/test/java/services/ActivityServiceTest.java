@@ -110,7 +110,7 @@ public class ActivityServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(username);
-			final Activity e = this.activityService.create();
+			final Activity e = this.activityService.create(null);
 
 			e.setDescription(description);
 

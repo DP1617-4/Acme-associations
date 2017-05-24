@@ -69,8 +69,8 @@
           </jstl:if>
           <div class="col-6 col-md-6 col-lg-4">
               <h2><spring:message code="item.comment.list"/></h2>
-              <%-- <display:table pagesize="5" class="displaytag" keepStatus="true" name="associationComments" requestURI="${requestURI}" id="row"> </display:table> --%>
-              <display:table pagesize="5" class="displaytag" keepStatus="true"
+              <%-- <display:table pagesize="5" class="displaytag" keepStatus="false" name="associationComments" requestURI="${requestURI}" id="row"> </display:table> --%>
+              <display:table pagesize="5" class="displaytag" keepStatus="false"
 					name="comments" requestURI="${requestURI }" id="row">
 				
 					<!--Attributes -->
@@ -85,7 +85,7 @@
 					
 					<spring:message code="comment.user" var="userHeader"/>
 					<display:column title="${userHeader}">
-						<a href="actor/user/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
+						<a href="actor/actor/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
 					</display:column>
 					
 				</display:table>

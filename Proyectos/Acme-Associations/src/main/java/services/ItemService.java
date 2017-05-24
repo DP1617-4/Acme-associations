@@ -2,8 +2,10 @@
 package services;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,7 +175,17 @@ public class ItemService {
 
 	public Item findMostLoanedItemByAssociation(Association association) {
 
-		return this.itemRepository.findMostLoanedItemByAssociation(association.getId());
+		Item item = null;
+		List<Item> items = new ArrayList<Item>(this.itemRepository.findMostLoanedItemByAssociation(association.getId()));
+		if (!items.isEmpty())
+			item = items.get(0);
+
+		return item;
+	}
+
+	public Integer countLoansItem(Item item) {
+
+		return this.itemRepository.countLoansItem(item.getId());
 	}
 
 }

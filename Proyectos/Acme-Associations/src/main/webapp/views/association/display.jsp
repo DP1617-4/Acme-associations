@@ -64,8 +64,8 @@
             </div><!--/span-->
             <div class="col-6 col-md-6 col-lg-8">
               <h2><spring:message code="association.comments"/></h2>
-              <%-- <display:table pagesize="5" class="displaytag" keepStatus="true" name="associationComments" requestURI="${requestURI}" id="row"> </display:table> --%>
-              <display:table pagesize="5" class="displaytag" keepStatus="true"
+              <%-- <display:table pagesize="5" class="displaytag" keepStatus="false" name="associationComments" requestURI="${requestURI}" id="row"> </display:table> --%>
+              <display:table pagesize="5" class="displaytag" keepStatus="false"
 					name="comments" requestURI="${requestURI }" id="row">
 				
 					<!--Attributes -->
@@ -80,7 +80,7 @@
 					
 					<spring:message code="comment.user" var="userHeader"/>
 					<display:column title="${userHeader}">
-						<a href="actor/user/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
+						<a href="actor/actor/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
 					</display:column>
 					
 				</display:table>
@@ -114,6 +114,7 @@
             <jstl:if test="${role eq 'MANAGER'}">
             <a href="user/request/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
             <a href="association/user/${association.id}/changeManager.do" class="list-group-item"><spring:message code="association.manager.change"/></a>
+            <a href="association/user/${association.id}/dashboard.do" class="list-group-item"><spring:message code="association.dashboard"/></a>
             </jstl:if>
             <jstl:if test="${role eq 'ASSOCIATE' || role eq 'COLLABORATOR'}">
             <a href="association/user/${association.id}/leave.do" class="list-group-item"><spring:message code="association.leave"/></a>

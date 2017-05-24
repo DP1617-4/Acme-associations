@@ -19,7 +19,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <security:authentication property="principal" var ="loggedactor"/>
-<display:table pagesize="5" keepStatus="true" name="meetings" requestURI="${requestURI}" id="row">
+<display:table pagesize="5" keepStatus="false" name="meetings" requestURI="${requestURI}" id="row">
 
 	<spring:message code="meeting.meetings" var="meetingHeader"/>
 	<spring:message code="meeting.issue" var="issueHeader" />

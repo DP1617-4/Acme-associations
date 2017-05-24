@@ -53,10 +53,14 @@ public class PlaceService {
 
 	public Place save(final Place place, final Activity activity) {
 		Assert.notNull(place);
+		if (place.getLongitude() != null)
+			Assert.isTrue(place.getLatitude() != null, "place.longitude.notDefined");
+		if (place.getLatitude() != null)
+			Assert.isTrue(place.getLongitude() != null, "place.latitude.notDefined");
 		Place result;
 		result = this.placeRepository.save(place);
 		if (activity.getPlace() == null)
-			this.activityService.setPlace(place, activity);
+			this.activityService.setPlace(result, activity);
 		return result;
 	}
 
