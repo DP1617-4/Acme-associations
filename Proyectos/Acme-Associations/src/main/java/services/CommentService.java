@@ -31,9 +31,6 @@ public class CommentService {
 	private UserService			userService;
 
 	@Autowired
-	private ItemService			itemService;
-
-	@Autowired
 	private CommentableService	commentableService;
 
 	@Autowired

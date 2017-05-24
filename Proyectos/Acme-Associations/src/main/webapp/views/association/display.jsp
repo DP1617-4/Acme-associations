@@ -98,9 +98,11 @@
 
         <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
           <div class="list-group">
+          	<security:authorize access="hasRole('USER')"> 
+          		<a href="sanction/actor/${association.id}/mySanctions.do" class="list-group-item"><spring:message code="association.sanction"/></a>
+          	</security:authorize>
           	<security:authorize access="isAuthenticated()"> 
           		<a href="association/user/${association.id}/listUsers.do" class="list-group-item"><spring:message code="association.user.list"/></a>
-          		<a href="sanction/actor/${association.id}/mySanctions.do" class="list-group-item"><spring:message code="association.sanction"/></a>
           		<a href="item/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.item"/></a>
           	</security:authorize>
             <a href="section/${association.id}/list.do" class="list-group-item"><spring:message code="association.section"/></a>
@@ -112,6 +114,7 @@
             <jstl:if test="${role eq 'MANAGER'}">
             <a href="user/request/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
             <a href="association/user/${association.id}/changeManager.do" class="list-group-item"><spring:message code="association.manager.change"/></a>
+            <a href="association/user/${association.id}/dashboard.do" class="list-group-item"><spring:message code="association.dashboard"/></a>
             </jstl:if>
             <jstl:if test="${role eq 'ASSOCIATE' || role eq 'COLLABORATOR'}">
             <a href="association/user/${association.id}/leave.do" class="list-group-item"><spring:message code="association.leave"/></a>

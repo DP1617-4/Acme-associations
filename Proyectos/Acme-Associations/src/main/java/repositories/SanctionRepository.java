@@ -23,5 +23,8 @@ public interface SanctionRepository extends JpaRepository<Sanction, Integer> {
 
 	@Query("select s from Sanction s where s.user.id = ?1 and s.endDate > now()")
 	Collection<Sanction> findAllByPrincipalActive(int userId);
-	
+
+	@Query("select count(s) from Sanction s where s.user.id=?1 and s.association.id=?2")
+	Integer countSanctionsByUserAssociation(int userId, int associationId);
+
 }

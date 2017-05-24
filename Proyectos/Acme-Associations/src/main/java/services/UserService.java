@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -227,5 +228,70 @@ public class UserService {
 	public Collection<User> findAllRelatedItem(final Item item) {
 
 		return this.userRepository.findAllRelatedItem(item.getId());
+	}
+
+	public Object[] minMaxAvgMembers() {
+		final Object[] result = new Object[3];
+
+		result[0] = this.userRepository.avgMembers();
+		final List<Long> counts = this.userRepository.findCountMembers();
+		result[1] = counts.get(0);
+		result[2] = counts.get(counts.size() - 1);
+
+		return result;
+	}
+
+	public Collection<User> mostSanctionedUsers() {
+		Collection<User> result;
+
+		result = this.userRepository.mostSanctionedUsers();
+
+		return result;
+	}
+
+	public User findCollaboratorLeastLoans(final Association association) {
+
+		List<User> users;
+		Collection<User> usersAux;
+		User user = null;
+
+		usersAux = this.findAssociationCollaborators(association);
+		users = new ArrayList<User>(this.userRepository.findCollaboratorLeastLoans(association.getId()));
+		if (users.size() > 0)
+			user = users.get(0);
+		for (final User u : usersAux)
+			if (!(users.contains(u))) {
+
+				user = u;
+				break;
+			}
+
+		return user;
+
+	}
+
+	public User findCollaboratorMostLoans(final Association association) {
+
+		User user = null;
+		List<User> users = new ArrayList<User>(this.userRepository.findCollaboratorMostLoans(association.getId()));
+		if (!users.isEmpty())
+			user = users.get(0);
+
+		return user;
+	}
+
+	public User selectUserWithMostSanctionsByAssociation(final Association association) {
+
+		User user = null;
+		List<User> users = new ArrayList<User>(this.userRepository.selectUserWithMostSanctionsByAssociation(association.getId()));
+		if (!users.isEmpty())
+			user = users.get(0);
+
+		return user;
+	}
+
+	public Integer countLoansCollaborator(User user, Association association) {
+
+		return this.userRepository.countLoansCollaborator(user.getId(), association.getId());
 	}
 }

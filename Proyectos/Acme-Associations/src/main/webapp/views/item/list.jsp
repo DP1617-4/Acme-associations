@@ -28,7 +28,12 @@
 	<!-- Attributes -->
 	<spring:message code="item.name" var="nameHeader" />
 	<display:column title="${nameHeader}">
-		<a href="item/user/${association.id}/display.do?itemId=${row.id}"><jstl:out value="${row.name }"/></a>
+		<jstl:if test="${ association!=null}">
+		<a href="item/user/${association.id}/display.do?itemId=${row.id}"><jstl:out value="${row.name}"/></a>
+		</jstl:if>
+		<jstl:if test="${ association==null}">
+		<jstl:out value="${row.name}"/>
+		</jstl:if>
 	</display:column>
 
 	<spring:message code="item.condition" var="conditionHeader" />

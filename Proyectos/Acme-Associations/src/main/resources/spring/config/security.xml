@@ -109,10 +109,14 @@
 		<security:intercept-url pattern="/user/user/edit.do**" access="hasRole('USER')" /> 
 		
 		<!-- Folder -->
+		<security:intercept-url pattern="/dashboard/admin/**" access="hasRole('ADMIN')" /> 
+		
+		<!-- Folder -->
 		 <security:intercept-url pattern="/folder/actor/**" access="isAuthenticated()" /> 
 		 <security:intercept-url pattern="/message/actor/**" access="isAuthenticated()" />
 		 
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
+		
 		
 		
 
