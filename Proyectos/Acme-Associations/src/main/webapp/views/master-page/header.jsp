@@ -40,6 +40,9 @@
 		</div>
 	</form>
 	
+	<li><a class="fNiv" href="activity/list.do"><spring:message
+              code="association.activity" /></a></li>
+	
 	<security:authorize access="hasRole('ADMIN')">
 	
 		
