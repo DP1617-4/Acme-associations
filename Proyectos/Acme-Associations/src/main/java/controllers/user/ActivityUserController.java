@@ -112,6 +112,7 @@ public class ActivityUserController extends AbstractController {
 			activity.setWinner(addWinner.getUser());
 			activity = this.activityService.save(activity);
 			result = new ModelAndView("redirect:/activity/" + activity.getAssociation().getId() + "/" + activity.getId() + "/display.do");
+			result.addObject("flashMessage", "activity.winner.added");
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 			result.addObject("flashMessage", oops.getMessage());
