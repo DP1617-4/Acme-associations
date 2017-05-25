@@ -27,6 +27,7 @@
 
 	<!-- Attributes -->
 	<spring:message code="item.name" var="nameHeader" />
+	<spring:message code="master.page.association" var="associationHeader" />
 	<display:column title="${nameHeader}">
 		<jstl:if test="${ association!=null}">
 		<a href="item/user/${association.id}/display.do?itemId=${row.id}"><jstl:out value="${row.name}"/></a>
@@ -35,6 +36,14 @@
 		<jstl:out value="${row.name}"/>
 		</jstl:if>
 	</display:column>
+	<jstl:if test="${ association==null}">
+	<display:column title="${associationHeader }">
+		<a href="association/${row.section.association.id}/display.do"><jstl:out value="${row.section.association.name}"/></a>
+	</display:column>
+	<display:column title="${associationHeader }">
+		<jstl:out value="${row.section.name}"/>
+	</display:column>
+	</jstl:if>
 
 	<spring:message code="item.condition" var="conditionHeader" />
 	<display:column property="itemCondition" title="${conditionHeader}" sortable="true" />
