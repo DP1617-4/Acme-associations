@@ -102,6 +102,7 @@ public class ActivityController extends AbstractController {
 		result.addObject("activities", activities);
 		result.addObject("requestURI", "activity/" + association.getId() + "/list.do");
 		result.addObject("role", role);
+		result.addObject("roles", roles);
 
 		return result;
 	}
@@ -110,11 +111,24 @@ public class ActivityController extends AbstractController {
 	public ModelAndView listAll() {
 		ModelAndView result;
 
-		Collection<Activity> activities = this.activityService.findAllNotFinished();
+		final Roles roles = null;
+		final String role = null;
+
+		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		result = new ModelAndView("welcome/index");
+
+		final Collection<Activity> activities = this.activityService.findAllNotFinished();
 
 		result = new ModelAndView("activity/list");
 		result.addObject("activities", activities);
 		result.addObject("requestURI", "activity/list.do");
+		result.addObject("role", role);
+		result.addObject("roles", roles);
+		if (principal != "anonymousUser") {
+			final Actor actPrincipal = this.actorService.findByPrincipal();
+			result.addObject("actPrincipal", actPrincipal);
+		}
 
 		return result;
 	}
