@@ -87,8 +87,11 @@
 				<jstl:if test="${role == 'ASSOCIATE' || role == 'COLLABORATOR' || role == 'MANAGER' }">
 				<form:form action="comment/user/${association.id }/edit.do" modelAttribute="comment">
 	            	<form:hidden path="commentable"/>
-	            	<form:input path="title" /></br>
-	            	<form:textarea path="text"/></br>
+	            	
+	            	<acme:textbox code="comment.title" path="title"/><br />
+	            	<acme:textarea code="comment.text" path="text"/><br />
+	            	
+
 	            	<acme:submit name="save" code="comment.new.save"/>
 	            </form:form>
 	            </jstl:if>

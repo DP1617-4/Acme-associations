@@ -54,8 +54,8 @@
 				<jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
 					<form:form action="comment/user/${meeting.id}/edit.do" modelAttribute="comment">
 	            		<form:hidden path="commentable"/>
-	            		<form:input path="title" /> </br>
-	            		<form:textarea path="text"/> </br>
+		            	<acme:textbox code="comment.title" path="title"/><br />
+	            		<acme:textarea code="comment.text" path="text"/><br />
 	            		<acme:submit name="save" code="comment.new.save"/>
 	            	</form:form>
 	            </jstl:if>
@@ -114,8 +114,8 @@
 				<jstl:if test="${isParticipant == true}">
 					<form:form action="comment/user/${meeting.id}/edit.do" modelAttribute="commentSecond">
 	            		<form:hidden path="commentable"/>
-	            		<form:input path="title" /> </br>
-	            		<form:textarea path="text"/> </br>
+		            	<acme:textbox code="comment.title" path="title"/><br />
+	            		<acme:textarea code="comment.text" path="text"/><br />
 	            		<acme:submit name="save" code="comment.new.save"/>
 	            	</form:form>
 	            </jstl:if>

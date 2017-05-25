@@ -206,6 +206,7 @@ public class MessageActorController extends AbstractController {
 
 		result.addObject("errorMessage", errorMessage);
 		result.addObject("actors", actors);
+		result.addObject("message", message);
 
 		return result;
 
