@@ -71,39 +71,7 @@ public class MinutesUserController extends AbstractController {
 			result = new ModelAndView("redirect:/meeting/user/" + association.getId() + "/" + meeting.getId() + "/display.do");
 		return result;
 	}
-	//	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	//	public ModelAndView edit(@PathVariable final Minutes minutes, @PathVariable final Association association, final RedirectAttributes redir) {
-	//		ModelAndView result;
-	//		Minutes m;
-	//
-	//		Roles roles = null;
-	//		String role = null;
-	//
-	//		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	//		final Actor actPrincipal = this.actorService.findByPrincipal();
-	//
-	//		if (principal != "anonymousUser")
-	//			if (actPrincipal instanceof User)
-	//				roles = this.rolesService.findRolesByPrincipalAssociation(association);
-	//
-	//		if (roles != null)
-	//			role = roles.getType();
-	//
-	//		m = this.minutesService.findOne(minutes.getId());
-	//		final Association ass = m.getMeeting().getAssociation();
-	//
-	//		try {
-	//			this.rolesService.checkManagerPrincipal(ass);
-	//			result = this.createEditModelAndView(m);
-	//		} catch (final Exception e) {
-	//			result = new ModelAndView("redirect:/welcome/index.do");
-	//			redir.addFlashAttribute("errorMessage", e.getMessage());
-	//		}
-	//
-	//		result = this.createEditModelAndView(minutes);
-	//
-	//		return result;
-	//	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final Minutes minutes, final BindingResult binding) {
 		ModelAndView result;
@@ -120,33 +88,6 @@ public class MinutesUserController extends AbstractController {
 			}
 		return result;
 	}
-
-	//	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	//	public ModelAndView display(@PathVariable final Association association, @PathVariable final Meeting meeting) {
-	//		final ModelAndView result;
-	//
-	//		Roles roles = null;
-	//		String role = null;
-	//
-	//		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	//		final Actor actPrincipal = this.actorService.findByPrincipal();
-	//
-	//		if (principal != "anonymousUser")
-	//			if (actPrincipal instanceof User)
-	//				roles = this.rolesService.findRolesByPrincipalAssociation(association);
-	//
-	//		if (roles != null)
-	//			role = roles.getType();
-	//
-	//		this.rolesService.checkCollaboratorPrincipal(association);
-	//		final Minutes minutes = this.minutesService.findOneByMeeting(meeting);
-	//
-	//		result = new ModelAndView("minutes/display");
-	//		result.addObject("minutes", minutes);
-	//		result.addObject("requestURI", "/minutes/user/" + association.getId() + "/" + meeting.getId() + "/display.do");
-	//
-	//		return result;
-	//	}
 
 	@RequestMapping(value = "/addParticipants", method = RequestMethod.POST, params = "save")
 	public ModelAndView addPicture(final AddParticipant addParticipant, final BindingResult binding) {
@@ -171,6 +112,7 @@ public class MinutesUserController extends AbstractController {
 			}
 		return result;
 	}
+
 	// Ancillary methods ---------------------------------------------------------
 	protected ModelAndView createEditModelAndView(final Minutes minutes) {
 		ModelAndView result;

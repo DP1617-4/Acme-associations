@@ -49,6 +49,7 @@ public class MinutesService {
 
 		return result;
 	}
+
 	public Minutes findOne(final int minutesId) {
 
 		Assert.isTrue(minutesId != 0);
