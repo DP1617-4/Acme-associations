@@ -43,12 +43,12 @@
 		<form:errors cssClass="error" path="endMoment" />
 	</div> <br />
 	<acme:textbox code="activity.maximumAttendants" path="maximumAttendants"/><br />
-		<%-- <form:label path="publicActivity">
-			<spring:message code="activity.public" />:
-		</form:label>
-		<form:input type="checkbox" path="publicActivity"/>
-		<form:errors cssClass="error" path="publicActivity" /> --%>
-  	
+	<form:label path="publicActivity" >
+		<b><spring:message code="activity.public" /> :</b>
+	</form:label>
+	<form:checkbox path="publicActivity" id="publicActivity" onchange="javascript: toggleSubmit()"/>
+	<form:errors path="publicActivity" cssClass="error" />
+  	<br /><br />
 	<form:label path="item">
 		<spring:message code="activity.item" />:
 	</form:label>
@@ -60,7 +60,7 @@
 	</form:select>
 	<form:errors cssClass="error" path="item" /> <br />
 
-
+	<br/>
 	<input type="submit" name="save"
 		value="<spring:message code="activity.save" />" />&nbsp; 
 	<input type="button" name="cancel"
