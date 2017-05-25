@@ -143,7 +143,10 @@ public class ActivityService {
 	public void addParticipant(final User user, final Activity activity) {
 		Collection<User> attendants;
 		attendants = activity.getAttendants();
-		attendants.add(user);
+		if (!attendants.contains(user))
+			attendants.add(user);
+		if (attendants.contains(user))
+			attendants.remove(user);
 		activity.setAttendants(attendants);
 		this.activityRepository.save(activity);
 	}
@@ -151,7 +154,7 @@ public class ActivityService {
 	public Activity findMostAttendedByAssociation(final Association association) {
 
 		Activity activity = null;
-		List<Activity> activities = new ArrayList<Activity>(this.activityRepository.findMostAttendedByAssociation(association.getId()));
+		final List<Activity> activities = new ArrayList<Activity>(this.activityRepository.findMostAttendedByAssociation(association.getId()));
 		if (!activities.isEmpty())
 			activity = activities.get(0);
 

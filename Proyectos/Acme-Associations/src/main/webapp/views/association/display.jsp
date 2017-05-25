@@ -112,7 +112,7 @@
             <a href="meeting/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.meeting"/></a>
             </jstl:if>
             <jstl:if test="${role eq 'MANAGER'}">
-            <a href="user/request/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
+            <a href="request/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
             <a href="association/user/${association.id}/changeManager.do" class="list-group-item"><spring:message code="association.manager.change"/></a>
             <a href="association/user/${association.id}/dashboard.do" class="list-group-item"><spring:message code="association.dashboard"/></a>
             </jstl:if>
@@ -147,7 +147,7 @@
             
              <jstl:if test="${role == null && application == false}">
              <div>
-	            <a class="btn btn-primary" href="user/request/${association.id}/apply.do"><spring:message code="association.request.apply"/></a>
+	            <a class="btn btn-primary" href="request/user/${association.id}/apply.do"><spring:message code="association.request.apply"/></a>
 	            
             </div>
             </jstl:if>
