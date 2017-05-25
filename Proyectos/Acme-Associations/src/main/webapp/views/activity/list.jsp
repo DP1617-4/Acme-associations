@@ -123,7 +123,6 @@
 			<jstl:if test="${row.attendants.size() < row.maximumAttendants}">
 				<a href="activity/user/${row.id}/register.do">
 				<jstl:set var="registered" value="false" />
-				
 					<jstl:if test="${row.attendants.contains(actPrincipal)}">
 						<jstl:set var="registered" value="true" />
 					</jstl:if>
@@ -148,7 +147,7 @@
 			<a href="activity/user/${row.id}/register.do">
 			<jstl:set var="registered" value="false" />
 			<jstl:forEach var="att" items="${row.attendants}">
-				<jstl:if test="${att.userAccount == loggedactor}">
+				<jstl:if test="${row.attendants.contains(actPrincipal)}">
 					<jstl:set var="registered" value="true" />
 				</jstl:if>
 			</jstl:forEach>

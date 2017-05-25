@@ -126,10 +126,9 @@ public class ActivityUserController extends AbstractController {
 		if (!activity.getPublicActivity())
 			try {
 				final Roles role = this.roleService.findRolesByPrincipalAssociation(activity.getAssociation());
-				String roleAComprobar;
-				roleAComprobar = role.getType();
+				String roleAComprobar = new String(role.getType());
 
-				Assert.isTrue(roleAComprobar == "MANAGER" || roleAComprobar == "COLLABORATOR" || roleAComprobar == "ASSOCIATE", "activity.notPublic");
+				Assert.isTrue(roleAComprobar.equalsIgnoreCase("MANAGER") || roleAComprobar.equalsIgnoreCase("COLLABORATOR") || roleAComprobar.equalsIgnoreCase("ASSOCIATE"), "activity.notPublic");
 
 				this.activityService.addParticipant(this.userService.findByPrincipal(), activity);
 				result = new ModelAndView("redirect:/activity/" + activity.getAssociation().getId() + "/" + activity.getId() + "/display.do");

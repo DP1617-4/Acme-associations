@@ -29,10 +29,10 @@
             <h1><jstl:out value="${actor.completeName}" /></h1>
             <p><jstl:out value="${actor.email}" /></p>
           </div>
-          <div><jstl:out value="${actor.phoneNumber}" /></div>
-          <div><jstl:out value="${actor.postalAddress}" /></div>
-          <div><jstl:out value="${actor.idNumber}"/></div>
+          <div><b><spring:message code="actor.phoneNumber"/>: </b><jstl:out value="${actor.phoneNumber}" /></div>
+          <div><b><spring:message code="actor.postalAddress"/>: </b><jstl:out value="${actor.postalAddress}" /></div>
           <jstl:if test="${loggedactor == actor.userAccount }">
+          <div><b><spring:message code="actor.idNumber"/>: </b><jstl:out value="${actor.idNumber}"/></div>
           <div class="row">
             <div class="col-12 col-lg-6">
               <h2><spring:message code="actor.messages"/></h2>
