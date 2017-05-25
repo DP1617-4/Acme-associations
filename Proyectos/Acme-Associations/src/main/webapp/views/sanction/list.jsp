@@ -68,9 +68,11 @@
 	
 </display:table>
 <br><br/>
+<jstl:if test="${userId!=null }">
 	<jstl:if test="${not empty role && (role.type eq 'COLLABORATOR' || role.type eq 'MANAGER') && not requestURI.contains('my')}">
 		<div><a href="sanction/user/${association.id}/create.do?userId=${userId}"><spring:message code="sanction.create"/></a></div>
 	</jstl:if>
+</jstl:if>
 <br/>
 
 		

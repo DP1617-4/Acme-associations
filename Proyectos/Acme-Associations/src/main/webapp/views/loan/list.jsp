@@ -55,7 +55,7 @@
 				
 				<spring:message code="loan.sanction" var="sanctionHeader"/>
 				<display:column title="${sanctionHeader}">
-					<a href="user/sanction/${row.borrower.id}/create.do"><spring:message code="loan.sanction.user" /></a>
+					<a href="sanction/user/${row.item.section.association.id}/create.do?userId=${row.borrower.id}"><spring:message code="loan.sanction.user" /></a>
 				</display:column>
 			</jstl:if>
 			
