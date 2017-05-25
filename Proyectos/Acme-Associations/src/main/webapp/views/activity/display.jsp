@@ -29,9 +29,9 @@
             <p><jstl:out value="${activity.description}" /></p>
           </div>
           <div class="col-6 col-md-6 col-lg-6">
-          <div><spring:message code="activity.startMoment"/>: <jstl:out value="${activity.startMoment}" /></div>
-          <div><spring:message code="activity.endMoment"/>: <jstl:out value="${activity.endMoment}" /></div>
-          <div><spring:message code="activity.maximumAttendants"/>: <jstl:out value="${activity.maximumAttendants}" /></div>
+          <div><b><spring:message code="activity.startMoment"/>: </b><jstl:out value="${activity.startMoment}" /></div>
+          <div><b><spring:message code="activity.endMoment"/>: </b><jstl:out value="${activity.endMoment}" /></div>
+          <div><b><spring:message code="activity.maximumAttendants"/>: </b><jstl:out value="${activity.maximumAttendants}" /></div>
           <jstl:if test="${role eq 'MANAGER'|| role eq 'COLLABORATOR'}">
 				<jstl:if test="${activity.winner == null}">
 						<form:form action="activity/user/addWinner.do" modelAttribute="addWinner">
@@ -71,9 +71,9 @@
 				</jstl:if>
 			</jstl:if>
 			<jstl:if test="${activity.place!=null}">
-				<div><spring:message code="activity.place.address"/><jstl:out value="${activity.place.address}" /></div>
-				<div><spring:message code="activity.place.latitude"/><jstl:out value="${activity.place.latitude}" /></div>
-				<div><spring:message code="activity.place.longitude"/><jstl:out value="${activity.place.longitude}" /></div>
+				<div><b><spring:message code="activity.place.address"/>: </b><jstl:out value="${activity.place.address}" /></div>
+				<div><b><spring:message code="activity.place.latitude"/>: </b><jstl:out value="${activity.place.latitude}" /></div>
+				<div><b><spring:message code="activity.place.longitude"/>: </b><jstl:out value="${activity.place.longitude}" /></div>
 			</jstl:if>
         </div><!--/span-->
       </div><!--/row-->

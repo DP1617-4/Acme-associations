@@ -145,7 +145,7 @@ public class ActivityService {
 		attendants = activity.getAttendants();
 		if (!attendants.contains(user))
 			attendants.add(user);
-		if (attendants.contains(user))
+		else if (attendants.contains(user))
 			attendants.remove(user);
 		activity.setAttendants(attendants);
 		this.activityRepository.save(activity);
