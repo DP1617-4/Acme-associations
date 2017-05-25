@@ -123,13 +123,12 @@
 			<jstl:if test="${row.attendants.size() < row.maximumAttendants}">
 				<a href="activity/user/${row.id}/register.do">
 				<jstl:set var="registered" value="false" />
-				<jstl:forEach var="item" items="${row.attendants}">
-					<jstl:if test="${item.userAccount.id == loggedactor.id}">
+				
+					<jstl:if test="${row.attendants.contains(actPrincipal)}">
 						<jstl:set var="registered" value="true" />
 					</jstl:if>
-				</jstl:forEach>
 				<jstl:choose>
-					<jstl:when test="${attendants}">
+					<jstl:when test="${registered}">
 						<spring:message code="activity.unregister" />
 					</jstl:when>
 					<jstl:otherwise>	
@@ -142,30 +141,28 @@
 		</security:authorize>
 	</jstl:if>
 	
-	<jstl:if test="${row.publicActivity} == false">
-		<jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR' || role eq 'ASSOCIATE'}">
-			<spring:message code="activity.register" var="registerHeader" />
-			<display:column title="${registerHeader}">
-			<jstl:if test="${row.attendants.size() < row.maximumAttendants}">
-				<a href="activity/user/${row.id}/register.do">
-				<jstl:set var="registered" value="false" />
-				<jstl:forEach var="item" items="${row.attendants}">
-					<jstl:if test="${item.userAccount.id == loggedactor.id}">
-						<jstl:set var="registered" value="true" />
-					</jstl:if>
-				</jstl:forEach>
-				<jstl:choose>
-					<jstl:when test="${attendants}">
-						<spring:message code="activity.unregister" />
-					</jstl:when>
-					<jstl:otherwise>	
-						<spring:message code="activity.register" />				
-					</jstl:otherwise>
-				</jstl:choose>
-				 </a>
-			</jstl:if>
-			</display:column>
+	<jstl:if test="${row.publicActivity == false && (role eq 'MANAGER' || role eq 'COLLABORATOR' || role eq 'ASSOCIATE')}">
+		<spring:message code="activity.register" var="registerHeader" />
+		<display:column title="${registerHeader}">
+		<jstl:if test="${row.attendants.size() < row.maximumAttendants}">
+			<a href="activity/user/${row.id}/register.do">
+			<jstl:set var="registered" value="false" />
+			<jstl:forEach var="att" items="${row.attendants}">
+				<jstl:if test="${att.userAccount == loggedactor}">
+					<jstl:set var="registered" value="true" />
+				</jstl:if>
+			</jstl:forEach>
+			<jstl:choose>
+				<jstl:when test="${registered}">
+					<spring:message code="activity.unregister" />
+				</jstl:when>
+				<jstl:otherwise>	
+					<spring:message code="activity.register" />				
+				</jstl:otherwise>
+			</jstl:choose>
+			 </a>
 		</jstl:if>
+		</display:column>
 	</jstl:if>
 	
 </display:table>
