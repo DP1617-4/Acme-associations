@@ -145,6 +145,7 @@ public class ActivityService {
 		attendants = activity.getAttendants();
 		attendants.add(user);
 		activity.setAttendants(attendants);
+		this.activityRepository.save(activity);
 	}
 
 	public Activity findMostAttendedByAssociation(final Association association) {

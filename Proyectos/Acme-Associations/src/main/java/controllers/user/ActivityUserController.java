@@ -41,16 +41,16 @@ public class ActivityUserController extends AbstractController {
 	//Service
 
 	@Autowired
-	private ActivityService		activityService;
+	private ActivityService	activityService;
 
 	@Autowired
-	private UserService			userService;
+	private UserService		userService;
 
 	@Autowired
-	private RolesService		roleService;
+	private RolesService	roleService;
 
 	@Autowired
-	private ItemService			itemService;
+	private ItemService		itemService;
 
 
 	@RequestMapping(value = "/{association}/create", method = RequestMethod.GET)
@@ -118,32 +118,34 @@ public class ActivityUserController extends AbstractController {
 		}
 		return result;
 	}
-	@RequestMapping(value = "/{association}/{activity}/register", method = RequestMethod.GET)
-	public ModelAndView register(@PathVariable final Association association, final Activity activity, final RedirectAttributes redir) {
+	@RequestMapping(value = "/{activity}/register", method = RequestMethod.GET)
+	public ModelAndView register(@PathVariable final Activity activity, final RedirectAttributes redir) {
 		ModelAndView result;
 
-		if (activity.getPublicActivity())
+		if (!activity.getPublicActivity())
 			try {
-				final Roles role = this.roleService.findRolesByPrincipalAssociation(association);
+				final Roles role = this.roleService.findRolesByPrincipalAssociation(activity.getAssociation());
+				String roleAComprobar;
+				roleAComprobar = role.getType();
 
-				Assert.isTrue(role.getType() == "MANAGER" || role.getType() == "COLLABORATOR" || role.getType() == "ASSOCIATE");
+				Assert.isTrue(roleAComprobar == "MANAGER" || roleAComprobar == "COLLABORATOR" || roleAComprobar == "ASSOCIATE", "activity.notPublic");
 
 				this.activityService.addParticipant(this.userService.findByPrincipal(), activity);
-				result = new ModelAndView("redirect:/welcome/index.do");
+				result = new ModelAndView("redirect:/activity/" + activity.getAssociation().getId() + "/" + activity.getId() + "/display.do");
 				result.addObject("flashMessage", "activity.added");
 			} catch (final Exception e) {
 
-				result = new ModelAndView("redirect:/welcome/index.do");
+				result = new ModelAndView("redirect:/activity/" + activity.getAssociation().getId() + "/" + activity.getId() + "/display.do");
 				redir.addFlashAttribute("errorMessage", e.getMessage());
 			}
 		else
 			try {
 				this.activityService.addParticipant(this.userService.findByPrincipal(), activity);
-				result = new ModelAndView("redirect:/welcome/index.do");
+				result = new ModelAndView("redirect:/activity/" + activity.getAssociation().getId() + "/" + activity.getId() + "/display.do");
 				result.addObject("flashMessage", "activity.added");
 			} catch (final Exception e) {
 
-				result = new ModelAndView("redirect:/welcome/index.do");
+				result = new ModelAndView("redirect:/activity/" + activity.getAssociation().getId() + "/" + activity.getId() + "/display.do");
 				redir.addFlashAttribute("errorMessage", e.getMessage());
 			}
 		return result;
