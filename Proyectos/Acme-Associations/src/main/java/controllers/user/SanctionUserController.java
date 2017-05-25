@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import controllers.AbstractController;
 import services.RolesService;
 import services.SanctionService;
+import controllers.AbstractController;
 import domain.Association;
 import domain.Roles;
 import domain.Sanction;
@@ -37,13 +37,13 @@ public class SanctionUserController extends AbstractController {
 
 	@Autowired
 	private SanctionService	sanctionService;
-	
+
 	@Autowired
 	private RolesService	rolesService;
 
 
 	@RequestMapping(value = "/{association}/listByUser", method = RequestMethod.GET)
-	public ModelAndView list(@PathVariable final Association association, final int userId) {
+	public ModelAndView list(@PathVariable final Association association, @RequestParam final int userId) {
 		ModelAndView result;
 
 		final Collection<Sanction> sanctions = this.sanctionService.findByAssociationAndUser(association, userId);
@@ -53,13 +53,27 @@ public class SanctionUserController extends AbstractController {
 		result.addObject("sanctions", sanctions);
 		result.addObject("role", role);
 		result.addObject("userId", userId);
-		result.addObject("requestURI", "/sanction/user/" + association.getId() + "/listByUser.do?userId="+userId);
+		result.addObject("requestURI", "/sanction/user/" + association.getId() + "/listByUser.do?userId=" + userId);
 
 		return result;
 	}
-	
+
+	@RequestMapping(value = "/{association}/list", method = RequestMethod.GET)
+	public ModelAndView listByAssociation(@PathVariable final Association association) {
+		ModelAndView result;
+
+		final Collection<Sanction> sanctions = this.sanctionService.findByAssociation(association);
+		final Roles role = this.rolesService.findRolesByPrincipalAssociation(association);
+
+		result = new ModelAndView("sanction/list");
+		result.addObject("sanctions", sanctions);
+		result.addObject("role", role);
+		result.addObject("requestURI", "/sanction/user/" + association.getId() + "/list.do");
+
+		return result;
+	}
 	@RequestMapping(value = "/{association}/listByUserActive", method = RequestMethod.GET)
-	public ModelAndView listActive(@PathVariable final Association association, final int userId) {
+	public ModelAndView listActive(@PathVariable final Association association, @RequestParam final int userId) {
 		ModelAndView result;
 
 		final Collection<Sanction> sanctions = this.sanctionService.findByAssociationAndUserActive(association, userId);
@@ -69,11 +83,11 @@ public class SanctionUserController extends AbstractController {
 		result.addObject("sanctions", sanctions);
 		result.addObject("role", role);
 		result.addObject("userId", userId);
-		result.addObject("requestURI", "/sanction/user/" + association.getId() + "/listByUserActive.do?userId="+userId);
+		result.addObject("requestURI", "/sanction/user/" + association.getId() + "/listByUserActive.do?userId=" + userId);
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/{association}/mySanctions", method = RequestMethod.GET)
 	public ModelAndView listOwn(@PathVariable final Association association) {
 		ModelAndView result;
@@ -88,7 +102,7 @@ public class SanctionUserController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/{association}/myActiveSanctions", method = RequestMethod.GET)
 	public ModelAndView listOwnActive(@PathVariable final Association association) {
 		ModelAndView result;
@@ -103,16 +117,16 @@ public class SanctionUserController extends AbstractController {
 
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/{association}/create", method = RequestMethod.GET)
-	public ModelAndView create(@PathVariable final Association association, final int userId) {
+	public ModelAndView create(@PathVariable final Association association, @RequestParam final int userId) {
 		ModelAndView result;
-		
+
 		final Sanction newSanction = this.sanctionService.create(userId, association);
 		result = this.createEditModelAndView(newSanction, association);
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/{association}/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@PathVariable final Association association, @RequestParam final int sanctionId, final RedirectAttributes redir) {
 		ModelAndView result;
@@ -138,13 +152,13 @@ public class SanctionUserController extends AbstractController {
 		else
 			try {
 				newSanction = this.sanctionService.save(newSanction);
-				result = new ModelAndView("redirect:/sanction/user/" + association.getId() + "/listByUser.do?userId="+newSanction.getUser().getId());
+				result = new ModelAndView("redirect:/sanction/user/" + association.getId() + "/listByUser.do?userId=" + newSanction.getUser().getId());
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(newSanction, association, "sanction.commit.error");
 			}
 		return result;
 	}
-	
+
 	protected ModelAndView createEditModelAndView(final Sanction sanction, final Association association) {
 		ModelAndView result;
 
@@ -156,9 +170,9 @@ public class SanctionUserController extends AbstractController {
 		ModelAndView result;
 
 		final String requestURI = "sanction/user/" + association.getId() + "/edit.do";
-		final String cancelURI = "sanction/user/" + association.getId() + "/listByUserActive.do?userId="+sanction.getUser().getId();
+		final String cancelURI = "sanction/user/" + association.getId() + "/listByUserActive.do?userId=" + sanction.getUser().getId();
 		final Roles role = this.rolesService.findRolesByPrincipalAssociation(association);
-		
+
 		result = new ModelAndView("sanction/edit");
 		result.addObject("sanction", sanction);
 		result.addObject("role", role);
