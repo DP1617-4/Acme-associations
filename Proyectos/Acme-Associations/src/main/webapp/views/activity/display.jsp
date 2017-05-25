@@ -49,6 +49,9 @@
 						</form:form>
 				</jstl:if>
 			</jstl:if>
+			<jstl:if test="${activity.winner != null}">
+				<jstl:out value="${activity.winner.completeName}" />
+			</jstl:if>
          </div>
           
           <div class="col-6 col-md-6 col-lg-6">
@@ -67,7 +70,4 @@
         </div><!--/span-->
       </div><!--/row-->
      </div>
- 
-				
-		</div><!--/span-->
-
+</div><!--/span-->
