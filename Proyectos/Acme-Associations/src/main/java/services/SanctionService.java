@@ -139,4 +139,8 @@ public class SanctionService {
 		return this.sanctionRepository.countSanctionsByUserAssociation(user.getId(), association.getId());
 	}
 
+	public Collection<Sanction> findByAssociation(Association association) {
+		final Collection<Sanction> result = sanctionRepository.findByAssociation(association.getId());
+		return result;
+	}
 }
