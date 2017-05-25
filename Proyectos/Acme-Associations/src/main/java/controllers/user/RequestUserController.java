@@ -92,7 +92,7 @@ public class RequestUserController extends AbstractController {
 		ModelAndView result;
 		try {
 			this.requestService.accept(request);
-			result = new ModelAndView("redirect:request/user/" + request.getAssociation().getId() + "/list.do");
+			result = new ModelAndView("redirect:/request/user/" + request.getAssociation().getId() + "/list.do");
 		} catch (final Exception exc) {
 
 			result = new ModelAndView("redirect:/welcome/index.do");
@@ -108,7 +108,7 @@ public class RequestUserController extends AbstractController {
 
 		try {
 			this.requestService.deny(request);
-			result = new ModelAndView("redirect:request/user/" + request.getAssociation().getId() + "/list.do");
+			result = new ModelAndView("redirect:/request/user/" + request.getAssociation().getId() + "/list.do");
 		} catch (final Exception exc) {
 
 			result = new ModelAndView("redirect:/welcome/index.do");

@@ -38,16 +38,16 @@
 	
 	<jstl:if test="${association != null }">
 		<display:column title="${acceptHeader}">
-			<a href="user/request/${row.id}/accept.do"> <spring:message code="request.accept" /></a>
+			<a href="request/user/${row.id}/accept.do"> <spring:message code="request.accept" /></a>
 		</display:column>
 		
 		<display:column title="${denyHeader}">
-			<a href="user/request/${row.id }/deny.do"><spring:message code="request.deny" /></a>
+			<a href="request/user/${row.id }/deny.do"><spring:message code="request.deny" /></a>
 		</display:column>
 	</jstl:if>
 	<jstl:if test="${association == null }">
 		<display:column title="${acceptHeader}">
-			<a href="user/request/${row.id}/cancel.do"><spring:message code="request.cancel" /></a>
+			<a href="request/user/${row.id}/cancel.do"><spring:message code="request.cancel" /></a>
 		</display:column>
 	</jstl:if>
 	
