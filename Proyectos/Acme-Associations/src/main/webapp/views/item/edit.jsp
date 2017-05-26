@@ -29,7 +29,7 @@
     
 	<acme:textbox code="item.name" path="name"/>
 	
-	<acme:textbox code="item.description" path="description"/>
+	<acme:textarea code="item.description" path="description"/>
 	
 	<form:label path="itemCondition">
 	<spring:message code="item.condition" />:
