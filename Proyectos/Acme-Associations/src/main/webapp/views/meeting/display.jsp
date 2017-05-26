@@ -111,14 +111,12 @@
 					</display:column>
 				</display:table>
 				
-				<jstl:if test="${isParticipant == true}">
 					<form:form action="comment/user/${meeting.id}/edit.do" modelAttribute="commentSecond">
 	            		<form:hidden path="commentable"/>
 		            	<acme:textbox code="comment.title" path="title"/><br />
 	            		<acme:textarea code="comment.text" path="text"/><br />
 	            		<acme:submit name="save" code="comment.new.save"/>
 	            	</form:form>
-	            </jstl:if>
 			</jstl:if>
 
 			<jstl:if test="${esAnterior == true}">

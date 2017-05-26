@@ -106,7 +106,7 @@ public class AssociationService {
 	public void closeAssociationByManager(final int associationId) {
 		final User user = this.userService.findByPrincipal();
 		final Association association = this.associationRepository.findOne(associationId);
-		this.rolesService.checkManager(user, association);
+		this.rolesService.checkAssociate(user, association);
 		if (association.getClosedAssociation())
 			association.setClosedAssociation(false);
 		else
@@ -124,22 +124,21 @@ public class AssociationService {
 
 		Assert.isTrue(association.getAdminClosed() == false && association.getClosedAssociation() == false, "association.closed.error");
 	}
-	
-	public Association getRandomAssociation(){
-		
+
+	public Association getRandomAssociation() {
+
 		Association result;
 		int randomNum;
-		Random rn = new Random();
-		Collection<Association> associations = this.findAllExceptBannedAndClosed();
-		
+		final Random rn = new Random();
+		final Collection<Association> associations = this.findAllExceptBannedAndClosed();
+
 		randomNum = rn.nextInt(associations.size());
-		List<Association> assList = new ArrayList<Association>(associations);
-		
+		final List<Association> assList = new ArrayList<Association>(associations);
+
 		result = assList.get(randomNum);
-		
+
 		return result;
 	}
-	
 
 	//Admin Dashboard
 

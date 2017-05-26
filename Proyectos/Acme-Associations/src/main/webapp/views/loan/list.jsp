@@ -30,13 +30,13 @@
 			</display:column>
 			
 			<spring:message code="loan.startDate" var="startHeader" />	
-			<display:column property="startDate" title="${startHeader}" sortable="true" format="{0,date,dd/MM/yyyy}" />
+			<display:column property="finalDate" title="${startHeader}" sortable="true" format="{0,date,dd/MM/yyyy}" />
 			
 			<spring:message code="loan.expectedDate" var="expectedDate" />	
-			<display:column property="expectedDate" title="${expectedDate}" sortable="true" format="{0,date,dd/MM/yyyy}" />
+			<display:column property="startDate" title="${expectedDate}" sortable="true" format="{0,date,dd/MM/yyyy}" />
 			
 			<spring:message code="loan.finalDate" var="finalDate" />	
-			<display:column property="finalDate" title="${finalDate}" sortable="true" format="{0,date,dd/MM/yyyy}" />
+			<display:column property="expectedDate" title="${finalDate}" sortable="true" format="{0,date,dd/MM/yyyy}" />
 		
 			<spring:message code="loan.borrower" var="borrowerHeader"/>
 			<display:column title="${borrowerHeader}">

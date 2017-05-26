@@ -70,10 +70,10 @@
 				
 					<!--Attributes -->
 					<spring:message code="comment.title" var="titleHeader" />
-					<display:column property="title" title="${titleHeader}" sortable="true" />
+					<display:column property="text" title="${titleHeader}" sortable="true" />
 				
 					<spring:message code="comment.text" var="textHeader" />
-					<display:column property="text" title="${textHeader}" sortable="true" />
+					<display:column property="title" title="${textHeader}" sortable="true" />
 				
 					<spring:message code="comment.moment" var="momentHeader" />
 					<display:column property="moment" title="${momentHeader}"  format="{0,date,dd/MM/yyyy HH:mm}"/>
@@ -137,10 +137,11 @@
             </div>
             </jstl:if>
             </br></br></br>
-            <jstl:if test="${role eq 'MANAGER'}">
+            
       	 <a class="btn btn-primary" href="association/user/${association.id}/close.do"><spring:message code="association.close"/></a>
       	 <br>
       	 </br>
+      	 <jstl:if test="${role eq 'MANAGER'}">
       	 <a class="btn btn-primary" href="association/user/edit.do?associationId=${association.id}"><spring:message code="association.edit"/></a>
       </jstl:if>
       

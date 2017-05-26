@@ -124,9 +124,8 @@ public class CommentService {
 			Assert.isTrue(this.userService.findAllByAssociation(meeting.getAssociation()).contains(principal), "commentable.association.error");
 		}
 		Minutes minutes;
-		if (commentable instanceof Minutes) {
+		if (commentable instanceof Minutes)
 			minutes = (Minutes) commentable;
-			Assert.isTrue(minutes.getUsers().contains(principal), "commentable.minutes.error");
-		}
+		//	Assert.isTrue(minutes.getUsers().contains(principal), "commentable.minutes.error");
 	}
 }
