@@ -294,4 +294,9 @@ public class UserService {
 
 		return this.userRepository.countLoansCollaborator(user.getId(), association.getId());
 	}
+
+	public Collection<User> findAllSanctionedByAssociation(Association association) {
+
+		return this.userRepository.findAllSanctionedByAssociation(association.getId());
+	}
 }

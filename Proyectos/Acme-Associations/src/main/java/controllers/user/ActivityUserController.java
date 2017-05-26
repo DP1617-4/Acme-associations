@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.ActivityService;
+import services.AssociationService;
 import services.ItemService;
 import services.RolesService;
 import services.UserService;
@@ -41,28 +42,37 @@ public class ActivityUserController extends AbstractController {
 	//Service
 
 	@Autowired
-	private ActivityService	activityService;
+	private ActivityService		activityService;
 
 	@Autowired
-	private UserService		userService;
+	private UserService			userService;
 
 	@Autowired
-	private RolesService	roleService;
+	private RolesService		roleService;
 
 	@Autowired
-	private ItemService		itemService;
+	private ItemService			itemService;
+
+	@Autowired
+	private AssociationService	associationService;
 
 
 	@RequestMapping(value = "/{association}/create", method = RequestMethod.GET)
-	public ModelAndView create(@PathVariable final Association association) {
+	public ModelAndView create(@PathVariable final Association association, RedirectAttributes redir) {
 		ModelAndView result;
+		try {
+			this.roleService.checkCollaboratorPrincipal(association);
+			this.associationService.checkClosedBanned(association);
+			Activity activity;
 
-		Activity activity;
+			activity = this.activityService.create(association);
 
-		activity = this.activityService.create(association);
-
-		result = this.createEditModelAndView(activity);
-		result.addObject("activity", activity);
+			result = this.createEditModelAndView(activity);
+			result.addObject("activity", activity);
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/welcome/index.do");
+			redir.addFlashAttribute("errorMessage", oops.getMessage());
+		}
 
 		return result;
 	}
@@ -90,8 +100,8 @@ public class ActivityUserController extends AbstractController {
 	public ModelAndView edit(@PathVariable final Activity activity, @PathVariable final Association association, final RedirectAttributes redir) {
 		ModelAndView result;
 		try {
-			this.roleService.checkManagerPrincipal(association);
 			this.roleService.checkCollaboratorPrincipal(association);
+			this.associationService.checkClosedBanned(association);
 
 			result = this.createEditModelAndView(activity);
 		} catch (final Throwable oops) {
@@ -108,6 +118,7 @@ public class ActivityUserController extends AbstractController {
 
 		try {
 			this.roleService.checkCollaboratorPrincipal(addWinner.getActivity().getAssociation());
+			this.associationService.checkClosedBanned(addWinner.getActivity().getAssociation());
 			Activity activity = addWinner.getActivity();
 			activity.setWinner(addWinner.getUser());
 			activity = this.activityService.save(activity);
@@ -140,6 +151,7 @@ public class ActivityUserController extends AbstractController {
 			}
 		else
 			try {
+				this.associationService.checkClosedBanned(activity.getAssociation());
 				this.activityService.addParticipant(this.userService.findByPrincipal(), activity);
 				result = new ModelAndView("redirect:/activity/" + activity.getAssociation().getId() + "/" + activity.getId() + "/display.do");
 				result.addObject("flashMessage", "activity.added");

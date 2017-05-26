@@ -15,7 +15,7 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer> {
 	@Query("select a from Activity a where a.id = ?1")
 	Activity findOne(int id);
 
-	@Query("select a from Activity a where a.association.id = ?1")
+	@Query("select a from Activity a where a.association.id = ?1 and a.association.adminClosed = false and a.association.closedAssociation = false")
 	Collection<Activity> findAllByAssociation(int associationId);
 
 	////	Actividades en curso con más usuarios apuntados.
@@ -26,7 +26,7 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer> {
 	@Query("select a from Activity a where a.association.id=?1 order by a.attendants.size DESC")
 	Collection<Activity> findMostAttendedByAssociation(int associationId);
 
-	@Query("select a from Activity a where a.endMoment > current_date and a.publicActivity = true")
+	@Query("select a from Activity a where a.endMoment > current_date and a.publicActivity = true and a.association.adminClosed = false and a.association.closedAssociation = false")
 	Collection<Activity> findAllNotFinished();
 
 }
