@@ -2,6 +2,7 @@
 package controllers.user;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -33,9 +34,9 @@ import forms.AddParticipant;
 
 @Controller
 @RequestMapping("/meeting/user")
-public class UserMeetingController extends AbstractController {
+public class MeetingUserController extends AbstractController {
 
-	public UserMeetingController() {
+	public MeetingUserController() {
 		super();
 	}
 
@@ -111,11 +112,16 @@ public class UserMeetingController extends AbstractController {
 	public ModelAndView display(@PathVariable final Association association, final Meeting meeting) {
 		ModelAndView result;
 
+		Boolean esAnterior = false;
+		final Date actual = new Date();
 		final Minutes minute = this.minutesService.findOneByMeeting(meeting);
 
 		Collection<Comment> comments;
 		comments = this.commentService.findAllByCommentableId(meeting.getId());
 		final Comment comment = this.commentService.create(meeting.getId());
+
+		if (meeting.getMoment().before(actual))
+			esAnterior = true;
 
 		Roles roles = null;
 		String role = null;
@@ -135,6 +141,7 @@ public class UserMeetingController extends AbstractController {
 		result = new ModelAndView("meeting/display");
 		result.addObject("association", association);
 		result.addObject("meeting", meeting);
+		result.addObject("esAnterior", esAnterior);
 		result.addObject("comments", comments);
 		result.addObject("comment", comment);
 		result.addObject("role", role);

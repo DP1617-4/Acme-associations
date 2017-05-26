@@ -86,18 +86,21 @@ public class ActivityController extends AbstractController {
 		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		result = new ModelAndView("welcome/index");
+
+		final Collection<Activity> activities = this.activityService.findAllByAssociation(association.getId());
+
+		result = new ModelAndView("activity/list");
+
 		if (principal != "anonymousUser") {
 			final Actor actPrincipal = this.actorService.findByPrincipal();
 			if (actPrincipal instanceof User)
 				roles = this.roleService.findRolesByPrincipalAssociation(association);
+			result.addObject("actPrincipal", actPrincipal);
 		}
 
 		if (roles != null)
 			role = roles.getType();
 
-		final Collection<Activity> activities = this.activityService.findAllByAssociation(association.getId());
-
-		result = new ModelAndView("activity/list");
 		result.addObject("association", association);
 		result.addObject("activities", activities);
 		result.addObject("requestURI", "activity/" + association.getId() + "/list.do");

@@ -54,8 +54,8 @@
 				<jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
 					<form:form action="comment/user/${meeting.id}/edit.do" modelAttribute="comment">
 	            		<form:hidden path="commentable"/>
-	            		<form:input path="title" /> </br>
-	            		<form:textarea path="text"/> </br>
+		            	<acme:textbox code="comment.title" path="title"/><br />
+	            		<acme:textarea code="comment.text" path="text"/><br />
 	            		<acme:submit name="save" code="comment.new.save"/>
 	            	</form:form>
 	            </jstl:if>
@@ -65,11 +65,11 @@
     	<div class="col-6 col-md-6 col-lg-6">
 			<h2><spring:message code="meeting.minute.description"/></h2>
 			<jstl:if test="${minutes != null}">
-				<div><b><spring:message code="meeting.minute.document"/>:</b><a href="${minutes.document}" ><jstl:out value="${minutes.document}" /></a></div>
-				<b><spring:message code="meeting.minute.users"/></b> </br>
+				<div><b><spring:message code="meeting.minute.document"/>: </b><a href="${minutes.document}" ><jstl:out value="${minutes.document}" /></a></div>
+				</br>
 				<display:table pagesize="5" class="displaytag" keepStatus="false" name="participants" requestURI="${requestURI}" id="row">
 					
-					<spring:message code="meeting.minute.user" var="userHeader"/>
+					<spring:message code="meeting.minute.users" var="userHeader"/>
 					
 					<display:column title="${userHeader}">
 						<a href="actor/actor/${row.id}/display.do"> ${row.name} ${row.surname}</a>
@@ -114,17 +114,25 @@
 				<jstl:if test="${isParticipant == true}">
 					<form:form action="comment/user/${meeting.id}/edit.do" modelAttribute="commentSecond">
 	            		<form:hidden path="commentable"/>
-	            		<form:input path="title" /> </br>
-	            		<form:textarea path="text"/> </br>
+		            	<acme:textbox code="comment.title" path="title"/><br />
+	            		<acme:textarea code="comment.text" path="text"/><br />
 	            		<acme:submit name="save" code="comment.new.save"/>
 	            	</form:form>
 	            </jstl:if>
 			</jstl:if>
+
+			<jstl:if test="${esAnterior == true}">
+				<jstl:if test="${minutes == null}">
+					<spring:message code="meeting.noMinute"/>
+					<jstl:if test="${role eq 'MANAGER'}">
+						<div><a class="btn btn-primary" href="minutes/user/${association.id}/${meeting.id}/create.do"><spring:message code="minute.create"/></a></div>
+					</jstl:if>
+				</jstl:if>
+			</jstl:if>
 			
-			<jstl:if test="${minutes == null}">
-				<spring:message code="meeting.noMinute"/>
-				<jstl:if test="${role eq 'MANAGER'}">
-					<div><a class="btn btn-primary" href="minutes/user/${association.id}/${meeting.id}/create.do"><spring:message code="minute.create"/></a></div>
+			<jstl:if test="${esAnterior == false}">
+				<jstl:if test="${minutes == null}">
+					<spring:message code="meeting.minutes.cannot.create"/>
 				</jstl:if>
 			</jstl:if>
 		</div><!--/span-->

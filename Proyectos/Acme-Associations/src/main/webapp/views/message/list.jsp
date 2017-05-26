@@ -29,7 +29,7 @@
 
 	
 	<display:column>
-		<a href="chirp/chorbi/delete.do?messageId=${row.id}" onclick="return confirm('<spring:message code="message.confirm.delete" />') ">
+		<a href="message/actor/delete.do?messageId=${row.id}" onclick="return confirm('<spring:message code="message.confirm.delete" />') ">
 			<spring:message code="message.delete" />
 		</a>
 	</display:column>
@@ -68,7 +68,7 @@
 <!-- Action links -->
 
 <div>
-	<a href="chirp/chorbi/create.do"> <spring:message
+	<a href="message/actor/create.do"> <spring:message
 			code="message.create" />
 	</a>
 </div>
