@@ -25,7 +25,7 @@ public class CommentUserController {
 	//Services
 
 	@Autowired
-	private CommentService		commentService;
+	private CommentService	commentService;
 
 
 	//Constructor
@@ -64,28 +64,50 @@ public class CommentUserController {
 		if (binding.hasErrors()) {
 			if (commentable instanceof Association)
 				result = new ModelAndView("redirect:/association/" + commentable.getId() + "/display.do");
-			if (commentable instanceof Item)
+			{
+				result.addObject("comment", comment);
+			}
+			if (commentable instanceof Item) {
 				result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
-			if (commentable instanceof Meeting || commentable instanceof Minutes)
+				result.addObject("comment", comment);
+			}
+			if (commentable instanceof Meeting || commentable instanceof Minutes) {
 				result = new ModelAndView("redirect:/meeting/user/" + ((Meeting) commentable).getAssociation() + "/" + commentable.getId() + "/display.do");
+				result.addObject("comment", comment);
+			}
 		} else
 			try {
 				comment = this.commentService.reconstruct(comment, binding);
-				this.commentService.checkPrincipalCanComment(commentable);
-				this.commentService.save(comment);
-				result = new ModelAndView("redirect:/welcome/index.do");
-				if (commentable instanceof Association)
-					result = new ModelAndView("redirect:/association/" + commentable.getId() + "/display.do");
-				if (commentable instanceof Item)
-					result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
-				if (commentable instanceof Meeting) {
-					final Meeting meeting = (Meeting) commentable;
-					result = new ModelAndView("redirect:/meeting/user/" + meeting.getAssociation().getId() + "/" + commentable.getId() + "/display.do");
-				}
-				if (commentable instanceof Minutes) {
-					final Minutes minutes = (Minutes) commentable;
-					final Meeting meeting = minutes.getMeeting();
-					result = new ModelAndView("redirect:/meeting/user/" + meeting.getAssociation().getId() + "/" + meeting.getId() + "/display.do");
+				if (binding.hasErrors()) {
+					if (commentable instanceof Association) {
+						result = new ModelAndView("redirect:/association/" + commentable.getId() + "/display.do");
+						result.addObject("comment", comment);
+					}
+					if (commentable instanceof Item) {
+						result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
+						result.addObject("comment", comment);
+					}
+					if (commentable instanceof Meeting || commentable instanceof Minutes) {
+						result = new ModelAndView("redirect:/meeting/user/" + ((Meeting) commentable).getAssociation() + "/" + commentable.getId() + "/display.do");
+						result.addObject("comment", comment);
+					}
+				} else {
+					this.commentService.checkPrincipalCanComment(commentable);
+					this.commentService.save(comment);
+					result = new ModelAndView("redirect:/welcome/index.do");
+					if (commentable instanceof Association)
+						result = new ModelAndView("redirect:/association/" + commentable.getId() + "/display.do");
+					if (commentable instanceof Item)
+						result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
+					if (commentable instanceof Meeting) {
+						final Meeting meeting = (Meeting) commentable;
+						result = new ModelAndView("redirect:/meeting/user/" + meeting.getAssociation().getId() + "/" + commentable.getId() + "/display.do");
+					}
+					if (commentable instanceof Minutes) {
+						final Minutes minutes = (Minutes) commentable;
+						final Meeting meeting = minutes.getMeeting();
+						result = new ModelAndView("redirect:/meeting/user/" + meeting.getAssociation().getId() + "/" + meeting.getId() + "/display.do");
+					}
 				}
 			} catch (final Throwable oops) {
 				if (commentable instanceof Association)

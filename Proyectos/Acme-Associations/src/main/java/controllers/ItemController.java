@@ -50,14 +50,14 @@ public class ItemController extends AbstractController {
 
 
 	@RequestMapping(value = "/filter", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam String filter) {
+	public ModelAndView list(@RequestParam final String filter) {
 		ModelAndView result;
 
 		final Collection<Item> items = this.itemService.filterItems(filter);
 
 		result = new ModelAndView("item/list");
 		result.addObject("items", items);
-		result.addObject("requestURI", "item/filter.do?filter=" + filter);
+		result.addObject("requestURI", "/item/filter.do");
 
 		return result;
 	}
