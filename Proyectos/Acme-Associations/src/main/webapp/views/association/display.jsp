@@ -102,7 +102,7 @@
         <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
           <div class="list-group">
           	<security:authorize access="hasRole('USER')"> 
-          		<a href="sanction/user/${association.id}/mySanctions.do" class="list-group-item"><spring:message code="association.sanction"/></a>
+          		<a href="sanction/user/${association.id}/mySanctions.do" class="list-group-item"><spring:message code="association.mySanctions"/></a>
           	</security:authorize>
           	<security:authorize access="isAuthenticated()"> 
           		<a href="association/user/${association.id}/listUsers.do" class="list-group-item"><spring:message code="association.user.list"/></a>
@@ -110,7 +110,7 @@
           	</security:authorize>
             <a href="section/${association.id}/list.do" class="list-group-item"><spring:message code="association.section"/></a>
             <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
-            <a href="sanction/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.sanction"/></a>
+            <a href="sanction/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.sanction.association"/></a>
             <a href="loan/user/${association.id}/listPending.do" class="list-group-item"><spring:message code="association.loanPending"/></a>
             <a href="meeting/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.meeting"/></a>
             </jstl:if>

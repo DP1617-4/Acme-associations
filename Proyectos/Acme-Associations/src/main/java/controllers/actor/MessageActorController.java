@@ -109,7 +109,7 @@ public class MessageActorController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/broadcast", method = RequestMethod.POST, params = "broadcast")
-	public ModelAndView broadcast(final MessageBroadcast messageBroad, final BindingResult binding, final RedirectAttributes redir) {
+	public ModelAndView broadcast(@Valid final MessageBroadcast messageBroad, final BindingResult binding, final RedirectAttributes redir) {
 		ModelAndView result;
 		Association association;
 

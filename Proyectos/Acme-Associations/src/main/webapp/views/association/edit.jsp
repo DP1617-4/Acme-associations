@@ -35,7 +35,7 @@
 	
 	<acme:textbox code="association.statutes" path="statutes"/><br />
 	
-	<acme:textbox code="association.announcements" path="announcements"/><br />
+	<acme:textarea code="association.announcements" path="announcements"/><br />
 	
 	<acme:textbox code="association.picture" path="picture"/><br />
 	

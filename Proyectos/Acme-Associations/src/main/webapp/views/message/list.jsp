@@ -67,8 +67,4 @@
 
 <!-- Action links -->
 
-<div>
-	<a href="message/actor/create.do"> <spring:message
-			code="message.create" />
-	</a>
-</div>
+

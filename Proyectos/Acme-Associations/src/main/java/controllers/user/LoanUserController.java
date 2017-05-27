@@ -143,7 +143,11 @@ public class LoanUserController extends AbstractController {
 		final String requestURI = "loan/user/" + association.getId() + "/" + item.getId() + "/create.do";
 		final String cancelURI = "association/" + association.getId() + "/display.do";
 		final Locale locale = LocaleContextHolder.getLocale();
-		final Collection<User> users = this.userService.findAllByAssociation(association);
+		Collection<User> users = this.userService.findAllByAssociation(association);
+		users.removeAll(this.userService.findAllSanctionedByAssociation(association));
+		if (association.getAdminClosed() || association.getClosedAssociation()) {
+			users = null;
+		}
 		result = new ModelAndView("loan/edit");
 		result.addObject("loan", loan);
 		result.addObject("users", users);
@@ -154,5 +158,4 @@ public class LoanUserController extends AbstractController {
 
 		return result;
 	}
-
 }

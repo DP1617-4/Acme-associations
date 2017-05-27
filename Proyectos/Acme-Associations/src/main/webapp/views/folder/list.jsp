@@ -28,3 +28,9 @@
 
 	
 </display:table>
+
+<div>
+	<a class="btn btn-primary" href="message/actor/create.do"> <spring:message
+			code="message.create" />
+	</a>
+</div>
