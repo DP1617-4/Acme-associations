@@ -84,7 +84,7 @@ public class MinutesUserController extends AbstractController {
 				final Minutes newMinutes = this.minutesService.save(minutes);
 				result = new ModelAndView("redirect:/meeting/user/" + newMinutes.getMeeting().getAssociation().getId() + "/" + newMinutes.getMeeting().getId() + "/display.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(minutes, oops.getMessage());
+				result = this.createEditModelAndView(minutes, "minutes.commit.error");
 			}
 		return result;
 	}
