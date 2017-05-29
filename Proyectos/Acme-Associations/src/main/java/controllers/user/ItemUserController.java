@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.ActorService;
+import services.AssociationService;
 import services.CommentService;
 import services.ItemService;
 import services.RolesService;
@@ -42,24 +43,29 @@ public class ItemUserController extends AbstractController {
 
 
 	@Autowired
-	private RolesService	rolesService;
+	private RolesService		rolesService;
 
 	@Autowired
-	private ItemService		itemService;
+	private ItemService			itemService;
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService		actorService;
 
 	@Autowired
-	private SectionService	sectionService;
+	private SectionService		sectionService;
 
 	@Autowired
-	private CommentService	commentService;
+	private CommentService		commentService;
+
+	@Autowired
+	private AssociationService	associationService;
+
 
 	@RequestMapping(value = "/{association}/{section}/create", method = RequestMethod.GET)
 	public ModelAndView create(@PathVariable final Association association, @PathVariable final Section section, final RedirectAttributes redir) {
 		ModelAndView result;
 		try {
+			this.associationService.checkClosedBanned(association);
 			this.sectionService.checkResponsiblePrincipal(section.getId());
 			final Item item = this.itemService.create(section);
 			result = this.createEditModelAndView(item);
@@ -82,6 +88,7 @@ public class ItemUserController extends AbstractController {
 			result = this.createEditModelAndView(item);
 		else
 			try {
+				this.associationService.checkClosedBanned(association);
 				newItem = this.itemService.save(item);
 				result = new ModelAndView("redirect:/item/user/" + association.getId() + "/display.do?itemId=" + newItem.getId());
 			} catch (final Throwable oops) {
@@ -157,13 +164,11 @@ public class ItemUserController extends AbstractController {
 		Boolean loaned = false;
 		Boolean loanable = false;
 
-
 		final Actor actPrincipal = this.actorService.findByPrincipal();
 
 		item = this.itemService.findOne(itemId);
 		changeCondition = new ChangeCondition();
 
-		
 		comments = commentService.findAllByCommentableId(item.getId());
 		changeCondition.setItem(item);
 
@@ -177,7 +182,7 @@ public class ItemUserController extends AbstractController {
 		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (principal != "anonymousUser")
-			if (actPrincipal instanceof User){
+			if (actPrincipal instanceof User) {
 				comment = this.commentService.create(item.getId());
 				loaned = this.itemService.isLoanedByPrincipal(item);
 				roles = this.rolesService.findRolesByPrincipalAssociation(association);
@@ -209,22 +214,20 @@ public class ItemUserController extends AbstractController {
 
 		return result;
 	}
-	
-	
+
 	@RequestMapping(value = "/filter", method = RequestMethod.POST, params = "filterItem")
 	public ModelAndView filtr(final FilterItem filterItem, final BindingResult binding, final RedirectAttributes redir) {
 		final ModelAndView result;
 
 		Collection<Item> found;
-		
+
 		found = this.itemService.filterItems(filterItem.getText());
-		
+
 		result = new ModelAndView("item/list");
 		result.addObject("found", found);
 
 		return result;
 	}
-	
 
 	protected ModelAndView createEditModelAndView(final Item item) {
 		ModelAndView result;

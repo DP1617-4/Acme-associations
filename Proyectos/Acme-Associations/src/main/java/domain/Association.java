@@ -14,6 +14,7 @@ import javax.validation.constraints.Past;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.util.Assert;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -108,6 +109,11 @@ public class Association extends Commentable {
 	}
 	public void setAdminClosed(final Boolean adminClosed) {
 		this.adminClosed = adminClosed;
+	}
+
+	public void checkClosedOrBanned(Association association) {
+
+		Assert.isTrue(association.getAdminClosed() == true || association.getClosedAssociation() == true, "association.closed.error");
 	}
 
 	// Relationships ----------------------------------------------------------

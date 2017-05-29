@@ -75,6 +75,7 @@ public class CommentUserController {
 				result = new ModelAndView("redirect:/meeting/user/" + ((Meeting) commentable).getAssociation() + "/" + commentable.getId() + "/display.do");
 				result.addObject("comment", comment);
 			}
+			redir.addFlashAttribute("flashMessage", "comment.empty.error");
 		} else
 			try {
 				comment = this.commentService.reconstruct(comment, binding);
@@ -87,10 +88,16 @@ public class CommentUserController {
 						result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
 						result.addObject("comment", comment);
 					}
-					if (commentable instanceof Meeting || commentable instanceof Minutes) {
-						result = new ModelAndView("redirect:/meeting/user/" + ((Meeting) commentable).getAssociation() + "/" + commentable.getId() + "/display.do");
-						result.addObject("comment", comment);
+					if (commentable instanceof Meeting) {
+						final Meeting meeting = (Meeting) commentable;
+						result = new ModelAndView("redirect:/meeting/user/" + meeting.getAssociation().getId() + "/" + meeting.getId() + "/display.do");
 					}
+					if (commentable instanceof Minutes) {
+						final Minutes minutes = (Minutes) commentable;
+						final Meeting meeting = minutes.getMeeting();
+						result = new ModelAndView("redirect:/meeting/user/" + meeting.getAssociation().getId() + "/" + meeting.getId() + "/display.do");
+					}
+					redir.addFlashAttribute("flashMessage", "comment.empty.error");
 				} else {
 					this.commentService.checkPrincipalCanComment(commentable);
 					this.commentService.save(comment);
@@ -101,7 +108,7 @@ public class CommentUserController {
 						result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
 					if (commentable instanceof Meeting) {
 						final Meeting meeting = (Meeting) commentable;
-						result = new ModelAndView("redirect:/meeting/user/" + meeting.getAssociation().getId() + "/" + commentable.getId() + "/display.do");
+						result = new ModelAndView("redirect:/meeting/user/" + meeting.getAssociation().getId() + "/" + meeting.getId() + "/display.do");
 					}
 					if (commentable instanceof Minutes) {
 						final Minutes minutes = (Minutes) commentable;
@@ -116,7 +123,7 @@ public class CommentUserController {
 					result = new ModelAndView("redirect:/item/user/" + ((Item) commentable).getSection().getAssociation().getId() + "/display.do?itemId=" + commentable.getId());
 				if (commentable instanceof Meeting || commentable instanceof Minutes)
 					result = new ModelAndView("redirect:/meeting/user/" + ((Meeting) commentable).getAssociation() + "/" + commentable.getId() + "/display.do");
-				redir.addFlashAttribute("flashMessage", oops.getMessage());
+				redir.addFlashAttribute("flashMessage", "comment.empty.error");
 			}
 		return result;
 	}

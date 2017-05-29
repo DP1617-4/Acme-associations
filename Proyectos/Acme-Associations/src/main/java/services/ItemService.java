@@ -85,6 +85,7 @@ public class ItemService {
 
 		Collection<Item> result;
 		result = this.itemRepository.findAllByAssociation(association.getId());
+		result.removeAll(this.itemRepository.findAllByAssociationLoaned(association.getId()));
 		return result;
 	}
 
