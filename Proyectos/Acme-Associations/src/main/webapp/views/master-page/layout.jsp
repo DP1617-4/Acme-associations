@@ -49,12 +49,17 @@
 
 <!-- hasta aqui -->
 
-	<!--  
+	 
 	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<!-- 
 	<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
 	<script type="text/javascript" src="js/locales/bootstrap-datepicker.en-GB.min.js" charset="UTF-8"></script>
-	<script type="text/javascript" src="js/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
-	<script type="text/javascript" src="js/tether.js"></script> -->
+	<script type="text/javascript" src="js/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script> -->
+	<script type="text/javascript" src="js/tether.js"></script> 
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	<!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -121,10 +126,32 @@
 		<tiles:insertAttribute name="footer" />
 	</div>
 
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
 <jstl:if test="${not empty flashMessage}">
-	<script>alertMessage('<spring:message code="${flashMessage}"/>'); </script>
+	<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><spring:message code="warning"/></h4>
+      </div>
+      <div class="modal-body">
+        <p><spring:message code="${flashMessage}"/></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="close"/> </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+$(document).ready(function(){
+	$("#myModal").modal();
+});
+</script>
 </jstl:if>
 
 </body>
