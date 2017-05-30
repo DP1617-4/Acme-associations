@@ -21,7 +21,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	@Query("select i from Item i where i.section.id=?1")
 	Collection<Item> findAllBySection(int sectionId);
 
-	@Query("select i from Item i where i.itemCondition!='LOAN' and (i.name like %?1% or i.identifier=?1 or i.itemCondition=?1 or i.description like %?1% or i.section.name like %?1% or i.section.association.name like %?1%)")
+	@Query("select i from Item i where i.itemCondition!='LOAN' and (i.name like %?1% or i.identifier=?1 or lower(i.itemCondition) like lower(?1) or i.description like %?1% or i.section.name like %?1% or i.section.association.name like %?1%)")
 	Collection<Item> filterItems(String filter);
 
 	@Query("select l.item from Loan l where l.item.section.association.id=?1 group by l.item order by count(l) DESC")
