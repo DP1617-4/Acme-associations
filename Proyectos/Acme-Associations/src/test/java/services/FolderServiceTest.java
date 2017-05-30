@@ -31,8 +31,8 @@ public class FolderServiceTest extends AbstractTest {
 	public void driverInitFolder() {
 		final Object testingData[][] = {
 			{		// Comprobacion correcta: username con sus folders.
-				"actor1", null
-			}, {	// Comprobacion erronea: username vacío.
+				"user1", null
+			}, {	// Comprobacion erronea: sin loguear.
 				"", IllegalArgumentException.class
 			}
 		};
