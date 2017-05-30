@@ -38,7 +38,7 @@ public class PlaceUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/{activity}/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Place place, @PathVariable final Activity activity, final BindingResult binding) {
+	public ModelAndView save(@Valid Place place, final BindingResult binding, @PathVariable final Activity activity) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
