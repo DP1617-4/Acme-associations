@@ -116,14 +116,14 @@ public class MessageServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void driverResendChirp() {
+	public void driverResendMessage() {
 		final Object testingData[][] = {
 			{
 				"user1", "message2", "user3", null
 			}
 		};
 		for (int i = 0; i < testingData.length; i++){
-			this.templateResendChirp((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
+			this.templateResendMessage((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
 		}
 	}
 	@Test
@@ -227,7 +227,7 @@ public class MessageServiceTest extends AbstractTest {
 		}
 		this.checkExceptions(expected, caught);
 	}
-	private void templateResendChirp(final String username, final String messageToSend, final String receiver, final Class<?> expected) {
+	private void templateResendMessage(final String username, final String messageToSend, final String receiver, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		final Message messageToSendExtracted = this.messageService.findOne(this.extract(messageToSend));

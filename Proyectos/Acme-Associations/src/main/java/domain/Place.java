@@ -6,6 +6,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -33,6 +34,7 @@ public class Place extends DomainEntity {
 		this.address = address;
 	}
 
+	@Range(min = -85, max = 85)
 	public Double getLatitude() {
 		return this.latitude;
 	}
@@ -40,6 +42,7 @@ public class Place extends DomainEntity {
 		this.latitude = latitude;
 	}
 
+	@Range(min = -180, max = 180)
 	public Double getLongitude() {
 		return this.longitude;
 	}
