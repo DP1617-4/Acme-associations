@@ -24,6 +24,9 @@ public class PlaceService {
 	@Autowired
 	private ActivityService	activityService;
 
+	@Autowired
+	private RolesService	rolesService;
+
 
 	//supporting services --------------------------------------
 
@@ -53,6 +56,7 @@ public class PlaceService {
 
 	public Place save(final Place place, final Activity activity) {
 		Assert.notNull(place);
+		this.rolesService.checkCollaboratorPrincipal(activity.getAssociation());
 		if (place.getLongitude() != null)
 			Assert.isTrue(place.getLatitude() != null, "place.longitude.notDefined");
 		if (place.getLatitude() != null)
