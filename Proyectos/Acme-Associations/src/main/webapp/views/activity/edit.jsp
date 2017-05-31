@@ -41,7 +41,8 @@
 		</form:label>
 		<form:input placeholder="dd/MM/yyyy HH:mm" path="endMoment" />
 		<form:errors cssClass="error" path="endMoment" />
-	</div> <br />
+	</div>
+	<form:errors cssClass="error" path="" />
 	<acme:textbox code="activity.maximumAttendants" path="maximumAttendants"/><br />
 	<form:label path="publicActivity" >
 		<b><spring:message code="activity.public" /> :</b>

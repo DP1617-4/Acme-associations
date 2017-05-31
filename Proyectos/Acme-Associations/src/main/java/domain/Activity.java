@@ -19,6 +19,9 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import validators.Moments;
+
+@Moments
 @Entity
 @Access(AccessType.PROPERTY)
 public class Activity extends DomainEntity {
