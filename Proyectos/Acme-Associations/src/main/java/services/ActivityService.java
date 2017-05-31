@@ -149,6 +149,7 @@ public class ActivityService {
 	}
 
 	public void addParticipant(final User user, final Activity activity) {
+		rolesService.checkAssociatePrincipal(activity.getAssociation());
 		if(!activity.getPublicActivity()){
 			Assert.notNull(rolesService.findRolesByUserAssociation(user, activity.getAssociation()));
 		}
