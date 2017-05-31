@@ -41,9 +41,10 @@ public class PlaceUserController extends AbstractController {
 	public ModelAndView save(@Valid Place place, final BindingResult binding, @PathVariable final Activity activity) {
 		ModelAndView result;
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
 			result = this.createEditModelAndView(place, activity);
-		else
+			result.addObject("errorMessage2", "address.input.none");
+		} else
 			try {
 				place = this.placeService.save(place, activity);
 				result = new ModelAndView("redirect:/activity/" + activity.getAssociation().getId() + "/" + activity.getId() + "/display.do");
@@ -52,7 +53,6 @@ public class PlaceUserController extends AbstractController {
 			}
 		return result;
 	}
-
 	// Ancillary methods ---------------------------------------------------------
 	protected ModelAndView createEditModelAndView(final Place place, final Activity activity) {
 		ModelAndView result;
