@@ -74,6 +74,10 @@ public class ActivityController extends AbstractController {
 		result.addObject("role", role);
 		result.addObject("addWinner", addWinner);
 		result.addObject("requestURI", "activity/" + association.getId() + "/" + activity.getId() + "/display.do");
+		if (activity.getPlace() != null && activity.getPlace().getLatitude() != null && activity.getPlace().getLongitude() != null) {
+			result.addObject("latitude", activity.getPlace().getLatitude());
+			result.addObject("longitude", activity.getPlace().getLongitude());
+		}
 		return result;
 	}
 	@RequestMapping(value = "/{association}/list", method = RequestMethod.GET)

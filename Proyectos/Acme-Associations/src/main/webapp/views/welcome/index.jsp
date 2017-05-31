@@ -21,6 +21,6 @@
 
 <p><spring:message code="welcome.greeting.current.time" /> ${moment}</p> 
 
-<p></p><br><fieldset><legend><spring:message code="welcome.greeting.association"/><b></legend><jstl:out value="${featured.name}"/></b></br> <a href="association/${featured.id}/display.do"><img src=${featured.picture } height="120"/></a></fieldset>
+<jstl:if test="${featured != null}"><br><fieldset><legend><spring:message code="welcome.greeting.association"/><b></legend><jstl:out value="${featured.name}"/></b></br> <a href="association/${featured.id}/display.do"><img src=${featured.picture } height="120"/></a></fieldset></jstl:if>
 
 
