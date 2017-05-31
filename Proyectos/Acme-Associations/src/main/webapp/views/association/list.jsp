@@ -44,8 +44,10 @@
 	<display:column property="address" title="${addressHeader}"/>	
 	
 </display:table>
+<security:authorize access="hasRole('USER')">
 <br><br/>
 <div><a class="btn btn-primary" href="association/user/create.do"><spring:message code="association.create"/></a></div>
 <br/>
+</security:authorize>
 
 		

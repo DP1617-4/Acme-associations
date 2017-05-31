@@ -40,9 +40,10 @@
 						<a href="actor/actor/${row.user.id}/display.do"> ${row.user.name} ${row.user.surname}</a>
 	</display:column>
 	<display:column> <a href="item/user/${association.id}/${row.id}/listSection.do">${itemsHeader}</a> </display:column>	
-	<jstl:if test="${loggedactor == row.user.userAccount }">
-		<display:column> <a href="item/user/${association.id}/${row.id}/create.do">${newItemHeader}</a> </display:column>	
+	<display:column>
+	<jstl:if test="${loggedactor == row.user.userAccount }"> <a href="item/user/${association.id}/${row.id}/create.do">${newItemHeader}</a> 	
 	</jstl:if>
+	</display:column>
 	</security:authorize>
 	
 </display:table>
