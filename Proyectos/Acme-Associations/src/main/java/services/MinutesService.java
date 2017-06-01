@@ -93,7 +93,7 @@ public class MinutesService {
 		final Collection<User> participants = minutes.getUsers();
 
 		participants.add(participant);
-		this.save(minutes);
+		this.minutesRepository.save(minutes);
 	}
 
 	public Minutes findOneByMeeting(final Meeting meeting) {
