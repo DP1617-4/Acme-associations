@@ -81,7 +81,7 @@ public class MinutesService {
 	public Minutes save(final Minutes minutes) {
 		Assert.notNull(minutes);
 		Minutes result;
-		Assert.isTrue(this.findOneByMeeting(minutes.getMeeting()) == null);
+		//Assert.isTrue(this.findOneByMeeting(minutes.getMeeting()) == null);
 		result = this.minutesRepository.save(minutes);
 		return result;
 	}
@@ -100,6 +100,11 @@ public class MinutesService {
 		Minutes result;
 		result = this.minutesRepository.findOneByMeeting(meeting.getId());
 		return result;
+	}
+
+	public void flush() {
+		this.minutesRepository.flush();
+
 	}
 
 }
