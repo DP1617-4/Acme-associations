@@ -109,6 +109,9 @@
 	<!-- maps -->
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript" src="js/map.js"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0HVq8CTYmEOaRdZ16y15RQBmo9u3A3EA&callback=initMap">
+    </script>
 	
 </head>
 <br>

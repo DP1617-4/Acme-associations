@@ -71,7 +71,7 @@
 		value="<spring:message code="activity.save" />" />&nbsp; 
 	<input type="button" name="cancel"
 		value="<spring:message code="activity.cancel" />"
-		onclick="location.href = ('activity/${activity.id}/display.do');" />
+		onclick="location.href = ('activity/${association.id}/list.do');" />
 	<br />
 
 	

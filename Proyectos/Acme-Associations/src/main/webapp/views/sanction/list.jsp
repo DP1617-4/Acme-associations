@@ -47,7 +47,8 @@
 	</jstl:if>
 	<spring:message code="sanction.user" var="userHeader" />
 	<spring:message code="sanction.end.date" var="endDateHeader"/>
-	<spring:message code="sanction.edit" var="editHeader"/>
+	<spring:message code="sanction.end" var="endHeader"/>
+	<spring:message code="sanction.motiff" var="motiffHeader"/>
 	
 	<jstl:if test="${association == null}">
 		<display:column title="${associationHeader}">
@@ -58,10 +59,11 @@
 		<a href="sanction/display.do?sanctionId=${row.id}"><jstl:out value="${row.user.name}"/><jstl:out value="${row.user.surname}"/></a>
 	</display:column>
 	<display:column title="${endDateHeader}"><jstl:out value="${row.endDate}"/></display:column>
+	<display:column title="${motiffHeader}"><jstl:out value="${row.motiff}"/></display:column>
 	<jstl:if test="${not empty role && (role.type eq 'COLLABORATOR' || role.type eq 'MANAGER')}">
-		<display:column title="${editHeader}">
+		<display:column title="${endHeader}">
 			<jstl:if test="${row.user.userAccount != loggedactor}">
-				<a href="sanction/user/${association.id}/edit.do?sanctionId=${row.id}"><spring:message code="sanction.edit"/></a>
+				<a href="sanction/user/${association.id}/end.do?sanctionId=${row.id}"><spring:message code="sanction.end"/></a>
 			</jstl:if>
 		</display:column>
 	</jstl:if>

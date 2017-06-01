@@ -106,7 +106,6 @@
           	</security:authorize>
           	<security:authorize access="isAuthenticated()"> 
           		<a href="association/user/${association.id}/listUsers.do" class="list-group-item"><spring:message code="association.user.list"/></a>
-          		<a href="item/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.item"/></a>
           	</security:authorize>
             <a href="section/${association.id}/list.do" class="list-group-item"><spring:message code="association.section"/></a>
             <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
