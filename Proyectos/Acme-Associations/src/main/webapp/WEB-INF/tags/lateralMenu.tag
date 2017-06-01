@@ -47,3 +47,17 @@
            </jstl:if>
          </div>
          
+         
+         
+         
+        <%--    <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<div class="row row-offcanvas row-offcanvas-right">
+
+  	<div class="col-12 col-md-9">
+
+	<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+	   <acme:lateralMenu/>
+
+
+<a class="btn btn-primary" href="association/${association.id}/display.do">&larr; <jstl:out value="${association.name}"/></a>
+          --%>
