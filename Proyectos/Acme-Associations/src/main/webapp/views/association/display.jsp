@@ -100,29 +100,7 @@
         </div><!--/span-->
 
         <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
-          <div class="list-group">
-          	<security:authorize access="hasRole('USER')"> 
-          		<a href="sanction/user/${association.id}/mySanctions.do" class="list-group-item"><spring:message code="association.mySanctions"/></a>
-          	</security:authorize>
-          	<security:authorize access="isAuthenticated()"> 
-          		<a href="association/user/${association.id}/listUsers.do" class="list-group-item"><spring:message code="association.user.list"/></a>
-          	</security:authorize>
-            <a href="section/${association.id}/list.do" class="list-group-item"><spring:message code="association.section"/></a>
-            <jstl:if test="${role eq 'MANAGER' || role eq 'COLLABORATOR'}">
-            <a href="sanction/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.sanction.association"/></a>
-            <a href="loan/user/${association.id}/listPending.do" class="list-group-item"><spring:message code="association.loanPending"/></a>
-            <a href="meeting/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.meeting"/></a>
-            </jstl:if>
-            <jstl:if test="${role eq 'MANAGER'}">
-            <a href="request/user/${association.id}/list.do" class="list-group-item"><spring:message code="association.request.list"/></a>
-            <a href="association/user/${association.id}/changeManager.do" class="list-group-item"><spring:message code="association.manager.change"/></a>
-            <a href="association/user/${association.id}/dashboard.do" class="list-group-item"><spring:message code="association.dashboard"/></a>
-            </jstl:if>
-            <jstl:if test="${role eq 'ASSOCIATE' || role eq 'COLLABORATOR'}">
-            <a href="association/user/${association.id}/leave.do" class="list-group-item"><spring:message code="association.leave"/></a>
-            </jstl:if>
-            <a href="activity/${association.id}/list.do" class="list-group-item"><spring:message code="association.activity"/></a>
-          </div>
+          <acme:lateralMenu/>
            <jstl:if test="${role eq 'MANAGER'}">
             <div>
 	            <form:form action="message/actor/broadcast.do" modelAttribute="messageBroad">
@@ -159,4 +137,11 @@
       
       </jstl:if>
 </div>
+
+<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+   <acme:lateralMenu/>
+</div>
+         
+
+
 
