@@ -54,7 +54,13 @@
 			</jstl:if>
 			
 			<br>
-			
+				<style>
+			       #map {
+			        height: 400px;
+			        width: 100%;
+			       }
+			       
+			    </style>
 			<display:table pagesize="5" keepStatus="false" name="${activity.attendants }" requestURI="${requestURI}" id="row">
 				<display:column title="${nameHeader}">
 					<a href="actor/actor/${row.id}/display.do"> <jstl:out value="${row.name }"/> <jstl:out value="${row.surname}"/></a>
@@ -72,8 +78,27 @@
 			</jstl:if>
 			<jstl:if test="${activity.place!=null}">
 				<div><b><spring:message code="activity.place.address"/>: </b><jstl:out value="${activity.place.address}" /></div>
-				<div><b><spring:message code="activity.place.latitude"/>: </b><jstl:out value="${activity.place.latitude}" /></div>
-				<div><b><spring:message code="activity.place.longitude"/>: </b><jstl:out value="${activity.place.longitude}" /></div>
+				<br>
+				
+    <div id="map"></div>
+    <script>
+      function initMap() {
+    	var lati = '${latitude}';
+    	var longi = '${longitude}';
+        var uluru = {lat: parseFloat(lati), lng: parseFloat(longi)};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0HVq8CTYmEOaRdZ16y15RQBmo9u3A3EA&callback=initMap">
+    </script>
 			</jstl:if>
         </div><!--/span-->
       </div><!--/row-->

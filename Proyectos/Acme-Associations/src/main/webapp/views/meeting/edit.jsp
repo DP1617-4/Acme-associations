@@ -27,7 +27,7 @@
 
 	<acme:textbox code="meeting.issue" path="issue"/><br />
 	
-	<acme:textbox code="meeting.agenda" path="agenda"/><br />
+	<acme:textbox code="meeting.agenda" path="agenda" placeholder="URL"/><br />
 	
 	<div>
 	<form:label path="moment">
