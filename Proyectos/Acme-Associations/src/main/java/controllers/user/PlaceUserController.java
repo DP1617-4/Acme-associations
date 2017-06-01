@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.PlaceService;
+import services.RolesService;
 import controllers.AbstractController;
 import domain.Activity;
 import domain.Place;
@@ -28,15 +30,25 @@ public class PlaceUserController extends AbstractController {
 	@Autowired
 	private PlaceService	placeService;
 
+	@Autowired
+	private RolesService	rolesService;
+
 
 	@RequestMapping(value = "/{activity}/create", method = RequestMethod.GET)
-	public ModelAndView create(@PathVariable final Activity activity) {
+	public ModelAndView create(@PathVariable final Activity activity, RedirectAttributes redir) {
 		ModelAndView result;
-		final Place newPlace = this.placeService.create();
-		result = this.createEditModelAndView(newPlace, activity);
+		try {
+
+			this.rolesService.checkCollaboratorPrincipal(activity.getAssociation());
+			final Place newPlace = this.placeService.create();
+			result = this.createEditModelAndView(newPlace, activity);
+		} catch (Exception e) {
+
+			result = new ModelAndView("redirect:/welcome/index.do");
+			redir.addFlashAttribute("errorMessage", e.getMessage());
+		}
 		return result;
 	}
-
 	@RequestMapping(value = "/{activity}/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Place place, final BindingResult binding, @PathVariable final Activity activity) {
 		ModelAndView result;

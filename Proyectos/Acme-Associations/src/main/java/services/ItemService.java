@@ -189,4 +189,9 @@ public class ItemService {
 		return this.itemRepository.countLoansItem(item.getId());
 	}
 
+	public void flush() {
+		this.itemRepository.flush();
+
+	}
+
 }
