@@ -95,7 +95,7 @@ public class ActivityServiceTest extends AbstractTest {
 			}, {	// Apuntarse y desapuntarse con exito: Asociado
 				"user8", "activity1", "user8", null
 			}, {	// Apuntarse y desapuntarse con error: Sin loguear
-				null, "activity1", "user1", IllegalArgumentException.class
+				null, "activity1", "user1", NullPointerException.class
 			}, {	// Apuntar y desapuntara otro con exito: Manager
 				"user1", "activity1", "user3", null
 			}, {	// Apuntar y desapuntara otro con exito: Collaborator
@@ -110,8 +110,7 @@ public class ActivityServiceTest extends AbstractTest {
 				"user9", "activity5", "user5", IllegalArgumentException.class
 			}
 		};
-		for (int i = 0; i < testingData.length; i++) {
-			System.out.println("Test añadir: " + i);
+		for (int i = 0; i < testingData.length; i++){
 			this.templateAddAttendant((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
 		}
 	}
@@ -126,7 +125,7 @@ public class ActivityServiceTest extends AbstractTest {
 			}, {	// Añadir ganador con error: Asociado
 				"user8", "activity1", "user3", "item2", IllegalArgumentException.class
 			}, {	// Añadir ganador con error: sin loguear
-				null, "activity1", "user3", "item2", IllegalArgumentException.class
+				null, "activity1", "user3", "item2", NullPointerException.class
 			}, {	// Añadir ganador con error: sin estar en la actividad
 				"user1", "activity1", "user8", "item2", IllegalArgumentException.class
 			}, {	// Añadir ganador con error: sin estar en la asociacion
@@ -139,8 +138,9 @@ public class ActivityServiceTest extends AbstractTest {
 				"user1", "activity1", "user3", null, NullPointerException.class
 			}
 		};
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++){
 			this.templateSetWinner((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (Class<?>) testingData[i][4]);
+		}
 	}
 
 	// Templates ----------------------------------------------------------
