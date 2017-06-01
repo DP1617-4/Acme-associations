@@ -116,6 +116,14 @@ public class LoanService {
 		return result;
 	}
 
+	public Collection<Loan> findUnfinishedLoansItem(final int itemId) {
+		Collection<Loan> result;
+
+		result = this.loanRepository.findUnfinishedLoans(itemId);
+
+		return result;
+	}
+
 	public List<Loan> findByAssociation(final Association association) {
 		List<Loan> result;
 
@@ -134,9 +142,10 @@ public class LoanService {
 
 	public Loan end(final Loan loan) {
 		Loan result;
-
-		loan.setFinalDate(new Date(System.currentTimeMillis() - 1));
+		final Date currentTime = new Date(System.currentTimeMillis() - 1);
+		loan.setFinalDate(currentTime);
 		result = this.loanRepository.save(loan);
+		Assert.isTrue(result.getFinalDate().equals(currentTime));
 
 		return result;
 	}
