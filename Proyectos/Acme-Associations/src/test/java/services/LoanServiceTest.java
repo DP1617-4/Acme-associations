@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Item;
@@ -60,21 +59,21 @@ public class LoanServiceTest extends AbstractTest {
 			}, {	// Creación errónea de una Association: creationDate null.
 				"user1", this.fechaValida, this.fechaFutura, null, "item1", "user1", "user2", ConstraintViolationException.class
 			}, {	// Creación errónea de una Association: creationDate null.
-				"user1", this.fechaValida, this.fechaFutura, this.fechaFutura, null, "user1", "user2", ConstraintViolationException.class
+				"user1", this.fechaValida, this.fechaFutura, this.fechaFutura, null, "user1", "user2", NullPointerException.class
 			}, {		// Creación correcta de una Association.
-				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item100", "user1", "user2", ConstraintViolationException.class
+				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item100", "user1", "user2", NumberFormatException.class
 			}, {		// Creación correcta de una Association.
-				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item1", null, "user2", ConstraintViolationException.class
+				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item1", null, "user2", NullPointerException.class
 			}, {		// Creación correcta de una Association.
-				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item1", "user100", "user2", ConstraintViolationException.class
+				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item1", "user100", "user2", NumberFormatException.class
 			}, {		// Creación correcta de una Association.
-				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item1", "user1", null, ConstraintViolationException.class
+				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item1", "user1", null, NullPointerException.class
 			}, {		// Creación correcta de una Association.
-				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item1", "user1", "user200", ConstraintViolationException.class
+				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item1", "user1", "user200", NumberFormatException.class
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
-			this.templateCreation((String) testingData[i][0], (Date) testingData[i][1], (Date) testingData[i][2], (Date) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][5], (Class<?>) testingData[i][6]);
+			this.templateCreation((String) testingData[i][0], (Date) testingData[i][1], (Date) testingData[i][2], (Date) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6], (Class<?>) testingData[i][7]);
 	}
 	@Test
 	public void driverDisplay() {
@@ -85,57 +84,12 @@ public class LoanServiceTest extends AbstractTest {
 				null, "loan1", null
 			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", "loan100", NumberFormatException.class
+			}, {		// Intento de mostrar una asociacion que no existe
+				"user1", null, NullPointerException.class
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
 			this.templateDisplaying((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
-	}
-
-	@Test
-	public void driverLoanable() {
-		final Object testingData[][] = {
-			{		// Display correcto de una association ya creado y logueado como tal. 
-				"user2", "item6", null
-			}, {	// Display correcto de un user distinto al que está logueado.
-				null, "item1", null
-			}, {	// Display correcto de un user distinto al que está logueado.
-				"admin", "item1", null
-			}
-		};
-		for (int i = 0; i < testingData.length; i++)
-			this.templateLoanable((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
-	}
-
-	@Test
-	public void driverIsLoaned() {
-		final Object testingData[][] = {
-			{		// Display correcto de una association ya creado y logueado como tal. 
-				"user1", "item1", IllegalArgumentException.class
-			}, {	// Display correcto de un user distinto al que está logueado.
-				null, "item1", IllegalArgumentException.class
-			}, {	// Display correcto de un user distinto al que está logueado.
-				"admin", "item1", IllegalArgumentException.class
-			}
-		};
-		for (int i = 0; i < testingData.length; i++)
-			this.templateisLoaned((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
-	}
-
-	@Test
-	public void driverChangeCondition() {
-		final Object testingData[][] = {
-			{		// Display correcto de una association ya creado y logueado como tal. 
-				"user1", "MODERATE", "item1", null
-			}, {	// Display correcto de un user distinto al que está logueado.
-				null, "MODERATE", "item1", IllegalArgumentException.class
-			}, {	// Display correcto de un user distinto al que está logueado.
-				"admin", "MODERATE", "item1", IllegalArgumentException.class
-			}, {		// Display correcto de una association ya creado y logueado como tal. 
-				"user1", "MODERATE", "item100", NumberFormatException.class
-			}
-		};
-		for (int i = 0; i < testingData.length; i++)
-			this.templateCondition((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
 	}
 
 	// Templates ----------------------------------------------------------
@@ -145,11 +99,11 @@ public class LoanServiceTest extends AbstractTest {
 		try {
 			this.authenticate(user);
 
-			final Loan l = loanService.create();
+			final Loan l = this.loanService.create();
 
-			Item i = this.itemService.findOne(this.extract(item));
-			User lend = this.userService.findOne(this.extract(lender));
-			User borr = this.userService.findOne(this.extract(borrower));
+			final Item i = this.itemService.findOne(this.extract(item));
+			final User lend = this.userService.findOne(this.extract(lender));
+			final User borr = this.userService.findOne(this.extract(borrower));
 
 			l.setStartDate(startDate);
 			l.setExpectedDate(expectedDate);
@@ -158,8 +112,9 @@ public class LoanServiceTest extends AbstractTest {
 			l.setLender(lend);
 			l.setBorrower(borr);
 
-			Loan saved = loanService.save(l);
-			this.loanService.delete(saved);
+			final Loan saved = this.loanService.save(l);
+			final Loan res = this.loanService.end(saved);
+			this.loanService.delete(res);
 			this.unauthenticate();
 			this.itemService.flush();
 		} catch (final Throwable oops) {
@@ -175,46 +130,6 @@ public class LoanServiceTest extends AbstractTest {
 			this.authenticate(username);
 			this.loanService.findOne(this.extract(loanId));
 			this.unauthenticate();
-		} catch (final Throwable oops) {
-			caught = oops.getClass();
-		}
-		this.checkExceptions(expected, caught);
-	}
-
-	protected void templateLoanable(final String username, final String itemId, final Class<?> expected) {
-		Class<?> caught;
-		caught = null;
-		try {
-			this.authenticate(username);
-			Item i = this.itemService.findOne(this.extract(itemId));
-			Assert.isTrue(this.itemService.isLoanable(i));
-		} catch (final Throwable oops) {
-			caught = oops.getClass();
-		}
-		this.checkExceptions(expected, caught);
-	}
-
-	protected void templateisLoaned(final String username, final String itemId, final Class<?> expected) {
-		Class<?> caught;
-		caught = null;
-		try {
-			this.authenticate(username);
-			Item i = this.itemService.findOne(this.extract(itemId));
-			Assert.isTrue(this.itemService.isLoanedByPrincipal(i));
-		} catch (final Throwable oops) {
-			caught = oops.getClass();
-		}
-		this.checkExceptions(expected, caught);
-	}
-
-	protected void templateCondition(final String username, final String condition, final String itemId, final Class<?> expected) {
-		Class<?> caught;
-		caught = null;
-		try {
-			this.authenticate(username);
-			Item i = this.itemService.findOne(this.extract(itemId));
-			this.itemService.changeCondition(i, condition);
-			this.itemService.flush();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		}
