@@ -1041,7 +1041,7 @@
 	<bean id="item5" class="domain.Item">
 		<property name="name" value="item5" />
 		<property name="identifier" value="20170521-b79" />
-		<property name="itemCondition" value="LOAN" />
+		<property name="itemCondition" value="EXCELENT" />
 		<property name="description" value="description" />
 		<property name="picture" value="" />
 		<property name="section" ref="section1" />

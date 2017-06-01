@@ -15,7 +15,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	@Query("select l.item from Loan l right JOIN l.item i where l.finalDate!=null and i.section.association.id=?1 and i.itemCondition != 'BAD' and i.itemCondition != 'PRIZE' and i.itemCondition !='LOAN'")
 	Collection<Item> findAllByAssociationLoaned(int associationId);
 
-	@Query("select i from Item i where i.section.association.id=?1 and i.itemCondition != 'BAD' and i.itemCondition != 'PRIZE' and i.itemCondition !='LOAN'")
+	@Query("select i from Loan l right join l.item i where i.section.association.id=?1 and i.itemCondition != 'BAD' and i.itemCondition != 'PRIZE' and i.itemCondition !='LOAN' and l.finalDate != null")
 	Collection<Item> findAllByAssociation(int associationId);
 
 	@Query("select i from Item i where i.section.id=?1")
