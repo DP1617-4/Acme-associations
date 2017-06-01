@@ -87,4 +87,9 @@ public class MeetingService {
 		result = this.meetingRepository.findAllByAssociation(association.getId());
 		return result;
 	}
+
+	public void flush() {
+		this.meetingRepository.flush();
+
+	}
 }
