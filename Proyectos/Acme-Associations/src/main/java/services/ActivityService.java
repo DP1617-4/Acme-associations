@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
@@ -29,6 +30,9 @@ public class ActivityService {
 
 	@Autowired
 	private Validator			validator;
+	
+	@Autowired
+	private RolesService		rolesService;
 
 
 	// Constructors --------------------------------------------
@@ -41,6 +45,7 @@ public class ActivityService {
 		Activity created;
 		created = new Activity();
 		created.setAssociation(association);
+		created.setAttendants(new ArrayList<User>());
 		return created;
 	}
 
@@ -57,6 +62,7 @@ public class ActivityService {
 	}
 
 	public Activity save(final Activity activity) {
+		rolesService.checkCollaboratorPrincipal(activity.getAssociation());
 		Activity result;
 		result = this.activityRepository.save(activity);
 		return result;
@@ -74,11 +80,13 @@ public class ActivityService {
 	//Our other bussiness methods ------------------------------
 	public void setWinner(final Activity activity, final User user, final Item item) {
 		User winner;
-		if (item.getItemCondition() != Item.PRIZE)
+		Assert.isTrue(activity.getAttendants().contains(user));
+		rolesService.checkCollaboratorPrincipal(activity.getAssociation());
+		if (item != null && item.getItemCondition() != Item.PRIZE)
 			item.setItemCondition(Item.PRIZE);
 		winner = user;
 		activity.setWinner(winner);
-		this.save(activity);
+		activityRepository.save(activity);
 	}
 
 	public Collection<Activity> findAllByAssociation(final int associationId) {
@@ -141,6 +149,10 @@ public class ActivityService {
 	}
 
 	public void addParticipant(final User user, final Activity activity) {
+		rolesService.checkAssociatePrincipal(activity.getAssociation());
+		if(!activity.getPublicActivity()){
+			Assert.notNull(rolesService.findRolesByUserAssociation(user, activity.getAssociation()));
+		}
 		Collection<User> attendants;
 		attendants = activity.getAttendants();
 		if (!attendants.contains(user))

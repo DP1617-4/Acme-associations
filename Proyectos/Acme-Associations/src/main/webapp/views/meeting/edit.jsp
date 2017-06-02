@@ -27,14 +27,11 @@
 
 	<acme:textbox code="meeting.issue" path="issue"/><br />
 	
-	<acme:textbox code="meeting.agenda" path="agenda"/><br />
+	<acme:textbox code="meeting.agenda" path="agenda" placeholder="URL"/><br />
 	
 	<div>
-	<form:label path="moment">
-		<spring:message code="meeting.moment" />:
-	</form:label>
-	<form:input placeholder="dd/MM/yyyy HH:mm" path="moment" />
-	<form:errors cssClass="error" path="moment" />
+	<acme:datepicker code="meeting.moment" path="moment" hour="true"/><br />
+	
 	</div> <br />
 	
 	<acme:textbox code="meeting.address" path="address"/><br />

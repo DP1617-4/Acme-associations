@@ -103,9 +103,7 @@ public class MinutesUserController extends AbstractController {
 		else
 			try {
 				this.rolesService.checkManagerPrincipal(minute.getMeeting().getAssociation());
-				users.add(addParticipant.getUser());
-				minute.setUsers(users);
-				minute = this.minutesService.save(minute);
+				this.minutesService.addParticipant(addParticipant.getUser().getId(), addParticipant.getMinute().getId());
 				result = new ModelAndView("redirect:/meeting/user/" + association.getId() + "/" + meeting.getId() + "/display.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(minute, "minutes.commit.error");

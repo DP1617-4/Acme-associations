@@ -97,34 +97,6 @@ public class ItemUserController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/{association}/list", method = RequestMethod.GET)
-	public ModelAndView list(@PathVariable final Association association) {
-		final ModelAndView result;
-
-		final Collection<Item> items = this.itemService.findAllByAssociation(association);
-
-		Roles roles = null;
-		String role = null;
-
-		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		if (principal != "anonymousUser") {
-			final Actor actPrincipal = this.actorService.findByPrincipal();
-			if (actPrincipal instanceof User)
-				roles = this.rolesService.findRolesByPrincipalAssociation(association);
-		}
-		if (roles != null)
-			role = roles.getType();
-
-		result = new ModelAndView("item/list");
-		result.addObject("items", items);
-		result.addObject("requestURI", "/item/user/" + association.getId() + "/list.do");
-		result.addObject("association", association);
-		result.addObject("role", role);
-
-		return result;
-	}
-
 	@RequestMapping(value = "/{association}/{section}/listSection", method = RequestMethod.GET)
 	public ModelAndView listSection(@PathVariable final Association association, @PathVariable final Section section) {
 		final ModelAndView result;
@@ -146,7 +118,7 @@ public class ItemUserController extends AbstractController {
 
 		result = new ModelAndView("item/list");
 		result.addObject("items", items);
-		result.addObject("requestURI", "/item/user/" + association.getId() + "/list.do");
+		result.addObject("requestURI", "/item/user/" + association.getId() + "/" + section.getId() + "/list.do");
 		result.addObject("association", association);
 		result.addObject("role", role);
 

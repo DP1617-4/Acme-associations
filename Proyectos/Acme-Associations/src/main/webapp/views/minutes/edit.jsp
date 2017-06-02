@@ -25,7 +25,7 @@
 	<form:hidden path="meeting"/>
 	<form:hidden path="users"/>
 
-    <acme:textbox code="minutes.document" path="document"/>
+    <acme:textbox code="minutes.document" path="document" placeholder="URL"/>
 	<br/>
 	
 	<button type="submit" name="save" class="btn btn-primary" id="save">

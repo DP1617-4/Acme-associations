@@ -55,23 +55,28 @@ public class UserUserController extends AbstractController {
 	public ModelAndView save(@Valid User user, final BindingResult binding) {
 		ModelAndView result;
 
-		try {
-			this.userService.phoneValidator(user.getPhoneNumber());
-		} catch (final Throwable oops) {
-			binding.rejectValue("phoneNumber", "error.object", "The phone number is not valid");
-		}
+		if (binding.hasErrors()) {
 
-		final User userR = this.userService.reconstructPrincipal(user, binding);
-
-		if (binding.hasErrors())
 			result = this.createEditModelAndView(user);
-		else
+		} else {
 			try {
-				user = this.userService.save(userR);
-				result = new ModelAndView("redirect:/actor/actor/displayOwn.do");
+				this.userService.phoneValidator(user.getPhoneNumber());
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(user, "user.commit.error");
+				binding.rejectValue("phoneNumber", "error.object", "The phone number is not valid");
 			}
+
+			final User userR = this.userService.reconstructPrincipal(user, binding);
+
+			if (binding.hasErrors())
+				result = this.createEditModelAndView(user);
+			else
+				try {
+					user = this.userService.save(userR);
+					result = new ModelAndView("redirect:/actor/actor/displayOwn.do");
+				} catch (final Throwable oops) {
+					result = this.createEditModelAndView(user, "user.commit.error");
+				}
+		}
 		return result;
 	}
 

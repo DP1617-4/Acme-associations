@@ -19,6 +19,8 @@
 <html>
 <head>
 
+
+
 <base
 	href="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/" />
 
@@ -103,6 +105,11 @@
 			alert(str);
 		}
 	</script>
+	
+	<!-- maps -->
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="js/map.js"></script>
+	
 </head>
 <br>
 <body>

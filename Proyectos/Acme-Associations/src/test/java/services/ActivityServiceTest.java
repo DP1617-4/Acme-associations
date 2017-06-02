@@ -16,6 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import utilities.AbstractTest;
 import domain.Activity;
+import domain.Association;
+import domain.Item;
+import domain.Place;
+import domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -26,95 +30,147 @@ public class ActivityServiceTest extends AbstractTest {
 
 	// The SUT -------------------------------------------------------------
 	@Autowired
-	private ActivityService	activityService;
+	private ActivityService		activityService;
 
-	Calendar				calendarValida	= new GregorianCalendar(1995, 12, 14);
-	Date					fechaValida		= this.calendarValida.getTime();
+	@Autowired
+	private AssociationService	associationService;
 
-	Calendar				calendarFutura	= new GregorianCalendar(2020, 12, 14);
-	Date					fechaFutura		= this.calendarFutura.getTime();
+	@Autowired
+	private UserService			userService;
+
+	@Autowired
+	private PlaceService		placeService;
+
+	@Autowired
+	private ItemService			itemService;
+
+	Calendar					calendarValida	= new GregorianCalendar(2017, 06, 06);
+	Date						fechaValida		= this.calendarValida.getTime();
+
+	Calendar					calendarPasada	= new GregorianCalendar(1995, 12, 14);
+	Date						fechaPasada		= this.calendarPasada.getTime();
+
+	Calendar					calendarFutura	= new GregorianCalendar(2020, 12, 14);
+	Date						fechaFutura		= this.calendarFutura.getTime();
 
 
 	// Teoria pagina 107 y 108
 	// Tests ---------------------------------------------------------------
 	@Test
-	public void driverCreation() {
+	public void driverCreationDelete() {
 		final Object testingData[][] = {
 			{		// Creación correcta de un Activity.
-				"manager1", "blae", this.fechaFutura, "equisdejajajaxdxdxd", "http://www.imagen.com.mx/assets/img/imagen_share.png", 10, null
-			}, {	// Creación errónea de un Activity: title vacío.
-				"manager1", null, this.fechaFutura, "equisdejajajaxdxdxd", "http://www.imagen.com.mx/assets/img/imagen_share.png", 1, ConstraintViolationException.class
-			}, {	// Creación errónea de un Activity: description vacío.
-				"manager1", "blae", this.fechaFutura, null, "http://www.imagen.com.mx/assets/img/imagen_share.png", 1, ConstraintViolationException.class
-			}, {	// Creación errónea de un Activity: picture que no es url.
-				"manager1", "blae", this.fechaFutura, "equisdejajajaxdxdxd", "no soy una url jiji", 1, ConstraintViolationException.class
-			}, {	// Creación errónea de un Activity: moment nulo vacío.
-				"manager1", "blae", null, "equisdejajajaxdxdxd", "http://www.imagen.com.mx/assets/img/imagen_share.png", 1, ConstraintViolationException.class
-			}, {	// Creación errónea de un Activity: numberSeat negativo.
-				"manager1", "blae", this.fechaFutura, "equisdejajajaxdxdxd", "http://www.imagen.com.mx/assets/img/imagen_share.png", -1, ConstraintViolationException.class
-			}, {	// Creación errónea de un Activity: no es un manager el logueado.
-				"chorbi1", "blae", this.fechaFutura, "equisdejajajaxdxdxd", "http://www.imagen.com.mx/assets/img/imagen_share.png", 1, ConstraintViolationException.class
+				"user1", "association1", null, null, null, "Actividad 1", "esta es una actividad de prueba", 10, this.fechaValida, this.fechaFutura, true, null
+			}, {		// Creación correcta de un Activity.
+				"user3", "association1", null, null, null, "Actividad 1", "esta es una actividad de prueba", 10, this.fechaValida, this.fechaFutura, true, null
+			}, {		// creacion Incorrecta: Usuario sin permisos.
+				"user8", "association1", null, null, null, "Actividad 1", "esta es una actividad de prueba", 10, this.fechaValida, this.fechaFutura, true, IllegalArgumentException.class
+			}, {		// creacion Incorrecta: Associacion nula.
+				"user1", null, null, null, null, "Actividad 1", "esta es una actividad de prueba", 10, this.fechaValida, this.fechaFutura, true, NullPointerException.class
+			}, {		// creacion Incorrecta: nombre nulo.
+				"user1", "association1", null, null, null, null, "esta es una actividad de prueba", 10, this.fechaValida, this.fechaFutura, true, ConstraintViolationException.class
+			}, {		// creacion Incorrecta: descripcion nula.
+				"user1", "association1", null, null, null, "Actividad 1", null, 10, this.fechaValida, this.fechaFutura, true, ConstraintViolationException.class
+			}, {		// creacion Incorrecta: maximo numero de attendants nulo.
+				"user1", "association1", null, null, null, "Actividad 1", "esta es una actividad de prueba", null, this.fechaValida, this.fechaFutura, true, ConstraintViolationException.class
+			}, {		// creacion Incorrecta: maximo numero de attendants negativo.
+				"user1", "association1", null, null, null, "Actividad 1", "esta es una actividad de prueba", -1, this.fechaValida, this.fechaFutura, true, ConstraintViolationException.class
+			}, {		// creacion Incorrecta: fecha inicio pasada.
+				"user1", "association1", null, null, null, "Actividad 1", "esta es una actividad de prueba", -1, this.fechaPasada, this.fechaFutura, true, ConstraintViolationException.class
+			}, {		// creacion Incorrecta: fecha inicio anterior a fecha fin.
+				"user1", "association1", null, null, null, "Actividad 1", "esta es una actividad de prueba", -1, this.fechaFutura, this.fechaValida, true, ConstraintViolationException.class
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
-			this.templateCreationDelete((String) testingData[i][0], (String) testingData[i][1], (Date) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (int) testingData[i][5], (Class<?>) testingData[i][6]);
+			this.templateCreationDelete((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6],
+				(Integer) testingData[i][7], (Date) testingData[i][8], (Date) testingData[i][9], (Boolean) testingData[i][10], (Class<?>) testingData[i][11]);
 	}
 	@Test
-	public void driverListOwn() {
+	public void driverAddAttendant() {
 		final Object testingData[][] = {
-			{		// Chorbi con su id
-				"chorbi1", 91, null
-			}, {	// Un chorbi
-				"manager1", 91, IllegalArgumentException.class
-			}, {	// Alguien no logueado
-				null, 91, IllegalArgumentException.class
+			{		// Apuntarse y desapuntarse con exito: Manager
+				"user1", "activity1", "user1", null
+			}, {	// Apuntarse y desapuntarse con exito: Collaborator
+				"user3", "activity1", "user3", null
+			}, {	// Apuntarse y desapuntarse con exito: Asociado
+				"user8", "activity1", "user8", null
+			}, {	// Apuntarse y desapuntarse con error: Sin loguear
+				null, "activity1", "user1", NullPointerException.class
+			}, {	// Apuntar y desapuntara otro con exito: Manager
+				"user1", "activity1", "user3", null
+			}, {	// Apuntar y desapuntara otro con exito: Collaborator
+				"user3", "activity1", "user1", null
+			}, {	// Apuntar y desapuntara otro con exito: Asociado
+				"user8", "activity1", "user1", null
+			}, {	// Apuntar y desapuntara otro con error: No en la misma asociacion
+				"user1", "activity5", "user9", IllegalArgumentException.class
+			}, {	// Apuntarse y desapuntarse con error: No en la misma asociacion
+				"user9", "activity5", "user9", IllegalArgumentException.class
+			}, {	// Apuntar y desapuntar con error: No en la misma asociacion
+				"user9", "activity5", "user5", IllegalArgumentException.class
 			}
 		};
-		for (int i = 0; i < testingData.length; i++)
-			this.templateListOwn((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+		for (int i = 0; i < testingData.length; i++){
+			this.templateAddAttendant((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
+		}
 	}
 
 	@Test
-	public void driverList() {
+	public void driverSetWinner() {
 		final Object testingData[][] = {
-			{		// Manager con su id
-				"manager1", 97, null
-			}, {	// Un chorbi
-				"chorbi1", 97, null
-			}, {	// Alguien no logueado
-				null, 97, null
+			{		// Añadir ganador con exito: Manager
+				"user1", "activity1", "user3", "item2", null
+			}, {	// Añadir ganador con exito: Collaborator
+				"user3", "activity1", "user1", "item2", null
+			}, {	// Añadir ganador con error: Asociado
+				"user8", "activity1", "user3", "item2", IllegalArgumentException.class
+			}, {	// Añadir ganador con error: sin loguear
+				null, "activity1", "user3", "item2", NullPointerException.class
+			}, {	// Añadir ganador con error: sin estar en la actividad
+				"user1", "activity1", "user8", "item2", IllegalArgumentException.class
+			}, {	// Añadir ganador con error: sin estar en la asociacion
+				"user1", "activity1", "user9", "item2", IllegalArgumentException.class
+			}, {	// Añadir ganador con error: sin estar en la asociacion
+				"user9", "activity1", "user1", "item2", IllegalArgumentException.class
+			}, {	// Añadir ganador con error: usuario nulo
+				"user2", "activity1", null, "item2", NullPointerException.class
+			}, {	// Añadir ganador con error: item nulo
+				"user1", "activity1", "user3", null, NullPointerException.class
 			}
 		};
-		for (int i = 0; i < testingData.length; i++)
-			this.templateList((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
-	}
-
-	@Test
-	public void driverRegister() {
-		final Object testingData[][] = {
-			{		// Un chorbi registrándose a un activity
-				"chorbi1", 142, null
-			}, {	// Un manager registrándose a un activity
-				"manager1", 142, IllegalArgumentException.class
-			}, {	// Alguien no logueado
-				null, 142, IllegalArgumentException.class
-			}
-		};
-		for (int i = 0; i < testingData.length; i++)
-			this.templateRegister((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+		for (int i = 0; i < testingData.length; i++){
+			this.templateSetWinner((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (Class<?>) testingData[i][4]);
+		}
 	}
 
 	// Templates ----------------------------------------------------------
-	protected void templateCreationDelete(final String username, final String title, final Date moment, final String description, final String picture, final int numberSeat, final Class<?> expected) {
+
+	protected void templateCreationDelete(final String username, final String association, final String place, final String winner, final String item, final String name, final String description, final Integer maximumAttendants, final Date startMoment,
+		final Date endMoment, final Boolean publicActivity, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {
 			this.authenticate(username);
-			final Activity e = this.activityService.create(null);
+			final Association a = this.associationService.findOne(this.extract(association));
+			final Activity activity = this.activityService.create(a);
 
-			e.setDescription(description);
+			if (place != null) {
+				final Place p = this.placeService.findOne(this.extract(place));
+				activity.setPlace(p);
+			}
+			if (item != null) {
+				final Item i = this.itemService.findOne(this.extract(item));
+				activity.setItem(i);
+			}
 
-			final Activity saved = this.activityService.save(e);
+			activity.setName(name);
+			activity.setDescription(description);
+			activity.setMaximumAttendants(maximumAttendants);
+			activity.setEndMoment(endMoment);
+			activity.setStartMoment(startMoment);
+			activity.setPublicActivity(publicActivity);
+
+			final Activity saved = this.activityService.save(activity);
 			this.activityService.delete(saved);
 			this.unauthenticate();
 			this.activityService.flush();
@@ -124,12 +180,15 @@ public class ActivityServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
-	protected void templateListOwn(final String username, final int managerId, final Class<?> expected) {
+	protected void templateAddAttendant(final String username, final String activity, final String user, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {
 			this.authenticate(username);
-			//			final Collection<Activity> e = this.activityService.findAllByPrincipalChorbi();
+			final Activity a = this.activityService.findOne(this.extract(activity));
+			final User u = this.userService.findOne(this.extract(user));
+			this.activityService.addParticipant(u, a);
+			this.activityService.addParticipant(u, a);
 			this.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
@@ -137,12 +196,15 @@ public class ActivityServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
-	protected void templateList(final String username, final int managerId, final Class<?> expected) {
+	protected void templateSetWinner(final String username, final String activity, final String user, final String item, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {
 			this.authenticate(username);
-			this.activityService.findAll();
+			final Activity a = this.activityService.findOne(this.extract(activity));
+			final User u = this.userService.findOne(this.extract(user));
+			final Item i = this.itemService.findOne(this.extract(item));
+			this.activityService.setWinner(a, u, i);
 
 			this.unauthenticate();
 		} catch (final Throwable oops) {
@@ -151,20 +213,21 @@ public class ActivityServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
-	protected void templateRegister(final String username, final int activityId, final Class<?> expected) {
-		Class<?> caught;
-		caught = null;
-		try {
-			this.authenticate(username);
-			this.activityService.findOne(activityId);
-			//			this.activityService.register(e);
-			//			this.activityService.register(e);
-			this.unauthenticate();
-			this.activityService.flush();
-		} catch (final Throwable oops) {
-			caught = oops.getClass();
-		}
-		this.checkExceptions(expected, caught);
-	}
+	@Test(expected = ConstraintViolationException.class)
+	public void MomentsValidatorTest() {
+		this.authenticate("user1");
+		final Association a = this.associationService.findOne(this.extract("association1"));
+		final Activity activity = this.activityService.create(a);
 
+		activity.setName("Prueba");
+		activity.setDescription("Prueba tests");
+		activity.setMaximumAttendants(55);
+		activity.setEndMoment(this.fechaValida);
+		activity.setStartMoment(this.fechaFutura);
+		activity.setPublicActivity(false);
+
+		final Activity saved = this.activityService.save(activity);
+		this.unauthenticate();
+		this.activityService.flush();
+	}
 }

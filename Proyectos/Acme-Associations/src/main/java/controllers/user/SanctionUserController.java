@@ -2,6 +2,7 @@
 package controllers.user;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -127,14 +128,16 @@ public class SanctionUserController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/{association}/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/{association}/end", method = RequestMethod.GET)
 	public ModelAndView edit(@PathVariable final Association association, @RequestParam final int sanctionId, final RedirectAttributes redir) {
 		ModelAndView result;
 		final Sanction sanction;
 		try {
 			sanction = this.sanctionService.findOneToEdit(sanctionId);
+			sanction.setEndDate(new Date());
+			sanctionService.save(sanction);
+			result = this.listByAssociation(association);
 
-			result = this.createEditModelAndView(sanction, association);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 			redir.addFlashAttribute("errorMessage", oops.getMessage());

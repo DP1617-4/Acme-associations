@@ -81,7 +81,7 @@ public class MinutesService {
 	public Minutes save(final Minutes minutes) {
 		Assert.notNull(minutes);
 		Minutes result;
-		Assert.isTrue(this.findOneByMeeting(minutes.getMeeting()) == null);
+		//Assert.isTrue(this.findOneByMeeting(minutes.getMeeting()) == null);
 		result = this.minutesRepository.save(minutes);
 		return result;
 	}
@@ -93,13 +93,18 @@ public class MinutesService {
 		final Collection<User> participants = minutes.getUsers();
 
 		participants.add(participant);
-		this.save(minutes);
+		this.minutesRepository.save(minutes);
 	}
 
 	public Minutes findOneByMeeting(final Meeting meeting) {
 		Minutes result;
 		result = this.minutesRepository.findOneByMeeting(meeting.getId());
 		return result;
+	}
+
+	public void flush() {
+		this.minutesRepository.flush();
+
 	}
 
 }

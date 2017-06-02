@@ -29,6 +29,7 @@
 	<acme:textbox code="activity.name" path="name"/><br />
 	<acme:textbox code="activity.description" path="description"/><br />
 	<div>
+		
 		<form:label path="startMoment">
 			<spring:message code="activity.startMoment" />:
 		</form:label>
@@ -41,8 +42,14 @@
 		</form:label>
 		<form:input placeholder="dd/MM/yyyy HH:mm" path="endMoment" />
 		<form:errors cssClass="error" path="endMoment" />
-	</div> <br />
-	<acme:textbox code="activity.maximumAttendants" path="maximumAttendants"/><br />
+
+	</div>
+	<form:errors cssClass="error" path="" />
+
+
+  <br />
+	<acme:number min="0" max ="999999999999999999" step="1" code="activity.maximumAttendants" path="maximumAttendants"/><br />
+
 	<form:label path="publicActivity" >
 		<b><spring:message code="activity.public" /> :</b>
 	</form:label>
@@ -65,7 +72,7 @@
 		value="<spring:message code="activity.save" />" />&nbsp; 
 	<input type="button" name="cancel"
 		value="<spring:message code="activity.cancel" />"
-		onclick="location.href = ('activity/${activity.id}/display.do');" />
+		onclick="location.href = ('activity/${association.id}/list.do');" />
 	<br />
 
 	

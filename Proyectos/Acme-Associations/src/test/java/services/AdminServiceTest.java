@@ -9,46 +9,46 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import utilities.AbstractTest;
-import domain.Actor;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
 })
 @Transactional
-public class FolderServiceTest extends AbstractTest {
+public class AdminServiceTest extends AbstractTest {
 
 	// The SUT -------------------------------------------------------------
 	@Autowired
-	private FolderService	folderService;
-
-	@Autowired
-	private UserService		actorService;
+	private AdministratorService	administratorService;
 
 
 	// Tests ---------------------------------------------------------------
 	@Test
-	public void driverInitFolder() {
+	public void driverCheckAdmin() {
 		final Object testingData[][] = {
 			{		// Comprobacion correcta: username con sus folders.
-				"user1", null
+				"admin", null
 			}, {	// Comprobacion erronea: sin loguear.
 				"", IllegalArgumentException.class
+			}, {	// Comprobacion erronea: sin loguear.
+				"user1", IllegalArgumentException.class
+			}, {	// Comprobacion erronea: sin loguear.
+				"user3", IllegalArgumentException.class
+			}, {	// Comprobacion erronea: sin loguear.
+				"user8", IllegalArgumentException.class
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
-			this.templateInitFolder((String) testingData[i][0], (Class<?>) testingData[i][1]);
+			this.templateCheckAdmin((String) testingData[i][0], (Class<?>) testingData[i][1]);
 	}
 
 	// Templates ----------------------------------------------------------
-	protected void templateInitFolder(final String username, final Class<?> expected) {
+	protected void templateCheckAdmin(final String username, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {
 			this.authenticate(username);
-			final Actor actor = this.actorService.findOne(this.extract(username));
-			this.folderService.initFolders(actor);
-			this.folderService.flush();
+			this.administratorService.checkAdministrator();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		}

@@ -17,6 +17,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
 <jstl:set var="full" value="font-weight: grey; color:grey; background-color:white;" />
@@ -25,7 +26,9 @@
 <jstl:set var="available" value="background-color:green; color: black; font-weight:bold;" />
 
 
+<div class="row row-offcanvas row-offcanvas-right">
 
+  	<div class="col-12 col-md-9">
 	<security:authentication property="principal" var ="loggedactor"/>
 	<jstl:if test="${requestURI.contains('Active')}">
 		<jstl:choose>
@@ -47,7 +50,8 @@
 	</jstl:if>
 	<spring:message code="sanction.user" var="userHeader" />
 	<spring:message code="sanction.end.date" var="endDateHeader"/>
-	<spring:message code="sanction.edit" var="editHeader"/>
+	<spring:message code="sanction.end" var="endHeader"/>
+	<spring:message code="sanction.motiff" var="motiffHeader"/>
 	
 	<jstl:if test="${association == null}">
 		<display:column title="${associationHeader}">
@@ -58,10 +62,11 @@
 		<a href="sanction/display.do?sanctionId=${row.id}"><jstl:out value="${row.user.name}"/><jstl:out value="${row.user.surname}"/></a>
 	</display:column>
 	<display:column title="${endDateHeader}"><jstl:out value="${row.endDate}"/></display:column>
+	<display:column title="${motiffHeader}"><jstl:out value="${row.motiff}"/></display:column>
 	<jstl:if test="${not empty role && (role.type eq 'COLLABORATOR' || role.type eq 'MANAGER')}">
-		<display:column title="${editHeader}">
+		<display:column title="${endHeader}">
 			<jstl:if test="${row.user.userAccount != loggedactor}">
-				<a href="sanction/user/${association.id}/edit.do?sanctionId=${row.id}"><spring:message code="sanction.edit"/></a>
+				<a href="sanction/user/${association.id}/end.do?sanctionId=${row.id}"><spring:message code="sanction.end"/></a>
 			</jstl:if>
 		</display:column>
 	</jstl:if>
@@ -74,5 +79,12 @@
 	</jstl:if>
 </jstl:if>
 <br/>
-
+</div>
+<jstl:if test="${association != null}">
+	<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+	<a class="btn btn-primary" href="association/${association.id}/display.do">&larr; <jstl:out value="${association.name}"/></a>
+	   <br><br><acme:lateralMenu role="${role.type }"/>
+	   </div>
+	</jstl:if>
+</div>
 		
