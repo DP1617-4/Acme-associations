@@ -48,13 +48,13 @@ public class PlaceServiceTest extends AbstractTest {
 			}, {		// Comprobacion incorrecta: address vacio
 				"user1","activity1","", 45.0, 45.0, ConstraintViolationException.class
 			}, {		// Comprobacion incorrecta: sin loguear
-				null,"activity1","address", 45.0, 45.0, IllegalArgumentException.class
+				null,"activity1","address", 45.0, 45.0, NullPointerException.class
 			}, {		// Comprobacion incorrecta: Activity con place
 				"user1","activity3","address", 45.0, 45.0, ConstraintViolationException.class
 			}
 		};
 		for (int i = 0; i < testingData.length; i++){
-			System.out.println("test create: "+i);
+			System.out.println("Test crear: "+i);
 			this.templateCreateDelete((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Double) testingData[i][3],  (Double) testingData[i][4], (Class<?>) testingData[i][5]);
 		}
 	}

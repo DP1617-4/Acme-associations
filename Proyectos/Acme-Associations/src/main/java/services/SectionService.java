@@ -108,19 +108,24 @@ public class SectionService {
 
 	}
 
-	public Section findSectionWithMostLoansByAssociation(Association association) {
+	public Section findSectionWithMostLoansByAssociation(final Association association) {
 
 		Section section = null;
-		List<Section> sections = new ArrayList<Section>(this.sectionRepository.findSectionWithMostLoansByAssociation(association.getId()));
+		final List<Section> sections = new ArrayList<Section>(this.sectionRepository.findSectionWithMostLoansByAssociation(association.getId()));
 		if (!sections.isEmpty())
 			section = sections.get(0);
 
 		return section;
 	}
 
-	public Integer countSanctionsByUserAssociation(Section section) {
+	public Integer countSanctionsByUserAssociation(final Section section) {
 
 		return this.sectionRepository.countSanctionsByUserAssociation(section.getId());
+	}
+
+	public void flush() {
+		this.sectionRepository.flush();
+
 	}
 
 }

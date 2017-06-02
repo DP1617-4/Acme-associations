@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +16,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import utilities.AbstractTest;
 import domain.Association;
-import domain.Request;
+import domain.Section;
+import domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
 })
 @Transactional
-public class RequestServiceTest extends AbstractTest {
+public class SectionServiceTest extends AbstractTest {
 
 	// The SUT -------------------------------------------------------------
 	@Autowired
-	private RequestService		requestService;
+	private SectionService		sectionService;
 
 	@Autowired
 	private AssociationService	associationService;
@@ -46,29 +49,31 @@ public class RequestServiceTest extends AbstractTest {
 	public void driverCreation() {
 		final Object testingData[][] = {
 			{		// Creación correcta de una Association.
-				"user1", "association3", null
+				"user1", "blae", "association1", "user1", null
 			}, {	// Creación errónea de una Association: name vacío.
-				"user1", "association1", IllegalArgumentException.class
+				"user1", "", "association1", "user1", ConstraintViolationException.class
 			}, {	// Creación errónea de una Association: name vacío.
-				"user1", "association2", IllegalArgumentException.class
+				"user1", "blae", "association1", "user5", ConstraintViolationException.class
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
-			this.templateCreation((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+			this.templateCreation((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (Class<?>) testingData[i][4]);
 	}
 	@Test
 	public void driverDisplay() {
 		final Object testingData[][] = {
 			{		// Display correcto de una association ya creado y logueado como tal. 
-				"user1", "request1", null
+				"user1", "section1", null
 			}, {	// Display correcto de un user distinto al que está logueado.
-				null, "request1", null
+				null, "section1", null
 			}, {		// Intento de mostrar una asociacion que no existe
-				"admin", "request1", null
+				"admin", "section1", null
 			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", null, NullPointerException.class
 			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", "blae", NumberFormatException.class
+			}, {		// Intento de mostrar una asociacion que no existe
+				"user1", "section7", null
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
@@ -76,67 +81,70 @@ public class RequestServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void driverAccept() {
+	public void driverResponsible() {
 		final Object testingData[][] = {
 			{		// Display correcto de una association ya creado y logueado como tal. 
-				"user2", "request1", null
+				"user1", "section1", "user1", null
 			}, {	// Display correcto de un user distinto al que está logueado.
-				null, "request5", IllegalArgumentException.class
-			}, {		// a ver para qué el user3 envia una peticion para ser miembro de la asociacion de la cual ya es manager de hecho(o colaborador, no me acuerdo)
-				"admin", "request2", NullPointerException.class
+				null, "section1", "user1", null
 			}, {		// Intento de mostrar una asociacion que no existe
-				"user1", "request3", IllegalArgumentException.class
+				"admin", "section1", "user1", null
+			}, {		// Intento de mostrar una asociacion que no existe
+				"user1", "section2", "user1", IllegalArgumentException.class
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
-			this.templateAccept((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+			this.templateResponsible((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
 	}
 
 	@Test
-	//UN ADMINISTRADOR Y UN USUARIO QUE NI PERTENECE A LA ASOCIACION PUEDEN DENEGAR UNA REQUEST QUE NO ES SUYA
-	public void driverDeny() {
+	public void driverResponsiblePrincipal() {
 		final Object testingData[][] = {
 			{		// Display correcto de una association ya creado y logueado como tal. 
-				"user2", "request1", null
+				"user1", "section1", null
 			}, {	// Display correcto de un user distinto al que está logueado.
-				null, "request5", IllegalArgumentException.class
-			}, {		// a ver para qué el user3 envia una peticion para ser miembro de la asociacion de la cual ya es manager de hecho(o colaborador, no me acuerdo)
-				"admin", "request2", IllegalArgumentException.class
+				null, "section1", IllegalArgumentException.class
 			}, {		// Intento de mostrar una asociacion que no existe
-				"user1", "request3", IllegalArgumentException.class
+				"admin", "section1", IllegalArgumentException.class
+			}, {		// Intento de mostrar una asociacion que no existe
+				"user1", "section2", IllegalArgumentException.class
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
-			this.templateDeny((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+			this.templateResponsiblePrincipal((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
 
 	// Templates ----------------------------------------------------------
-	protected void templateCreation(final String user, final String associationId, final Class<?> expected) {
+	protected void templateCreation(final String user, final String name, final String associationId, final String userId, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {
 			this.authenticate(user);
 
 			final Association association = this.associationService.findOne(this.extract(associationId));
+			final User u = this.userService.findOne(this.extract(userId));
 
-			final Request request = this.requestService.create(association);
+			final Section section = this.sectionService.create(association);
 
-			final Request saved = this.requestService.save(request);
+			section.setName(name);
+			section.setUser(u);
 
-			this.requestService.delete(saved);
+			final Section saved = this.sectionService.save(section);
+
+			this.sectionService.delete(saved);
 			this.unauthenticate();
-			this.requestService.flush();
+			this.sectionService.flush();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		}
 		this.checkExceptions(expected, caught);
 	}
-	protected void templateDisplaying(final String username, final String requestId, final Class<?> expected) {
+	protected void templateDisplaying(final String username, final String sectionId, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {
 			this.authenticate(username);
-			this.requestService.findOne(this.extract(requestId));
+			this.sectionService.findOne(this.extract(sectionId));
 			this.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
@@ -144,34 +152,32 @@ public class RequestServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
-	protected void templateAccept(final String username, final String requestId, final Class<?> expected) {
+	protected void templateResponsible(final String username, final String sectionId, final String userId, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {
 			this.authenticate(username);
-			final Request request = this.requestService.findOne(this.extract(requestId));
-			this.requestService.accept(request);
+			final Section section = this.sectionService.findOne(this.extract(sectionId));
+			final User u = this.userService.findOne(this.extract(userId));
+			this.sectionService.checkResponsible(u, section);
 			this.unauthenticate();
-			this.requestService.flush();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		}
 		this.checkExceptions(expected, caught);
 	}
 
-	protected void templateDeny(final String username, final String requestId, final Class<?> expected) {
+	protected void templateResponsiblePrincipal(final String username, final String sectionId, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {
 			this.authenticate(username);
-			final Request request = this.requestService.findOne(this.extract(requestId));
-			this.requestService.deny(request);
+			final Section section = this.sectionService.findOne(this.extract(sectionId));
+			this.sectionService.checkResponsiblePrincipal(section.getId());
 			this.unauthenticate();
-			this.requestService.flush();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 		}
 		this.checkExceptions(expected, caught);
 	}
-
 }

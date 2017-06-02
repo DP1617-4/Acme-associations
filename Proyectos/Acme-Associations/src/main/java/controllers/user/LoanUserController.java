@@ -2,6 +2,7 @@
 package controllers.user;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -109,17 +110,22 @@ public class LoanUserController extends AbstractController {
 		ModelAndView result;
 
 		this.loanService.reconstruct(loan, binding);
-		if (binding.hasErrors())
+		if (loan.getExpectedDate().before(new Date())) {
 			result = this.createEditModelAndView(association, item, loan, null);
-		else
-			try {
-				loan = this.loanService.save(loan);
-				result = new ModelAndView("redirect:/loan/user/" + association.getId() + "/list.do");
+			result.addObject("errorMessage", "loan.date.past");
+		} else {
+			if (binding.hasErrors())
+				result = this.createEditModelAndView(association, item, loan, null);
+			else
+				try {
+					loan = this.loanService.save(loan);
+					result = new ModelAndView("redirect:/loan/user/" + association.getId() + "/list.do");
 
-			} catch (final IllegalArgumentException e) {
-				result = new ModelAndView("redirect:/welcome/index.do");
-				redir.addFlashAttribute("errorMessage", e.getMessage());
-			}
+				} catch (final IllegalArgumentException e) {
+					result = new ModelAndView("redirect:/welcome/index.do");
+					redir.addFlashAttribute("errorMessage", e.getMessage());
+				}
+		}
 		return result;
 	}
 

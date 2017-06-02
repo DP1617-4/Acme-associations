@@ -75,7 +75,6 @@ public class CommentServiceTest extends AbstractTest {
 			}
 		};
 		for (int i = 0; i < testingData.length; i++){
-			System.out.println("Test create numero: "+ i);
 			this.templateCreation((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (Class<?>) testingData[i][4]);
 		}
 	}

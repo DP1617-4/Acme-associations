@@ -98,7 +98,7 @@ public class MinutesServiceTest extends AbstractTest {
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
-			this.templateDisplaying((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
+			this.templateAddParticipant((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
 	}
 
 	// Templates ----------------------------------------------------------
@@ -136,7 +136,7 @@ public class MinutesServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
-	protected void templateDisplaying(final String username, final String minutesId, final String userId, final Class<?> expected) {
+	protected void templateAddParticipant(final String username, final String minutesId, final String userId, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {
