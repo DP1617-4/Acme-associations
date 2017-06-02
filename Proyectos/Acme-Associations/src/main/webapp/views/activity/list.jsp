@@ -20,10 +20,14 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
+<style>
+a{color: #251EEB}
+</style>
+
 <jstl:set var="full" value="font-weight: grey; color:grey; background-color:white;" />
 <jstl:set var="Inminent" value="color:white; font-weight:bold; background-color:black;" />
-<jstl:set var="passed" value="background-color:red; color: black; font-weight:bold;" />
-<jstl:set var="available" value="background-color:green; color: black; font-weight:bold;" />
+<jstl:set var="passed" value="background-color:#E68181; color: black; font-weight:bold;" />
+<jstl:set var="available" value="background-color:  #81E685; color: black; font-weight:bold;" />
 
 
 <div class="row row-offcanvas row-offcanvas-right">
@@ -50,7 +54,7 @@
 			<display:column property="maximumAttendants" title="${maximumAttendantsHeader}" sortable="true" style="${full}" />
 			<jstl:if test="${association == null }">
 				<display:column title="${associationHeader}" sortable="true" style="${full}">
-					<a href="association/${row.association.id}/display.do"><jstl:out value="${row.association.name}"/></a>
+					<a  href="association/${row.association.id}/display.do"><jstl:out value="${row.association.name}"/></a>
 				</display:column>
 			</jstl:if>
 		</jstl:when>
@@ -69,7 +73,7 @@
 					<display:column property="maximumAttendants" title="${maximumAttendantsHeader}" sortable="true" style="${Inminent}" />
 					<jstl:if test="${association == null }">
 					<display:column title="${associationHeader}" sortable="true" style="${Inminent}">
-						<a href="association/${row.association.id}/display.do"><jstl:out value="${row.association.name}"/></a>
+						<a  href="association/${row.association.id}/display.do"><jstl:out value="${row.association.name}"/></a>
 					</display:column>
 					</jstl:if>
 				</jstl:when>
@@ -83,7 +87,7 @@
 					<display:column property="maximumAttendants" title="${maximumAttendantsHeader}" sortable="true" style="${passed}" />
 					<jstl:if test="${association == null }">
 						<display:column title="${associationHeader}" sortable="true" style="${passed}">
-							<a href="association/${row.association.id}/display.do"><jstl:out value="${row.association.name}"/></a>
+							<a  href="association/${row.association.id}/display.do"><jstl:out value="${row.association.name}"/></a>
 						</display:column>
 					</jstl:if>
 				</jstl:when>
@@ -97,7 +101,7 @@
 					<display:column property="maximumAttendants" title="${maximumAttendantsHeader}" sortable="true" style="${available}" />
 					<jstl:if test="${association == null }">
 						<display:column title="${associationHeader}" sortable="true" style="${available}">
-							<a href="association/${row.association.id}/display.do"><jstl:out value="${row.association.name}"/></a>
+							<a  href="association/${row.association.id}/display.do"><jstl:out value="${row.association.name}"/></a>
 						</display:column>
 					</jstl:if>
 				</jstl:otherwise>
@@ -186,6 +190,9 @@
 <br/>
 </div>
 <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
-   <acme:lateralMenu/>
+<jstl:if test="${association != null }">
+<a class="btn btn-primary" href="association/${association.id}/display.do">&larr; <jstl:out value="${association.name}"/></a>
+   <br><br><acme:lateralMenu/>
+   </jstl:if>
 </div>
 </div>

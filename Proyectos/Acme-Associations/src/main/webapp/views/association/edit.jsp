@@ -39,9 +39,9 @@
 	
 	<acme:textbox code="association.picture" path="picture"/><br />
 	
-	<input type="submit" name="save"
+	<input class="btn btn-primary" type="submit" name="save"
 		value="<spring:message code="association.save" />" />&nbsp; 
-	<input type="button" name="cancel"
+	<input class="btn btn-primary" type="button" name="cancel"
 		value="<spring:message code="association.cancel" />"
 		onclick="location.href = ('association/list.do');" />
 	<br />

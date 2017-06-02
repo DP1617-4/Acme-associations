@@ -77,6 +77,10 @@
 
 	<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
 		<a class="btn btn-primary" href="association/${association.id}/display.do">&larr; <jstl:out value="${association.name}"/></a>
+		 <br><br><br><br><br><br><br><br><br><br><a class="btn btn-primary" href="association/user/${association.id}/close.do"><spring:message code="association.close"/></a>
+      	 <br>
+      	 </br>
+      	 <a class="btn btn-primary" href="association/user/edit.do?associationId=${association.id}"><spring:message code="association.edit"/></a>
       </div>
       </div>
 </div>

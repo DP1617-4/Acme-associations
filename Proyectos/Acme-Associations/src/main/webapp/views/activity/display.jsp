@@ -103,6 +103,7 @@
         </div><!--/span-->
       </div><!--/row-->
       <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+      <a class="btn btn-primary" href="association/${association.id}/display.do">&larr; <jstl:out value="${association.name}"/></a>
    <acme:lateralMenu/>
 </div>
      </div>
