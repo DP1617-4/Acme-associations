@@ -44,7 +44,7 @@
 	<input id="${path}" class="form-control" type="text" name="${path}" readonly="${readonly}"/>
 	<jstl:if test="${hour}">
 		<form:label path="${path}">
-			<spring:message code="${code}.hour" />
+			<spring:message code="layout.hour" />
 		</form:label>
 		<input id="${path}hour" class="form-control" type="text" name="${path}hour" onKeyUp="addHour(this)"/>
 	</jstl:if>

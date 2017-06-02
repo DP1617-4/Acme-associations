@@ -138,9 +138,7 @@
       </jstl:if>
 </div>
 
-<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
-   <acme:lateralMenu/>
-</div>
+
          
 
 
