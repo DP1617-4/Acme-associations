@@ -39,6 +39,7 @@
 		<value>/views/minutes/messages</value>
 		<value>/views/place/messages</value>
 		<value>/views/dashboard/messages</value>
+		<value>/views/upload/messages</value>
 	</util:list>
 
 </beans>

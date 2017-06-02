@@ -124,5 +124,9 @@
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.tiles2.TilesView" />
 	</bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+		<property name="multipartResolver" value="org.springframework.web.multipart.MultipartResolver"></property>
+	</bean>
 
 </beans>

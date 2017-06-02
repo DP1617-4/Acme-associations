@@ -115,7 +115,7 @@
 		 <security:intercept-url pattern="/folder/actor/**" access="isAuthenticated()" /> 
 		 <security:intercept-url pattern="/message/actor/**" access="isAuthenticated()" />
 		 
-		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
+		<security:intercept-url pattern="/**" access="isAnonymous()" />
 		
 		
 		

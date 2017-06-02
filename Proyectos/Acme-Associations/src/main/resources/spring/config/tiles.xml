@@ -40,6 +40,7 @@
 		<value>/views/sanction/tiles.xml</value>
 		<value>/views/place/tiles.xml</value>
 		<value>/views/dashboard/tiles.xml</value>
+		<value>/views/upload/tiles.xml</value>
 	</util:list>
 
 </beans>
