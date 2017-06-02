@@ -17,8 +17,12 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <security:authentication property="principal" var ="loggedactor"/>
+<div class="row row-offcanvas row-offcanvas-right">
+
+  	<div class="col-12 col-md-9">
 <display:table pagesize="5" keepStatus="false" name="meetings" requestURI="${requestURI}" id="row">
 
 	<spring:message code="meeting.meetings" var="meetingHeader"/>
@@ -36,3 +40,12 @@
 </jstl:if>
 
 <br/>
+</div>
+<jstl:if test="${association != null}">
+	<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+	<a class="btn btn-primary" href="association/${association.id}/display.do">&larr; <jstl:out value="${association.name}"/></a>
+	   <br><br><acme:lateralMenu/>
+	   </div>
+	</jstl:if>
+	</div>
+	

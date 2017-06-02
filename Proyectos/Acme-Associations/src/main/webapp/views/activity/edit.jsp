@@ -29,6 +29,7 @@
 	<acme:textbox code="activity.name" path="name"/><br />
 	<acme:textbox code="activity.description" path="description"/><br />
 	<div>
+		
 		<form:label path="startMoment">
 			<spring:message code="activity.startMoment" />:
 		</form:label>
