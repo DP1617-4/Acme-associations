@@ -570,6 +570,7 @@
 	
 	<bean id="roles2" class="domain.Roles">
 		<property name="type" value="MANAGER"/>
+		
 		<property name="association" ref="association2" />
 		<property name="user" ref="user2" />
 	</bean>

@@ -41,7 +41,7 @@ public class SanctionService {
 
 	public Sanction create(final int userId, final Association association) {
 		Sanction result;
-		final User user = userService.findOne(userId);
+		final User user = this.userService.findOne(userId);
 
 		result = new Sanction();
 		result.setUser(user);
@@ -62,7 +62,7 @@ public class SanctionService {
 		Sanction result;
 		result = this.sanctionRepository.findOne(SanctionId);
 
-		rolesService.checkCollaboratorPrincipal(result.getAssociation());
+		this.rolesService.checkCollaboratorPrincipal(result.getAssociation());
 
 		return result;
 	}
@@ -98,49 +98,54 @@ public class SanctionService {
 		return result;
 	}
 
-	public Collection<Sanction> findByAssociationAndUser(Association association, int userId) {
+	public Collection<Sanction> findByAssociationAndUser(final Association association, final int userId) {
 
-		rolesService.checkCollaboratorPrincipal(association);
+		this.rolesService.checkCollaboratorPrincipal(association);
 
-		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUser(association.getId(), userId);
+		final Collection<Sanction> result = this.sanctionRepository.findByAssociationAndUser(association.getId(), userId);
 		return result;
 	}
-	public Collection<Sanction> findByAssociationAndPrincipal(Association association) {
-		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUser(association.getId(), userService.findByPrincipal().getId());
+	public Collection<Sanction> findByAssociationAndPrincipal(final Association association) {
+		final Collection<Sanction> result = this.sanctionRepository.findByAssociationAndUser(association.getId(), this.userService.findByPrincipal().getId());
 		return result;
 	}
 
 	public Collection<Sanction> findAllByPrincipal() {
-		final Collection<Sanction> result = sanctionRepository.findAllByPrincipal(userService.findByPrincipal().getId());
+		final Collection<Sanction> result = this.sanctionRepository.findAllByPrincipal(this.userService.findByPrincipal().getId());
 		return result;
 	}
 
-	public Collection<Sanction> findByAssociationAndPrincipalActive(Association association) {
-		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUserActive(association.getId(), userService.findByPrincipal().getId());
+	public Collection<Sanction> findByAssociationAndPrincipalActive(final Association association) {
+		final Collection<Sanction> result = this.sanctionRepository.findByAssociationAndUserActive(association.getId(), this.userService.findByPrincipal().getId());
 		return result;
 	}
 
-	public Collection<Sanction> findByAssociationAndUserActive(Association association, int userId) {
+	public Collection<Sanction> findByAssociationAndUserActive(final Association association, final int userId) {
 
-		rolesService.checkCollaboratorPrincipal(association);
+		this.rolesService.checkCollaboratorPrincipal(association);
 
-		rolesService.checkCollaboratorPrincipal(association);
+		this.rolesService.checkCollaboratorPrincipal(association);
 
-		final Collection<Sanction> result = sanctionRepository.findByAssociationAndUserActive(association.getId(), userId);
+		final Collection<Sanction> result = this.sanctionRepository.findByAssociationAndUserActive(association.getId(), userId);
 		return result;
 	}
 	public Collection<Sanction> findAllByPrincipalActive() {
-		final Collection<Sanction> result = sanctionRepository.findAllByPrincipalActive(userService.findByPrincipal().getId());
+		final Collection<Sanction> result = this.sanctionRepository.findAllByPrincipalActive(this.userService.findByPrincipal().getId());
 		return result;
 	}
 
-	public Integer countSanctionsByUserAssociation(User user, Association association) {
+	public Integer countSanctionsByUserAssociation(final User user, final Association association) {
 
 		return this.sanctionRepository.countSanctionsByUserAssociation(user.getId(), association.getId());
 	}
 
-	public Collection<Sanction> findByAssociation(Association association) {
-		final Collection<Sanction> result = sanctionRepository.findByAssociation(association.getId());
+	public Collection<Sanction> findByAssociation(final Association association) {
+		final Collection<Sanction> result = this.sanctionRepository.findByAssociation(association.getId());
 		return result;
+	}
+
+	public void flush() {
+		this.sanctionRepository.flush();
+
 	}
 }
