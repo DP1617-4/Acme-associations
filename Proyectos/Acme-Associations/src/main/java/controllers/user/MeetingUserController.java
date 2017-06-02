@@ -94,110 +94,130 @@ public class MeetingUserController extends AbstractController {
 	public ModelAndView save(@Valid final Meeting meeting, final BindingResult binding) {
 		ModelAndView result;
 
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(meeting);
-		else
-			try {
-				this.rolesService.checkManagerPrincipal(meeting.getAssociation());
-				final Meeting newMeeting = this.meetingService.save(meeting);
-				final Association association = newMeeting.getAssociation();
-				result = new ModelAndView("redirect:/meeting/user/" + association.getId() + "/list.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(meeting, "meeting.commit.error");
-			}
+		if (meeting.getMoment().before(new Date())) {
+			result = this.createEditModelAndView(meeting, null);
+			result.addObject("errorMessage", "meeting.date.past");
+		} else {
+
+			if (binding.hasErrors())
+				result = this.createEditModelAndView(meeting);
+			else
+				try {
+					this.rolesService.checkManagerPrincipal(meeting.getAssociation());
+					final Meeting newMeeting = this.meetingService.save(meeting);
+					final Association association = newMeeting.getAssociation();
+					result = new ModelAndView("redirect:/meeting/user/" + association.getId() + "/list.do");
+				} catch (final Throwable oops) {
+					result = this.createEditModelAndView(meeting, "meeting.commit.error");
+				}
+		}
 		return result;
 	}
 
 	@RequestMapping(value = "/{association}/{meeting}/display", method = RequestMethod.GET)
-	public ModelAndView display(@PathVariable final Association association, final Meeting meeting) {
+	public ModelAndView display(@PathVariable final Association association, final Meeting meeting, RedirectAttributes redir) {
 		ModelAndView result;
 
-		Boolean esAnterior = false;
-		final Date actual = new Date();
-		final Minutes minute = this.minutesService.findOneByMeeting(meeting);
+		try {
+			rolesService.checkCollaboratorPrincipal(association);
+			Boolean esAnterior = false;
+			final Date actual = new Date();
+			final Minutes minute = this.minutesService.findOneByMeeting(meeting);
 
-		Collection<Comment> comments;
-		comments = this.commentService.findAllByCommentableId(meeting.getId());
-		final Comment comment = this.commentService.create(meeting.getId());
+			Collection<Comment> comments;
+			comments = this.commentService.findAllByCommentableId(meeting.getId());
+			final Comment comment = this.commentService.create(meeting.getId());
 
-		if (meeting.getMoment().before(actual))
-			esAnterior = true;
+			if (meeting.getMoment().before(actual))
+				esAnterior = true;
 
-		Roles roles = null;
-		String role = null;
+			Roles roles = null;
+			String role = null;
 
-		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		result = new ModelAndView("welcome/index");
-		if (principal != "anonymousUser") {
-			final Actor actPrincipal = this.actorService.findByPrincipal();
-			if (actPrincipal instanceof User)
-				roles = this.rolesService.findRolesByPrincipalAssociation(association);
+			result = new ModelAndView("welcome/index");
+			if (principal != "anonymousUser") {
+				final Actor actPrincipal = this.actorService.findByPrincipal();
+				if (actPrincipal instanceof User)
+					roles = this.rolesService.findRolesByPrincipalAssociation(association);
+			}
+
+			if (roles != null)
+				role = roles.getType();
+
+			result = new ModelAndView("meeting/display");
+			result.addObject("association", association);
+			result.addObject("meeting", meeting);
+			result.addObject("esAnterior", esAnterior);
+			result.addObject("comments", comments);
+			result.addObject("comment", comment);
+			result.addObject("role", role);
+			result.addObject("minutes", minute);
+
+			if (minute != null) {
+				Collection<Comment> commentsSecond;
+				final AddParticipant addParticipant = new AddParticipant();
+				commentsSecond = this.commentService.findAllByCommentableId(minute.getId());
+				final Comment commentSecond = this.commentService.create(minute.getId());
+				final Collection<User> users = this.userService.findAssociationCollaboratorsAndManager(association);
+				final Collection<User> participants = minute.getUsers();
+				users.removeAll(minute.getUsers());
+				final User principalUser = this.userService.findByPrincipal();
+				Boolean isParticipant = false;
+				if (participants.contains(principalUser))
+					isParticipant = true;
+
+				addParticipant.setMinute(minute);
+				result.addObject("minute", minute);
+				result.addObject("commentsSecond", commentsSecond);
+				result.addObject("commentSecond", commentSecond);
+				result.addObject("addParticipant", addParticipant);
+				result.addObject("users", users);
+				result.addObject("isParticipant", isParticipant);
+				result.addObject("participants", participants);
+			}
+
+			result.addObject("requestURI", "/meeting/user/" + association.getId() + "/" + meeting.getId() + "/display.do");
+		} catch (Exception e) {
+
+			result = new ModelAndView("redirect:/welcome/index.do");
+			redir.addFlashAttribute("errorMessage", e.getMessage());
 		}
-
-		if (roles != null)
-			role = roles.getType();
-
-		result = new ModelAndView("meeting/display");
-		result.addObject("association", association);
-		result.addObject("meeting", meeting);
-		result.addObject("esAnterior", esAnterior);
-		result.addObject("comments", comments);
-		result.addObject("comment", comment);
-		result.addObject("role", role);
-		result.addObject("minutes", minute);
-
-		if (minute != null) {
-			Collection<Comment> commentsSecond;
-			final AddParticipant addParticipant = new AddParticipant();
-			commentsSecond = this.commentService.findAllByCommentableId(minute.getId());
-			final Comment commentSecond = this.commentService.create(minute.getId());
-			final Collection<User> users = this.userService.findAssociationCollaboratorsAndManager(association);
-			final Collection<User> participants = minute.getUsers();
-			users.removeAll(minute.getUsers());
-			final User principalUser = this.userService.findByPrincipal();
-			Boolean isParticipant = false;
-			if (participants.contains(principalUser))
-				isParticipant = true;
-
-			addParticipant.setMinute(minute);
-			result.addObject("minute", minute);
-			result.addObject("commentsSecond", commentsSecond);
-			result.addObject("commentSecond", commentSecond);
-			result.addObject("addParticipant", addParticipant);
-			result.addObject("users", users);
-			result.addObject("isParticipant", isParticipant);
-			result.addObject("participants", participants);
-		}
-
-		result.addObject("requestURI", "/meeting/user/" + association.getId() + "/" + meeting.getId() + "/display.do");
 		return result;
 
 	}
 
 	@RequestMapping(value = "{association}/list", method = RequestMethod.GET)
-	public ModelAndView list(@PathVariable final Association association) {
-		final ModelAndView result;
-		Roles roles = null;
-		String role = null;
+	public ModelAndView list(@PathVariable final Association association, RedirectAttributes redir) {
+		ModelAndView result;
+		try {
+			rolesService.checkCollaboratorPrincipal(association);
+			Roles roles = null;
+			String role = null;
 
-		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		if (principal != "anonymousUser") {
-			final Actor actPrincipal = this.actorService.findByPrincipal();
-			this.rolesService.checkCollaboratorPrincipal(association);
-			if (actPrincipal instanceof User)
-				roles = this.rolesService.findRolesByPrincipalAssociation(association);
+			if (principal != "anonymousUser") {
+				final Actor actPrincipal = this.actorService.findByPrincipal();
+				this.rolesService.checkCollaboratorPrincipal(association);
+				if (actPrincipal instanceof User)
+					roles = this.rolesService.findRolesByPrincipalAssociation(association);
+			}
+			if (roles != null)
+				role = roles.getType();
+
+			final Collection<Meeting> meetings = this.meetingService.findAllByAssociation(association);
+
+			result = new ModelAndView("meeting/list");
+			result.addObject("meetings", meetings);
+			result.addObject("role", role);
+			result.addObject("requestURI", "/meeting/user/" + association.getId() + "/list.do");
+		} catch (Exception e) {
+
+			result = new ModelAndView("redirect:/welcome/index.do");
+			redir.addFlashAttribute("errorMessage", e.getMessage());
 		}
-		if (roles != null)
-			role = roles.getType();
-
-		final Collection<Meeting> meetings = this.meetingService.findAllByAssociation(association);
-
-		result = new ModelAndView("meeting/list");
-		result.addObject("meetings", meetings);
-		result.addObject("role", role);
-		result.addObject("requestURI", "/meeting/user/" + association.getId() + "/list.do");
 
 		return result;
 	}

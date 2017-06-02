@@ -102,5 +102,8 @@
 			</jstl:if>
         </div><!--/span-->
       </div><!--/row-->
+      <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+   <acme:lateralMenu/>
+</div>
      </div>
 </div><!--/span-->

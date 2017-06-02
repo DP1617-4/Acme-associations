@@ -16,6 +16,7 @@ import org.springframework.util.Assert;
 import repositories.ItemRepository;
 import domain.Association;
 import domain.Item;
+import domain.Loan;
 import domain.Section;
 import domain.User;
 
@@ -39,6 +40,9 @@ public class ItemService {
 
 	@Autowired
 	private RolesService	roleService;
+
+	@Autowired
+	private LoanService		loanService;
 
 	@Autowired
 	private SectionService	sectionService;
@@ -85,7 +89,7 @@ public class ItemService {
 
 		Collection<Item> result;
 		result = this.itemRepository.findAllByAssociation(association.getId());
-		result.removeAll(this.itemRepository.findAllByAssociationLoaned(association.getId()));
+
 		return result;
 	}
 
@@ -144,47 +148,44 @@ public class ItemService {
 		return this.itemRepository.findAllBySection(section.getId());
 	}
 
-	public Boolean isLoaned(Item item, User user) {
+	public Boolean isLoaned(final Item item, final User user) {
 
 		boolean result = false;
-		if (userService.findAllRelatedItem(item).contains(user)) {
+		if (this.userService.findAllRelatedItem(item).contains(user))
 			result = true;
-		}
 		return result;
 	}
 
-	public Boolean isLoanedByPrincipal(Item item) {
+	public Boolean isLoanedByPrincipal(final Item item) {
 
-		User principal = userService.findByPrincipal();
+		final User principal = this.userService.findByPrincipal();
 		return this.isLoaned(item, principal);
 	}
 
-	public Boolean isLoanable(Item item) {
+	public Boolean isLoanable(final Item item) {
 		boolean result = false;
-		Collection<Item> items = this.itemRepository.findAllByAssociation(item.getSection().getAssociation().getId());
-		if (items.contains(item)) {
+		final Collection<Loan> unfinishedLoan = this.loanService.findUnfinishedLoansItem(item.getId());
+		if (unfinishedLoan.isEmpty() && item.getItemCondition() != "LOAN" && item.getItemCondition() != "BAD" && item.getItemCondition() != "PRIZE")
 			result = true;
-		}
 		return result;
 
 	}
-
-	public Collection<Item> filterItems(String filter) {
+	public Collection<Item> filterItems(final String filter) {
 
 		return this.itemRepository.filterItems(filter);
 	}
 
-	public Item findMostLoanedItemByAssociation(Association association) {
+	public Item findMostLoanedItemByAssociation(final Association association) {
 
 		Item item = null;
-		List<Item> items = new ArrayList<Item>(this.itemRepository.findMostLoanedItemByAssociation(association.getId()));
+		final List<Item> items = new ArrayList<Item>(this.itemRepository.findMostLoanedItemByAssociation(association.getId()));
 		if (!items.isEmpty())
 			item = items.get(0);
 
 		return item;
 	}
 
-	public Integer countLoansItem(Item item) {
+	public Integer countLoansItem(final Item item) {
 
 		return this.itemRepository.countLoansItem(item.getId());
 	}
