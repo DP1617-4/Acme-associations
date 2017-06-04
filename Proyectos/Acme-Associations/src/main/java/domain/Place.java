@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -27,6 +28,7 @@ public class Place extends DomainEntity {
 
 
 	@NotBlank
+	@SafeHtml
 	public String getAddress() {
 		return this.address;
 	}

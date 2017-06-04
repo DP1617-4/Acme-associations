@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.Assert;
@@ -40,6 +41,7 @@ public class Association extends Commentable {
 	// Attributes -------------------------------------------------------------
 
 	@NotBlank
+	@SafeHtml
 	public String getName() {
 		return this.name;
 	}
@@ -48,6 +50,7 @@ public class Association extends Commentable {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getDescription() {
 		return this.description;
 	}
@@ -75,6 +78,7 @@ public class Association extends Commentable {
 
 	@URL
 	@NotBlank
+	@SafeHtml
 	public String getStatutes() {
 		return this.statutes;
 	}
@@ -82,6 +86,7 @@ public class Association extends Commentable {
 		this.statutes = statutes;
 	}
 
+	@SafeHtml
 	public String getAnnouncements() {
 		return this.announcements;
 	}
@@ -90,6 +95,7 @@ public class Association extends Commentable {
 	}
 
 	@URL
+	@SafeHtml
 	public String getPicture() {
 		return this.picture;
 	}
@@ -111,7 +117,7 @@ public class Association extends Commentable {
 		this.adminClosed = adminClosed;
 	}
 
-	public void checkClosedOrBanned(Association association) {
+	public void checkClosedOrBanned(final Association association) {
 
 		Assert.isTrue(association.getAdminClosed() == true || association.getClosedAssociation() == true, "association.closed.error");
 	}

@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -42,6 +43,7 @@ public class Item extends Commentable {
 
 
 	@NotBlank
+	@SafeHtml
 	public String getName() {
 		return this.name;
 	}
@@ -52,6 +54,7 @@ public class Item extends Commentable {
 	@NotBlank
 	@Column(unique = true)
 	@Pattern(regexp = "\\d{8}-.{3}")
+	@SafeHtml
 	public String getIdentifier() {
 		return this.identifier;
 	}
@@ -61,6 +64,7 @@ public class Item extends Commentable {
 
 	@NotBlank
 	@Pattern(regexp = "^" + Item.BAD + "|" + Item.EXCELENT + "|" + Item.GOOD + "|" + Item.LOAN + "|" + Item.MODERATE + "|" + Item.PRIZE + "$")
+	@SafeHtml
 	public String getItemCondition() {
 		return this.itemCondition;
 	}
@@ -69,6 +73,7 @@ public class Item extends Commentable {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getDescription() {
 		return this.description;
 	}
@@ -76,6 +81,7 @@ public class Item extends Commentable {
 		this.description = description;
 	}
 
+	@SafeHtml
 	public String getPicture() {
 		return this.picture;
 	}

@@ -1,7 +1,6 @@
 
 package domain;
 
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -41,6 +41,7 @@ public class Roles extends DomainEntity {
 
 	@NotBlank
 	@Pattern(regexp = "^" + Roles.MANAGER + "|" + Roles.COLLABORATOR + "|" + Roles.ASSOCIATE + "$")
+	@SafeHtml
 	public String getType() {
 		return this.type;
 	}
@@ -77,13 +78,11 @@ public class Roles extends DomainEntity {
 	}
 
 	public static List<String> values() {
-		Field[] declaredFields = String.class.getDeclaredFields();
-		List<String> staticFields = new ArrayList<String>();
-		for (Field field : declaredFields) {
-		    if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
-		        staticFields.add(field.toString());
-		    }
-		}
+		final Field[] declaredFields = String.class.getDeclaredFields();
+		final List<String> staticFields = new ArrayList<String>();
+		for (final Field field : declaredFields)
+			if (java.lang.reflect.Modifier.isStatic(field.getModifiers()))
+				staticFields.add(field.toString());
 		return staticFields;
 	}
 

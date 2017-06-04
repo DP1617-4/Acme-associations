@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -46,6 +47,7 @@ public class Meeting extends Commentable {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getAddress() {
 		return this.address;
 	}
@@ -55,6 +57,7 @@ public class Meeting extends Commentable {
 
 	@NotNull
 	@URL
+	@SafeHtml
 	public String getAgenda() {
 		return this.agenda;
 	}
@@ -63,6 +66,7 @@ public class Meeting extends Commentable {
 	}
 
 	@NotBlank
+	@SafeHtml
 	public String getIssue() {
 		return this.issue;
 	}
