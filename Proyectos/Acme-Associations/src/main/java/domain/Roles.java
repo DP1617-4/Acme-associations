@@ -1,7 +1,6 @@
 
 package domain;
 
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +8,9 @@ import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -18,6 +19,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(indexes = {
+	@Index(columnList = "type"), @Index(columnList = "association_id"), @Index(columnList = "user_id")
+})
 public class Roles extends DomainEntity {
 
 	private String	type;
@@ -80,9 +84,9 @@ public class Roles extends DomainEntity {
 		Field[] declaredFields = String.class.getDeclaredFields();
 		List<String> staticFields = new ArrayList<String>();
 		for (Field field : declaredFields) {
-		    if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
-		        staticFields.add(field.toString());
-		    }
+			if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
+				staticFields.add(field.toString());
+			}
 		}
 		return staticFields;
 	}
