@@ -68,11 +68,11 @@ public class AssociationServiceTest extends AbstractTest {
 	@Test
 	public void driverDisplay() {
 		final Object testingData[][] = {
-			{		// Display correcto de una association ya creado y logueado como tal. 
+			{		// Display correcto de una Association ya creada y logueado como user. 
 				"user1", "association1", null
-			}, {	// Display correcto de un user distinto al que está logueado.
+			}, {	// Display correcto de una Asociation sin haberse logueado.
 				null, "association1", null
-			}, {		// Intento de mostrar una asociacion que no existe
+			}, {		// Intento de mostrar una Association que no existe.
 				"user1", "association100", NumberFormatException.class
 			}
 		};
@@ -83,11 +83,11 @@ public class AssociationServiceTest extends AbstractTest {
 	@Test
 	public void driverClose() {
 		final Object testingData[][] = {
-			{		// Display correcto de una association ya creado y logueado como tal. 
+			{		// Cierre de una Association por su manager.
 				"user1", "association1", null
-			}, {	// Display correcto de un user distinto al que está logueado.
+			}, {	// Intento de cierre de una Association por parte de alguien sin loguearse.
 				null, "association1", IllegalArgumentException.class
-			}, {	// Display correcto de un user distinto al que está logueado.
+			}, {	// Intento de cierre de una Association por parte de un usuario de la cual es solo colaborador.
 				"user2", "association1", IllegalArgumentException.class
 			}
 		};
@@ -98,11 +98,11 @@ public class AssociationServiceTest extends AbstractTest {
 	@Test
 	public void driverBan() {
 		final Object testingData[][] = {
-			{		// Display correcto de una association ya creado y logueado como tal. 
+			{		// Baneo de una Association por parte del admin.
 				"admin", "association1", null
-			}, {	// Display correcto de un user distinto al que está logueado.
+			}, {	// Intento de banear una Association por parte de alguien no logueado.
 				null, "association1", IllegalArgumentException.class
-			}, {	// Display correcto de un user distinto al que está logueado.
+			}, {	// Intento de banear una Association por parte de un usuario cualquiera.
 				"user2", "association1", IllegalArgumentException.class
 			}
 		};
@@ -116,7 +116,7 @@ public class AssociationServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(user);
-			final Association a = associationService.create();
+			final Association a = this.associationService.create();
 			a.setName(name);
 			a.setDescription(description);
 			a.setAddress(address);
@@ -125,7 +125,7 @@ public class AssociationServiceTest extends AbstractTest {
 			a.setAnnouncements(announcements);
 			a.setPicture(picture);
 
-			Association saved = associationService.save(a);
+			final Association saved = this.associationService.save(a);
 			this.unauthenticate();
 			this.associationService.flush();
 		} catch (final Throwable oops) {
@@ -151,7 +151,7 @@ public class AssociationServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(username);
-			Association a = this.associationService.findOne(this.extract(associationId));
+			final Association a = this.associationService.findOne(this.extract(associationId));
 			this.associationService.closeAssociationByManager(a.getId());
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
@@ -164,7 +164,7 @@ public class AssociationServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(username);
-			Association a = this.associationService.findOne(this.extract(associationId));
+			final Association a = this.associationService.findOne(this.extract(associationId));
 			this.associationService.banAssociation(a.getId());
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
@@ -174,7 +174,7 @@ public class AssociationServiceTest extends AbstractTest {
 
 	@Test
 	public void testRandom() {
-		Association a = this.associationService.getRandomAssociation();
+		final Association a = this.associationService.getRandomAssociation();
 		this.associationService.checkClosedBanned(a);
 	}
 
