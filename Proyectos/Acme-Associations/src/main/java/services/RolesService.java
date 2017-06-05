@@ -61,13 +61,12 @@ public class RolesService {
 			Assert.isTrue(rolePrincipal.getType().equals(Roles.MANAGER), "association.role.manager.error");
 			rolePrincipal.setType(Roles.COLLABORATOR);
 			role.setType(Roles.MANAGER);
-		} else if (roleType.equals(Roles.MANAGER) && rolePrincipal == null && associationRoles.isEmpty())
-			Assert.isTrue(user.equals(principal));
-		else
-			Assert.isTrue(!user.equals(principal));
+		}
+
 		role.setType(roleType);
 
-		this.save(rolePrincipal);
+		if (rolePrincipal != null)
+			this.save(rolePrincipal);
 		final Roles saved = this.save(role);
 
 		return saved;
