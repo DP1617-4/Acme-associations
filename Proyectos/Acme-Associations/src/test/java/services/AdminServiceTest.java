@@ -30,11 +30,11 @@ public class AdminServiceTest extends AbstractTest {
 				"admin", null
 			}, {	// Comprobacion erronea: sin loguear.
 				"", IllegalArgumentException.class
-			}, {	// Comprobacion erronea: sin loguear.
+			}, {	// Comprobacion erronea: Manager
 				"user1", IllegalArgumentException.class
-			}, {	// Comprobacion erronea: sin loguear.
+			}, {	// Comprobacion erronea: Colaborador
 				"user3", IllegalArgumentException.class
-			}, {	// Comprobacion erronea: sin loguear.
+			}, {	// Comprobacion erronea: Asociado.
 				"user8", IllegalArgumentException.class
 			}
 		};
