@@ -329,6 +329,12 @@
 		    <version>1.7.4</version>
 		</dependency>
 		
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.3.1</version>
+		</dependency>
+		
 	</dependencies>
 
 	<artifactId>Acme-Associations</artifactId>

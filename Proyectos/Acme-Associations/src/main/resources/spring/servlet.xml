@@ -125,33 +125,7 @@
 			value="org.springframework.web.servlet.view.tiles2.TilesView" />
 	</bean>
 	
-	<!-- <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
-		<property name="multipartResolver" value="org.springframework.web.multipart.MultipartResolver"></property>
-	</bean> -->
-	
-	<!-- <bean id="viewResolver"
-        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/" />
-        <property name="suffix" value=".jsp" />
-    </bean> -->
  
-    <bean id="multipartResolver"
-        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <!-- max upload size in bytes -->
-        <property name="maxUploadSize" value="20971520" /> <!-- 20MB -->
-         
-        <!-- max size of file in memory (in bytes) -->
-        <property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
- 
-    </bean>
-     
-    <bean
-        class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-        <property name="exceptionMappings">
-            <props>
-                <prop key="java.lang.Exception">Error</prop>
-            </props>
-        </property>
-    </bean>
+    <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver"/>
 
 </beans>
