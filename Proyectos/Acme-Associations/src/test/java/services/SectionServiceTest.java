@@ -48,11 +48,11 @@ public class SectionServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation() {
 		final Object testingData[][] = {
-			{		// Creación correcta de una Association.
+			{		// Creación correcta de una Section.
 				"user1", "blae", "association1", "user1", null
-			}, {	// Creación errónea de una Association: name vacío.
+			}, {	// Creación errónea de una Section: name vacío.
 				"user1", "", "association1", "user1", ConstraintViolationException.class
-			}, {	// Creación errónea de una Association: name vacío.
+			}, {	// Creación errónea de una Section: user que no forma parte de la Association.
 				"user1", "blae", "association1", "user5", ConstraintViolationException.class
 			}
 		};
@@ -62,17 +62,17 @@ public class SectionServiceTest extends AbstractTest {
 	@Test
 	public void driverDisplay() {
 		final Object testingData[][] = {
-			{		// Display correcto de una association ya creado y logueado como tal. 
+			{		// Display correcto de una Section.
 				"user1", "section1", null
-			}, {	// Display correcto de un user distinto al que está logueado.
+			}, {	// Display correcto de una Section sin loguearse.
 				null, "section1", null
-			}, {		// Intento de mostrar una asociacion que no existe
+			}, {		// Display correcto de una Section logueado como admin.
 				"admin", "section1", null
-			}, {		// Intento de mostrar una asociacion que no existe
+			}, {		// Intento de mostrar una Section null.
 				"user1", null, NullPointerException.class
-			}, {		// Intento de mostrar una asociacion que no existe
+			}, {		// Intento de mostrar una Section que no existe.
 				"user1", "blae", NumberFormatException.class
-			}, {		// Intento de mostrar una asociacion que no existe
+			}, {		// Display correcto de una Section logueado como user que no pertenece a la Section.
 				"user1", "section7", null
 			}
 		};
@@ -83,13 +83,13 @@ public class SectionServiceTest extends AbstractTest {
 	@Test
 	public void driverResponsible() {
 		final Object testingData[][] = {
-			{		// Display correcto de una association ya creado y logueado como tal. 
+			{		// Comprobación correcta del responsible de la Section logueado como usuario que es responsible de la misma.
 				"user1", "section1", "user1", null
-			}, {	// Display correcto de un user distinto al que está logueado.
+			}, {	// Comprobación correcta del responsible de la Section sin loguearse.
 				null, "section1", "user1", null
-			}, {		// Intento de mostrar una asociacion que no existe
+			}, {		// Comprobación correcta logueado como admin.
 				"admin", "section1", "user1", null
-			}, {		// Intento de mostrar una asociacion que no existe
+			}, {		// Intento de comprobación del responsible de una Section que no existe.
 				"user1", "section2", "user1", IllegalArgumentException.class
 			}
 		};
@@ -100,13 +100,13 @@ public class SectionServiceTest extends AbstractTest {
 	@Test
 	public void driverResponsiblePrincipal() {
 		final Object testingData[][] = {
-			{		// Display correcto de una association ya creado y logueado como tal. 
+			{		// Comprobación correcta de que el logueado es el reponsible.
 				"user1", "section1", null
-			}, {	// Display correcto de un user distinto al que está logueado.
+			}, {	// Comprobación erronea del responsible principal sin estar logueado.
 				null, "section1", IllegalArgumentException.class
-			}, {		// Intento de mostrar una asociacion que no existe
+			}, {	// Comprobación erronea del responsible principal logueado como admin.
 				"admin", "section1", IllegalArgumentException.class
-			}, {		// Intento de mostrar una asociacion que no existe
+			}, {	// Comprobacion erronea del responsible principal logueado como un user que no es responsible de la Section dada.
 				"user1", "section2", IllegalArgumentException.class
 			}
 		};

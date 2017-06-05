@@ -40,9 +40,9 @@ public class UserServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation1() {
 		final Object testingData[][] = {
-			{		// Creación correcta de un Customer.
+			{		// Creación correcta de un User.
 				"username10", "password", "nombre", "apellidos", "email@gmail.com", "2345", "casita", "1234", null
-			}, {	// Creación errónea de un Customer: username vacío.
+			}, {	// Creación errónea de un User: name vacío.
 				"username11", "password", "", "apellidos", "email@gmail.com", "2345", "casita", "1234", ConstraintViolationException.class
 			}
 		};
@@ -55,7 +55,7 @@ public class UserServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation2() {
 		final Object testingData[][] = {
-			{	// Creación errónea de un Customer: password vacío.
+			{	// Creación errónea de un User: surname vacío.
 				"username12", "password", "nombre", "", "email@gmail.com", "2345", "casita", "1234", ConstraintViolationException.class
 			}
 		};
@@ -68,7 +68,7 @@ public class UserServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation3() {
 		final Object testingData[][] = {
-			{	// Creación errónea de un Customer: password vacío.
+			{	// Creación errónea de un User: email raro.
 				"username13", "password", "nombre", "apellidos", "jiji", "2345", "casita", "1234", ConstraintViolationException.class
 			}
 		};
@@ -81,7 +81,7 @@ public class UserServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation4() {
 		final Object testingData[][] = {
-			{	// Creación errónea de un Customer: password vacío.
+			{	// Creación errónea de un User: email vacío.
 				"username14", "password", "nombre", "apellidos", "", "2345", "casita", "1234", ConstraintViolationException.class
 			}
 		};
@@ -94,7 +94,7 @@ public class UserServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation5() {
 		final Object testingData[][] = {
-			{	// Creación errónea de un Customer: password vacío.
+			{	// Creación errónea de un User: phone vacío.
 				"username15", "password", "nombre", "apellidos", "email@gmail.com", "", "casita", "1234", ConstraintViolationException.class
 			}
 		};
@@ -107,7 +107,7 @@ public class UserServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation6() {
 		final Object testingData[][] = {
-			{	// Creación errónea de un Customer: password vacío.
+			{	// Creación errónea de un User: address vacío.
 				"username16", "password", "nombre", "apellidos", "email@gmail.com", "2345", "", "1234", ConstraintViolationException.class
 			}
 		};
@@ -120,7 +120,7 @@ public class UserServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation7() {
 		final Object testingData[][] = {
-			{	// Creación errónea de un Customer: password vacío.
+			{	// Creación errónea de un User: id vacío.
 				"username17", "password", "nombre", "apellidos", "email@gmail.com", "2345", "casita", "", ConstraintViolationException.class
 			}
 		};
@@ -133,7 +133,7 @@ public class UserServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation8() {
 		final Object testingData[][] = {
-			{		// Creación correcta de un Customer.
+			{		// Creación erronea de un User: username vacío.
 				"", "password", "nombre", "apellidos", "email@gmail.com", "2345", "casita", "1234", ConstraintViolationException.class
 			}
 		};
@@ -146,7 +146,7 @@ public class UserServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation9() {
 		final Object testingData[][] = {
-			{		// Creación correcta de un Customer.
+			{		// Creación erronea de un User: password vacío.
 				"username18", "", "nombre", "apellidos", "email@gmail.com", "2345", "casita", "1234", ConstraintViolationException.class
 			}
 		};
@@ -159,7 +159,7 @@ public class UserServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation10() {
 		final Object testingData[][] = {
-			{		// Creación correcta de un Customer.
+			{		// Creación erronea de un User: password con pocos caracteres.
 				"username19", "pass", "nombre", "apellidos", "email@gmail.com", "2345", "casita", "1234", ConstraintViolationException.class
 			}
 		};
@@ -178,7 +178,7 @@ public class UserServiceTest extends AbstractTest {
 				"admin", "user1", null
 			}, {	// Display correcto de un user, sin estar logueado en el sistema.
 				null, "user1", null
-			}, {	// Display correcto de un user, sin estar logueado en el sistema.
+			}, {	// Display erroneo de un user que no existe.
 				"user1", "user100", NumberFormatException.class
 			}
 		};
@@ -189,13 +189,13 @@ public class UserServiceTest extends AbstractTest {
 	@Test
 	public void driverPhoneValidator() {
 		final Object testingData[][] = {
-			{		// Display correcto de un user ya creado y logueado como tal. 
+			{		// Teléfono no válido.
 				"1234", ArrayIndexOutOfBoundsException.class
-			}, {	// Display correcto de un user distinto al que está logueado.
+			}, {	// Teléfono válido.
 				"+34 663475722", null
-			}, {	// Display correcto de un user, sin estar logueado en el sistema.
+			}, {	// Teléfono no válido (caracteres no numéricos).
 				"blae", ArrayIndexOutOfBoundsException.class
-			}, {	// Display correcto de un user, sin estar logueado en el sistema.
+			}, {	// Teléfono no válido.
 				"35435", ArrayIndexOutOfBoundsException.class
 			}
 		};
