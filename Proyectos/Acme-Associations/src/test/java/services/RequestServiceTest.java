@@ -45,11 +45,11 @@ public class RequestServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation() {
 		final Object testingData[][] = {
-			{		// Creación correcta de una Request.
+			{		// Creación correcta de una Association.
 				"user1", "association3", null
-			}, {	// Creación errónea de una Request: usuario ya en la Association.
+			}, {	// Creación errónea de una Association: name vacío.
 				"user1", "association1", IllegalArgumentException.class
-			}, {	// Creación errónea de una Request: Request ya hecha.
+			}, {	// Creación errónea de una Association: name vacío.
 				"user1", "association2", IllegalArgumentException.class
 			}
 		};
@@ -59,15 +59,15 @@ public class RequestServiceTest extends AbstractTest {
 	@Test
 	public void driverDisplay() {
 		final Object testingData[][] = {
-			{		// Display correcto de una Request logueado como manager de la Association a la que se le ha enviado la Request.
+			{		// Display correcto de una association ya creado y logueado como tal. 
 				"user1", "request1", null
-			}, {	// Display correcto de una Request sin estar logueado.
+			}, {	// Display correcto de un user distinto al que está logueado.
 				null, "request1", null
-			}, {		// Display correcto de una Request logueado como admin.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"admin", "request1", null
-			}, {		// Intento de mostrar una Request null.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", null, NullPointerException.class
-			}, {		// Intento de mostrar una Request que no existe.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", "blae", NumberFormatException.class
 			}
 		};
@@ -78,13 +78,13 @@ public class RequestServiceTest extends AbstractTest {
 	@Test
 	public void driverAccept() {
 		final Object testingData[][] = {
-			{		// Aceptación correcta de una Request logueado como manager.
+			{		// Display correcto de una association ya creado y logueado como tal. 
 				"user2", "request1", null
-			}, {	// Aceptación erronea de una Request sin estar logueado.
+			}, {	// Display correcto de un user distinto al que está logueado.
 				null, "request5", NullPointerException.class
-			}, {	// Aceptación erronea de una Request logueado como admin.
+			}, {		// a ver para qué el user3 envia una peticion para ser miembro de la asociacion de la cual ya es manager de hecho(o colaborador, no me acuerdo)
 				"admin", "request2", NullPointerException.class
-			}, {	// Aceptación erronea de una Request logueado como un user.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", "request3", IllegalArgumentException.class
 			}
 		};
@@ -93,15 +93,16 @@ public class RequestServiceTest extends AbstractTest {
 	}
 
 	@Test
+	//UN ADMINISTRADOR Y UN USUARIO QUE NI PERTENECE A LA ASOCIACION PUEDEN DENEGAR UNA REQUEST QUE NO ES SUYA
 	public void driverDeny() {
 		final Object testingData[][] = {
-			{		// Denegación correcta logueado como manager de la Association. 
+			{		// Display correcto de una association ya creado y logueado como tal. 
 				"user2", "request1", null
-			}, {	// Intento de denegación sin estar logueado.
+			}, {	// Display correcto de un user distinto al que está logueado.
 				null, "request5", NullPointerException.class
-			}, {	// Intento de denegación por parte del admin.
+			}, {		// a ver para qué el user3 envia una peticion para ser miembro de la asociacion de la cual ya es manager de hecho(o colaborador, no me acuerdo)
 				"admin", "request2", NullPointerException.class
-			}, {	// Intento de denegación por parte de un user que no es el manager de la Association.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", "request3", IllegalArgumentException.class
 			}
 		};

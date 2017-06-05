@@ -47,19 +47,19 @@ public class MeetingServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation() {
 		final Object testingData[][] = {
-			{		// Creación correcta de un Meeting.
+			{		// Creación correcta de una Association.
 				"user1", this.fechaValida, "mi casa", "http://www.imagen.com.mx/assets/img/imagen_share.png", "blae", "association1", null
-			}, {	// Creación errónea de un Meeting: moment null.
+			}, {	// Creación errónea de una Association: name vacío.
 				"user1", null, "mi casa", "http://www.imagen.com.mx/assets/img/imagen_share.png", "blae", "association1", ConstraintViolationException.class
-			}, {	// Creación errónea de un Meeting: address vacío
+			}, {	// Creación errónea de una Association: creationDate null.
 				"user1", this.fechaValida, "", "http://www.imagen.com.mx/assets/img/imagen_share.png", "blae", "association1", ConstraintViolationException.class
-			}, {	// Creación errónea de un Meeting: agenda null.
+			}, {	// Creación errónea de una Association: creationDate futuro.
 				"user1", this.fechaValida, "mi casa", null, "blae", "association1", ConstraintViolationException.class
-			}, {	// Creación errónea de un Meeting: issue vacío.
+			}, {	// Creación errónea de una Association: creationDate null.
 				"user1", this.fechaValida, "mi casa", "http://www.imagen.com.mx/assets/img/imagen_share.png", "", "association1", ConstraintViolationException.class
-			}, {	// Creación errónea de un Meeting: Association null.
+			}, {	// Creación errónea de una Association: creationDate null.
 				"user1", this.fechaValida, "mi casa", "http://www.imagen.com.mx/assets/img/imagen_share.png", "blae", null, NullPointerException.class
-			}, {	// Creación errónea de un Meeting: Association inexistente.
+			}, {		// Creación correcta de una Association.
 				"user1", this.fechaValida, "mi casa", "http://www.imagen.com.mx/assets/img/imagen_share.png", "blae", "association100", NumberFormatException.class
 			}
 		};
@@ -69,15 +69,15 @@ public class MeetingServiceTest extends AbstractTest {
 	@Test
 	public void driverDisplay() {
 		final Object testingData[][] = {
-			{		// Display correcto de un Meeting logueado como user. 
+			{		// Display correcto de una association ya creado y logueado como tal. 
 				"user1", "meeting1", null
-			}, {	// Display correcto de un Meeting sin estar logueado.
+			}, {	// Display correcto de un user distinto al que está logueado.
 				null, "meeting1", null
-			}, {	// display correcto de un Meeting logueado como admin.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"admin", "meeting1", null
-			}, {	// Intento de mostrar un Meeting null.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", null, NullPointerException.class
-			}, {	// Intento de mostrar un Meeting que no existe.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", "meeting100", NumberFormatException.class
 			}
 		};

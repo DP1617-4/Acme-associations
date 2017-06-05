@@ -48,15 +48,15 @@ public class MinutesServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation() {
 		final Object testingData[][] = {
-			{		// Creación correcta de un Minutes.
+			{		// Creación correcta de una Association.
 				"user1", "http://www.imagen.com.mx/assets/img/imagen_share.png", "meeting1", null
-			}, {	// Creación errónea de un Minute: document null.
+			}, {	// Creación errónea de una Association: name vacío.
 				"user1", null, "meeting1", ConstraintViolationException.class
-			}, {	// Creación errónea de un Minute: document sin formato URL.
+			}, {	// Creación errónea de una Association: creationDate null.
 				"user1", "document", "meeting1", ConstraintViolationException.class
-			}, {	// Creación errónea de un Minute: Meeting null.
+			}, {	// Creación errónea de una Association: creationDate futuro.
 				"user1", "document", null, NullPointerException.class
-			}, {	// Creación errónea de un Minute: Meeting inexistente.
+			}, {	// Creación errónea de una Association: creationDate null.
 				"user1", "document", "meeting100", NumberFormatException.class
 			}
 		};
@@ -66,15 +66,15 @@ public class MinutesServiceTest extends AbstractTest {
 	@Test
 	public void driverDisplay() {
 		final Object testingData[][] = {
-			{		// Display correcto de un Minutes logueado como user.
+			{		// Display correcto de una association ya creado y logueado como tal. 
 				"user1", "minutes1", null
-			}, {	// Display correcto de un Minutes sin estar logueado.
+			}, {	// Display correcto de un user distinto al que está logueado.
 				null, "minutes1", null
-			}, {		// Display correcto de un Minutes logueado como admin.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"admin", "minutes1", null
-			}, {		// Intento de mostrar un Minutes null.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", null, NullPointerException.class
-			}, {		// Intento de mostrar un Minutes que no existe.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", "minutes100", NumberFormatException.class
 			}
 		};
@@ -85,15 +85,15 @@ public class MinutesServiceTest extends AbstractTest {
 	@Test
 	public void driverAddParticipant() {
 		final Object testingData[][] = {
-			{		// Participant añadido correctamente logueado como user.
+			{		// Display correcto de una association ya creado y logueado como tal. 
 				"user1", "minutes1", "user4", null
-			}, {	// Intento de añadir un participant a un Minutes sin estar logueado.
+			}, {	// Display correcto de un user distinto al que está logueado.
 				null, "minutes1", "user4", null
-			}, {		// Participant añadido correctamente logueado como admin.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"admin", "minutes1", "user4", null
-			}, {		// Intento de añadir un participant a un Meeting null.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", null, "user4", NullPointerException.class
-			}, {		// Intento de añadir un participant a un Meeting que no existe.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", "minutes100", "user4", NumberFormatException.class
 			}
 		};

@@ -45,18 +45,16 @@ public class ItemServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation() {
 		final Object testingData[][] = {
-			{		// Creación correcta de un Item
+			{		// Creación correcta de una Association.
 				"user1", "item", "GOOD", "description", "http://www.imagen.com.mx/assets/img/imagen_share.png", "section1", null
-			}, {	// Creación errónea de un Item: name vacío.
+			}, {	// Creación errónea de una Association: name vacío.
 				"user1", "", "GOOD", "description", "http://www.imagen.com.mx/assets/img/imagen_share.png", "section1", ConstraintViolationException.class
-			}, {	// Creación errónea de un Item: condition rara.
+			}, {	// Creación errónea de una Association: creationDate null.
 				"user1", "item", "blae", "description", "http://www.imagen.com.mx/assets/img/imagen_share.png", "section1", ConstraintViolationException.class
-			}, {	//Creación errónea de un Item: condition vacía.
+			}, {	// Creación errónea de una Association: creationDate futuro.
 				"user1", "item", "", "description", "http://www.imagen.com.mx/assets/img/imagen_share.png", "section1", ConstraintViolationException.class
-			}, {	// Creación errónea de un Item: description vacía.
+			}, {	// Creación errónea de una Association: creationDate null.
 				"user1", "item", "GOOD", "", "http://www.imagen.com.mx/assets/img/imagen_share.png", "section1", ConstraintViolationException.class
-			}, {		// Creación errónea de un Item: picture sin formato URL.
-				"user1", "item", "GOOD", "description", "blae", "section1", ConstraintViolationException.class
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
@@ -65,11 +63,11 @@ public class ItemServiceTest extends AbstractTest {
 	@Test
 	public void driverDisplay() {
 		final Object testingData[][] = {
-			{		// Display correcto de un Item y logueado como user. 
+			{		// Display correcto de una association ya creado y logueado como tal. 
 				"user1", "item1", null
-			}, {	// Display correcto de un Item y sin estar logueado.
+			}, {	// Display correcto de un user distinto al que está logueado.
 				null, "item1", null
-			}, {		// Intento de mostrar un Item que no existe
+			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", "item100", NumberFormatException.class
 			}
 		};
@@ -80,11 +78,11 @@ public class ItemServiceTest extends AbstractTest {
 	@Test
 	public void driverLoanable() {
 		final Object testingData[][] = {
-			{		// Comprobación correcta de que el Item es loanable. 
+			{		// Display correcto de una association ya creado y logueado como tal. 
 				"user1", "item1", null
-			}, {	// Comprobación correcta de que el Item es loanable sin haberse autenticado.
+			}, {	// Display correcto de un user distinto al que está logueado.
 				null, "item1", null
-			}, {	// Comprobación de que el Item no es loanable.
+			}, {	// Display correcto de un user distinto al que está logueado.
 				"user1", "item6", IllegalArgumentException.class
 			}
 		};
@@ -95,11 +93,11 @@ public class ItemServiceTest extends AbstractTest {
 	@Test
 	public void driverIsLoaned() {
 		final Object testingData[][] = {
-			{		// comprobación de que un item no está loaned logueándose como un user.
+			{		// Display correcto de una association ya creado y logueado como tal. 
 				"user1", "item1", IllegalArgumentException.class
-			}, {	// comprobación de que un item no está loaned sin haberse logueado.
+			}, {	// Display correcto de un user distinto al que está logueado.
 				null, "item1", IllegalArgumentException.class
-			}, {	// comprobación de que un item no está loaned logueándose como un admin.
+			}, {	// Display correcto de un user distinto al que está logueado.
 				"admin", "item1", IllegalArgumentException.class
 			}
 		};
@@ -110,13 +108,13 @@ public class ItemServiceTest extends AbstractTest {
 	@Test
 	public void driverChangeCondition() {
 		final Object testingData[][] = {
-			{		// Cambio correcto de condition de un Item, logueado como manager de la Association del Item.
+			{		// Display correcto de una association ya creado y logueado como tal. 
 				"user1", "MODERATE", "item1", null
-			}, {	// Cambio erroneo de condition de un Item, sin estar logueado.
+			}, {	// Display correcto de un user distinto al que está logueado.
 				null, "MODERATE", "item1", IllegalArgumentException.class
-			}, {	// Cambio erroneo de condition de un Item, estando logueado como admin.
+			}, {	// Display correcto de un user distinto al que está logueado.
 				"admin", "MODERATE", "item1", IllegalArgumentException.class
-			}, {		// Cambio erroneo de condition de un Item que no existe.
+			}, {		// Display correcto de una association ya creado y logueado como tal. 
 				"user1", "MODERATE", "item100", NumberFormatException.class
 			}
 		};

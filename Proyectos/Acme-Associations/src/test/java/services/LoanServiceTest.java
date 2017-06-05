@@ -48,27 +48,27 @@ public class LoanServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation() {
 		final Object testingData[][] = {
-			{		// Creación correcta de un Loan.
+			{		// Creación correcta de una Association.
 				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item1", "user1", "user2", null
-			}, {	// Creación errónea de un Loan: startDate null.
+			}, {	// Creación errónea de una Association: name vacío.
 				"user1", null, this.fechaFutura, this.fechaValida, "item1", "user1", "user2", ConstraintViolationException.class
-			}, {	// Creación errónea de un Loan: startDate con fecha futura.
+			}, {	// Creación errónea de una Association: creationDate null.
 				"user1", this.fechaFutura, this.fechaFutura, this.fechaValida, "item1", "user1", "user2", ConstraintViolationException.class
-			}, {	// Creación errónea de un Loan: expectedDate null.
+			}, {	// Creación errónea de una Association: creationDate futuro.
 				"user1", this.fechaValida, null, this.fechaValida, "item1", "user1", "user2", ConstraintViolationException.class
-			}, {	// Creación errónea de un Loan: finalDate null.
+			}, {	// Creación errónea de una Association: creationDate null.
 				"user1", this.fechaValida, this.fechaFutura, null, "item1", "user1", "user2", ConstraintViolationException.class
-			}, {	// Creación errónea de un Loan: Item null.
+			}, {	// Creación errónea de una Association: creationDate null.
 				"user1", this.fechaValida, this.fechaFutura, this.fechaFutura, null, "user1", "user2", NullPointerException.class
-			}, {		// Creación errónea de un Loan: Item inexistente.
+			}, {		// Creación correcta de una Association.
 				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item100", "user1", "user2", NumberFormatException.class
-			}, {		// Creación errónea de un Loan: lender null.
+			}, {		// Creación correcta de una Association.
 				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item1", null, "user2", NullPointerException.class
-			}, {		// Creación errónea de un Loan: lender inexistente.
+			}, {		// Creación correcta de una Association.
 				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item1", "user100", "user2", NumberFormatException.class
-			}, {		// Creación errónea de un Loan: borrower null.
+			}, {		// Creación correcta de una Association.
 				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item1", "user1", null, NullPointerException.class
-			}, {		// Creación errónea de un Loan: borrower inexistente.
+			}, {		// Creación correcta de una Association.
 				"user1", this.fechaValida, this.fechaFutura, this.fechaValida, "item1", "user1", "user200", NumberFormatException.class
 			}
 		};
@@ -78,13 +78,13 @@ public class LoanServiceTest extends AbstractTest {
 	@Test
 	public void driverDisplay() {
 		final Object testingData[][] = {
-			{		// Display correcto de un Loan logueado como un user.
+			{		// Display correcto de una association ya creado y logueado como tal. 
 				"user1", "loan1", null
-			}, {	// Display correcto de un loan sin estar logueado.
+			}, {	// Display correcto de un user distinto al que está logueado.
 				null, "loan1", null
-			}, {		// Intento de mostrar un loan que no existe.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", "loan100", NumberFormatException.class
-			}, {		// Intento de mostrar un loan null.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", null, NullPointerException.class
 			}
 		};

@@ -48,13 +48,13 @@ public class SanctionServiceTest extends AbstractTest {
 	@Test
 	public void driverCreation() {
 		final Object testingData[][] = {
-			{		// Creación correcta de una Sanction.
+			{		// Creación correcta de una Association.
 				"user1", "blae", this.fechaFutura, "association1", "user3", null
-			}, {	// Creación errónea de una Sanction: motiff vacío.
+			}, {	// Creación errónea de una Association: name vacío.
 				"user1", "", this.fechaFutura, "association1", "user3", ConstraintViolationException.class
-			}, {	// Creación errónea de una Sanction: endDate null.
+			}, {	// Creación errónea de una Association: name vacío.
 				"user1", "blae", null, "association1", "user3", ConstraintViolationException.class
-			}, {	// Creación errónea de una Sanction: Association de la cual el logueado no es el manager.
+			}, {	// Creación errónea de una Association: name vacío.
 				"user1", "blae", this.fechaFutura, "association6", "user3", IllegalArgumentException.class
 			}
 		};
@@ -64,15 +64,15 @@ public class SanctionServiceTest extends AbstractTest {
 	@Test
 	public void driverDisplay() {
 		final Object testingData[][] = {
-			{		// Display correcto de una Sanction logueado como manager de la Association.
+			{		// Display correcto de una association ya creado y logueado como tal. 
 				"user1", "sanction1", null
-			}, {	// Intento de mostrar una Sanction sin estar logueado.
+			}, {	// Display correcto de un user distinto al que está logueado.
 				null, "sanction1", NullPointerException.class
-			}, {		// Intento de mostrar una Sanction logueado como admin.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"admin", "sanction1", NullPointerException.class
-			}, {		// Intento de mostrar una Sanction logueado como user que no es manager de la Association.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"user2", null, NullPointerException.class
-			}, {		// Intento de mostrar una Sanction que no existe.
+			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", "blae", NumberFormatException.class
 			}
 		};
