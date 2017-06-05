@@ -21,7 +21,6 @@
 
 <html>
 <body>
-<h1>Upload Status</h1>
 <h2>Message : <spring:message code="upload.succesful" />${message2}</h2>
 </body>
 </html>
