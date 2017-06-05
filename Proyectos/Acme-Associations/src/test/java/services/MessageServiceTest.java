@@ -52,9 +52,9 @@ public class MessageServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			{		// Creación correcta de un Mensaje: Un adjunto
 				"user1", "correcto", "correcto", null
-			}, {		// Creación correcta de un Mensaje: Sin adjuntos;
+			}, {	// Creación correcta de un Mensaje: Sin adjuntos;
 				"user1", "correcto", "correcto", null
-			}, {		// Creación correcta de un Mensaje: Muchos adjuntos;
+			}, {	// Creación correcta de un Mensaje: Muchos adjuntos;
 				"user1", "correcto", "correcto", null
 			}, {	// Creación errónea de un Mensaje: title vacío.
 				"user1", "", "incorrecto", ConstraintViolationException.class
