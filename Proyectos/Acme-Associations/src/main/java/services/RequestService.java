@@ -101,6 +101,7 @@ public class RequestService {
 	}
 	public void accept(final Request request) {
 
+		this.rolesService.checkManagerPrincipal(request.getAssociation());
 		final User user;
 		final Association association;
 
@@ -115,6 +116,7 @@ public class RequestService {
 
 	public void deny(final Request request) {
 
+		this.rolesService.checkManagerPrincipal(request.getAssociation());
 		request.getUser();
 		request.getAssociation();
 
