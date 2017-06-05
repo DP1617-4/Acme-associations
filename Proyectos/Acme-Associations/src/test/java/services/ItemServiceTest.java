@@ -64,11 +64,11 @@ public class ItemServiceTest extends AbstractTest {
 	public void driverDisplay() {
 		final Object testingData[][] = {
 			{		// Display correcto de una association ya creado y logueado como tal. 
-				"user1", "association1", null
+				"user1", "item1", null
 			}, {	// Display correcto de un user distinto al que está logueado.
-				null, "association1", null
+				null, "item1", null
 			}, {		// Intento de mostrar una asociacion que no existe
-				"user1", "association100", NumberFormatException.class
+				"user1", "item100", NumberFormatException.class
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
@@ -79,11 +79,11 @@ public class ItemServiceTest extends AbstractTest {
 	public void driverLoanable() {
 		final Object testingData[][] = {
 			{		// Display correcto de una association ya creado y logueado como tal. 
-				"user2", "item6", null
+				"user1", "item1", null
 			}, {	// Display correcto de un user distinto al que está logueado.
 				null, "item1", null
 			}, {	// Display correcto de un user distinto al que está logueado.
-				"admin", "item1", null
+				"user1", "item6", IllegalArgumentException.class
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
@@ -128,15 +128,15 @@ public class ItemServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(user);
-			Section section = this.sectionService.findOne(this.extract(sectionId));
-			final Item i = itemService.create(section);
+			final Section section = this.sectionService.findOne(this.extract(sectionId));
+			final Item i = this.itemService.create(section);
 
 			i.setName(name);
 			i.setItemCondition(itemCondition);
 			i.setDescription(description);
 			i.setPicture(picture);
 
-			Item saved = itemService.save(i);
+			final Item saved = this.itemService.save(i);
 			this.itemService.delete(saved);
 			this.unauthenticate();
 			this.itemService.flush();
@@ -164,7 +164,7 @@ public class ItemServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(username);
-			Item i = this.itemService.findOne(this.extract(itemId));
+			final Item i = this.itemService.findOne(this.extract(itemId));
 			Assert.isTrue(this.itemService.isLoanable(i));
 			this.unauthenticate();
 		} catch (final Throwable oops) {
@@ -178,7 +178,7 @@ public class ItemServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(username);
-			Item i = this.itemService.findOne(this.extract(itemId));
+			final Item i = this.itemService.findOne(this.extract(itemId));
 			Assert.isTrue(this.itemService.isLoanedByPrincipal(i));
 			this.unauthenticate();
 		} catch (final Throwable oops) {
@@ -192,7 +192,7 @@ public class ItemServiceTest extends AbstractTest {
 		caught = null;
 		try {
 			this.authenticate(username);
-			Item i = this.itemService.findOne(this.extract(itemId));
+			final Item i = this.itemService.findOne(this.extract(itemId));
 			this.itemService.changeCondition(i, condition);
 			this.unauthenticate();
 			this.itemService.flush();
