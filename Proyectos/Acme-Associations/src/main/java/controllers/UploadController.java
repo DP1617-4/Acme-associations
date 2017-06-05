@@ -33,10 +33,12 @@ public class UploadController extends AbstractController {
 	public ModelAndView singleFileUpload(@RequestParam("file") final MultipartFile file, final RedirectAttributes redirectAttributes) {
 
 		final ModelAndView result;
+		String message = null;
 
 		if (file.isEmpty()) {
-			redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+
 			result = new ModelAndView("upload/subir");
+			redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
 			return result;
 		}
 
@@ -47,13 +49,14 @@ public class UploadController extends AbstractController {
 			final Path path = Paths.get(UploadController.UPLOADED_FOLDER + file.getOriginalFilename());
 			Files.write(path, bytes);
 
-			redirectAttributes.addFlashAttribute("message", "You successfully uploaded '" + file.getOriginalFilename() + "'");
+			message = "You successfully uploaded '" + file.getOriginalFilename() + "'";
 
 		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 
 		result = new ModelAndView("upload/status");
+		result.addObject("message", message);
 		return result;
 	}
 
