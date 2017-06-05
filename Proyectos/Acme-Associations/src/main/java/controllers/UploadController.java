@@ -34,11 +34,13 @@ public class UploadController extends AbstractController {
 
 		final ModelAndView result;
 		String message = null;
+		String message2 = null;
 
 		if (file.isEmpty()) {
 
-			result = new ModelAndView("upload/subir");
-			redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+			result = this.index();
+			message = "upload.not.defined";
+			result.addObject("message", message);
 			return result;
 		}
 
@@ -49,7 +51,8 @@ public class UploadController extends AbstractController {
 			final Path path = Paths.get(UploadController.UPLOADED_FOLDER + file.getOriginalFilename());
 			Files.write(path, bytes);
 
-			message = "You successfully uploaded '" + file.getOriginalFilename() + "'";
+			message = "upload.succesful";
+			message2 = file.getOriginalFilename();
 
 		} catch (final IOException e) {
 			e.printStackTrace();
@@ -57,6 +60,7 @@ public class UploadController extends AbstractController {
 
 		result = new ModelAndView("upload/status");
 		result.addObject("message", message);
+		result.addObject("message2", message2);
 		return result;
 	}
 
@@ -65,45 +69,6 @@ public class UploadController extends AbstractController {
 		ModelAndView result;
 		result = new ModelAndView("upload/status");
 		return result;
-	}
-
-	//	@RequestMapping(value = "/uploadMulti", method = RequestMethod.POST)
-	//	public String multiFileUpload(@RequestParam("files") final MultipartFile[] files, final RedirectAttributes redirectAttributes) {
-	//
-	//		final StringJoiner sj = new StringJoiner(" , ");
-	//
-	//		for (final MultipartFile file : files) {
-	//
-	//			if (file.isEmpty())
-	//				continue; //next pls
-	//
-	//			try {
-	//
-	//				final byte[] bytes = file.getBytes();
-	//				final Path path = Paths.get(UploadController.UPLOADED_FOLDER + file.getOriginalFilename());
-	//				Files.write(path, bytes);
-	//
-	//				sj.add(file.getOriginalFilename());
-	//
-	//			} catch (final IOException e) {
-	//				e.printStackTrace();
-	//			}
-	//
-	//		}
-	//
-	//		final String uploadedFileName = sj.toString();
-	//		if (StringUtils.isEmpty(uploadedFileName))
-	//			redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-	//		else
-	//			redirectAttributes.addFlashAttribute("message", "You successfully uploaded '" + uploadedFileName + "'");
-	//
-	//		return "redirect:/uploadStatus";
-	//
-	//	}
-
-	@RequestMapping(value = "/uploadMultiPage", method = RequestMethod.GET)
-	public String uploadMultiPage() {
-		return "uploadMulti";
 	}
 
 }

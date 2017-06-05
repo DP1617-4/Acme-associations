@@ -22,11 +22,11 @@
 
 <body>
 <h1>Spring MVC file upload example</h1>
-
+	
 <form method="POST" action="upload/upload.do" enctype="multipart/form-data">
     <input type="file" name="file" /><br/>
-    <input type="submit" value="Submit" />
+    <input type="submit" value="Submit" /> <br></br>
+    	<span style="color:red;"><spring:message code="${message }" /></span>
 </form>
-
 </body>
 </html>
