@@ -20,7 +20,9 @@
 
 <body>
 <security:authentication property="principal" var ="loggedactor"/>
+	<div class="row row-offcanvas row-offcanvas-right">
 
+  	<div class="col-12 col-md-9">
 	<div class="jumbotron">
 		<h2><jstl:out value="${meeting.issue}" /></h2>
 	</div>
@@ -137,6 +139,14 @@
 			</jstl:if>
 		</div><!--/span-->
     
+	</div>
+	</div>
+	<jstl:if test="${association != null}">
+	<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+	<a class="btn btn-primary" href="association/${association.id}/display.do">&larr; <jstl:out value="${association.name}"/></a>
+	   <br><br><acme:lateralMenu/>
+	   </div>
+	</jstl:if>
 	</div>
 	
 </body>

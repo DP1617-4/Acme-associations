@@ -17,12 +17,15 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
 
 
 
+<div class="row row-offcanvas row-offcanvas-right">
 
+  	<div class="col-12 col-md-9">
 <security:authentication property="principal" var ="loggedactor"/>
 <display:table pagesize="5" keepStatus="false" name="requests" requestURI="${requestURI}" id="row">
 	
@@ -56,5 +59,15 @@
 
 
 <br/>
+
+</div>
+<jstl:if test="${association != null}">
+	<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+	<a class="btn btn-primary" href="association/${association.id}/display.do">&larr; <jstl:out value="${association.name}"/></a>
+	   </div>
+	</jstl:if>
+	</div>
+
+
 
 		

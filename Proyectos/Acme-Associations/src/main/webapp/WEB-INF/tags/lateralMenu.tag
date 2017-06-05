@@ -15,7 +15,11 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <%-- Attributes --%> 
- 
+ <%@ attribute name="role" required="false" %>
+
+<jstl:if test="${role == null}">
+	<jstl:set var="role" value="${role}" />
+</jstl:if>
 
 <%-- Definition --%>
 		
@@ -47,3 +51,19 @@
            </jstl:if>
          </div>
          
+         
+         
+         
+        <%--    <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<div class="row row-offcanvas row-offcanvas-right">
+
+  	<div class="col-12 col-md-9">
+	<jstl:if test="${association != null}">
+	<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+	<a class="btn btn-primary" href="association/${association.id}/display.do">&larr; <jstl:out value="${association.name}"/></a>
+	   <br><br><acme:lateralMenu/>
+	</jstl:if>
+
+
+
+          --%>

@@ -79,17 +79,14 @@ public class ItemServiceTest extends AbstractTest {
 	public void driverLoanable() {
 		final Object testingData[][] = {
 			{		// Display correcto de una association ya creado y logueado como tal. 
-				"user2", "item6", null
+				"item1", null
 			}, {	// Display correcto de un user distinto al que está logueado.
-				null, "item1", null
-			}, {	// Display correcto de un user distinto al que está logueado.
-				"admin", "item1", null
+				"item6", IllegalArgumentException.class
 			}
 		};
 		for (int i = 0; i < testingData.length; i++)
-			this.templateLoanable((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+			this.templateLoanable((String) testingData[i][0], (Class<?>) testingData[i][1]);
 	}
-
 	@Test
 	public void driverIsLoaned() {
 		final Object testingData[][] = {
@@ -159,11 +156,10 @@ public class ItemServiceTest extends AbstractTest {
 		this.checkExceptions(expected, caught);
 	}
 
-	protected void templateLoanable(final String username, final String itemId, final Class<?> expected) {
+	protected void templateLoanable(final String itemId, final Class<?> expected) {
 		Class<?> caught;
 		caught = null;
 		try {
-			this.authenticate(username);
 			Item i = this.itemService.findOne(this.extract(itemId));
 			Assert.isTrue(this.itemService.isLoanable(i));
 			this.unauthenticate();

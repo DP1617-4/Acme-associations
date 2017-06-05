@@ -50,22 +50,23 @@ public class RolesService {
 		User principal;
 		principal = this.userService.findByPrincipal();
 		role = this.roleRepository.findRolesByUserAssociation(user.getId(), association.getId());
-		Roles rolePrincipal = this.roleRepository.findRolesByUserAssociation(principal.getId(), association.getId());
-		Collection<Roles> associationRoles = this.roleRepository.findAllByAssociation(association.getId());
-		if (role != null || !associationRoles.isEmpty()) {
+		final Roles rolePrincipal = this.roleRepository.findRolesByUserAssociation(principal.getId(), association.getId());
+		final Collection<Roles> associationRoles = this.roleRepository.findAllByAssociation(association.getId());
+		if (role != null || !associationRoles.isEmpty())
 			this.checkManagerPrincipal(association);
-
-		}
 		if (role == null)
 			role = this.create(user, association);
 
 		if (roleType.equals(Roles.MANAGER) && rolePrincipal != null) {
+			Assert.isTrue(rolePrincipal.getType().equals(Roles.MANAGER), "association.role.manager.error");
 			rolePrincipal.setType(Roles.COLLABORATOR);
 			role.setType(Roles.MANAGER);
-		} else
-			Assert.isTrue(!user.equals(principal));
+		}
+
 		role.setType(roleType);
 
+		if (rolePrincipal != null)
+			this.save(rolePrincipal);
 		final Roles saved = this.save(role);
 
 		return saved;

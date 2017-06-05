@@ -18,9 +18,12 @@
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib uri="/WEB-INF/tags/functions" prefix="mask" %>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 <security:authentication property="principal" var ="loggedactor"/>
+<div class="row row-offcanvas row-offcanvas-right">
 
+  	<div class="col-12 col-md-9">
 <display:table pagesize="5" class="displaytag" keepStatus="false"
 	name="items" requestURI="${requestURI}" id="row">
 	
@@ -29,12 +32,15 @@
 	<spring:message code="item.name" var="nameHeader" />
 	<spring:message code="master.page.association" var="associationHeader" />
 	<display:column title="${nameHeader}">
-		<jstl:if test="${ association!=null}">
-		<a href="item/user/${association.id}/display.do?itemId=${row.id}"><jstl:out value="${row.name}"/></a>
-		</jstl:if>
-		<jstl:if test="${ association==null}">
+		<security:authorize access="hasRole('USER')"> 
+		<a href="item/user/${row.section.association.id}/display.do?itemId=${row.id}"><jstl:out value="${row.name}"/></a>
+		</security:authorize>
+		<security:authorize access="isAnonymous()"> 
 		<jstl:out value="${row.name}"/>
-		</jstl:if>
+		</security:authorize>
+		<security:authorize access="hasRole('ADMIN')"> 
+		<jstl:out value="${row.name}"/>
+		</security:authorize>
 	</display:column>
 	<jstl:if test="${ association==null}">
 	<display:column title="${associationHeader }">
@@ -51,3 +57,11 @@
 	
 </display:table>
 <br/>
+
+</div>
+<jstl:if test="${association != null}">
+	<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+	<a class="btn btn-primary" href="association/${association.id}/display.do">&larr; <jstl:out value="${association.name}"/></a>
+	   <br><br><acme:lateralMenu/>
+	   </div>
+	</jstl:if>
