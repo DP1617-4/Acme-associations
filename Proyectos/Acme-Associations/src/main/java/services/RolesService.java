@@ -56,6 +56,8 @@ public class RolesService {
 			this.checkManagerPrincipal(association);
 		if (role == null)
 			role = this.create(user, association);
+		if (rolePrincipal != null)
+			Assert.isTrue(user.getId()!=userService.findByPrincipal().getId());
 
 		if (roleType.equals(Roles.MANAGER) && rolePrincipal != null) {
 			Assert.isTrue(rolePrincipal.getType().equals(Roles.MANAGER), "association.role.manager.error");

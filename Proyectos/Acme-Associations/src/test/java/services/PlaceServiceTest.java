@@ -54,7 +54,6 @@ public class PlaceServiceTest extends AbstractTest {
 			}
 		};
 		for (int i = 0; i < testingData.length; i++){
-			System.out.println("Test crear: "+i);
 			this.templateCreateDelete((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Double) testingData[i][3],  (Double) testingData[i][4], (Class<?>) testingData[i][5]);
 		}
 	}

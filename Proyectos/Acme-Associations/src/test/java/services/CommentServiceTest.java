@@ -43,8 +43,7 @@ public class CommentServiceTest extends AbstractTest {
 
 	// Teoria pagina 107 y 108
 	// Tests ---------------------------------------------------------------
-	//- An actor who is authenticated must be able to:
-	//	o Post a comment on another association, meeting, minute and item
+	//
 	@Test
 	public void driverCreation() {
 		final Object testingData[][] = {
