@@ -38,38 +38,137 @@ public class UserServiceTest extends AbstractTest {
 	// Teoria pagina 107 y 108
 	// Tests ---------------------------------------------------------------
 	@Test
-	public void driverCreation() {
+	public void driverCreation1() {
 		final Object testingData[][] = {
 			{		// Creación correcta de un Customer.
 				"username10", "password", "nombre", "apellidos", "email@gmail.com", "2345", "casita", "1234", null
 			}, {	// Creación errónea de un Customer: username vacío.
 				"username11", "password", "", "apellidos", "email@gmail.com", "2345", "casita", "1234", ConstraintViolationException.class
-			}, {	// Creación errónea de un Customer: password vacío.
-				"username12", "password", "nombre", "", "email@gmail.com", "2345", "casita", "1234", ConstraintViolationException.class
-			}, {	// Creación errónea de un Customer: password vacío.
-				"username13", "password", "nombre", "apellidos", "jiji", "2345", "casita", "1234", ConstraintViolationException.class
-			}, {	// Creación errónea de un Customer: password vacío.
-				"username14", "password", "nombre", "apellidos", "", "2345", "casita", "1234", ConstraintViolationException.class
-			}, {	// Creación errónea de un Customer: password vacío.
-				"username15", "password", "nombre", "apellidos", "email@gmail.com", "", "casita", "1234", ConstraintViolationException.class
-			}, {	// Creación errónea de un Customer: password vacío.
-				"username16", "password", "nombre", "apellidos", "email@gmail.com", "2345", "", "1234", ConstraintViolationException.class
-			}, {	// Creación errónea de un Customer: password vacío.
-				"username17", "password", "nombre", "apellidos", "email@gmail.com", "2345", "casita", "", ConstraintViolationException.class
-			}, {		// Creación correcta de un Customer.
-				"", "password", "nombre", "apellidos", "email@gmail.com", "2345", "casita", "1234", ConstraintViolationException.class
-			}, {		// Creación correcta de un Customer.
-				"username18", "", "nombre", "apellidos", "email@gmail.com", "2345", "casita", "1234", ConstraintViolationException.class
-			}, {		// Creación correcta de un Customer.
-				"u", "password", "nombre", "apellidos", "email@gmail.com", "2345", "casita", "1234", ConstraintViolationException.class
-			}, {		// Creación correcta de un Customer.
-				"username18", "pass", "nombre", "apellidos", "email@gmail.com", "2345", "casita", "1234", ConstraintViolationException.class
 			}
 		};
+
 		for (int i = 0; i < testingData.length; i++)
 			this.templateCreation((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6],
 				(String) testingData[i][7], (Class<?>) testingData[i][8]);
 	}
+
+	@Test
+	public void driverCreation2() {
+		final Object testingData[][] = {
+			{	// Creación errónea de un Customer: password vacío.
+				"username12", "password", "nombre", "", "email@gmail.com", "2345", "casita", "1234", ConstraintViolationException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.templateCreation((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6],
+				(String) testingData[i][7], (Class<?>) testingData[i][8]);
+	}
+
+	@Test
+	public void driverCreation3() {
+		final Object testingData[][] = {
+			{	// Creación errónea de un Customer: password vacío.
+				"username13", "password", "nombre", "apellidos", "jiji", "2345", "casita", "1234", ConstraintViolationException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.templateCreation((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6],
+				(String) testingData[i][7], (Class<?>) testingData[i][8]);
+	}
+
+	@Test
+	public void driverCreation4() {
+		final Object testingData[][] = {
+			{	// Creación errónea de un Customer: password vacío.
+				"username14", "password", "nombre", "apellidos", "", "2345", "casita", "1234", ConstraintViolationException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.templateCreation((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6],
+				(String) testingData[i][7], (Class<?>) testingData[i][8]);
+	}
+
+	@Test
+	public void driverCreation5() {
+		final Object testingData[][] = {
+			{	// Creación errónea de un Customer: password vacío.
+				"username15", "password", "nombre", "apellidos", "email@gmail.com", "", "casita", "1234", ConstraintViolationException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.templateCreation((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6],
+				(String) testingData[i][7], (Class<?>) testingData[i][8]);
+	}
+
+	@Test
+	public void driverCreation6() {
+		final Object testingData[][] = {
+			{	// Creación errónea de un Customer: password vacío.
+				"username16", "password", "nombre", "apellidos", "email@gmail.com", "2345", "", "1234", ConstraintViolationException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.templateCreation((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6],
+				(String) testingData[i][7], (Class<?>) testingData[i][8]);
+	}
+
+	@Test
+	public void driverCreation7() {
+		final Object testingData[][] = {
+			{	// Creación errónea de un Customer: password vacío.
+				"username17", "password", "nombre", "apellidos", "email@gmail.com", "2345", "casita", "", ConstraintViolationException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.templateCreation((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6],
+				(String) testingData[i][7], (Class<?>) testingData[i][8]);
+	}
+
+	@Test
+	public void driverCreation8() {
+		final Object testingData[][] = {
+			{		// Creación correcta de un Customer.
+				"", "password", "nombre", "apellidos", "email@gmail.com", "2345", "casita", "1234", ConstraintViolationException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.templateCreation((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6],
+				(String) testingData[i][7], (Class<?>) testingData[i][8]);
+	}
+
+	@Test
+	public void driverCreation9() {
+		final Object testingData[][] = {
+			{		// Creación correcta de un Customer.
+				"username18", "", "nombre", "apellidos", "email@gmail.com", "2345", "casita", "1234", ConstraintViolationException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.templateCreation((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6],
+				(String) testingData[i][7], (Class<?>) testingData[i][8]);
+	}
+
+	@Test
+	public void driverCreation10() {
+		final Object testingData[][] = {
+			{		// Creación correcta de un Customer.
+				"username19", "pass", "nombre", "apellidos", "email@gmail.com", "2345", "casita", "1234", ConstraintViolationException.class
+			}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.templateCreation((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6],
+				(String) testingData[i][7], (Class<?>) testingData[i][8]);
+	}
+
 	@Test
 	public void driverDisplaying() {
 		final Object testingData[][] = {

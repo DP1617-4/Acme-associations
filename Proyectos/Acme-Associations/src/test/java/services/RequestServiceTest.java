@@ -81,7 +81,7 @@ public class RequestServiceTest extends AbstractTest {
 			{		// Display correcto de una association ya creado y logueado como tal. 
 				"user2", "request1", null
 			}, {	// Display correcto de un user distinto al que está logueado.
-				null, "request5", IllegalArgumentException.class
+				null, "request5", NullPointerException.class
 			}, {		// a ver para qué el user3 envia una peticion para ser miembro de la asociacion de la cual ya es manager de hecho(o colaborador, no me acuerdo)
 				"admin", "request2", NullPointerException.class
 			}, {		// Intento de mostrar una asociacion que no existe
@@ -99,9 +99,9 @@ public class RequestServiceTest extends AbstractTest {
 			{		// Display correcto de una association ya creado y logueado como tal. 
 				"user2", "request1", null
 			}, {	// Display correcto de un user distinto al que está logueado.
-				null, "request5", IllegalArgumentException.class
+				null, "request5", NullPointerException.class
 			}, {		// a ver para qué el user3 envia una peticion para ser miembro de la asociacion de la cual ya es manager de hecho(o colaborador, no me acuerdo)
-				"admin", "request2", IllegalArgumentException.class
+				"admin", "request2", NullPointerException.class
 			}, {		// Intento de mostrar una asociacion que no existe
 				"user1", "request3", IllegalArgumentException.class
 			}

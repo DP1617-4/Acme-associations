@@ -54,14 +54,15 @@ public class ActivityServiceTest extends AbstractTest {
 	Date						fechaFutura		= this.calendarFutura.getTime();
 
 
-	// Teoria pagina 107 y 108
+	// 
 	// Tests ---------------------------------------------------------------
+	// Test para la creacion y borrado de una actividad
 	@Test
 	public void driverCreationDelete() {
 		final Object testingData[][] = {
-			{		// Creación correcta de un Activity.
+			{			// Creación correcta de un Activity: Manager.
 				"user1", "association1", null, null, null, "Actividad 1", "esta es una actividad de prueba", 10, this.fechaValida, this.fechaFutura, true, null
-			}, {		// Creación correcta de un Activity.
+			}, {		// Creación correcta de un Activity: Colaborador.
 				"user3", "association1", null, null, null, "Actividad 1", "esta es una actividad de prueba", 10, this.fechaValida, this.fechaFutura, true, null
 			}, {		// creacion Incorrecta: Usuario sin permisos.
 				"user8", "association1", null, null, null, "Actividad 1", "esta es una actividad de prueba", 10, this.fechaValida, this.fechaFutura, true, IllegalArgumentException.class
@@ -128,9 +129,9 @@ public class ActivityServiceTest extends AbstractTest {
 				null, "activity1", "user3", "item2", NullPointerException.class
 			}, {	// Añadir ganador con error: sin estar en la actividad
 				"user1", "activity1", "user8", "item2", IllegalArgumentException.class
-			}, {	// Añadir ganador con error: sin estar en la asociacion
+			}, {	// Añadir ganador con error: ganador fuera de la asociacion
 				"user1", "activity1", "user9", "item2", IllegalArgumentException.class
-			}, {	// Añadir ganador con error: sin estar en la asociacion
+			}, {	// Añadir ganador con error: usuario logueado fuera de la asociacion
 				"user9", "activity1", "user1", "item2", IllegalArgumentException.class
 			}, {	// Añadir ganador con error: usuario nulo
 				"user2", "activity1", null, "item2", NullPointerException.class
